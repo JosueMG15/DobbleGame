@@ -61,6 +61,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Abandonar.
+        /// </summary>
+        public static string btn_Abandonar {
+            get {
+                return ResourceManager.GetString("btn_Abandonar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Actualizar foto.
         /// </summary>
         public static string btn_ActualizarFoto {
@@ -75,6 +84,15 @@ namespace DobbleGame.Properties {
         public static string btn_CrearSala {
             get {
                 return ResourceManager.GetString("btn_CrearSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminar.
+        /// </summary>
+        public static string btn_Eliminar {
+            get {
+                return ResourceManager.GetString("btn_Eliminar", resourceCulture);
             }
         }
         
@@ -97,6 +115,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Enviar.
+        /// </summary>
+        public static string btn_Enviar {
+            get {
+                return ResourceManager.GetString("btn_Enviar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Enviar código.
         /// </summary>
         public static string btn_EnviarCódigo {
@@ -106,11 +133,47 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Iniciar Sesión.
+        ///   Busca una cadena traducida similar a Expulsar.
         /// </summary>
-        public static string btn_IniciarSesión {
+        public static string btn_Expulsar {
             get {
-                return ResourceManager.GetString("btn_IniciarSesión", resourceCulture);
+                return ResourceManager.GetString("btn_Expulsar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Iniciar partida.
+        /// </summary>
+        public static string btn_IniciarPartida {
+            get {
+                return ResourceManager.GetString("btn_IniciarPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitar amigo.
+        /// </summary>
+        public static string btn_InvitarAmigo {
+            get {
+                return ResourceManager.GetString("btn_InvitarAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitar por correo.
+        /// </summary>
+        public static string btn_InvitarPorCorreo {
+            get {
+                return ResourceManager.GetString("btn_InvitarPorCorreo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rechazar.
+        /// </summary>
+        public static string btn_Rechazar {
+            get {
+                return ResourceManager.GetString("btn_Rechazar", resourceCulture);
             }
         }
         
@@ -129,6 +192,15 @@ namespace DobbleGame.Properties {
         public static string btn_Reintentar {
             get {
                 return ResourceManager.GetString("btn_Reintentar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Unirse.
+        /// </summary>
+        public static string btn_Unirse {
+            get {
+                return ResourceManager.GetString("btn_Unirse", resourceCulture);
             }
         }
         
@@ -187,6 +259,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Iniciar sesión.
+        /// </summary>
+        public static string global_IniciarSesión {
+            get {
+                return ResourceManager.GetString("global_IniciarSesión", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nueva contraseña.
         /// </summary>
         public static string global_NuevaContraseña {
@@ -234,9 +315,9 @@ namespace DobbleGame.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Cambio de contraseña.
         /// </summary>
-        public static string lb_CambioDeContraseña {
+        public static string lb_CambioContraseña {
             get {
-                return ResourceManager.GetString("lb_CambioDeContraseña", resourceCulture);
+                return ResourceManager.GetString("lb_CambioContraseña", resourceCulture);
             }
         }
         
@@ -268,6 +349,24 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña.
+        /// </summary>
+        public static string lb_Contraseña {
+            get {
+                return ResourceManager.GetString("lb_Contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña actual.
+        /// </summary>
+        public static string lb_ContraseñaActual {
+            get {
+                return ResourceManager.GetString("lb_ContraseñaActual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Olvidaste tu contraseña?.
         /// </summary>
         public static string lb_ContraseñaOlvidada {
@@ -295,11 +394,29 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a DOBBLE.NET.
+        /// </summary>
+        public static string lb_Dobble_NET {
+            get {
+                return ResourceManager.GetString("lb_Dobble.NET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a En línea.
         /// </summary>
         public static string lb_EnLínea {
             get {
                 return ResourceManager.GetString("lb_EnLínea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enviar invitación.
+        /// </summary>
+        public static string lb_EnviarInvitación {
+            get {
+                return ResourceManager.GetString("lb_EnviarInvitación", resourceCulture);
             }
         }
         
@@ -358,7 +475,52 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Lo sentimos, parace que hemos perdido la conexión con la base de datos, favor de intentarlo más tarde.
+        ///   Busca una cadena traducida similar a Ingrese su nuevo nombre de usuario.
+        /// </summary>
+        public static string lb_IngreseNuevoNombre {
+            get {
+                return ResourceManager.GetString("lb_IngreseNuevoNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Jugador#.
+        /// </summary>
+        public static string lb_Jugador {
+            get {
+                return ResourceManager.GetString("lb_Jugador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas abandonar la partida?.
+        /// </summary>
+        public static string lb_MensajeAbandonarPartida {
+            get {
+                return ResourceManager.GetString("lb_MensajeAbandonarPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas eliminar a ...?.
+        /// </summary>
+        public static string lb_MensajeEliminarAmigo {
+            get {
+                return ResourceManager.GetString("lb_MensajeEliminarAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el correo electrónico para enviar la invitación a la sala.
+        /// </summary>
+        public static string lb_MensajeEnviarInvitación {
+            get {
+                return ResourceManager.GetString("lb_MensajeEnviarInvitación", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lo sentimos, parece que hemos perdido la conexión con la base de datos, favor de intentarlo más tarde.
         /// </summary>
         public static string lb_MensajeErrorConexiónBD {
             get {
@@ -376,11 +538,56 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas expulsar a...?.
+        /// </summary>
+        public static string lb_MensajeExpulsarJugador {
+            get {
+                return ResourceManager.GetString("lb_MensajeExpulsarJugador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Iniciaste como invitado, para comprobar todas las funciones de DOBBLE.NET inicia sesión.
         /// </summary>
         public static string lb_MensajeMenúInvitado {
             get {
                 return ResourceManager.GetString("lb_MensajeMenúInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el código de sala para unirse.
+        /// </summary>
+        public static string lb_MensajeUnirsePartida {
+            get {
+                return ResourceManager.GetString("lb_MensajeUnirsePartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre de usuario.
+        /// </summary>
+        public static string lb_NombreUsuario {
+            get {
+                return ResourceManager.GetString("lb_NombreUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nuevo nombre de usuario.
+        /// </summary>
+        public static string lb_NuevoNombreUsuario {
+            get {
+                return ResourceManager.GetString("lb_NuevoNombreUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Puntos.
+        /// </summary>
+        public static string lb_Puntos {
+            get {
+                return ResourceManager.GetString("lb_Puntos", resourceCulture);
             }
         }
         
@@ -403,11 +610,191 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Solicitudes de amistad.
+        /// </summary>
+        public static string lb_SolicitudesAmistad {
+            get {
+                return ResourceManager.GetString("lb_SolicitudesAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Unirse a partida.
+        /// </summary>
+        public static string lb_UnirseAPartida {
+            get {
+                return ResourceManager.GetString("lb_UnirseAPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Clic para chatear....
+        /// </summary>
+        public static string tb_ClicChat {
+            get {
+                return ResourceManager.GetString("tb_ClicChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Código.
         /// </summary>
         public static string tb_Código {
             get {
                 return ResourceManager.GetString("tb_Código", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código de sala.
+        /// </summary>
+        public static string tb_CódigoDeSala {
+            get {
+                return ResourceManager.GetString("tb_CódigoDeSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nuevo nombre de usuario.
+        /// </summary>
+        public static string tb_NuevoNombre {
+            get {
+                return ResourceManager.GetString("tb_NuevoNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambio de contraseña.
+        /// </summary>
+        public static string titulo_CambioContraseña {
+            get {
+                return ResourceManager.GetString("titulo_CambioContraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambio de nombre.
+        /// </summary>
+        public static string titulo_CambioNombre {
+            get {
+                return ResourceManager.GetString("titulo_CambioNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminar amigo.
+        /// </summary>
+        public static string titulo_EliminarAmigo {
+            get {
+                return ResourceManager.GetString("titulo_EliminarAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Envío de código.
+        /// </summary>
+        public static string titulo_EnvíoDeCódigo {
+            get {
+                return ResourceManager.GetString("titulo_EnvíoDeCódigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error conexión base de datos.
+        /// </summary>
+        public static string titulo_ErrorConexiónBD {
+            get {
+                return ResourceManager.GetString("titulo_ErrorConexiónBD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error conexión servidor.
+        /// </summary>
+        public static string titulo_ErrorConexiónServidor {
+            get {
+                return ResourceManager.GetString("titulo_ErrorConexiónServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a En espera de confirmación.
+        /// </summary>
+        public static string titulo_EsperaConfirmación {
+            get {
+                return ResourceManager.GetString("titulo_EsperaConfirmación", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Menú.
+        /// </summary>
+        public static string titulo_Menu {
+            get {
+                return ResourceManager.GetString("titulo_Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Menú invitado.
+        /// </summary>
+        public static string titulo_MenúInvitado {
+            get {
+                return ResourceManager.GetString("titulo_MenúInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nueva contraseña.
+        /// </summary>
+        public static string titulo_NuevaContraseña {
+            get {
+                return ResourceManager.GetString("titulo_NuevaContraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Perfil.
+        /// </summary>
+        public static string titulo_Perfil {
+            get {
+                return ResourceManager.GetString("titulo_Perfil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registro.
+        /// </summary>
+        public static string titulo_Registro {
+            get {
+                return ResourceManager.GetString("titulo_Registro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sala.
+        /// </summary>
+        public static string titulo_Sala {
+            get {
+                return ResourceManager.GetString("titulo_Sala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sala invitado.
+        /// </summary>
+        public static string titulo_SalaInvitado {
+            get {
+                return ResourceManager.GetString("titulo_SalaInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Solicitudes de amistad.
+        /// </summary>
+        public static string titulo_SolicitudesAmistad {
+            get {
+                return ResourceManager.GetString("titulo_SolicitudesAmistad", resourceCulture);
             }
         }
     }

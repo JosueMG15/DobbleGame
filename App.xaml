@@ -28,6 +28,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="5" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Padding" Value="15,0,15,0" />
             <Setter Property="Width" Value="300" />
@@ -54,6 +59,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="5" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Padding" Value="15,0,15,0" />
             <Setter Property="Width" Value="300" />
@@ -61,11 +71,23 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="Titulo1" TargetType="Label">
+        <Style x:Key="TituloLuckiestGuy1" TargetType="Label">
             <Setter Property="FontSize" Value="70" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="pack://application:,,,/Fuentes/#Luckiest Guy" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="5" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TituloLalezar1" TargetType="Label">
+            <Setter Property="FontSize" Value="70" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="pack://application:,,,/Fuentes/#Lalezar" />
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />
@@ -108,6 +130,7 @@
             </Setter>
             <Setter Property="FontFamily" Value="Inter" />
             <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />

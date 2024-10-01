@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DobbleGame"
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
+        xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="550" WindowStartupLocation="CenterScreen">
+        Title="{x:Static p:Resources.global_IniciarSesión}" Height="700" Width="550" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="None"/>
@@ -18,34 +19,24 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" VerticalAlignment="Top" Height="200" Opacity="0.7" Margin="30"/>
-        <Label Style="{StaticResource Titulo1}" VerticalAlignment="Top" 
-               Margin="0,120,0,10">
-            DOBBLE.NET
-        </Label>
-        <Label Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
-               Margin="0,230,0,15">
-            Iniciar Sesión
-        </Label>
+        <Label Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" VerticalAlignment="Top" 
+               Margin="0,120,0,10"></Label>
+        <Label Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
+               Margin="0,230,0,15"></Label>
 
         <StackPanel Grid.Row="2">
-            <TextBox Grid.Row="2" extensiones:TextBoxExtensiones.TextoSugerido="Usuario" Margin="10" />
-            <PasswordBox Grid.Row="2" extensiones:PasswordBoxExtensiones.TextoSugerido="Contraseña" Margin="10" 
+            <TextBox Grid.Row="2" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_Usuario}" Margin="10" />
+            <PasswordBox Grid.Row="2" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="10" 
                          PasswordChanged="PasswordBox_CambioDeContraseña" />
-            <TextBlock Style="{StaticResource TextBlock}" Grid.Row="2" Margin="0,30,0,10" TextDecorations="Underline">
-                ¿Aún no has creado una cuenta? ¡Registrate!
-            </TextBlock>
-            <TextBlock Style="{StaticResource TextBlock}" Grid.Row="2" Margin="0,0,120,0" TextDecorations="Underline">
-                ¿Olvidaste tu constraseña?
-            </TextBlock>
+            <TextBlock Text="{x:Static p:Resources.lb_CrearCuenta}" Style="{StaticResource TextBlock}" Grid.Row="2" 
+                       Margin="0,30,0,10" TextDecorations="Underline" ></TextBlock>
+            <TextBlock Text="{x:Static p:Resources.lb_ContraseñaOlvidada}" Style="{StaticResource TextBlock}" Grid.Row="2" 
+                       Margin="0,0,120,0" TextDecorations="Underline"></TextBlock>
         </StackPanel>
 
-        <Button Grid.Row="3" Width="200" Margin="0,30,0,80" VerticalAlignment="Top" 
-                FontSize="20" Background="#F1EA29">
-            Entrar
-        </Button>
-        <Button Grid.Row="3" Width="160" Margin="0,0,0,30" VerticalAlignment="Bottom"
-                FontSize="14" Background="#D5D4C8">
-            Entrar como invitado
-        </Button>
+        <Button Content="{x:Static p:Resources.btn_Entrar}" Grid.Row="3" Width="200" Margin="0,30,0,80" VerticalAlignment="Top" 
+                FontSize="20" Background="#F1EA29" Click="BtnEntrarMenu_Click"></Button>
+        <Button Content="{x:Static p:Resources.btn_EntrarComoInvitado}" Grid.Row="3" Width="160" Margin="0,0,0,30" VerticalAlignment="Bottom"
+                FontSize="14" Background="#D5D4C8"></Button>
     </Grid>
 </Window>

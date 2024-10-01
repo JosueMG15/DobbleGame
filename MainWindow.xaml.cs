@@ -33,5 +33,11 @@ namespace DobbleGame
             ContraseñaHelper.ActualizarVisibilidadTextoSugerido(passwordBox, textoSugerido);
         }
 
+        private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
+        {
+            VentanaMenu ventanaMenu = new VentanaMenu();
+            ventanaMenu.Show();
+            this.Close();
+        }
     }
 }

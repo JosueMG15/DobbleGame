@@ -159,9 +159,6 @@
   <data name="global_CorreoElectrónico" xml:space="preserve">
     <value>E-mail</value>
   </data>
-  <data name="btn_IniciarSesión" xml:space="preserve">
-    <value>Log in</value>
-  </data>
   <data name="lb_ContraseñaOlvidada" xml:space="preserve">
     <value>Forgot your password?</value>
   </data>
@@ -201,9 +198,6 @@
   <data name="btn_Reintentar" xml:space="preserve">
     <value>Retry</value>
   </data>
-  <data name="lb_CambioDeContraseña" xml:space="preserve">
-    <value>Change password</value>
-  </data>
   <data name="btn_CrearSala" xml:space="preserve">
     <value>Create lobby</value>
   </data>
@@ -233,5 +227,140 @@
   </data>
   <data name="lb_IngresarNombreUsuario" xml:space="preserve">
     <value>Enter your new username</value>
+  </data>
+  <data name="lb_NuevoNombreUsuario" xml:space="preserve">
+    <value>New username</value>
+  </data>
+  <data name="lb_CambioContraseña" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="lb_ContraseñaActual" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="lb_IngreseNuevoNombre" xml:space="preserve">
+    <value>Enter your new username</value>
+  </data>
+  <data name="tb_NuevoNombre" xml:space="preserve">
+    <value>New username</value>
+  </data>
+  <data name="lb_SolicitudesAmistad" xml:space="preserve">
+    <value>Friend requests</value>
+  </data>
+  <data name="btn_Rechazar" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="lb_MensajeEliminarAmigo" xml:space="preserve">
+    <value>¿Are you sure you want to remove ...?</value>
+  </data>
+  <data name="btn_Eliminar" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="lb_UnirseAPartida" xml:space="preserve">
+    <value>Join game</value>
+  </data>
+  <data name="lb_MensajeUnirsePartida" xml:space="preserve">
+    <value>Enter the room code to join</value>
+  </data>
+  <data name="tb_CódigoDeSala" xml:space="preserve">
+    <value>Lobby code</value>
+  </data>
+  <data name="btn_Unirse" xml:space="preserve">
+    <value>Join</value>
+  </data>
+  <data name="lb_Jugador" xml:space="preserve">
+    <value>Player#</value>
+  </data>
+  <data name="btn_InvitarAmigo" xml:space="preserve">
+    <value>Invite friend</value>
+  </data>
+  <data name="btn_InvitarPorCorreo" xml:space="preserve">
+    <value>Invite by e-mail</value>
+  </data>
+  <data name="tb_ClicChat" xml:space="preserve">
+    <value>Clic to chat...</value>
+  </data>
+  <data name="btn_IniciarPartida" xml:space="preserve">
+    <value>Start game</value>
+  </data>
+  <data name="lb_EnviarInvitación" xml:space="preserve">
+    <value>Send invitation</value>
+  </data>
+  <data name="lb_MensajeEnviarInvitación" xml:space="preserve">
+    <value>Enter the e-mail to send the lobby invitation</value>
+  </data>
+  <data name="btn_Enviar" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="lb_MensajeAbandonarPartida" xml:space="preserve">
+    <value>Are you sure you want to leave the game?</value>
+  </data>
+  <data name="lb_MensajeExpulsarJugador" xml:space="preserve">
+    <value>Are you sure you want to kick ...?</value>
+  </data>
+  <data name="lb_Puntos" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="btn_Abandonar" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="btn_Expulsar" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="titulo_MenúInvitado" xml:space="preserve">
+    <value>Guest menu</value>
+  </data>
+  <data name="titulo_ErrorConexiónBD" xml:space="preserve">
+    <value>Database connection error</value>
+  </data>
+  <data name="titulo_ErrorConexiónServidor" xml:space="preserve">
+    <value>Server connection error</value>
+  </data>
+  <data name="titulo_Registro" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="titulo_Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="titulo_EnvíoDeCódigo" xml:space="preserve">
+    <value>Sending code</value>
+  </data>
+  <data name="titulo_EsperaConfirmación" xml:space="preserve">
+    <value>Waiting for confirmation</value>
+  </data>
+  <data name="titulo_NuevaContraseña" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="titulo_Perfil" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="titulo_CambioNombre" xml:space="preserve">
+    <value>Change name</value>
+  </data>
+  <data name="titulo_CambioContraseña" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="titulo_SolicitudesAmistad" xml:space="preserve">
+    <value>Friend requests</value>
+  </data>
+  <data name="titulo_EliminarAmigo" xml:space="preserve">
+    <value>Remove friend</value>
+  </data>
+  <data name="titulo_Sala" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="titulo_SalaInvitado" xml:space="preserve">
+    <value>Guest lobby</value>
+  </data>
+  <data name="lb_Dobble.NET" xml:space="preserve">
+    <value>DOBBLE.NET</value>
+  </data>
+  <data name="global_IniciarSesión" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="lb_Contraseña" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="lb_NombreUsuario" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>
