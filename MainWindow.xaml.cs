@@ -39,5 +39,13 @@ namespace DobbleGame
             ventanaMenu.Show();
             this.Close();
         }
+
+        private void ClicCrearCuentaTf(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            VentanaRegistro ventanaRegistro = new VentanaRegistro();
+            ventanaRegistro.Owner = this;
+            ventanaRegistro.Show();
+            this.Hide();
+        }
     }
 }

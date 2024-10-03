@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace DobbleGame
 {
     /// <summary>
-    /// Lógica de interacción para VentanaRegistro.xaml
+    /// Lógica de interacción para VentanaPerfil.xaml
     /// </summary>
-    public partial class VentanaRegistro : Window
+    public partial class VentanaPerfil : Window
     {
-        public VentanaRegistro()
+        public VentanaPerfil()
         {
             InitializeComponent();
-        }
-
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
-        {
-            this.Owner.Show();
-            this.Close();
         }
     }
 }

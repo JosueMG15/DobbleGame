@@ -7,21 +7,22 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.titulo_Registro}" Height="700" Width="550">
+        Title="{x:Static p:Resources.titulo_Registro}" Height="700" Width="550" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="None"/>
         </Grid.Background>
-        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Background="Transparent">
+        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Background="Transparent"
+                Click="BtnRegresar_Click">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
         <StackPanel>
-            <Label Content="{x:Static p:Resources.lb_Registro}" Style="{StaticResource TituloLalezar1}" Margin="0,60,0,10"></Label>
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_CorreoElectrónico}" Margin="0,0,0,60"></TextBox>
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_NombreUsuario}" Margin="0,0,0,60"></TextBox>
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="0,0,0,60"></TextBox>
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" Margin="0,0,0,50"></TextBox>
-            <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29"></Button>
+            <Label Content="{x:Static p:Resources.lb_Registro}" Style="{StaticResource TituloLalezar1}" Margin="0,60,0,10" />
+            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_CorreoElectrónico}" Margin="0,0,0,60" />
+            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_NombreUsuario}" Margin="0,0,0,60" />
+            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="0,0,0,60" />
+            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" Margin="0,0,0,50" />
+            <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29" />
         </StackPanel>
     </Grid>
 </Window>

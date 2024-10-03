@@ -6,8 +6,26 @@
         xmlns:local="clr-namespace:DobbleGame"
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
-        Title="VentanaMenu" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="VentanaMenu" Height="800" Width="1600" WindowStartupLocation="CenterScreen"
+        WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" Opacity="0.5" Width="650" 
+               Margin="-700,0,0,-400"/>
+        <StackPanel>
+            <Label Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" 
+                   FontSize="110" Margin="0,130,0,10"/>
+            <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_CrearSala}" FontSize="60" 
+                    Width="600" Background="#F1EA29" Margin="0,80,0,60"/>
+            <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_UnirseASala}" FontSize="50" 
+                    Width="500" Background="#FC8C1B" Foreground="White"/>
+        </StackPanel>
+        <local:GestionUsuario Grid.Column="2"/>
     </Grid>
 </Window>

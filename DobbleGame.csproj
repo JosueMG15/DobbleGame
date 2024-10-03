@@ -82,6 +82,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GestionUsuario.xaml.cs">
+      <DependentUpon>GestionUsuario.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,9 +102,16 @@
     <Compile Include="VentanaMenu.xaml.cs">
       <DependentUpon>VentanaMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VentanaPerfil.xaml.cs">
+      <DependentUpon>VentanaPerfil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaRegistro.xaml.cs">
       <DependentUpon>VentanaRegistro.xaml</DependentUpon>
     </Compile>
+    <Page Include="GestionUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -115,6 +125,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="VentanaMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaPerfil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonRegresar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\BotonSalir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\AbejaInvitado.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />
