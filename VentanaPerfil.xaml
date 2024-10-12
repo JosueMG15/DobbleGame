@@ -5,12 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DobbleGame"
         mc:Ignorable="d"
-        Title="VentanaPerfil" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" 
+        Title="VentanaPerfil" Height="800" Width="1600" WindowState="Maximized" WindowStyle="None" 
         ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Label Content="Hola mundo" Style="{StaticResource TituloLuckiestGuy1}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid >
+            <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Background="Transparent"
+                    Click="BtnRegresar_Click">
+                <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
+            </Button>
+        </Grid>
+        <local:GestionUsuario Grid.Column="2"/>
     </Grid>
+    
 </Window>

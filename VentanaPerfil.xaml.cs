@@ -23,5 +23,12 @@ namespace DobbleGame
         {
             InitializeComponent();
         }
+
+        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        {
+            VentanaMenu ventanaMenu = new VentanaMenu();
+            ventanaMenu.Show();
+            this.Close();
+        }
     }
 }

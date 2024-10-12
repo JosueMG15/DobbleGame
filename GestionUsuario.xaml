@@ -7,14 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="400">
     <Grid>
-        <StackPanel Orientation="Horizontal" Background="#EDE193">
-            <Button Style="{StaticResource BotonPerfil}" VerticalAlignment="Top" Width="80" Height="80" Margin="25,40,10,0"
-                    Click="BtnIrPerfil_Click" />
-            <Label Content="KILLERESHAFSERT" VerticalAlignment="Top" Height="40" FontSize="20" FontWeight="SemiBold"  />
-            <Button VerticalAlignment="Top" Width="80" Height="80" Background="Transparent"
-                    Click="BtnCerrarSesion_Click">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Background="#EDE193">
+            <Button Style="{StaticResource BotonPerfil}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Height="80" 
+                    Margin="30,40,10,0" Click="BtnIrPerfil_Click" />
+            <Label Content="KILLERESHAFSERT" VerticalAlignment="Top" HorizontalAlignment="Right" Height="40" FontSize="20" Margin="100,40" FontWeight="SemiBold" 
+                   />
+            <Button Background="#59B01E" Width="20" Height="20" Margin="134,-55,246,55"/>
+            <Label Style="{StaticResource EstadoUsuario}" Content="En línea" Height="30" Margin="0,80,0,190"/>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Background="Transparent" Margin="10,35"
+                    Padding="0" Click="BtnCerrarSesion_Click">
                 <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform"/>
             </Button>
-        </StackPanel>
+            <Line X1="30" X2="370" Y1="130" Y2="130" Stroke="Black" StrokeThickness=".5" />
+        </Grid>
+        <Grid Grid.Row="2" Background="#EDE193">
+            
+        </Grid>
     </Grid>
 </UserControl>
