@@ -20,8 +20,9 @@
                     Click="BtnRegresar_Click">
                 <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
             </Button>
+            <Label Content="LABEL DE PRUEBA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72"/>
         </Grid>
         <local:GestionUsuario Grid.Column="2"/>
     </Grid>
-    
+
 </Window>
