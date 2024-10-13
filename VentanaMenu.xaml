@@ -26,6 +26,6 @@
             <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_UnirseASala}" FontSize="50" 
                     Width="500" Background="#FC8C1B" Foreground="White"/>
         </StackPanel>
-        <local:GestionUsuario Grid.Column="2"/>
+        <local:GestionUsuario Grid.Column="2" Loaded="GestionUsuario_Loaded"/>
     </Grid>
 </Window>

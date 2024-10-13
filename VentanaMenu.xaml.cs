@@ -23,5 +23,10 @@ namespace DobbleGame
         {
             InitializeComponent();
         }
+
+        private void GestionUsuario_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
