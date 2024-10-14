@@ -36,5 +36,10 @@ namespace DobbleGame
             this.Close();
             mainWindow.Show();
         }
+
+        private void GestionUsuario_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
