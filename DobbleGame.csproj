@@ -82,8 +82,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GestionUsuario.xaml.cs">
-      <DependentUpon>GestionUsuario.xaml</DependentUpon>
+    <Compile Include="PaginaMenu.xaml.cs">
+      <DependentUpon>PaginaMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaginaPerfil.xaml.cs">
+      <DependentUpon>PaginaPerfil.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaginaSala.xaml.cs">
+      <DependentUpon>PaginaSala.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -102,16 +108,9 @@
     <Compile Include="VentanaMenu.xaml.cs">
       <DependentUpon>VentanaMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VentanaPerfil.xaml.cs">
-      <DependentUpon>VentanaPerfil.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VentanaRegistro.xaml.cs">
       <DependentUpon>VentanaRegistro.xaml</DependentUpon>
     </Compile>
-    <Page Include="GestionUsuario.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -124,11 +123,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="VentanaMenu.xaml">
+    <Page Include="PaginaMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VentanaPerfil.xaml">
+    <Page Include="PaginaPerfil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PaginaSala.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\AbejaInvitado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\FondoPanalSala.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

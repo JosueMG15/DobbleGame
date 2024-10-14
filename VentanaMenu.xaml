@@ -16,16 +16,23 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
-        <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" Opacity="0.5" Width="650" 
-               Margin="-700,0,0,-400"/>
-        <StackPanel>
-            <Label Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" 
-                   FontSize="110" Margin="0,130,0,10"/>
-            <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_CrearSala}" FontSize="60" 
-                    Width="600" Background="#F1EA29" Margin="0,80,0,60"/>
-            <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_UnirseASala}" FontSize="50" 
-                    Width="500" Background="#FC8C1B" Foreground="White"/>
-        </StackPanel>
-        <local:GestionUsuario Grid.Column="2"/>
+        <Frame x:Name="MarcoPrincipal" NavigationUIVisibility="Hidden"/>
+        <Grid Grid.Column="2" Background="#EDE193">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Style="{StaticResource BotonPerfil}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Height="80" 
+                    Margin="30,40,10,0" Click="BtnIrPerfil_Click" />
+            <Label Content="KILLERESHAFSERT" VerticalAlignment="Top" HorizontalAlignment="Right" Height="40" FontSize="20" Margin="100,40" FontWeight="SemiBold" 
+                   />
+            <Button Background="#59B01E" Width="20" Height="20" Margin="134,-55,246,55"/>
+            <Label Style="{StaticResource EstadoUsuario}" Content="En línea" Height="30" Margin="0,80,0,190"/>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Background="Transparent" Margin="10,35"
+                    Padding="0" Click="BtnCerrarSesion_Click">
+                <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform"/>
+            </Button>
+            <Line X1="30" X2="370" Y1="130" Y2="130" Stroke="Black" StrokeThickness=".5" />
+        </Grid>
     </Grid>
 </Window>

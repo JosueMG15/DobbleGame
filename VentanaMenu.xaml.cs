@@ -22,6 +22,19 @@ namespace DobbleGame
         public VentanaMenu()
         {
             InitializeComponent();
+            MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
+        }
+
+        private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
+        {
+            MarcoPrincipal.NavigationService.Navigate(new PaginaPerfil());
+        }
+
+        private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            this.Close();
+            mainWindow.Show();
         }
     }
 }

@@ -36,8 +36,8 @@ namespace DobbleGame
         private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
         {
             VentanaMenu ventanaMenu = new VentanaMenu();
-            ventanaMenu.Show();
             this.Close();
+            ventanaMenu.Show();
         }
 
         private void ClicCrearCuentaTf(object sender, System.Windows.Input.MouseButtonEventArgs e)
