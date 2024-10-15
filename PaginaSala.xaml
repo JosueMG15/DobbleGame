@@ -12,6 +12,19 @@
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
-        </Grid.Background>        
+        </Grid.Background>
+        <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" TextChanged="TbChat" Name="tbChat"/>
+        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
+                    Click="BtnEnviar_Mnesaje" Height="56">
+            <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
+        </Button>
+
+        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Background="Transparent"
+                    Click="BtnRegresar_Click" Height="91">
+            <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
+        </Button>
+        <TextBox Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333"
+                 Height="309" TextChanged="tbContenedor_TextChanged" TextWrapping="Wrap" IsReadOnly="True" />
     </Grid>
+
 </Page>

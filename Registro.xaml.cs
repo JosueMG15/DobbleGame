@@ -10,24 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DobbleGame
 {
     /// <summary>
-    /// Lógica de interacción para PaginaPerfil.xaml
+    /// Lógica de interacción para VentanaRegistro.xaml
     /// </summary>
-    public partial class PaginaPerfil : Page
+    public partial class VentanaRegistro : Window
     {
-        public PaginaPerfil()
+        public VentanaRegistro()
         {
             InitializeComponent();
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PaginaMenu());
+            this.Owner.Show();
+            this.Close();
         }
     }
 }
