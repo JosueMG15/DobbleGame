@@ -84,6 +84,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\ServicioDobblePasajero\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ServidorDobble\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,6 +184,13 @@
     </EmbeddedResource>
     <Resource Include="Fuentes\Lalezar-Regular.ttf" />
     <Resource Include="Fuentes\LuckiestGuy-Regular.ttf" />
+    <None Include="Connected Services\ServicioDobblePasajero\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServicioDobblePasajero\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServicioDobblePasajero\ServicioImplementacion.wsdl" />
     <None Include="Connected Services\ServidorDobble\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -221,10 +233,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServicioDobblePasajero\" />
     <WCFMetadataStorage Include="Connected Services\ServidorDobble\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDobble\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServidorDobble\configuration91.svcinfo" />
@@ -237,6 +247,29 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDobble\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServicioDobblePasajero\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServicioDobblePasajero\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServicioDobblePasajero\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServicioDobblePasajero\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\BotonMandarSolicitud.png" />
+    <Resource Include="Imagenes\BotonSolicitudes.png" />
+    <Resource Include="Imagenes\BuscarAmistad.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

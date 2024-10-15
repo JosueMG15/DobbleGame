@@ -41,5 +41,15 @@ namespace DobbleGame
         {
 
         }
+
+        private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnAgregarAmistad(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

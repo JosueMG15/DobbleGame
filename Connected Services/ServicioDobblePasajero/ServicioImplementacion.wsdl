@@ -60,8 +60,8 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.137.77:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.137.77:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGestionJugador_Registro_InputMessage">
@@ -121,18 +121,18 @@
   </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
-      <soap12:address location="net.tcp://localhost:8081/DobbleServicio" />
+      <soap12:address location="net.tcp://192.168.137.77:8081/DobbleServicio" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.77:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>ERILAP\Erick</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionSala" binding="tns:NetTcpBinding_IGestionSala">
-      <soap12:address location="net.tcp://localhost:8081/DobbleServicio" />
+      <soap12:address location="net.tcp://192.168.137.77:8081/DobbleServicio" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.77:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>ERILAP\Erick</Upn>
         </Identity>
