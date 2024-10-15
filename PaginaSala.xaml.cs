@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +18,7 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    public partial class PaginaSala : Page
+    public partial class PaginaSala : Page, ServidorDobble.IGestionSalaCallback
     {
         public PaginaSala()
         {
@@ -36,20 +38,28 @@ namespace DobbleGame
 
             if (!string.IsNullOrEmpty(mensaje))
             {
-                tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
-                tbContenedor.ScrollToEnd();
+                InstanceContext contexto = new InstanceContext(this);
+                ServidorDobble.GestionSalaClient proxy = new ServidorDobble.GestionSalaClient(contexto);
+                proxy.EnviarMensajeSala(mensaje);
                 tbChat.Text = String.Empty;
             }
-        }
-
-        private void TbChat(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private void tbContenedor_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void TbChat_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tbContenedor.Visibility = Visibility.Visible;
+        }
+
+        public void SalaResponse(string respuesta)
+        {
+            tbContenedor.Text += $"{respuesta}{Environment.NewLine}";
+            tbContenedor.ScrollToEnd();
+            
         }
     }
 }

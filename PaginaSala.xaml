@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DobbleGame"
       xmlns:p="clr-namespace:DobbleGame.Properties"
+      xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="PaginaSala">
@@ -13,7 +14,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" TextChanged="TbChat" Name="tbChat"/>
+        <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" 
+                 Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}"/>
         <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
                     Click="BtnEnviar_Mnesaje" Height="56">
             <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
@@ -23,8 +25,8 @@
                     Click="BtnRegresar_Click" Height="91">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
-        <TextBox Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333"
-                 Height="309" TextChanged="tbContenedor_TextChanged" TextWrapping="Wrap" IsReadOnly="True" />
+        <TextBox Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                 Height="309" TextChanged="tbContenedor_TextChanged" TextWrapping="Wrap" IsReadOnly="True" Opacity="0.5" Visibility="Collapsed"/>
     </Grid>
 
 </Page>
