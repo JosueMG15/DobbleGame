@@ -117,6 +117,9 @@
     <Compile Include="Extensiones\PasswordBoxExtensiones.cs" />
     <Compile Include="Extensiones\TextBoxExtensiones.cs" />
     <Compile Include="Utilidades\ContraseñaHelper.cs" />
+    <Compile Include="VentanaCambioNombre.xaml.cs">
+      <DependentUpon>VentanaCambioNombre.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaMenu.xaml.cs">
       <DependentUpon>VentanaMenu.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PaginaSala.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaCambioNombre.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -270,6 +277,18 @@
     <Resource Include="Imagenes\BotonMandarSolicitud.png" />
     <Resource Include="Imagenes\BotonSolicitudes.png" />
     <Resource Include="Imagenes\BuscarAmistad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bob.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\PerfilPorDefecto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\BotonEdicion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\FondoPanalGris.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

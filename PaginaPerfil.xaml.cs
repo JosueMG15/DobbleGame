@@ -29,5 +29,27 @@ namespace DobbleGame
         {
             this.NavigationService.Navigate(new PaginaMenu());
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnCambiarUsuario(object sender, RoutedEventArgs e)
+        {
+            VentanaCambioNombre ventanaCambioNombre = new VentanaCambioNombre();
+            ventanaCambioNombre.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ventanaCambioNombre.ShowDialog();
+        }
+
+        private void BtnCambiarContraseña(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnActualizarFoto(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

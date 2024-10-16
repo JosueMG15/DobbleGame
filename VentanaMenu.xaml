@@ -55,7 +55,8 @@
             <Line X1="30" X2="370" Y1="130" Y2="130" Stroke="Black" StrokeThickness=".5" />
             <Rectangle HorizontalAlignment="Center" Height="563" Margin="0,227,0,0" VerticalAlignment="Top" Width="338" Stroke="#FFC9BD75" 
 Fill="#FFC9BD75" Grid.RowSpan="2" RadiusX="30" RadiusY="30" UseLayoutRounding="False"/>
-            <TextBox HorizontalAlignment="Left" Margin="200,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Buscar}"/>
+            <TextBox HorizontalAlignment="Left" Margin="200,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" 
+                     extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Buscar}"/>
         </Grid>
     </Grid>
 </Window>
