@@ -62,13 +62,20 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IGestionJugador_Registro_InputMessage">
-    <wsdl:part name="parameters" element="tns:Registro" />
+  <wsdl:message name="IGestionJugador_RegistrarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
   </wsdl:message>
-  <wsdl:message name="IGestionJugador_Registro_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RegistroResponse" />
+  <wsdl:message name="IGestionJugador_RegistrarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ExisteNombreUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExisteNombreUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ExisteNombreUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExisteNombreUsuarioResponse" />
   </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
@@ -77,9 +84,13 @@
     <wsdl:part name="parameters" element="tns:SalaResponse" />
   </wsdl:message>
   <wsdl:portType name="IGestionJugador">
-    <wsdl:operation name="Registro">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/Registro" message="tns:IGestionJugador_Registro_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/RegistroResponse" message="tns:IGestionJugador_Registro_OutputMessage" />
+    <wsdl:operation name="RegistrarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/RegistrarUsuario" message="tns:IGestionJugador_RegistrarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse" message="tns:IGestionJugador_RegistrarUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExisteNombreUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario" message="tns:IGestionJugador_ExisteNombreUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse" message="tns:IGestionJugador_ExisteNombreUsuario_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -93,8 +104,17 @@
   <wsdl:binding name="NetTcpBinding_IGestionJugador" type="tns:IGestionJugador">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionJugador_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Registro">
-      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/Registro" style="document" />
+    <wsdl:operation name="RegistrarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/RegistrarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExisteNombreUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuario" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -125,7 +145,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ERILAP\Erick</Upn>
+          <Upn>LAPTOP-F4IN65HR\sosue</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -134,7 +154,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ERILAP\Erick</Upn>
+          <Upn>LAPTOP-F4IN65HR\sosue</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

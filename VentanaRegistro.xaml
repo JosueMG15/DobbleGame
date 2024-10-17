@@ -17,12 +17,18 @@
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
         <StackPanel>
-            <Label Content="{x:Static p:Resources.lb_Registro}" Style="{StaticResource TituloLalezar1}" Margin="0,60,0,10" />
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_CorreoElectrónico}" Margin="0,0,0,60" />
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_NombreUsuario}" Margin="0,0,0,60" />
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="0,0,0,60" />
-            <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" Margin="0,0,0,50" />
-            <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29" />
+            <Label Content="{x:Static p:Resources.lb_Registro}" Style="{StaticResource TituloLalezar1}" Margin="0,20,0,0" />
+            <StackPanel x:Name="panelMensaje" Orientation="Horizontal" Visibility="Hidden">
+                <Image Margin="100,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
+                <Label x:Name="lbMensaje" Content="Texto prueba" Margin="0,0,0,10" FontSize="20" Foreground="Red" />
+            </StackPanel>
+            <TextBox x:Name="tbCorreo" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_CorreoElectrónico}" Margin="0,10,0,60" />
+            <TextBox x:Name="tbNombreUsuario" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_NombreUsuario}" Margin="0,0,0,60" MaxLength="15"/>
+            <PasswordBox x:Name="tbContraseña" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="0,0,0,60" 
+                         PasswordChanged="PasswordBox_CambioDeContraseña"/>
+            <PasswordBox x:Name="tbContraseñaConfirmada" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" Margin="0,0,0,50" 
+                         PasswordChanged="PasswordBox_CambioDeContraseña"/>
+            <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29" Click="BtnRegistrarUsuario_Click" />
         </StackPanel>
     </Grid>
 </Window>

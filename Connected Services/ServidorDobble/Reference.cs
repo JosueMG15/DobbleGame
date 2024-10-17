@@ -9,17 +9,118 @@
 //------------------------------------------------------------------------------
 
 namespace DobbleGame.ServidorDobble {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CuentaUsuario", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class CuentaUsuario : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContraseñaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CorreoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdCuentaUsuarioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsuarioField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Contraseña {
+            get {
+                return this.ContraseñaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContraseñaField, value) != true)) {
+                    this.ContraseñaField = value;
+                    this.RaisePropertyChanged("Contraseña");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Correo {
+            get {
+                return this.CorreoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CorreoField, value) != true)) {
+                    this.CorreoField = value;
+                    this.RaisePropertyChanged("Correo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdCuentaUsuario {
+            get {
+                return this.IdCuentaUsuarioField;
+            }
+            set {
+                if ((this.IdCuentaUsuarioField.Equals(value) != true)) {
+                    this.IdCuentaUsuarioField = value;
+                    this.RaisePropertyChanged("IdCuentaUsuario");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Usuario {
+            get {
+                return this.UsuarioField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsuarioField, value) != true)) {
+                    this.UsuarioField = value;
+                    this.RaisePropertyChanged("Usuario");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDobble.IGestionJugador")]
     public interface IGestionJugador {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Registro", ReplyAction="http://tempuri.org/IGestionJugador/RegistroResponse")]
-        bool Registro();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
+        bool RegistrarUsuario(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Registro", ReplyAction="http://tempuri.org/IGestionJugador/RegistroResponse")]
-        System.Threading.Tasks.Task<bool> RegistroAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
+        bool ExisteNombreUsuario(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +150,20 @@ namespace DobbleGame.ServidorDobble {
                 base(binding, remoteAddress) {
         }
         
-        public bool Registro() {
-            return base.Channel.Registro();
+        public bool RegistrarUsuario(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario) {
+            return base.Channel.RegistrarUsuario(cuentaUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> RegistroAsync() {
-            return base.Channel.RegistroAsync();
+        public System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario) {
+            return base.Channel.RegistrarUsuarioAsync(cuentaUsuario);
+        }
+        
+        public bool ExisteNombreUsuario(string nombreUsuario) {
+            return base.Channel.ExisteNombreUsuario(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario) {
+            return base.Channel.ExisteNombreUsuarioAsync(nombreUsuario);
         }
     }
     
