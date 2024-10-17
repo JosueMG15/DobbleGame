@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para PaginaPerfil.xaml
-    /// </summary>
     public partial class PaginaPerfil : Page
     {
         public PaginaPerfil()
@@ -44,6 +41,9 @@ namespace DobbleGame
 
         private void BtnCambiarContraseña(object sender, RoutedEventArgs e)
         {
+            VentanaCambioContraseña ventanaCambioContraseña = new VentanaCambioContraseña();
+            ventanaCambioContraseña.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ventanaCambioContraseña.ShowDialog();
 
         }
 

@@ -47,5 +47,12 @@ namespace DobbleGame
             ventanaRegistro.Show();
             this.Hide();
         }
+
+        private void ClicRecuperarContraseñaTf(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            VentanaRecuperarContraseña ventanaRecuperarContraseña = new VentanaRecuperarContraseña();
+            ventanaRecuperarContraseña.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ventanaRecuperarContraseña.ShowDialog();
+        }
     }
 }

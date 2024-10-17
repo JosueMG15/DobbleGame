@@ -31,7 +31,7 @@
             <TextBlock Text="{x:Static p:Resources.lb_CrearCuenta}" Style="{StaticResource TextBlock}" Grid.Row="2" 
                        Margin="0,30,0,10" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonUp="ClicCrearCuentaTf" />
             <TextBlock Text="{x:Static p:Resources.lb_ContraseñaOlvidada}" Style="{StaticResource TextBlock}" Grid.Row="2" 
-                       Margin="0,0,120,0" TextDecorations="Underline" />
+                       Margin="0,0,120,0" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonUp="ClicRecuperarContraseñaTf" />
         </StackPanel>
 
         <Button Content="{x:Static p:Resources.btn_Entrar}" Grid.Row="3" Width="200" Margin="0,30,0,80" VerticalAlignment="Top" 

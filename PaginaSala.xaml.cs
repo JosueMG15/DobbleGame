@@ -61,5 +61,10 @@ namespace DobbleGame
             tbContenedor.ScrollToEnd();
             
         }
+
+        private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

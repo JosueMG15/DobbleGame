@@ -35,6 +35,6 @@
             <Image Source="/Imagenes/BotonEdicion.png" Stretch="Uniform" Height="36" Width="51"/>
         </Button>
 
-        <Button Content="{x:Static p:Resources.btn_ActualizarFoto}" Width="200" FontSize="20" Background="#FF62E02C" Click="BtnActualizarFoto" Margin="180,557,820,177" Foreground="White" />
+        <Button Content="{x:Static p:Resources.btn_ActualizarFoto}" HorizontalAlignment="Left" FontSize="20" Background="#FF62E02C" Click="BtnActualizarFoto" Margin="146,557,0,149" Padding="50 0" Foreground="White" Width="203" />
     </Grid>
 </Page>
