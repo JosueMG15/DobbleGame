@@ -38,7 +38,7 @@ namespace DobbleGame
         private void BtnCambiarUsuario(object sender, RoutedEventArgs e)
         {
             VentanaCambioNombre ventanaCambioNombre = new VentanaCambioNombre();
-            ventanaCambioNombre.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ventanaCambioNombre.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaCambioNombre.ShowDialog();
         }
 
