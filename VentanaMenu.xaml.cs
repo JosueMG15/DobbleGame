@@ -44,12 +44,16 @@ namespace DobbleGame
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
-
+            VentanaGestionarSolicitudesAmistad ventanaGestionarSolicitudesAmistad = new VentanaGestionarSolicitudesAmistad();
+            ventanaGestionarSolicitudesAmistad.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ventanaGestionarSolicitudesAmistad.ShowDialog();
         }
 
         private void BtnAgregarAmistad(object sender, RoutedEventArgs e)
         {
-
+            VentanaEnviarSolicitudAmistad ventanaEnviarSolicitudAmistad = new VentanaEnviarSolicitudAmistad();
+            ventanaEnviarSolicitudAmistad.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ventanaEnviarSolicitudAmistad.ShowDialog();
         }
     }
 }
