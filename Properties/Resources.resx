@@ -363,4 +363,25 @@
   <data name="lb_NombreUsuario" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>
+  <data name="lb_UsuarioExistente " xml:space="preserve">
+    <value>El nombre de usuario ya existe</value>
+  </data>
+  <data name="lb_CorreoExistente " xml:space="preserve">
+    <value>El correo electrónico ya existe</value>
+  </data>
+  <data name="lb_CorreoNoExiste " xml:space="preserve">
+    <value>El correo es inexistente </value>
+  </data>
+  <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
+    <value>La contraseña no cumple con los solicitado </value>
+  </data>
+  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
+    <value>Las contraseñas no coinciden </value>
+  </data>
+  <data name="lb_EnviarSolicitud " xml:space="preserve">
+    <value>Enviar solicitud de amistad </value>
+  </data>
+  <data name="lb_IngresarNombreJugador " xml:space="preserve">
+    <value>Ingresa el nombre de usuario del jugador </value>
+  </data>
 </root>

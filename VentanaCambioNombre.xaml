@@ -14,7 +14,7 @@
         </Grid.Background>
 
         <Label Content="{x:Static Properties:Resources.lb_CambioNombre}" Style="{StaticResource TituloLalezar1}" Margin="0,23,0,484" Width="516" FontSize="65" />
-        <TextBox TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,274,122,294"/>
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.tb_NuevoNombre}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,274,122,294"/>
         <Label Content="{x:Static Properties:Resources.lb_IngresarNombreUsuario}" Margin="0,122,0,418" HorizontalAlignment="Center" FontFamily="Segoe UI" 
                Foreground="White" Width="418" FontSize="25" />
         <Button Content="{x:Static Properties:Resources.global_Actualizar}" FontSize="20" Background="#FF62E02C" Foreground="White" Margin="92,422,396,115" Click="BtnActualizarUsuario"/>
