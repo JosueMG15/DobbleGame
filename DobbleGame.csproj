@@ -224,6 +224,9 @@
     </EmbeddedResource>
     <Resource Include="Fuentes\Lalezar-Regular.ttf" />
     <Resource Include="Fuentes\LuckiestGuy-Regular.ttf" />
+    <None Include="Connected Services\ServidorDobble\DobbleGame.ServidorDobble.CuentaUsuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServidorDobble\item.xsd">
       <SubType>Designer</SubType>
     </None>

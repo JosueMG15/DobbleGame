@@ -367,11 +367,47 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La contraseña no cumple con los solicitado .
+        /// </summary>
+        public static string lb_ContraseñaIncorrecta_ {
+            get {
+                return ResourceManager.GetString("lb_ContraseñaIncorrecta ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Las contraseñas no coinciden .
+        /// </summary>
+        public static string lb_ContraseñaNoCoincide_ {
+            get {
+                return ResourceManager.GetString("lb_ContraseñaNoCoincide ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Olvidaste tu contraseña?.
         /// </summary>
         public static string lb_ContraseñaOlvidada {
             get {
                 return ResourceManager.GetString("lb_ContraseñaOlvidada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El correo electrónico ya existe.
+        /// </summary>
+        public static string lb_CorreoExistente_ {
+            get {
+                return ResourceManager.GetString("lb_CorreoExistente ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El correo es inexistente .
+        /// </summary>
+        public static string lb_CorreoNoExiste_ {
+            get {
+                return ResourceManager.GetString("lb_CorreoNoExiste ", resourceCulture);
             }
         }
         
@@ -421,6 +457,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Enviar solicitud de amistad .
+        /// </summary>
+        public static string lb_EnviarSolicitud_ {
+            get {
+                return ResourceManager.GetString("lb_EnviarSolicitud ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Envío de código.
         /// </summary>
         public static string lb_EnvíoDeCódigo {
@@ -462,6 +507,15 @@ namespace DobbleGame.Properties {
         public static string lb_IngresarCódigo {
             get {
                 return ResourceManager.GetString("lb_IngresarCódigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa el nombre de usuario del jugador .
+        /// </summary>
+        public static string lb_IngresarNombreJugador_ {
+            get {
+                return ResourceManager.GetString("lb_IngresarNombreJugador ", resourceCulture);
             }
         }
         
@@ -624,6 +678,15 @@ namespace DobbleGame.Properties {
         public static string lb_UnirseAPartida {
             get {
                 return ResourceManager.GetString("lb_UnirseAPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El nombre de usuario ya existe.
+        /// </summary>
+        public static string lb_UsuarioExistente_ {
+            get {
+                return ResourceManager.GetString("lb_UsuarioExistente ", resourceCulture);
             }
         }
         

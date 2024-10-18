@@ -83,6 +83,12 @@
   <wsdl:message name="IGestionJugador_ExisteCorreoAsociado_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExisteCorreoAsociadoResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionJugador_IniciarSesionJugador_InputMessage">
+    <wsdl:part name="parameters" element="tns:IniciarSesionJugador" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_IniciarSesionJugador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IniciarSesionJugadorResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
@@ -101,6 +107,10 @@
     <wsdl:operation name="ExisteCorreoAsociado">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado" message="tns:IGestionJugador_ExisteCorreoAsociado_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse" message="tns:IGestionJugador_ExisteCorreoAsociado_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IniciarSesionJugador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador" message="tns:IGestionJugador_IniciarSesionJugador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse" message="tns:IGestionJugador_IniciarSesionJugador_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -141,6 +151,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IniciarSesionJugador">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/IniciarSesionJugador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionSala" type="tns:IGestionSala">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionSala_policy" />
@@ -164,7 +183,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-F4IN65HR\sosue</Upn>
+          <Upn>ERILAP\Erick</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -173,7 +192,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-F4IN65HR\sosue</Upn>
+          <Upn>ERILAP\Erick</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

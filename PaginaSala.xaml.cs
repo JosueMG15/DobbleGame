@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -29,7 +30,34 @@ namespace DobbleGame
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PaginaMenu());
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+            fadeOutAnimation.Completed += (s, a) =>
+            {
+                PaginaMenu paginaMenu = new PaginaMenu();
+                this.NavigationService.Navigate(paginaMenu);
+
+                AnimateElementsInPaginaMenu(paginaMenu);
+            };
+            this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+
+        }
+
+        private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
+        {
+            if (paginaMenu.Content is Panel panel)
+            {
+                foreach (UIElement element in panel.Children)
+                {
+                    element.Opacity = 0;
+
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)))
+                    {
+                        BeginTime = TimeSpan.FromMilliseconds(200)
+                    };
+
+                    element.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                }
+            }
         }
 
         private void BtnEnviar_Mnesaje(object sender, RoutedEventArgs e)

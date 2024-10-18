@@ -14,7 +14,7 @@
         </Grid.Background>
 
         <Label Content="{x:Static Properties:Resources.lb_EnvíoDeCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" />
-        <TextBox TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="98,168,97,203" />
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_CorreoElectrónico}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="98,168,97,203" />
         <Button Content="{x:Static Properties:Resources.btn_EnviarCódigo}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnEnviarCodigo" Margin="75,272,288,75"/>
         <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="285,274,78,85"/>
     </Grid>

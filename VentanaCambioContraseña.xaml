@@ -14,12 +14,12 @@
         </Grid.Background>
 
         <Label Content="{x:Static Properties:Resources.lb_CambioContraseña}" Style="{StaticResource TituloLalezar1}" Margin="0,22,0,512" Width="616" FontSize="65" />
-        <TextBox TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,307,122,261"/>
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_NuevaContraseña}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,307,122,261"/>
 
         <Button Content="{x:Static Properties:Resources.global_Actualizar}" FontSize="20" Background="#FF62E02C" Foreground="White" Margin="71,493,417,44" Click="BtnActualizarContraseña"/>
         <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="20" Background="#FFF44545" Foreground="White" Margin="418,499,70,38" Click="BtnCancelar"/>
-        <TextBox TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,218,122,350"/>
-        <TextBox TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,394,122,174"/>
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.lb_ContraseñaActual}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,218,122,350"/>
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_ConfirmarContraseña}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="122,394,122,174"/>
 
     </Grid>
 </Window>

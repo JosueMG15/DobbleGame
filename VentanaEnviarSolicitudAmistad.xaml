@@ -13,7 +13,7 @@
                     Click="BtnRegresar_Click" Height="68">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform" Height="46" Width="39"/>
         </Button>
-        <Label Content="{x:Static Properties:Resources.lb_SolicitudesAmistad}" Style="{StaticResource TituloLalezar1}"  Width="528" FontSize="55" Margin="0,91,0,455" />
+        <Label Content="{x:Static Properties:Resources.btn_Eliminar}" Style="{StaticResource TituloLalezar1}"  Width="528" FontSize="55" Margin="0,91,0,455" />
         <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="464" Height="71" Margin="0,304,0,0"/>
     </Grid>
 
