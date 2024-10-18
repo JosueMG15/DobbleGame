@@ -78,17 +78,15 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="XamlAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=20a987d8023d9690, processorArchitecture=MSIL">
+      <HintPath>packages\XamlAnimatedGif.2.3.0\lib\net45\XamlAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Connected Services\ServicioDobblePasajero\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\ServidorDobble\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,13 +224,6 @@
     </EmbeddedResource>
     <Resource Include="Fuentes\Lalezar-Regular.ttf" />
     <Resource Include="Fuentes\LuckiestGuy-Regular.ttf" />
-    <None Include="Connected Services\ServicioDobblePasajero\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServicioDobblePasajero\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServicioDobblePasajero\ServicioImplementacion.wsdl" />
     <None Include="Connected Services\ServidorDobble\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -278,7 +269,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServicioDobblePasajero\" />
     <WCFMetadataStorage Include="Connected Services\ServidorDobble\" />
   </ItemGroup>
   <ItemGroup>
@@ -295,21 +285,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServidorDobble\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServicioDobblePasajero\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServicioDobblePasajero\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServicioDobblePasajero\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServicioDobblePasajero\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonMandarSolicitud.png" />

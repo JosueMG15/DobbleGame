@@ -29,7 +29,13 @@ namespace DobbleGame.ServidorDobble {
         private string CorreoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] FotoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdCuentaUsuarioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PuntajeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsuarioField;
@@ -71,6 +77,19 @@ namespace DobbleGame.ServidorDobble {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Foto {
+            get {
+                return this.FotoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FotoField, value) != true)) {
+                    this.FotoField = value;
+                    this.RaisePropertyChanged("Foto");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int IdCuentaUsuario {
             get {
                 return this.IdCuentaUsuarioField;
@@ -79,6 +98,19 @@ namespace DobbleGame.ServidorDobble {
                 if ((this.IdCuentaUsuarioField.Equals(value) != true)) {
                     this.IdCuentaUsuarioField = value;
                     this.RaisePropertyChanged("IdCuentaUsuario");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Puntaje {
+            get {
+                return this.PuntajeField;
+            }
+            set {
+                if ((this.PuntajeField.Equals(value) != true)) {
+                    this.PuntajeField = value;
+                    this.RaisePropertyChanged("Puntaje");
                 }
             }
         }
