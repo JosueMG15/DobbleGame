@@ -367,7 +367,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La contraseña no cumple con los solicitado .
+        ///   Busca una cadena traducida similar a La contraseña no cumple con lo solicitado .
         /// </summary>
         public static string lb_ContraseñaIncorrecta_ {
             get {

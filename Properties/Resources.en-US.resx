@@ -363,4 +363,25 @@
   <data name="lb_NombreUsuario" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="lb_UsuarioExistente " xml:space="preserve">
+    <value>Username already exists</value>
+  </data>
+  <data name="lb_CorreoExistente " xml:space="preserve">
+    <value>E-mail already exists</value>
+  </data>
+  <data name="lb_CorreoNoExiste " xml:space="preserve">
+    <value>The e-mail is doesn't exist</value>
+  </data>
+  <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
+    <value>The password doesn't meet the requirements</value>
+  </data>
+  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
+    <value>Password doesn't match</value>
+  </data>
+  <data name="lb_EnviarSolicitud " xml:space="preserve">
+    <value>Send friend request</value>
+  </data>
+  <data name="lb_IngresarNombreJugador " xml:space="preserve">
+    <value>Enter the player's username</value>
+  </data>
 </root>

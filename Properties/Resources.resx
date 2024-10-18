@@ -373,7 +373,7 @@
     <value>El correo es inexistente </value>
   </data>
   <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
-    <value>La contraseña no cumple con los solicitado </value>
+    <value>La contraseña no cumple con lo solicitado </value>
   </data>
   <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
     <value>Las contraseñas no coinciden </value>
