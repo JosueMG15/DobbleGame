@@ -56,7 +56,7 @@ namespace DobbleGame
                     {
                         if (proxy.RegistrarUsuario(cuentaUsuario))
                         {
-                            MostrarMensaje("Cuenta creada con éxito");
+                            MostrarMensaje(Properties.Resources.lb_RegistroExitoso);
                         }
                         else
                         {
@@ -141,7 +141,8 @@ namespace DobbleGame
         {
             try
             {
-                string rutaFotoDefecto = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes", "PerfilPorDefecto.png");
+                string rutaProyecto = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                string rutaFotoDefecto = System.IO.Path.Combine(rutaProyecto, "Imagenes", "PerfilPorDefecto.png");
 
                 if (!File.Exists(rutaFotoDefecto))
                 {

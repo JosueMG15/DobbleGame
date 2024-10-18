@@ -24,8 +24,15 @@
             </StackPanel>
             <TextBox x:Name="tbCorreo" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_CorreoElectrónico}" Margin="0,10,0,60" />
             <TextBox x:Name="tbNombreUsuario" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_NombreUsuario}" Margin="0,0,0,60" MaxLength="15"/>
-            <PasswordBox x:Name="tbContraseña" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="0,0,0,60" 
-                         PasswordChanged="PasswordBox_CambioDeContraseña"/>
+            <StackPanel Orientation="Horizontal">
+                <PasswordBox x:Name="tbContraseña" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="130,0,0,60" 
+                             PasswordChanged="PasswordBox_CambioDeContraseña"/>
+                <Button Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,-5" Background="Transparent" 
+                        Click="BtnRegresar_Click" ToolTip="La contraseña debe tener: mínimo una letra mayúscula, 8 caracteres y 2 números">
+                    <Image Source="pack://application:,,,/Imagenes/IconoInformacion.png" Stretch="Uniform"/>
+                </Button>
+            </StackPanel>
+
             <PasswordBox x:Name="tbContraseñaConfirmada" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" Margin="0,0,0,50" 
                          PasswordChanged="PasswordBox_CambioDeContraseña"/>
             <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29" Click="BtnRegistrarUsuario_Click" />

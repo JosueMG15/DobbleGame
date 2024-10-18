@@ -43,6 +43,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="IniciarSesionJugador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="contraseña" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IniciarSesionJugadorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="IniciarSesionJugadorResult" nillable="true" type="q2:CuentaUsuario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="EnviarMensajeSala">
     <xs:complexType>
       <xs:sequence>

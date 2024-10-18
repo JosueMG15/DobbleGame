@@ -83,6 +83,12 @@
   <wsdl:message name="IGestionJugador_ExisteCorreoAsociado_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExisteCorreoAsociadoResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionJugador_IniciarSesionJugador_InputMessage">
+    <wsdl:part name="parameters" element="tns:IniciarSesionJugador" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_IniciarSesionJugador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IniciarSesionJugadorResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
@@ -101,6 +107,10 @@
     <wsdl:operation name="ExisteCorreoAsociado">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado" message="tns:IGestionJugador_ExisteCorreoAsociado_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse" message="tns:IGestionJugador_ExisteCorreoAsociado_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IniciarSesionJugador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador" message="tns:IGestionJugador_IniciarSesionJugador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse" message="tns:IGestionJugador_IniciarSesionJugador_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -134,6 +144,15 @@
     </wsdl:operation>
     <wsdl:operation name="ExisteCorreoAsociado">
       <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IniciarSesionJugador">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/IniciarSesionJugador" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

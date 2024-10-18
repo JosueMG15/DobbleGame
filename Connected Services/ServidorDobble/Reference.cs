@@ -159,6 +159,12 @@ namespace DobbleGame.ServidorDobble {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado", ReplyAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse")]
         System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
+        DobbleGame.ServidorDobble.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
+        System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -210,6 +216,14 @@ namespace DobbleGame.ServidorDobble {
         
         public System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario) {
             return base.Channel.ExisteCorreoAsociadoAsync(correoUsuario);
+        }
+        
+        public DobbleGame.ServidorDobble.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña) {
+            return base.Channel.IniciarSesionJugador(nombreUsuario, contraseña);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
+            return base.Channel.IniciarSesionJugadorAsync(nombreUsuario, contraseña);
         }
     }
     
