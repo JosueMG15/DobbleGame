@@ -1,6 +1,7 @@
 ﻿using DobbleGame.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -37,51 +38,59 @@ namespace DobbleGame
         {
             if (!TieneCamposVacios() && ValidarCorreo() && ValidarComparacionContraseña())
             {
+                byte[] foto = CargarFotoDefecto();
+                if (foto == null) return;
+
                 ServidorDobble.GestionJugadorClient proxy = new ServidorDobble.GestionJugadorClient();
                 ServidorDobble.CuentaUsuario cuentaUsuario = new ServidorDobble.CuentaUsuario
                 {
                     Correo = tbCorreo.Text.Trim(),
                     Usuario = tbNombreUsuario.Text.Trim(),
                     Contraseña = tbContraseña.Password.Trim(),
+                    Foto = CargarFotoDefecto(),
                 };
-                if (!proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
+                
+                if (!proxy.ExisteCorreoAsociado(cuentaUsuario.Correo))
                 {
-                    if (proxy.RegistrarUsuario(cuentaUsuario))
+                    if (!proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
                     {
-                        MostrarMensaje("Cuenta creada con éxito");
+                        if (proxy.RegistrarUsuario(cuentaUsuario))
+                        {
+                            MostrarMensaje("Cuenta creada con éxito");
+                        }
+                        else
+                        {
+                            MostrarMensaje("Error inesperado");
+                        }
                     }
                     else
                     {
-                        MostrarMensaje("Error inesperado");
+                        MostrarMensaje("El nombre de usuario ya existe");
                     }
                 }
                 else
                 {
-                    MostrarMensaje("El nombre de usuario ya existe");
+                    MostrarMensaje("El correo ya se encuentra \nasociado a una cuenta");
                 }
-
+                
             }
         }
 
         private bool TieneCamposVacios()
         {
-            bool validado = true;
-            String correo = tbCorreo.Text.Trim();
-            String nombreUsuario = tbNombreUsuario.Text.Trim();
-            String contraseña = tbContraseña.Password.Trim();
-            String contraseñaConfirmada = tbContraseñaConfirmada.Password.Trim();
+            bool hayCaposVacios =
+                string.IsNullOrWhiteSpace(tbCorreo.Text) ||
+                string.IsNullOrWhiteSpace(tbNombreUsuario.Text) ||
+                string.IsNullOrWhiteSpace(tbContraseña.Password) ||
+                string.IsNullOrWhiteSpace(tbContraseñaConfirmada.Password);
 
-            if (!String.IsNullOrEmpty(correo) && !String.IsNullOrEmpty(nombreUsuario) && !String.IsNullOrEmpty(contraseña) 
-                && !String.IsNullOrEmpty(contraseñaConfirmada))
-            {
-                validado = false;
-            }
-            else
+            if (hayCaposVacios)
             {
                 MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                return true;
             }
 
-            return validado;
+            return false;
         }
 
         private bool ValidarComparacionContraseña()
@@ -94,7 +103,7 @@ namespace DobbleGame
             }
             else
             {
-                MostrarMensaje("Las contraseña no coinciden");
+                MostrarMensaje("Las contraseñas no coinciden");
             }
             return validado;
         }
@@ -126,6 +135,27 @@ namespace DobbleGame
         {
             panelMensaje.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
+        }
+
+        private byte[] CargarFotoDefecto()
+        {
+            try
+            {
+                string rutaFotoDefecto = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Imagenes", "PerfilPorDefecto.png");
+
+                if (!File.Exists(rutaFotoDefecto))
+                {
+                    MostrarMensaje("No se encontró la imagen por defecto");
+                    return null;
+                }
+
+                return File.ReadAllBytes(rutaFotoDefecto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
     }
 }

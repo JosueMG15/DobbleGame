@@ -153,6 +153,12 @@ namespace DobbleGame.ServidorDobble {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
         System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado", ReplyAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse")]
+        bool ExisteCorreoAsociado(string correoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado", ReplyAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse")]
+        System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -196,6 +202,14 @@ namespace DobbleGame.ServidorDobble {
         
         public System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario) {
             return base.Channel.ExisteNombreUsuarioAsync(nombreUsuario);
+        }
+        
+        public bool ExisteCorreoAsociado(string correoUsuario) {
+            return base.Channel.ExisteCorreoAsociado(correoUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario) {
+            return base.Channel.ExisteCorreoAsociadoAsync(correoUsuario);
         }
     }
     
