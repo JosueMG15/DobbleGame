@@ -36,7 +36,7 @@ namespace DobbleGame
 
         private void BtnRegistrarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            if (!TieneCamposVacios() && ValidarCorreo() && ValidarComparacionContraseña())
+            if (!TieneCamposVacios() && ValidarCorreo() && ValidarContraseña() && ValidarComparacionContraseña())
             {
                 byte[] foto = CargarFotoDefecto();
                 if (foto == null) return;
@@ -65,12 +65,12 @@ namespace DobbleGame
                     }
                     else
                     {
-                        MostrarMensaje("El nombre de usuario ya existe");
+                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
                     }
                 }
                 else
                 {
-                    MostrarMensaje("El correo ya se encuentra \nasociado a una cuenta");
+                    MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
                 }
                 
             }
@@ -93,6 +93,38 @@ namespace DobbleGame
             return false;
         }
 
+        private bool ValidarContraseña()
+        {
+
+            String contraseña = tbContraseña.Password;
+            
+            if (contraseña.Contains(" "))
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                return false;
+            }
+
+            if (contraseña.Length < 8)
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                return false;
+            }
+
+            if (!contraseña.Any(Char.IsUpper))
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                return false;
+            }
+
+            if (contraseña.Count(Char.IsDigit) < 2)
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                return false;
+            }
+
+            return true;
+        }
+
         private bool ValidarComparacionContraseña()
         {
             bool validado = false;
@@ -103,7 +135,7 @@ namespace DobbleGame
             }
             else
             {
-                MostrarMensaje("Las contraseñas no coinciden");
+                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
             }
             return validado;
         }
@@ -118,7 +150,7 @@ namespace DobbleGame
             }
             else
             {
-                MostrarMensaje("Correo no válido");
+                MostrarMensaje(Properties.Resources.lb_CorreoInválido);
             }
             
             return validado;
@@ -156,6 +188,14 @@ namespace DobbleGame
             {
                 Console.WriteLine(ex.ToString());
                 return null;
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
+            {
+                panelMensaje.Visibility = Visibility.Hidden;
             }
         }
     }

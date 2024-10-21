@@ -403,6 +403,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El correo no es válido.
+        /// </summary>
+        public static string lb_CorreoInválido {
+            get {
+                return ResourceManager.GetString("lb_CorreoInválido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El correo es inexistente .
         /// </summary>
         public static string lb_CorreoNoExiste_ {

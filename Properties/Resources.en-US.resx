@@ -163,7 +163,7 @@
     <value>Forgot your password?</value>
   </data>
   <data name="lb_CrearCuenta" xml:space="preserve">
-    <value>Haven't created an account yet?</value>
+    <value>Haven't created an account yet? Sign up</value>
   </data>
   <data name="btn_Entrar" xml:space="preserve">
     <value>Sign up</value>
@@ -383,5 +383,8 @@
   </data>
   <data name="lb_IngresarNombreJugador " xml:space="preserve">
     <value>Enter the player's username</value>
+  </data>
+  <data name="lb_CorreoInválido" xml:space="preserve">
+    <value>The e-mail is not valid</value>
   </data>
 </root>

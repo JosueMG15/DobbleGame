@@ -1,8 +1,10 @@
 ﻿using DobbleGame.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +55,22 @@ namespace DobbleGame
             VentanaRecuperarContraseña ventanaRecuperarContraseña = new VentanaRecuperarContraseña();
             ventanaRecuperarContraseña.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaRecuperarContraseña.ShowDialog();
+        }
+
+        private void BtnCambioIdioma_Click(object sender, RoutedEventArgs e)
+        {
+            string idiomaEspañol = "es-MX";
+            string idiomaIngles = "en-US";
+
+            if (Thread.CurrentThread.CurrentUICulture.Name == idiomaEspañol)
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(idiomaIngles);
+            } 
+            else
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(idiomaEspañol);
+            }
+                
         }
     }
 }

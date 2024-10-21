@@ -5,10 +5,13 @@
              xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
              xmlns:utilidades="clr-namespace:DobbleGame.Utilidades"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow.xaml"
+             >
     <Application.Resources>
         <utilidades:CadenaVisibilidadConverter x:Key="CadenaVisibilidadConverter" />
-
+        <Style TargetType="Window">
+            <Setter Property="Icon" Value="pack://application:,,,/DobbleGame;component/Imagenes/AbejaMenu.png"/>
+        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>

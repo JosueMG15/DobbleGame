@@ -384,4 +384,7 @@
   <data name="lb_IngresarNombreJugador " xml:space="preserve">
     <value>Ingresa el nombre de usuario del jugador </value>
   </data>
+  <data name="lb_CorreoInválido" xml:space="preserve">
+    <value>El correo no es válido</value>
+  </data>
 </root>
