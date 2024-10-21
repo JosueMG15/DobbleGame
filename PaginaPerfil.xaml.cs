@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,7 +73,22 @@ namespace DobbleGame
 
         private void BtnActualizarFoto(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
+            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+            openFileDialog.Title = "Selecciona una imagen";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(selectedFilePath);
+                bitmap.EndInit();
+
+                ImagenPerfil.Source = bitmap;
+            }
         }
     }
 }

@@ -20,8 +20,12 @@
         </Button>
         <Rectangle HorizontalAlignment="Left" Height="558" Margin="511,103,0,0" Stroke="#FFE9E9E9" VerticalAlignment="Top" 
                    Width="577" Fill="#FFE9E9E9" RadiusX="15" RadiusY="15"/>
-        <Image Source="Imagenes/PerfilPorDefecto.png" Stretch="Uniform" Margin="82,116,721,262" />
-        <Label Content="{x:Static p:Resources.global_CorreoElectrónico}" Margin="564,128,0,618" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="292" FontSize="27" FontWeight="Bold" />
+
+        <Image Source="pack://application:,,,/Imagenes/PerfilPorDefecto.png" Name="ImagenPerfil" Stretch="Uniform" ClipToBounds="True" Margin="85,146,720,256"/>
+
+
+
+            <Label Content="{x:Static p:Resources.global_CorreoElectrónico}" Margin="564,128,0,618" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="292" FontSize="27" FontWeight="Bold" />
         <Label Content="{x:Static p:Resources.global_Usuario}" Margin="564,300,0,446" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="124" FontSize="27" FontWeight="Bold" />
         <Label Content="{x:Static p:Resources.lb_Contraseña}" Margin="564,470,0,274" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="212" FontSize="27" FontWeight="Bold" />
         <Line X1="10" Y1="10" X2="500" Y2="10" Stroke="Black" Margin="588,386,166,386" />

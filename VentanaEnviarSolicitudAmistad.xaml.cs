@@ -26,6 +26,11 @@ namespace DobbleGame
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void BtnEnviar_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
