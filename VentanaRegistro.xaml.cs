@@ -41,8 +41,8 @@ namespace DobbleGame
                 byte[] foto = CargarFotoDefecto();
                 if (foto == null) return;
 
-                ServidorDobble.GestionJugadorClient proxy = new ServidorDobble.GestionJugadorClient();
-                ServidorDobble.CuentaUsuario cuentaUsuario = new ServidorDobble.CuentaUsuario
+                ServidorTemporal.GestionJugadorClient proxy = new ServidorTemporal.GestionJugadorClient();
+                ServidorTemporal.CuentaUsuario cuentaUsuario = new ServidorTemporal.CuentaUsuario
                 {
                     Correo = tbCorreo.Text.Trim(),
                     Usuario = tbNombreUsuario.Text.Trim(),

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DobbleGame.Utilidades;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,12 +14,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+using System.Runtime.Remoting.Proxies;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaCambioNombre.xaml
-    /// </summary>
     public partial class VentanaCambioNombre : Window
     {
         public VentanaCambioNombre()
@@ -26,12 +28,42 @@ namespace DobbleGame
 
         private void BtnActualizarUsuario(object sender, RoutedEventArgs e)
         {
+            String nuevoNombre = tbNuevoNombre.Text.Trim();
+            ServidorDobble.GestionJugadorClient proxy = new ServidorDobble.GestionJugadorClient();
 
+            if(string.IsNullOrEmpty(nuevoNombre))
+            {
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+            }
+            else
+            {
+                if (proxy.ExisteNombreUsuario(nuevoNombre))
+                {
+                    MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                }
+                else
+                {
+                    proxy.ModificarNombreUsuario(1, nuevoNombre);
+                    this.Close();
+                }
+            }           
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            advertenciaIcono.Visibility = Visibility.Visible;
+            lbMensaje.Content = mensaje;
+        }
+
+        private void TbNuevoNombre(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
     }
 }

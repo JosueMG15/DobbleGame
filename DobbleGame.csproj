@@ -92,6 +92,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ServidorTemporal\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="PaginaIngresoCodigo.xaml.cs">
       <DependentUpon>PaginaIngresoCodigo.xaml</DependentUpon>
     </Compile>
@@ -237,6 +242,19 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDobble\ServicioImplementacion.wsdl" />
+    <None Include="Connected Services\ServidorTemporal\DobbleGame.ServidorTemporal.CuentaUsuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServidorTemporal\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorTemporal\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorTemporal\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorTemporal\ServicioImplementacion.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -273,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDobble\" />
+    <WCFMetadataStorage Include="Connected Services\ServidorTemporal\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServidorDobble\configuration91.svcinfo" />
@@ -316,6 +335,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\IconoInformacion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorTemporal\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorTemporal\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorTemporal\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorTemporal\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />
