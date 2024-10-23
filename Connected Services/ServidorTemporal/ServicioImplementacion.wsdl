@@ -3,28 +3,11 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IGestionJugador_policy">
     <wsp:ExactlyOne>
       <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
@@ -32,37 +15,20 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IGestionSala_policy">
     <wsp:ExactlyOne>
       <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGestionJugador_RegistrarUsuario_InputMessage">
@@ -101,12 +67,6 @@
   <wsdl:message name="IGestionJugador_ModificarContraseñaUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:ModificarContraseñaUsuarioResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionJugador_ValidarContraseña_InputMessage">
-    <wsdl:part name="parameters" element="tns:ValidarContraseña" />
-  </wsdl:message>
-  <wsdl:message name="IGestionJugador_ValidarContraseña_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ValidarContraseñaResponse" />
-  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
@@ -137,10 +97,6 @@
     <wsdl:operation name="ModificarContraseñaUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario" message="tns:IGestionJugador_ModificarContraseñaUsuario_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse" message="tns:IGestionJugador_ModificarContraseñaUsuario_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ValidarContraseña">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ValidarContraseña" message="tns:IGestionJugador_ValidarContraseña_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse" message="tns:IGestionJugador_ValidarContraseña_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -208,15 +164,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ValidarContraseña">
-      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ValidarContraseña" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionSala" type="tns:IGestionSala">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionSala_policy" />
@@ -236,21 +183,15 @@
   </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
-      <soap12:address location="net.tcp://localhost:8081/DobbleServicio" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionJugador" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ERILAP\Erick</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionJugador</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionSala" binding="tns:NetTcpBinding_IGestionSala">
-      <soap12:address location="net.tcp://localhost:8081/DobbleServicio" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionSala" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/DobbleServicio</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ERILAP\Erick</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionSala</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DobbleGame.ServidorDobble {
+namespace DobbleGame.ServidorTemporal {
     using System.Runtime.Serialization;
     using System;
     
@@ -155,14 +155,14 @@ namespace DobbleGame.ServidorDobble {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDobble.IGestionJugador")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorTemporal.IGestionJugador")]
     public interface IGestionJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
-        bool RegistrarUsuario(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario);
+        bool RegistrarUsuario(DobbleGame.ServidorTemporal.CuentaUsuario cuentaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario);
+        System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorTemporal.CuentaUsuario cuentaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
         bool ExisteNombreUsuario(string nombreUsuario);
@@ -177,10 +177,10 @@ namespace DobbleGame.ServidorDobble {
         System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
-        DobbleGame.ServidorDobble.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña);
+        DobbleGame.ServidorTemporal.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
-        System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
+        System.Threading.Tasks.Task<DobbleGame.ServidorTemporal.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarNombreUsuarioResponse")]
         bool ModificarNombreUsuario(int idCuenta, string nombreUsuario);
@@ -193,21 +193,15 @@ namespace DobbleGame.ServidorDobble {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
         System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
-        bool ValidarContraseña(int idCuenta, string contraseñaUsuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
-        System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGestionJugadorChannel : DobbleGame.ServidorDobble.IGestionJugador, System.ServiceModel.IClientChannel {
+    public interface IGestionJugadorChannel : DobbleGame.ServidorTemporal.IGestionJugador, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GestionJugadorClient : System.ServiceModel.ClientBase<DobbleGame.ServidorDobble.IGestionJugador>, DobbleGame.ServidorDobble.IGestionJugador {
+    public partial class GestionJugadorClient : System.ServiceModel.ClientBase<DobbleGame.ServidorTemporal.IGestionJugador>, DobbleGame.ServidorTemporal.IGestionJugador {
         
         public GestionJugadorClient() {
         }
@@ -228,11 +222,11 @@ namespace DobbleGame.ServidorDobble {
                 base(binding, remoteAddress) {
         }
         
-        public bool RegistrarUsuario(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario) {
+        public bool RegistrarUsuario(DobbleGame.ServidorTemporal.CuentaUsuario cuentaUsuario) {
             return base.Channel.RegistrarUsuario(cuentaUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorDobble.CuentaUsuario cuentaUsuario) {
+        public System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.ServidorTemporal.CuentaUsuario cuentaUsuario) {
             return base.Channel.RegistrarUsuarioAsync(cuentaUsuario);
         }
         
@@ -252,11 +246,11 @@ namespace DobbleGame.ServidorDobble {
             return base.Channel.ExisteCorreoAsociadoAsync(correoUsuario);
         }
         
-        public DobbleGame.ServidorDobble.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña) {
+        public DobbleGame.ServidorTemporal.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña) {
             return base.Channel.IniciarSesionJugador(nombreUsuario, contraseña);
         }
         
-        public System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
+        public System.Threading.Tasks.Task<DobbleGame.ServidorTemporal.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
             return base.Channel.IniciarSesionJugadorAsync(nombreUsuario, contraseña);
         }
         
@@ -275,18 +269,10 @@ namespace DobbleGame.ServidorDobble {
         public System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ModificarContraseñaUsuarioAsync(idCuenta, contraseñaUsuario);
         }
-        
-        public bool ValidarContraseña(int idCuenta, string contraseñaUsuario) {
-            return base.Channel.ValidarContraseña(idCuenta, contraseñaUsuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario) {
-            return base.Channel.ValidarContraseñaAsync(idCuenta, contraseñaUsuario);
-        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDobble.IGestionSala", CallbackContract=typeof(DobbleGame.ServidorDobble.IGestionSalaCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorTemporal.IGestionSala", CallbackContract=typeof(DobbleGame.ServidorTemporal.IGestionSalaCallback))]
     public interface IGestionSala {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
@@ -304,12 +290,12 @@ namespace DobbleGame.ServidorDobble {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGestionSalaChannel : DobbleGame.ServidorDobble.IGestionSala, System.ServiceModel.IClientChannel {
+    public interface IGestionSalaChannel : DobbleGame.ServidorTemporal.IGestionSala, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GestionSalaClient : System.ServiceModel.DuplexClientBase<DobbleGame.ServidorDobble.IGestionSala>, DobbleGame.ServidorDobble.IGestionSala {
+    public partial class GestionSalaClient : System.ServiceModel.DuplexClientBase<DobbleGame.ServidorTemporal.IGestionSala>, DobbleGame.ServidorTemporal.IGestionSala {
         
         public GestionSalaClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
