@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f32cb370-8737-4ad1-93a7-92b9b098787b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8082" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="2f2119b1-af06-4f01-aec0-2e74d3d8c889" SourceId="1" SourceUrl="http://192.168.137.1:8082/?xsd=xsd0" />
+    <MetadataFile FileName="ServicioImplementacion1.wsdl" MetadataType="Wsdl" ID="a6458d05-0977-4407-a8d2-56cdf22ffff4" SourceId="1" SourceUrl="http://192.168.137.1:8082/?wsdl" />
+    <MetadataFile FileName="item31.xsd" MetadataType="Schema" ID="64d19d13-6c48-4475-9cca-98b3e9be0e59" SourceId="1" SourceUrl="http://192.168.137.1:8082/?xsd=xsd2" />
+    <MetadataFile FileName="item32.xsd" MetadataType="Schema" ID="bf4c09a7-9593-4b76-853f-057a38beed80" SourceId="1" SourceUrl="http://192.168.137.1:8082/?xsd=xsd1" />
+    <MetadataFile FileName="item1.disco" MetadataType="Disco" ID="5dfe5e24-ac2f-4c0c-baf5-b954e9753e6c" SourceId="1" SourceUrl="http://192.168.137.1:8082/?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

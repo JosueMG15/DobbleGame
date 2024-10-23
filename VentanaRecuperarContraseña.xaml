@@ -1,0 +1,22 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DobbleGame"
+        xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
+        xmlns:Properties="clr-namespace:DobbleGame.Properties" x:Class="DobbleGame.VentanaRecuperarContraseña"
+        mc:Ignorable="d"
+        Title="VentanaRecuperarContraseña" Height="420" Width="500" WindowStyle="None">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
+        </Grid.Background>
+
+        <Label Content="{x:Static Properties:Resources.lb_EnvíoDeCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" />
+        <TextBox extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_CorreoElectrónico}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="98,168,97,203" />
+        <Button Content="{x:Static Properties:Resources.btn_EnviarCódigo}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnEnviarCodigo" Margin="75,272,288,75"/>
+        <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="285,274,78,85"/>
+    </Grid>
+</Window>
+
