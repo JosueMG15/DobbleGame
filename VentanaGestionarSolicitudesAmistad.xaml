@@ -7,7 +7,7 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         xmlns:Properties="clr-namespace:DobbleGame.Properties" x:Class="DobbleGame.VentanaGestionarSolicitudesAmistad"
         mc:Ignorable="d"
-        Title="VentanaGestionarSolicitudesAmistad" Height="650" Width="700">
+        Title="VentanaGestionarSolicitudesAmistad" Height="650" Width="700" WindowStyle="None">
     <Grid Background="#FFE1DD8B">
         <Button Width="59" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Background="Transparent"
                     Click="BtnRegresar_Click" Height="68">

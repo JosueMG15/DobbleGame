@@ -181,6 +181,18 @@ namespace DobbleGame.ServidorDobble {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
         System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarNombreUsuarioResponse")]
+        bool ModificarNombreUsuario(int idCuenta, string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarNombreUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
+        bool ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -240,6 +252,22 @@ namespace DobbleGame.ServidorDobble {
         
         public System.Threading.Tasks.Task<DobbleGame.ServidorDobble.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
             return base.Channel.IniciarSesionJugadorAsync(nombreUsuario, contraseña);
+        }
+        
+        public bool ModificarNombreUsuario(int idCuenta, string nombreUsuario) {
+            return base.Channel.ModificarNombreUsuario(idCuenta, nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario) {
+            return base.Channel.ModificarNombreUsuarioAsync(idCuenta, nombreUsuario);
+        }
+        
+        public bool ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ModificarContraseñaUsuario(idCuenta, contraseñaUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ModificarContraseñaUsuarioAsync(idCuenta, contraseñaUsuario);
         }
     }
     

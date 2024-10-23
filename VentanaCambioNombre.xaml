@@ -7,7 +7,7 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         xmlns:Properties="clr-namespace:DobbleGame.Properties" x:Class="DobbleGame.VentanaCambioNombre"
         mc:Ignorable="d"
-        Title="VentanaCambioNombre" Height="650" Width="700">
+        Title="VentanaCambioNombre" Height="630" Width="700" WindowStyle="None">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
