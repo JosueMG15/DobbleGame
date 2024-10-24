@@ -36,20 +36,34 @@ namespace DobbleGame
 
         private void BtnRegistrarUsuario_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                IniciarRegistro();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void IniciarRegistro()
+        {
             if (!TieneCamposVacios() && ValidarCorreo() && ValidarContraseña() && ValidarComparacionContraseña())
             {
                 byte[] foto = CargarFotoDefecto();
                 if (foto == null) return;
 
-                ServidorTemporal.GestionJugadorClient proxy = new ServidorTemporal.GestionJugadorClient();
-                ServidorTemporal.CuentaUsuario cuentaUsuario = new ServidorTemporal.CuentaUsuario
+                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password);
+
+                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+                Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
                 {
-                    Correo = tbCorreo.Text.Trim(),
-                    Usuario = tbNombreUsuario.Text.Trim(),
-                    Contraseña = tbContraseña.Password.Trim(),
+                    Correo = tbCorreo.Text,
+                    Usuario = tbNombreUsuario.Text,
+                    Contraseña = contraseñaHasheada,
                     Foto = CargarFotoDefecto(),
                 };
-                
+
                 if (!proxy.ExisteCorreoAsociado(cuentaUsuario.Correo))
                 {
                     if (!proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
@@ -72,7 +86,7 @@ namespace DobbleGame
                 {
                     MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
                 }
-                
+
             }
         }
 
@@ -81,8 +95,8 @@ namespace DobbleGame
             bool hayCaposVacios =
                 string.IsNullOrWhiteSpace(tbCorreo.Text) ||
                 string.IsNullOrWhiteSpace(tbNombreUsuario.Text) ||
-                string.IsNullOrWhiteSpace(tbContraseña.Password) ||
-                string.IsNullOrWhiteSpace(tbContraseñaConfirmada.Password);
+                string.IsNullOrWhiteSpace(pbContraseña.Password) ||
+                string.IsNullOrWhiteSpace(pbContraseñaConfirmada.Password);
 
             if (hayCaposVacios)
             {
@@ -95,28 +109,7 @@ namespace DobbleGame
 
         private bool ValidarContraseña()
         {
-
-            String contraseña = tbContraseña.Password;
-            
-            if (contraseña.Contains(" "))
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (contraseña.Length < 8)
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (!contraseña.Any(Char.IsUpper))
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (contraseña.Count(Char.IsDigit) < 2)
+            if (!Utilidades.Utilidades.ValidarContraseña(pbContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
                 return false;
@@ -128,8 +121,8 @@ namespace DobbleGame
         private bool ValidarComparacionContraseña()
         {
             bool validado = false;
-            String contraseña = tbContraseña.Password.Trim();
-            if (contraseña.Equals(tbContraseñaConfirmada.Password.Trim()))
+            String contraseña = pbContraseña.Password;
+            if (contraseña.Equals(pbContraseñaConfirmada.Password))
             {
                 validado = true;
             }
@@ -144,7 +137,7 @@ namespace DobbleGame
         {
             bool validado = false;
             string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (Regex.Match(tbCorreo.Text.Trim(), patronCorreo).Success)
+            if (Regex.Match(tbCorreo.Text, patronCorreo).Success)
             {
                 validado = true;
             }

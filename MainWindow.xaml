@@ -24,11 +24,14 @@
                Margin="0,120,0,10" />
         <Label Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
                Margin="0,230,0,15" />
-
+        <StackPanel x:Name="panelMensaje" Grid.Row="1" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center">
+            <Image Margin="0,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
+            <Label x:Name="lbMensaje" Content="" Margin="0,0,0,10" FontSize="20" Foreground="Red" />
+        </StackPanel>
         <StackPanel Grid.Row="2">
-            <TextBox Grid.Row="2" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_Usuario}" Margin="10" />
-            <PasswordBox Grid.Row="2" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="10" 
-                         PasswordChanged="PasswordBox_CambioDeContraseña" />
+            <TextBox x:Name="tbUsuario" Grid.Row="2" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_Usuario}" Margin="10" MaxLength="15"/>
+            <PasswordBox x:Name="pbContraseña" Grid.Row="2" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="10" 
+                         PasswordChanged="PasswordBox_CambioDeContraseña" MaxLength="35"/>
             <TextBlock Text="{x:Static p:Resources.lb_CrearCuenta}" Style="{StaticResource TextBlock}" Grid.Row="2" 
                        Margin="0,30,0,10" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonUp="ClicCrearCuentaTf" />
             <TextBlock Text="{x:Static p:Resources.lb_ContraseñaOlvidada}" Style="{StaticResource TextBlock}" Grid.Row="2" 

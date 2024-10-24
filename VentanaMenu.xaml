@@ -29,10 +29,10 @@
                     <DropShadowEffect/>
                 </Button.Effect>
             </Button>
-            <Label Content="KILLERESHAFSERT" VerticalAlignment="Top" HorizontalAlignment="Right" Height="40" FontSize="20" Margin="100,40" FontWeight="SemiBold" 
+            <Label x:Name="lbNombreUsuario" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" FontSize="20" Margin="130,40" FontWeight="SemiBold" 
                    />
-            <Button Background="#59B01E" Width="20" Height="20" Margin="130,85,250,195"/>
-            <Label Style="{StaticResource EstadoUsuario}" Content="En línea" Height="30" Margin="155,80,0,190" HorizontalAlignment="Left"/>
+            <Button x:Name="btnEstadoUsuario" Width="20" Height="20" Margin="130,85,250,195" Click="BtnCambiarEstado_Click" />
+            <Label x:Name="lbEstadoUsuario" Style="{StaticResource EstadoUsuario}"  Height="30" Margin="155,80,0,190" HorizontalAlignment="Left"/>
             <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Background="Transparent" Margin="10,35"
                     Padding="0" Click="BtnCerrarSesion_Click">
                 <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform">

@@ -1,8 +1,10 @@
 ﻿using DobbleGame.Utilidades;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +30,34 @@ namespace DobbleGame
             InitializeComponent();
         }
 
+        private void IniciarSesion()
+        {
+            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+            var cuentaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+
+            if (cuentaInicioSesion != null )
+            {
+                CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                {
+                    IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
+                    Usuario = cuentaInicioSesion.Usuario,
+                    Correo = cuentaInicioSesion.Correo,
+                    Contraseña = cuentaInicioSesion.Contraseña,
+                    Foto = cuentaInicioSesion.Foto,
+                    Puntaje = cuentaInicioSesion.Puntaje,
+                    Estado = true,
+                };
+                VentanaMenu ventanaMenu = new VentanaMenu();
+                this.Close();
+                ventanaMenu.Show();
+            }
+            else
+            {
+                panelMensaje.Visibility = Visibility.Visible;
+                lbMensaje.Content = "No se pudo iniciar sesión";
+            }
+        }
+
         private void PasswordBox_CambioDeContraseña(object sender, RoutedEventArgs e)
         {
             var passwordBox = sender as PasswordBox;
@@ -37,9 +67,7 @@ namespace DobbleGame
 
         private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
         {
-            VentanaMenu ventanaMenu = new VentanaMenu();
-            this.Close();
-            ventanaMenu.Show();
+            IniciarSesion();
         }
 
         private void ClicCrearCuentaTf(object sender, System.Windows.Input.MouseButtonEventArgs e)

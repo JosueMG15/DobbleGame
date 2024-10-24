@@ -19,7 +19,7 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    public partial class PaginaSala : Page, ServidorDobble.IGestionSalaCallback
+    public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
     {
         public PaginaSala()
         {
@@ -67,7 +67,7 @@ namespace DobbleGame
             if (!string.IsNullOrEmpty(mensaje))
             {
                 InstanceContext contexto = new InstanceContext(this);
-                ServidorDobble.GestionSalaClient proxy = new ServidorDobble.GestionSalaClient(contexto);
+                Servidor.GestionSalaClient proxy = new Servidor.GestionSalaClient(contexto);
                 proxy.EnviarMensajeSala(mensaje);
                 tbChat.Text = String.Empty;
             }

@@ -31,13 +31,13 @@ namespace DobbleGame
             this.Close();
         }
 
-        private void BtnActualizarContraseña(object sender, RoutedEventArgs e)
+       /* private void BtnActualizarContraseña(object sender, RoutedEventArgs e)
         {
             String contraseñaActual = pbContraseñaActual.Password.Trim();
             String nuevaContraseña = pbNuevaContraseña.Password.Trim();
             String confirmarNuevaContraseña = pbConfirmarNuevaContraseña.Password.Trim();
 
-            ServidorDobble.GestionJugadorClient proxy = new ServidorDobble.GestionJugadorClient();
+            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
             if(string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
                         string.IsNullOrEmpty(confirmarNuevaContraseña))
@@ -71,7 +71,7 @@ namespace DobbleGame
                     }
                 }
             }
-        }
+        }*/
 
         private void MostrarMensaje(string mensaje)
         {

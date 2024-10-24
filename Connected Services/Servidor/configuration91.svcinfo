@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="c4L5xfRMU5K73JP9olIr5fRCl41CaR88Qz8tGQ8zohY=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="diHS7oQtUeI9JaHns5xCXLvX41HVXjaDN42G3srlHKo=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="NetTcpBinding_IGestionJugador1">
       <properties>
@@ -239,10 +239,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_IGestionJugador1" contract="ServidorTemporal.IGestionJugador" bindingType="netTcpBinding" address="net.tcp://192.168.137.1:8081/IGestionJugador" bindingConfiguration="NetTcpBinding_IGestionJugador1">
+    <endpoint name="NetTcpBinding_IGestionJugador1" contract="Servidor.IGestionJugador" bindingType="netTcpBinding" address="net.tcp://localhost:8081/IGestionJugador" bindingConfiguration="NetTcpBinding_IGestionJugador1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://192.168.137.1:8081/IGestionJugador</serializedValue>
+          <serializedValue>net.tcp://localhost:8081/IGestionJugador</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -254,7 +254,7 @@
           <serializedValue>NetTcpBinding_IGestionJugador1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ServidorTemporal.IGestionJugador</serializedValue>
+          <serializedValue>Servidor.IGestionJugador</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -324,10 +324,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="NetTcpBinding_IGestionSala1" contract="ServidorTemporal.IGestionSala" bindingType="netTcpBinding" address="net.tcp://192.168.137.1:8081/IGestionSala" bindingConfiguration="NetTcpBinding_IGestionSala1">
+    <endpoint name="NetTcpBinding_IGestionSala1" contract="Servidor.IGestionSala" bindingType="netTcpBinding" address="net.tcp://localhost:8081/IGestionSala" bindingConfiguration="NetTcpBinding_IGestionSala1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://192.168.137.1:8081/IGestionSala</serializedValue>
+          <serializedValue>net.tcp://localhost:8081/IGestionSala</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -339,7 +339,7 @@
           <serializedValue>NetTcpBinding_IGestionSala1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ServidorTemporal.IGestionSala</serializedValue>
+          <serializedValue>Servidor.IGestionSala</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>

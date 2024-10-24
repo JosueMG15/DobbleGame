@@ -1,4 +1,6 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DobbleGame.Servidor;
+using Dominio;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,15 @@ namespace DobbleGame
         public VentanaMenu()
         {
             InitializeComponent();
+            InicializarDatos();
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
+        }
+
+        private void InicializarDatos()
+        {
+            lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
+            btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
+            lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
         }
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
@@ -63,6 +73,12 @@ namespace DobbleGame
             VentanaEnviarSolicitudAmistad ventanaEnviarSolicitudAmistad = new VentanaEnviarSolicitudAmistad();
             ventanaEnviarSolicitudAmistad.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaEnviarSolicitudAmistad.ShowDialog();
+        }
+
+        private void BtnCambiarEstado_Click(object sender, RoutedEventArgs e)
+        {
+            btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#F44545");
+            lbEstadoUsuario.Content = Properties.Resources.lb_Ausente;
         }
     }
 }

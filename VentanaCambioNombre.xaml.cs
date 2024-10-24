@@ -29,7 +29,7 @@ namespace DobbleGame
         private void BtnActualizarUsuario(object sender, RoutedEventArgs e)
         {
             String nuevoNombre = tbNuevoNombre.Text.Trim();
-            ServidorDobble.GestionJugadorClient proxy = new ServidorDobble.GestionJugadorClient();
+            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
             if(string.IsNullOrEmpty(nuevoNombre))
             {
