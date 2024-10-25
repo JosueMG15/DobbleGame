@@ -193,6 +193,18 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
         System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
+        bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
+        bool ValidarContraseña(int idCuenta, string contraseñaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
+        System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -268,6 +280,22 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ModificarContraseñaUsuarioAsync(idCuenta, contraseñaUsuario);
+        }
+        
+        public bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario) {
+            return base.Channel.ModificarFotoUsuario(idCuenta, fotoUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario) {
+            return base.Channel.ModificarFotoUsuarioAsync(idCuenta, fotoUsuario);
+        }
+        
+        public bool ValidarContraseña(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ValidarContraseña(idCuenta, contraseñaUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ValidarContraseñaAsync(idCuenta, contraseñaUsuario);
         }
     }
     

@@ -28,6 +28,7 @@
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
+                <Image Name="ImagenPerfil"  Stretch="Uniform"/>
             </Button>
             <Label x:Name="lbNombreUsuario" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" FontSize="20" Margin="130,40" FontWeight="SemiBold" 
                    />

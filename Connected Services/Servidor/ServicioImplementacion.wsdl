@@ -67,6 +67,18 @@
   <wsdl:message name="IGestionJugador_ModificarContraseñaUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:ModificarContraseñaUsuarioResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionJugador_ModificarFotoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarFotoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ModificarFotoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarFotoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ValidarContraseña_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarContraseña" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ValidarContraseña_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarContraseñaResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
@@ -97,6 +109,14 @@
     <wsdl:operation name="ModificarContraseñaUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario" message="tns:IGestionJugador_ModificarContraseñaUsuario_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse" message="tns:IGestionJugador_ModificarContraseñaUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificarFotoUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario" message="tns:IGestionJugador_ModificarFotoUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse" message="tns:IGestionJugador_ModificarFotoUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarContraseña">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ValidarContraseña" message="tns:IGestionJugador_ValidarContraseña_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse" message="tns:IGestionJugador_ValidarContraseña_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -157,6 +177,24 @@
     </wsdl:operation>
     <wsdl:operation name="ModificarContraseñaUsuario">
       <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificarFotoUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarContraseña">
+      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ValidarContraseña" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

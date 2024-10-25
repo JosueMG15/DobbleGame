@@ -16,14 +16,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Runtime.Remoting.Proxies;
+using Dominio;
+using System.Windows.Navigation;
 
 namespace DobbleGame
 {
     public partial class VentanaCambioNombre : Window
     {
-        public VentanaCambioNombre()
+        private PaginaPerfil _paginaPerfil;
+        private VentanaMenu _ventanaMenu;
+        public VentanaCambioNombre(PaginaPerfil paginaPerfil, VentanaMenu ventanaMenu)
         {
             InitializeComponent();
+            _paginaPerfil = paginaPerfil;
+            _ventanaMenu = ventanaMenu;
         }
 
         private void BtnActualizarUsuario(object sender, RoutedEventArgs e)
@@ -43,7 +49,11 @@ namespace DobbleGame
                 }
                 else
                 {
-                    proxy.ModificarNombreUsuario(1, nuevoNombre);
+                    proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                    CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
+
+                    _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
+                    _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
                     this.Close();
                 }
             }           
