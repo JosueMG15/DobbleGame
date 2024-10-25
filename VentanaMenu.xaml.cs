@@ -3,6 +3,7 @@ using Dominio;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace DobbleGame
             lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
             btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
             lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
+            ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
         }
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
@@ -44,7 +46,7 @@ namespace DobbleGame
                 DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
                 fadeOutAnimation.Completed += (s, a) =>
                 {
-                    PaginaPerfil paginaPerfil = new PaginaPerfil();
+                    PaginaPerfil paginaPerfil = new PaginaPerfil(this);
                     MarcoPrincipal.Navigate(paginaPerfil);
 
                     DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
@@ -90,6 +92,29 @@ namespace DobbleGame
                 Dominio.CuentaUsuario.cuentaUsuarioActual.Estado = true;
             }
       
+        }
+
+        public void ActualizarNombreUsuario(string nuevoTexto)
+        {
+            lbNombreUsuario.Content = nuevoTexto;
+        }
+
+        public void ConvertirImagenPerfil(byte[] fotoBytes)
+        {
+            if (fotoBytes == null || fotoBytes.Length == 0)
+                return;
+
+            using (var ms = new MemoryStream(fotoBytes))
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = ms;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                image.Freeze();
+
+                ImagenPerfil.Source = image;
+            }
         }
     }
 }

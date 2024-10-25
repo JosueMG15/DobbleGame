@@ -1,7 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +23,19 @@ namespace DobbleGame
 {
     public partial class PaginaPerfil : Page
     {
-        public PaginaPerfil()
+        private VentanaMenu _ventanaMenu;
+        public PaginaPerfil(VentanaMenu ventanaMenu)
         {
             InitializeComponent();
+            InicializarDatos();
+            _ventanaMenu = ventanaMenu; 
+        }
+
+        private void InicializarDatos()
+        {
+            lbCorreoElectronico.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo;
+            lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
+            ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
@@ -58,7 +72,7 @@ namespace DobbleGame
 
         private void BtnCambiarUsuario(object sender, RoutedEventArgs e)
         {
-            VentanaCambioNombre ventanaCambioNombre = new VentanaCambioNombre();
+            VentanaCambioNombre ventanaCambioNombre = new VentanaCambioNombre(this, _ventanaMenu);
             ventanaCambioNombre.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaCambioNombre.ShowDialog();
         }
@@ -77,15 +91,49 @@ namespace DobbleGame
 
             openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
             openFileDialog.Title = "Selecciona una imagen";
+
             openFileDialog.ShowDialog();
             string selectedFilePath = openFileDialog.FileName;
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(selectedFilePath);
-            bitmap.EndInit();
 
-            ImagenPerfil.Source = bitmap;
+            if(!string.IsNullOrEmpty(selectedFilePath) && File.Exists(selectedFilePath))
+            {
+                bitmap.UriSource = new Uri(selectedFilePath);
+                bitmap.EndInit();
+
+                ImagenPerfil.Source = bitmap;
+
+                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+                byte[] foto = File.ReadAllBytes(selectedFilePath);
+                proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, foto);
+            }
         }
+
+        public void ConvertirImagenPerfil(byte[] fotoBytes)
+        {
+            if (fotoBytes == null || fotoBytes.Length == 0)
+                return;
+
+            using (var ms = new MemoryStream(fotoBytes))
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = ms;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                image.Freeze();
+
+                ImagenPerfil.Source = image;
+            }
+        }
+
+        public void ActualizarNombreUsuario(string nuevoTexto)
+        {
+            lbNombreUsuario.Content = nuevoTexto;
+        }
+
+
     }
 }

@@ -1,7 +1,10 @@
-﻿using DobbleGame.Utilidades;
+﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +34,7 @@ namespace DobbleGame
             this.Close();
         }
 
-       /* private void BtnActualizarContraseña(object sender, RoutedEventArgs e)
+        private void BtnActualizarContraseña(object sender, RoutedEventArgs e)
         {
             String contraseñaActual = pbContraseñaActual.Password.Trim();
             String nuevaContraseña = pbNuevaContraseña.Password.Trim();
@@ -39,14 +42,14 @@ namespace DobbleGame
 
             Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
-            if(string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
+            if (string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
                         string.IsNullOrEmpty(confirmarNuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_CamposVacíos);
             }
             else
             {
-                if (!proxy.ValidarContraseña(1, contraseñaActual))
+                if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)))
                 {
                     MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
                 }
@@ -61,7 +64,8 @@ namespace DobbleGame
                         if(ValidarContraseña(contraseñaActual) == true && ValidarContraseña(nuevaContraseña) == true 
                             && ValidarContraseña(confirmarNuevaContraseña) == true)
                         {
-                            proxy.ModificarContraseñaUsuario(1, nuevaContraseña);
+                            string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
+                            proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
                             this.Close();
                         }
                         else
@@ -71,7 +75,7 @@ namespace DobbleGame
                     }
                 }
             }
-        }*/
+        }
 
         private void MostrarMensaje(string mensaje)
         {
