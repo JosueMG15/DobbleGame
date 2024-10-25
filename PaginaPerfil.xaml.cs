@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using DobbleGame.Utilidades;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,17 +93,47 @@ namespace DobbleGame
             openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
             openFileDialog.Title = "Selecciona una imagen";
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string selectedFilePath = openFileDialog.FileName;
+            openFileDialog.ShowDialog();
+            string selectedFilePath = openFileDialog.FileName;
 
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+
+            if (!string.IsNullOrEmpty(selectedFilePath) && File.Exists(selectedFilePath))
+            {
                 bitmap.UriSource = new Uri(selectedFilePath);
                 bitmap.EndInit();
 
                 ImagenPerfil.Source = bitmap;
+
+                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+                byte[] foto = File.ReadAllBytes(selectedFilePath);
+                proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, foto);
+                Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
             }
+        }
+
+        public void ConvertirImagenPerfil(byte[] fotoBytes)
+        {
+            if (fotoBytes == null || fotoBytes.Length == 0)
+                return;
+
+            using (var ms = new MemoryStream(fotoBytes))
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = ms;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                image.Freeze();
+
+                ImagenPerfil.Source = image;
+            }
+        }
+
+        public void ActualizarNombreUsuario(string nuevoTexto)
+        {
+            lbNombreUsuario.Content = nuevoTexto;
         }
     }
 }
