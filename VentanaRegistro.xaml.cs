@@ -30,7 +30,13 @@ namespace DobbleGame
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
-            this.Owner.Show();
+            IrMainWindow();
+        }
+
+        private void IrMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
 
@@ -48,55 +54,95 @@ namespace DobbleGame
 
         private void IniciarRegistro()
         {
-            if (!TieneCamposVacios() && ValidarCorreo() && ValidarContraseña() && ValidarComparacionContraseña())
+            if (TieneCamposVacios())
             {
-                byte[] foto = CargarFotoDefecto();
-                if (foto == null) return;
+                return;
+            }
 
-                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password);
+            if (!ValidarPatronCorreo())
+            {
+                return;
+            }
 
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+            if (!ValidarContraseña())
+            {
+                return;
+            }
+
+            if (!ValidarComparacionContraseña())
+            {
+                return;
+            }
+
+            byte[] foto = CargarFotoDefecto();
+            if (foto == null)
+            {
+                return;
+            }
+
+            string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password);
+
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
                 Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
                 {
                     Correo = tbCorreo.Text,
                     Usuario = tbNombreUsuario.Text,
                     Contraseña = contraseñaHasheada,
-                    Foto = CargarFotoDefecto(),
+                    Foto = foto
                 };
 
-                if (!proxy.ExisteCorreoAsociado(cuentaUsuario.Correo))
+                try
                 {
-                    if (!proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
+                    if (proxy.ExisteCorreoAsociado(cuentaUsuario.Correo))
                     {
-                        if (proxy.RegistrarUsuario(cuentaUsuario))
+                        MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
+                        return;
+                    }
+
+                    if (proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
+                    {
+                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                        return;
+                    }
+
+                    if (proxy.RegistrarUsuario(cuentaUsuario))
+                    {
+                        VentanaRegistroExitoso ventanaRegistroExitoso = new VentanaRegistroExitoso
                         {
-                            MostrarMensaje(Properties.Resources.lb_RegistroExitoso);
-                        }
-                        else
-                        {
-                            MostrarMensaje("Error inesperado");
-                        }
+                            Owner = this,
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner
+                        };
+                        ventanaRegistroExitoso.ShowDialog();
+                        IrMainWindow();
                     }
                     else
                     {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                        MostrarMensaje("Error inesperado durante el registro.");
                     }
                 }
-                else
+                catch (CommunicationException)
                 {
-                    MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
+                    var ventanaErrorConexion = new VentanaErrorConexion(
+                             Properties.Resources.lb_ErrorConexiónServidor,
+                             Properties.Resources.lb_MensajeErrorConexiónServidor
+                         )
+                    {
+                        Owner = this,
+                        WindowStartupLocation= WindowStartupLocation.CenterOwner
+                    };
+                    ventanaErrorConexion.ShowDialog();
                 }
-
             }
         }
 
         private bool TieneCamposVacios()
         {
             bool hayCaposVacios =
-                string.IsNullOrWhiteSpace(tbCorreo.Text) ||
-                string.IsNullOrWhiteSpace(tbNombreUsuario.Text) ||
-                string.IsNullOrWhiteSpace(pbContraseña.Password) ||
-                string.IsNullOrWhiteSpace(pbContraseñaConfirmada.Password);
+                Utilidades.Utilidades.EsCampoVacio(tbCorreo.Text) ||
+                Utilidades.Utilidades.EsCampoVacio(tbNombreUsuario.Text) ||
+                Utilidades.Utilidades.EsCampoVacio(pbContraseña.Password) ||
+                Utilidades.Utilidades.EsCampoVacio(pbContraseñaConfirmada.Password);
 
             if (hayCaposVacios)
             {
@@ -109,7 +155,7 @@ namespace DobbleGame
 
         private bool ValidarContraseña()
         {
-            if (!Utilidades.Utilidades.ValidarContraseña(pbContraseña))
+            if (!Utilidades.Utilidades.ValidarContraseña(pbContraseña.Password))
             {
                 MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
                 return false;
@@ -121,8 +167,7 @@ namespace DobbleGame
         private bool ValidarComparacionContraseña()
         {
             bool validado = false;
-            String contraseña = pbContraseña.Password;
-            if (contraseña.Equals(pbContraseñaConfirmada.Password))
+            if (Utilidades.Utilidades.EsMismaContraseña(pbContraseña.Password, pbContraseñaConfirmada.Password))
             {
                 validado = true;
             }
@@ -133,11 +178,11 @@ namespace DobbleGame
             return validado;
         }
 
-        private bool ValidarCorreo()
+        private bool ValidarPatronCorreo()
         {
             bool validado = false;
-            string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (Regex.Match(tbCorreo.Text, patronCorreo).Success)
+            
+            if (Utilidades.Utilidades.ValidarPatronCorreo(tbCorreo.Text))
             {
                 validado = true;
             }

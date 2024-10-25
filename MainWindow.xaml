@@ -14,7 +14,7 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -24,7 +24,7 @@
                Margin="0,120,0,10" />
         <Label Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
                Margin="0,230,0,15" />
-        <StackPanel x:Name="panelMensaje" Grid.Row="1" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center">
+        <StackPanel x:Name="panelMensaje" Grid.Row="1" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center" >
             <Image Margin="0,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
             <Label x:Name="lbMensaje" Content="" Margin="0,0,0,10" FontSize="20" Foreground="Red" />
         </StackPanel>

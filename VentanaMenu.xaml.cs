@@ -77,8 +77,19 @@ namespace DobbleGame
 
         private void BtnCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
-            btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#F44545");
-            lbEstadoUsuario.Content = Properties.Resources.lb_Ausente;
+            if (Dominio.CuentaUsuario.cuentaUsuarioActual.Estado == true)
+            {
+                btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#F44545");
+                lbEstadoUsuario.Content = Properties.Resources.lb_Ausente;
+                Dominio.CuentaUsuario.cuentaUsuarioActual.Estado = false;
+            }
+            else
+            {
+                btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
+                lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
+                Dominio.CuentaUsuario.cuentaUsuarioActual.Estado = true;
+            }
+      
         }
     }
 }

@@ -10,34 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DobbleGame
 {
     /// <summary>
-    /// Lógica de interacción para PaginaIngresoCodigo.xaml
+    /// Lógica de interacción para VentanaRegistroExitoso.xaml
     /// </summary>
-    public partial class PaginaIngresoCodigo : Page
+    public partial class VentanaRegistroExitoso : Window
     {
-        public PaginaIngresoCodigo()
+        public VentanaRegistroExitoso()
         {
             InitializeComponent();
         }
 
-        private void BtnAceptar(object sender, RoutedEventArgs e)
+        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void BtnCancelar(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnReintentar(object sender, RoutedEventArgs e)
-        {
-
+            this.Close();
         }
     }
 }

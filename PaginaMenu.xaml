@@ -22,7 +22,7 @@
             </Button>
 
             <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_UnirseASala}" FontSize="50" 
-                    Width="500" Background="#FC8C1B" Foreground="White">
+                    Width="500" Background="#FC8C1B" Foreground="White" Click="BtnUnirseASala_Click">
             </Button>
             
         </StackPanel>

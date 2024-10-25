@@ -21,15 +21,51 @@ namespace DobbleGame
 {
     public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
     {
+        private Servidor.GestionSalaClient proxy;
+        private Servidor.CuentaUsuario[] cuentaUsuarios;
+        public bool EsNuevaSala { get; set; }
+        public string CodigoSala { get; set; }
+
         public PaginaSala()
         {
             InitializeComponent();
             this.DataContext = this;
         }
 
+        public bool CrearSala()
+        {
+            bool resultado = false;
+
+            try
+            {
+                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+                if (EsNuevaSala)
+                {
+                    CodigoSala = proxy.GenerarCodigoNuevaSala();
+                    btnCodigoSala.Content = CodigoSala;
+                    proxy.CrearNuevaSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala);
+                }
+                btnCodigoSala.Content = CodigoSala;
+                proxy.UnirseASala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Se ha unido a la sala");
+                resultado = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            
+            return resultado;
+        }
+
+        private void AbandonarSala()
+        {
+            proxy.AbandonarSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Ha abandonado la sala");
+            proxy.Abort();
+        }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
+            AbandonarSala();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
             fadeOutAnimation.Completed += (s, a) =>
             {
@@ -62,20 +98,13 @@ namespace DobbleGame
 
         private void BtnEnviar_Mnesaje(object sender, RoutedEventArgs e)
         {
-            String mensaje = tbChat.Text.Trim();
+            string mensaje = tbChat.Text.Trim();
 
             if (!string.IsNullOrEmpty(mensaje))
             {
-                InstanceContext contexto = new InstanceContext(this);
-                Servidor.GestionSalaClient proxy = new Servidor.GestionSalaClient(contexto);
-                proxy.EnviarMensajeSala(mensaje);
-                tbChat.Text = String.Empty;
+                proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                tbChat.Text = string.Empty;
             }
-        }
-
-        private void tbContenedor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private void TbChat_GotFocus(object sender, RoutedEventArgs e)
@@ -83,16 +112,24 @@ namespace DobbleGame
             tbContenedor.Visibility = Visibility.Visible;
         }
 
-        public void SalaResponse(string respuesta)
-        {
-            tbContenedor.Text += $"{respuesta}{Environment.NewLine}";
-            tbContenedor.ScrollToEnd();
-            
-        }
-
         private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        public void MostrarMensajeSala(string mensaje)
+        {
+            tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
+            tbContenedor.ScrollToEnd();
+        }
+
+        private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button boton)
+            {
+                Clipboard.SetText(boton.Content.ToString());
+            }
+        }
+
     }
 }

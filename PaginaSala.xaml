@@ -16,7 +16,7 @@
         </Grid.Background>
         <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" 
                  Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}"/>
-        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
+        <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
                     Click="BtnEnviar_Mnesaje" Height="56">
             <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
         </Button>
@@ -25,8 +25,8 @@
                     Click="BtnRegresar_Click" Height="91">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
-        <TextBox Panel.ZIndex="1" Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
-                 Height="309" TextChanged="tbContenedor_TextChanged" TextWrapping="Wrap" IsReadOnly="True" Opacity="0.7" Visibility="Collapsed"/>
+        <TextBox Panel.ZIndex="1" x:Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                 Height="309" TextWrapping="Wrap" IsReadOnly="True" Opacity="0.5" Visibility="Hidden"/>
         <Rectangle HorizontalAlignment="Left" Height="270" Margin="123,103,0,0" VerticalAlignment="Top" Width="460" RadiusX="21" RadiusY="21">
             <Rectangle.Effect>
                 <DropShadowEffect/>
@@ -71,7 +71,7 @@
                 <SolidColorBrush Color="#FFFFFA60" Opacity="0.6"/>
             </Rectangle.Stroke>
         </Rectangle>
-        <Button Content="" HorizontalAlignment="Left" Margin="825,686,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29"/>
+        <Button x:Name="btnCodigoSala" Content="" HorizontalAlignment="Left" Margin="825,686,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29" Click="BtnCopiarCodigoSala_Click"/>
         <Button Content="" HorizontalAlignment="Left" Margin="825,740,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29"/>
         <Button Width="238" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="485,682,0,0" Background="Transparent"
             Click="BtnIniciarPartida_Click" Height="126">

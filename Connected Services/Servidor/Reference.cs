@@ -193,6 +193,18 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
         System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
+        bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
+        bool ValidarContraseña(int idCuenta, string contraseñaUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
+        System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -269,24 +281,64 @@ namespace DobbleGame.Servidor {
         public System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ModificarContraseñaUsuarioAsync(idCuenta, contraseñaUsuario);
         }
+        
+        public bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario) {
+            return base.Channel.ModificarFotoUsuario(idCuenta, fotoUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario) {
+            return base.Channel.ModificarFotoUsuarioAsync(idCuenta, fotoUsuario);
+        }
+        
+        public bool ValidarContraseña(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ValidarContraseña(idCuenta, contraseñaUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario) {
+            return base.Channel.ValidarContraseñaAsync(idCuenta, contraseñaUsuario);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionSala", CallbackContract=typeof(DobbleGame.Servidor.IGestionSalaCallback))]
     public interface IGestionSala {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
-        void EnviarMensajeSala(string mensaje);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/CrearNuevaSala", ReplyAction="http://tempuri.org/IGestionSala/CrearNuevaSalaResponse")]
+        bool CrearNuevaSala(string nombreAnfitrion, string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/CrearNuevaSala", ReplyAction="http://tempuri.org/IGestionSala/CrearNuevaSalaResponse")]
+        System.Threading.Tasks.Task<bool> CrearNuevaSalaAsync(string nombreAnfitrion, string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/UnirseASala", ReplyAction="http://tempuri.org/IGestionSala/UnirseASalaResponse")]
+        void UnirseASala(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/UnirseASala", ReplyAction="http://tempuri.org/IGestionSala/UnirseASalaResponse")]
+        System.Threading.Tasks.Task UnirseASalaAsync(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/AbandonarSala")]
+        void AbandonarSala(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/AbandonarSala")]
+        System.Threading.Tasks.Task AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
-        System.Threading.Tasks.Task EnviarMensajeSalaAsync(string mensaje);
+        void EnviarMensajeSala(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
+        System.Threading.Tasks.Task EnviarMensajeSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSala", ReplyAction="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSalaResponse")]
+        string GenerarCodigoNuevaSala();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSala", ReplyAction="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSalaResponse")]
+        System.Threading.Tasks.Task<string> GenerarCodigoNuevaSalaAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IGestionSalaCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/SalaResponse")]
-        void SalaResponse(string respuesta);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/MostrarMensajeSala")]
+        void MostrarMensajeSala(string mensaje);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -317,12 +369,44 @@ namespace DobbleGame.Servidor {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void EnviarMensajeSala(string mensaje) {
-            base.Channel.EnviarMensajeSala(mensaje);
+        public bool CrearNuevaSala(string nombreAnfitrion, string codigoSala) {
+            return base.Channel.CrearNuevaSala(nombreAnfitrion, codigoSala);
         }
         
-        public System.Threading.Tasks.Task EnviarMensajeSalaAsync(string mensaje) {
-            return base.Channel.EnviarMensajeSalaAsync(mensaje);
+        public System.Threading.Tasks.Task<bool> CrearNuevaSalaAsync(string nombreAnfitrion, string codigoSala) {
+            return base.Channel.CrearNuevaSalaAsync(nombreAnfitrion, codigoSala);
+        }
+        
+        public void UnirseASala(string nombreUsuario, string codigoSala, string mensaje) {
+            base.Channel.UnirseASala(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public System.Threading.Tasks.Task UnirseASalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
+            return base.Channel.UnirseASalaAsync(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public void AbandonarSala(string nombreUsuario, string codigoSala, string mensaje) {
+            base.Channel.AbandonarSala(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public System.Threading.Tasks.Task AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
+            return base.Channel.AbandonarSalaAsync(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public void EnviarMensajeSala(string nombreUsuario, string codigoSala, string mensaje) {
+            base.Channel.EnviarMensajeSala(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public System.Threading.Tasks.Task EnviarMensajeSalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
+            return base.Channel.EnviarMensajeSalaAsync(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public string GenerarCodigoNuevaSala() {
+            return base.Channel.GenerarCodigoNuevaSala();
+        }
+        
+        public System.Threading.Tasks.Task<string> GenerarCodigoNuevaSalaAsync() {
+            return base.Channel.GenerarCodigoNuevaSalaAsync();
         }
     }
 }

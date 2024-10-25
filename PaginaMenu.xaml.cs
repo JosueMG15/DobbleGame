@@ -29,10 +29,28 @@ namespace DobbleGame
 
         private void BtnCrearSala_Click(object sender, RoutedEventArgs e)
         {
+            PaginaSala paginaSala = new PaginaSala()
+            {
+                EsNuevaSala = true
+            };
+
+            if (paginaSala.CrearSala())
+            {
+                IrPaginaSalaAnimacion(paginaSala);
+            }
+            else
+            {
+                Console.WriteLine("No se pudo crear la sala");
+            }
+            
+        }
+
+        public void IrPaginaSalaAnimacion(PaginaSala paginaSala)
+        {
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
             fadeOutAnimation.Completed += (s, a) =>
             {
-                PaginaSala paginaSala = new PaginaSala();
+                //PaginaSala paginaSala = new PaginaSala();
                 this.NavigationService.Navigate(paginaSala);
 
                 AnimateElementsInPaginaSala(paginaSala);
@@ -56,6 +74,17 @@ namespace DobbleGame
 
                     element.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 }
+            }
+        }
+
+        private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)
+        {
+            VentanaIngresoCodigo paginaIngresoCodigo = new VentanaIngresoCodigo();
+            bool? resultado = paginaIngresoCodigo.ShowDialog();
+
+            if (resultado == true)
+            {
+                IrPaginaSalaAnimacion(paginaIngresoCodigo.Sala);
             }
         }
     }

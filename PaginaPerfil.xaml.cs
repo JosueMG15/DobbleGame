@@ -77,18 +77,15 @@ namespace DobbleGame
 
             openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
             openFileDialog.Title = "Selecciona una imagen";
+            openFileDialog.ShowDialog();
+            string selectedFilePath = openFileDialog.FileName;
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string selectedFilePath = openFileDialog.FileName;
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(selectedFilePath);
+            bitmap.EndInit();
 
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(selectedFilePath);
-                bitmap.EndInit();
-
-                ImagenPerfil.Source = bitmap;
-            }
+            ImagenPerfil.Source = bitmap;
         }
     }
 }
