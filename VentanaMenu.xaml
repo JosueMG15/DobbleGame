@@ -23,8 +23,8 @@
                 <RowDefinition Height="300" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Style="{StaticResource BotonPerfil}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Height="80" 
-                    Margin="30,40,10,0" Click="BtnIrPerfil_Click" >
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Height="80" 
+                    Margin="30,40,10,0" Click="BtnIrPerfil_Click" Background="{x:Null}" >
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>

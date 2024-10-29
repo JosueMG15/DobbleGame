@@ -21,9 +21,7 @@
         <Rectangle HorizontalAlignment="Left" Height="501" Margin="511,103,0,0" Stroke="#FFE9E9E9" VerticalAlignment="Top" 
                    Width="577" Fill="#FFE9E9E9" RadiusX="15" RadiusY="15"/>
 
-        <Image Source="pack://application:,,,/Imagenes/PerfilPorDefecto.png" Name="ImagenPerfil" Stretch="Uniform" ClipToBounds="True" Margin="85,146,720,256"/>
-
-
+        <Image Source="pack://application:,,,/Imagenes/PerfilPorDefecto.png" Name="ImagenPerfil" Stretch="Uniform" Margin="85,148,722,258"/>
 
         <Label Content="{x:Static p:Resources.global_CorreoElectrónico}" Margin="564,128,0,618" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="292" FontSize="27" FontWeight="Bold" />
         <Label Content="{x:Static p:Resources.global_Usuario}" Margin="564,300,0,446" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="124" FontSize="27" FontWeight="Bold" />
@@ -42,5 +40,7 @@
         <Button Content="{x:Static p:Resources.btn_ActualizarFoto}" HorizontalAlignment="Left" FontSize="20" Background="#FF62E02C" Click="BtnActualizarFoto" Margin="146,557,0,149" Padding="50 0" Foreground="White" Width="203" />
         <Label Name="lbCorreoElectronico" HorizontalAlignment="Left" Margin="574,187,0,0" VerticalAlignment="Top" FontSize="31" FontFamily="Segoe UI Variable Display Semibold"/>
         <Label Name="lbNombreUsuario" HorizontalAlignment="Left" Margin="600,366,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Variable Display Semibold"/>
+        <Label Content = "{x:Static p:Resources.lb_Puntos}" Style="{StaticResource TituloLalezar1}" Margin="82,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
+        <Label Name="lbPuntaje" Style="{StaticResource TituloLalezar1}" Margin="213,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
     </Grid>
 </Page>

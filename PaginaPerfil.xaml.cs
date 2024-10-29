@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -36,6 +37,7 @@ namespace DobbleGame
         {
             lbCorreoElectronico.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo;
             lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
+            lbPuntaje.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Puntaje;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
         }
 
@@ -106,14 +108,52 @@ namespace DobbleGame
 
                 ImagenPerfil.Source = bitmap;
 
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
-                byte[] foto = File.ReadAllBytes(selectedFilePath);
-                proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, foto);
-                Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+                guardarFotoPerfil(selectedFilePath);
+
+                _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);          
             }
         }
 
-        public void ConvertirImagenPerfil(byte[] fotoBytes)
+        private void guardarFotoPerfil(String rutaImagen)
+        {
+            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+
+            byte[] foto = File.ReadAllBytes(rutaImagen);
+            byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
+            proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+            Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+        }
+
+        private byte[] RedimensionarImagen(byte[] datosImagen, int anchoMaximo, int altoMaximo)
+        {
+            using (MemoryStream memoriaEntrada = new MemoryStream(datosImagen))
+            {
+                System.Drawing.Image imagenOriginal = System.Drawing.Image.FromStream(memoriaEntrada);
+                int nuevoAncho = imagenOriginal.Width;
+                int nuevoAlto = imagenOriginal.Height;
+
+                if (imagenOriginal.Width > anchoMaximo || imagenOriginal.Height > altoMaximo)
+                {
+                    float proporcionAncho = (float)anchoMaximo / imagenOriginal.Width;
+                    float proporcionAlto = (float)altoMaximo / imagenOriginal.Height;
+                    float proporcion = Math.Min(proporcionAncho, proporcionAlto); 
+
+                    nuevoAncho = (int)(imagenOriginal.Width * proporcion);
+                    nuevoAlto = (int)(imagenOriginal.Height * proporcion);
+                }
+
+                Bitmap imagenRedimensionada = new Bitmap(imagenOriginal, new System.Drawing.Size(nuevoAncho, nuevoAlto));
+
+                using (MemoryStream memoriaSalida = new MemoryStream())
+                {
+                    imagenRedimensionada.Save(memoriaSalida, ImageFormat.Jpeg);
+
+                    return memoriaSalida.ToArray();
+                }
+            }
+        }
+
+        private void ConvertirImagenPerfil(byte[] fotoBytes)
         {
             if (fotoBytes == null || fotoBytes.Length == 0)
                 return;

@@ -40,6 +40,11 @@ namespace DobbleGame
             String nuevaContraseña = pbNuevaContraseña.Password.Trim();
             String confirmarNuevaContraseña = pbConfirmarNuevaContraseña.Password.Trim();
 
+            ActualizarContraseña(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña);
+        }
+
+        private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
+        {
             Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
             if (string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
@@ -51,7 +56,7 @@ namespace DobbleGame
             {
                 if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)))
                 {
-                    MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                    MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
                 }
                 else
                 {
@@ -61,8 +66,8 @@ namespace DobbleGame
                     }
                     else
                     {
-                        if(ValidarContraseña(contraseñaActual) == true && ValidarContraseña(nuevaContraseña) == true 
-                            && ValidarContraseña(confirmarNuevaContraseña) == true)
+                        if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) == true && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) == true
+                            && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña) == true)
                         {
                             string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
                             proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
@@ -75,6 +80,7 @@ namespace DobbleGame
                     }
                 }
             }
+
         }
 
         private void MostrarMensaje(string mensaje)
@@ -88,34 +94,6 @@ namespace DobbleGame
             var passwordBox = sender as PasswordBox;
             var textoSugerido = ContraseñaHelper.EncontrarHijoVisual<TextBlock>(passwordBox, "TextoSugerido");
             ContraseñaHelper.ActualizarVisibilidadTextoSugerido(passwordBox, textoSugerido);
-        }
-
-        private bool ValidarContraseña(String contraseña)
-        {
-            if (contraseña.Contains(" "))
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (contraseña.Length < 8)
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (!contraseña.Any(Char.IsUpper))
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-
-            if (contraseña.Count(Char.IsDigit) < 2)
-            {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
-                return false;
-            }
-            return true;
         }
 
     }
