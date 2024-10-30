@@ -87,6 +87,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\ServidorJosue\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\Servidor\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,6 +245,19 @@
     </EmbeddedResource>
     <Resource Include="Fuentes\Lalezar-Regular.ttf" />
     <Resource Include="Fuentes\LuckiestGuy-Regular.ttf" />
+    <None Include="Connected Services\ServidorJosue\DobbleGame.ServidorJosue.CuentaUsuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServidorJosue\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorJosue\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorJosue\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorJosue\ServicioImplementacion.wsdl" />
     <None Include="Connected Services\Servidor\DobbleGame.Servidor.CuentaUsuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -288,6 +306,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServidorJosue\" />
     <WCFMetadataStorage Include="Connected Services\Servidor\" />
   </ItemGroup>
   <ItemGroup>
