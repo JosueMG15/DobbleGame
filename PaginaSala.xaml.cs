@@ -19,10 +19,10 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
+    public partial class PaginaSala : Page, ServidorJosue.IGestionSalaCallback
     {
-        private Servidor.GestionSalaClient proxy;
-        private Servidor.CuentaUsuario[] cuentaUsuarios;
+        private ServidorJosue.GestionSalaClient proxy;
+        private ServidorJosue.CuentaUsuario[] cuentaUsuarios;
         public bool EsNuevaSala { get; set; }
         public string CodigoSala { get; set; }
 
@@ -38,7 +38,7 @@ namespace DobbleGame
 
             try
             {
-                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+                proxy = new ServidorJosue.GestionSalaClient(new InstanceContext(this));
                 if (EsNuevaSala)
                 {
                     CodigoSala = proxy.GenerarCodigoNuevaSala();

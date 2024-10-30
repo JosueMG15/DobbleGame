@@ -367,6 +367,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La contraseña actual no es valida .
+        /// </summary>
+        public static string lb_ContraseñaActualInvalida {
+            get {
+                return ResourceManager.GetString("lb_ContraseñaActualInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La contraseña no cumple con lo solicitado .
         /// </summary>
         public static string lb_ContraseñaIncorrecta_ {
@@ -655,7 +664,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Puntos.
+        ///   Busca una cadena traducida similar a Puntos:.
         /// </summary>
         public static string lb_Puntos {
             get {
