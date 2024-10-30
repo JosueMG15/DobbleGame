@@ -58,7 +58,7 @@ namespace DobbleGame
                 }
                 else
                 {
-                    if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)))
+                    if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)).Resultado)
                     {
                         MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
                     }

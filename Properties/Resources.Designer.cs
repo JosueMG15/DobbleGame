@@ -511,6 +511,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ha ocurrido un error inesperado .
+        /// </summary>
+        public static string lb_ErrorInesperado {
+            get {
+                return ResourceManager.GetString("lb_ErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El usuario y/o contraseña son incorrectos.
         /// </summary>
         public static string lb_ErrorInicioSesión {

@@ -393,4 +393,7 @@
   <data name="lb_ErrorInicioSesión" xml:space="preserve">
     <value>The username and/or password are incorrect</value>
   </data>
+  <data name="lb_ErrorInesperado" xml:space="preserve">
+    <value>An unexpected error has ocurred</value>
+  </data>
 </root>

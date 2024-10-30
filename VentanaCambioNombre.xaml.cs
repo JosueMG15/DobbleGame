@@ -38,14 +38,87 @@ namespace DobbleGame
         private void BtnActualizarUsuario(object sender, RoutedEventArgs e)
         {
             String nuevoNombre = tbNuevoNombre.Text.Trim();
-            guardarCambioNombre(nuevoNombre);
+            GuardarCambioNombre(nuevoNombre);
 
             _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
             _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
         }
 
-        private void guardarCambioNombre(string nuevoNombre)
+        private void GuardarCambioNombre(string nuevoNombre)
         {
+            if (Utilidades.Utilidades.EsCampoVacio(nuevoNombre))
+            {
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                return;
+            }
+
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
+                try
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    var respuestaUsuario = proxy.ExisteNombreUsuario(nuevoNombre);
+                    if (respuestaUsuario.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (respuestaUsuario.Resultado)
+                    {
+                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                        return;
+                    }
+
+                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                    if (respuestaModificarUsuario.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (respuestaModificarUsuario.Resultado)
+                    {
+                        CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
+                        this.Close();
+                    }
+                }
+                catch (CommunicationObjectFaultedException faultEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                }
+                catch (CommunicationException commEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
+                }
+            }
+            /*
             try
             {
                 Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
@@ -56,7 +129,7 @@ namespace DobbleGame
                 }
                 else
                 {
-                    if (proxy.ExisteNombreUsuario(nuevoNombre))
+                    if (proxy.ExisteNombreUsuario(nuevoNombre).Resultado)
                     {
                         MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
                 }
@@ -99,6 +172,7 @@ namespace DobbleGame
                 //Excepción generica
                 MostrarMensaje("Ocurrió un error inesperado: " + ex.Message);
             }
+            */
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)

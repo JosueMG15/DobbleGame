@@ -1,4 +1,5 @@
 ﻿using DobbleGame.Utilidades;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,18 +41,6 @@ namespace DobbleGame
 
         private void BtnRegistrarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                IniciarRegistro();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private void IniciarRegistro()
-        {
             if (!CamposValidos()) return;
 
             byte[] foto = CargarFotoDefecto();
@@ -68,29 +57,53 @@ namespace DobbleGame
         {
             using (var proxy = new Servidor.GestionJugadorClient())
             {
-                Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
-                {
-                    Correo = correo,
-                    Usuario = nombreUsuario,
-                    Contraseña = contraseñaHasheada,
-                    Foto = foto
-                };
-
                 try
                 {
-                    if (proxy.ExisteCorreoAsociado(cuentaUsuario.Correo))
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
+                    {
+                        Correo = correo,
+                        Usuario = nombreUsuario,
+                        Contraseña = contraseñaHasheada,
+                        Foto = foto
+                    };
+
+                    var respuestaCorreo = proxy.ExisteCorreoAsociado(cuentaUsuario.Correo);
+                    if (respuestaCorreo.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (respuestaCorreo.Resultado)
                     {
                         MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
                         return;
                     }
 
-                    if (proxy.ExisteNombreUsuario(cuentaUsuario.Usuario))
+                    var respuestaUsuario = proxy.ExisteNombreUsuario(cuentaUsuario.Usuario);
+                    if (respuestaUsuario.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (respuestaUsuario.Resultado)
                     {
                         MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
                         return;
                     }
 
-                    if (proxy.RegistrarUsuario(cuentaUsuario))
+                    var respuestaRegistro = proxy.RegistrarUsuario(cuentaUsuario);
+                    if (respuestaRegistro.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (respuestaRegistro.Resultado)
                     {
                         VentanaRegistroExitoso ventanaRegistroExitoso = new VentanaRegistroExitoso
                         {
@@ -102,20 +115,39 @@ namespace DobbleGame
                     }
                     else
                     {
-                        MostrarMensaje("Error inesperado durante el registro.");
+                        MostrarMensaje(Properties.Resources.lb_ErrorInesperado);
                     }
                 }
-                catch (CommunicationException)
+                catch (CommunicationObjectFaultedException faultEx)
                 {
-                    var ventanaErrorConexion = new VentanaErrorConexion(
-                             Properties.Resources.lb_ErrorConexiónServidor,
-                             Properties.Resources.lb_MensajeErrorConexiónServidor
-                         )
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                }
+                catch (CommunicationException commEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
                     {
-                        Owner = this,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    };
-                    ventanaErrorConexion.ShowDialog();
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
                 }
             }
         }

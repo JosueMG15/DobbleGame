@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -61,6 +62,30 @@ namespace DobbleGame.Utilidades
         {
             var convertidorBrush = new BrushConverter();
             return (System.Windows.Media.Brush)convertidorBrush.ConvertFromString(colorString);
+        }
+        public static void MostrarVentanaErrorConexionBD(Window contenedor)
+        {
+            var ventanaErrorConexion = new VentanaErrorConexion(
+                             Properties.Resources.lb_ErrorConexiónBD,
+                             Properties.Resources.lb_MensajeErrorConexiónBD
+                         )
+            {
+                Owner = contenedor,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            ventanaErrorConexion.ShowDialog();
+        }
+        public static void MostrarVentanaErrorConexionServidor(Window contenedor)
+        {
+            var ventanaErrorConexion = new VentanaErrorConexion(
+                 Properties.Resources.lb_ErrorConexiónServidor,
+                 Properties.Resources.lb_MensajeErrorConexiónServidor
+             )
+            {
+                Owner = contenedor,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            ventanaErrorConexion.ShowDialog();
         }
     }
 }

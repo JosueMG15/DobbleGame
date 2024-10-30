@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -34,28 +35,39 @@ namespace DobbleGame
         {
             if (!HayCamposVacios())
             {
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
-                var cuentaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
-
-                if (cuentaInicioSesion != null)
+                try
                 {
-                    CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                    Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+                    var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+                    if (respuestaInicioSesion.ErrorBD)
                     {
-                        IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
-                        Usuario = cuentaInicioSesion.Usuario,
-                        Correo = cuentaInicioSesion.Correo,
-                        Contraseña = cuentaInicioSesion.Contraseña,
-                        Foto = cuentaInicioSesion.Foto,
-                        Puntaje = cuentaInicioSesion.Puntaje,
-                        Estado = true,
-                    };
-                    VentanaMenu ventanaMenu = new VentanaMenu();
-                    this.Close();
-                    ventanaMenu.Show();
-                }
-                else
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    }
+                    if (respuestaInicioSesion.Resultado != null)
+                    {
+                        var cuentaInicioSesion = respuestaInicioSesion.Resultado;
+                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                        {
+                            IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
+                            Usuario = cuentaInicioSesion.Usuario,
+                            Correo = cuentaInicioSesion.Correo,
+                            Contraseña = cuentaInicioSesion.Contraseña,
+                            Foto = cuentaInicioSesion.Foto,
+                            Puntaje = cuentaInicioSesion.Puntaje,
+                            Estado = true,
+                        };
+                        VentanaMenu ventanaMenu = new VentanaMenu();
+                        this.Close();
+                        ventanaMenu.Show();
+                    }
+                    else
+                    {
+                        MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
+                    }
+                } 
+                catch (Exception)
                 {
-                    MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
                 }
             }
             

@@ -154,57 +154,211 @@ namespace DobbleGame.Servidor {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicioOfboolean", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class RespuestaServicioOfboolean : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorBDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExitosoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ResultadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorBD {
+            get {
+                return this.ErrorBDField;
+            }
+            set {
+                if ((this.ErrorBDField.Equals(value) != true)) {
+                    this.ErrorBDField = value;
+                    this.RaisePropertyChanged("ErrorBD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Exitoso {
+            get {
+                return this.ExitosoField;
+            }
+            set {
+                if ((this.ExitosoField.Equals(value) != true)) {
+                    this.ExitosoField = value;
+                    this.RaisePropertyChanged("Exitoso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Resultado {
+            get {
+                return this.ResultadoField;
+            }
+            set {
+                if ((this.ResultadoField.Equals(value) != true)) {
+                    this.ResultadoField = value;
+                    this.RaisePropertyChanged("Resultado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicioOfCuentaUsuario6jbaXeYD", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class RespuestaServicioOfCuentaUsuario6jbaXeYD : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorBDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExitosoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DobbleGame.Servidor.CuentaUsuario ResultadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorBD {
+            get {
+                return this.ErrorBDField;
+            }
+            set {
+                if ((this.ErrorBDField.Equals(value) != true)) {
+                    this.ErrorBDField = value;
+                    this.RaisePropertyChanged("ErrorBD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Exitoso {
+            get {
+                return this.ExitosoField;
+            }
+            set {
+                if ((this.ExitosoField.Equals(value) != true)) {
+                    this.ExitosoField = value;
+                    this.RaisePropertyChanged("Exitoso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DobbleGame.Servidor.CuentaUsuario Resultado {
+            get {
+                return this.ResultadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultadoField, value) != true)) {
+                    this.ResultadoField = value;
+                    this.RaisePropertyChanged("Resultado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionJugador")]
     public interface IGestionJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
-        bool RegistrarUsuario(DobbleGame.Servidor.CuentaUsuario cuentaUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean RegistrarUsuario(DobbleGame.Servidor.CuentaUsuario cuentaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/RegistrarUsuario", ReplyAction="http://tempuri.org/IGestionJugador/RegistrarUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.Servidor.CuentaUsuario cuentaUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> RegistrarUsuarioAsync(DobbleGame.Servidor.CuentaUsuario cuentaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
-        bool ExisteNombreUsuario(string nombreUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ExisteNombreUsuario(string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ExisteNombreUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ExisteNombreUsuarioAsync(string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado", ReplyAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse")]
-        bool ExisteCorreoAsociado(string correoUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ExisteCorreoAsociado(string correoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ExisteCorreoAsociado", ReplyAction="http://tempuri.org/IGestionJugador/ExisteCorreoAsociadoResponse")]
-        System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ExisteCorreoAsociadoAsync(string correoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
-        DobbleGame.Servidor.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña);
+        DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD IniciarSesionJugador(string nombreUsuario, string contraseña);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/IniciarSesionJugador", ReplyAction="http://tempuri.org/IGestionJugador/IniciarSesionJugadorResponse")]
-        System.Threading.Tasks.Task<DobbleGame.Servidor.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarNombreUsuarioResponse")]
-        bool ModificarNombreUsuario(int idCuenta, string nombreUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ModificarNombreUsuario(int idCuenta, string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarNombreUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarNombreUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
-        bool ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarContraseñaUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
-        bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ModificarFotoUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ModificarFotoUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
-        bool ValidarContraseña(int idCuenta, string contraseñaUsuario);
+        DobbleGame.Servidor.RespuestaServicioOfboolean ValidarContraseña(int idCuenta, string contraseñaUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ValidarContraseña", ReplyAction="http://tempuri.org/IGestionJugador/ValidarContraseñaResponse")]
-        System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario);
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -234,67 +388,67 @@ namespace DobbleGame.Servidor {
                 base(binding, remoteAddress) {
         }
         
-        public bool RegistrarUsuario(DobbleGame.Servidor.CuentaUsuario cuentaUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean RegistrarUsuario(DobbleGame.Servidor.CuentaUsuario cuentaUsuario) {
             return base.Channel.RegistrarUsuario(cuentaUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> RegistrarUsuarioAsync(DobbleGame.Servidor.CuentaUsuario cuentaUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> RegistrarUsuarioAsync(DobbleGame.Servidor.CuentaUsuario cuentaUsuario) {
             return base.Channel.RegistrarUsuarioAsync(cuentaUsuario);
         }
         
-        public bool ExisteNombreUsuario(string nombreUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ExisteNombreUsuario(string nombreUsuario) {
             return base.Channel.ExisteNombreUsuario(nombreUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ExisteNombreUsuarioAsync(string nombreUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ExisteNombreUsuarioAsync(string nombreUsuario) {
             return base.Channel.ExisteNombreUsuarioAsync(nombreUsuario);
         }
         
-        public bool ExisteCorreoAsociado(string correoUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ExisteCorreoAsociado(string correoUsuario) {
             return base.Channel.ExisteCorreoAsociado(correoUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ExisteCorreoAsociadoAsync(string correoUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ExisteCorreoAsociadoAsync(string correoUsuario) {
             return base.Channel.ExisteCorreoAsociadoAsync(correoUsuario);
         }
         
-        public DobbleGame.Servidor.CuentaUsuario IniciarSesionJugador(string nombreUsuario, string contraseña) {
+        public DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD IniciarSesionJugador(string nombreUsuario, string contraseña) {
             return base.Channel.IniciarSesionJugador(nombreUsuario, contraseña);
         }
         
-        public System.Threading.Tasks.Task<DobbleGame.Servidor.CuentaUsuario> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> IniciarSesionJugadorAsync(string nombreUsuario, string contraseña) {
             return base.Channel.IniciarSesionJugadorAsync(nombreUsuario, contraseña);
         }
         
-        public bool ModificarNombreUsuario(int idCuenta, string nombreUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ModificarNombreUsuario(int idCuenta, string nombreUsuario) {
             return base.Channel.ModificarNombreUsuario(idCuenta, nombreUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarNombreUsuarioAsync(int idCuenta, string nombreUsuario) {
             return base.Channel.ModificarNombreUsuarioAsync(idCuenta, nombreUsuario);
         }
         
-        public bool ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ModificarContraseñaUsuario(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ModificarContraseñaUsuario(idCuenta, contraseñaUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarContraseñaUsuarioAsync(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ModificarContraseñaUsuarioAsync(idCuenta, contraseñaUsuario);
         }
         
-        public bool ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ModificarFotoUsuario(int idCuenta, byte[] fotoUsuario) {
             return base.Channel.ModificarFotoUsuario(idCuenta, fotoUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ModificarFotoUsuarioAsync(int idCuenta, byte[] fotoUsuario) {
             return base.Channel.ModificarFotoUsuarioAsync(idCuenta, fotoUsuario);
         }
         
-        public bool ValidarContraseña(int idCuenta, string contraseñaUsuario) {
+        public DobbleGame.Servidor.RespuestaServicioOfboolean ValidarContraseña(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ValidarContraseña(idCuenta, contraseñaUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario) {
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> ValidarContraseñaAsync(int idCuenta, string contraseñaUsuario) {
             return base.Channel.ValidarContraseñaAsync(idCuenta, contraseñaUsuario);
         }
     }
