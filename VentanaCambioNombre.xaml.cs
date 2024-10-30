@@ -42,8 +42,6 @@ namespace DobbleGame
 
             _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
             _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
-            this.Close();
-
         }
 
         private void guardarCambioNombre(string nuevoNombre)
@@ -61,31 +59,40 @@ namespace DobbleGame
                     if (proxy.ExisteNombreUsuario(nuevoNombre))
                     {
                         MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
-                    }
+                }
                     else
                     {
                         proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
                         CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
+                        this.Close();
                     }
                 }
             }
-            catch (EndpointNotFoundException ex)
+            catch (CommunicationException ex)
             {
                 //Error de conexión con el servidor
-                VentanaErrorConexion errorConexion = new VentanaErrorConexion();
-                errorConexion.Show();
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónServidor,
+                    Properties.Resources.lb_MensajeErrorConexiónServidor
+                    )
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
             }
             catch (SqlException ex)
             {
                 //Error de conexión con la base de datos
-                VentanaErrorConexion errorConexion = new VentanaErrorConexion();
-                errorConexion.Show();
-            }
-            catch (CommunicationException ex)
-            {
-                // Manejar otros errores de comunicación con el servidor
-                VentanaErrorConexion errorConexion = new VentanaErrorConexion();
-                errorConexion.Show();
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónBD,
+                    Properties.Resources.lb_MensajeErrorConexiónBD
+                    )
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
             }
             catch (Exception ex)
             {

@@ -3,7 +3,9 @@ using DobbleGame.Utilidades;
 using Dominio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,41 +47,77 @@ namespace DobbleGame
 
         private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
         {
-            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+            try
+            {
+                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
-            if (string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
-                        string.IsNullOrEmpty(confirmarNuevaContraseña))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-            }
-            else
-            {
-                if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)))
+                if (string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
+                            string.IsNullOrEmpty(confirmarNuevaContraseña))
                 {
-                    MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
                 }
                 else
                 {
-                    if (nuevaContraseña != confirmarNuevaContraseña)
+                    if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)))
                     {
-                        MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                        MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
                     }
                     else
                     {
-                        if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) == true && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) == true
-                            && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña) == true)
+                        if (nuevaContraseña != confirmarNuevaContraseña)
                         {
-                            string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
-                            proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
-                            this.Close();
+                            MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
                         }
                         else
                         {
-                            MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                            if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) == true && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) == true
+                                && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña) == true)
+                            {
+                                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
+                                proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                            }
                         }
                     }
                 }
+
             }
+            catch (CommunicationException ex)
+            {
+                //Error de conexión con el servidor
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónServidor,
+                    Properties.Resources.lb_MensajeErrorConexiónServidor
+                    )
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
+            }
+            catch (SqlException ex)
+            {
+                //Error de conexión con la base de datos
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónBD,
+                    Properties.Resources.lb_MensajeErrorConexiónBD
+                    )
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                //Excepción generica
+                MostrarMensaje("Ocurrió un error inesperado: " + ex.Message);
+            }
+
 
         }
 

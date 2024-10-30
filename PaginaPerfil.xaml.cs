@@ -3,11 +3,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -116,12 +118,39 @@ namespace DobbleGame
 
         private void guardarFotoPerfil(String rutaImagen)
         {
-            Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+            //try
+            //{
+                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
 
-            byte[] foto = File.ReadAllBytes(rutaImagen);
-            byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
-            proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
-            Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+                byte[] foto = File.ReadAllBytes(rutaImagen);
+                byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
+                proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+                Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+            /*}
+            catch (CommunicationException ex)
+            {
+                //Error de conexión con el servidor
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónServidor,
+                    Properties.Resources.lb_MensajeErrorConexiónServidor
+                    )
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
+            }
+            catch (SqlException ex)
+            {
+                //Error de conexión con la base de datos
+                var ventanaErrorConexion = new VentanaErrorConexion(
+                    Properties.Resources.lb_ErrorConexiónBD,
+                    Properties.Resources.lb_MensajeErrorConexiónBD
+                    )
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                ventanaErrorConexion.ShowDialog();
+            }*/
         }
 
         private byte[] RedimensionarImagen(byte[] datosImagen, int anchoMaximo, int altoMaximo)

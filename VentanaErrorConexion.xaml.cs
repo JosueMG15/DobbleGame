@@ -26,9 +26,18 @@ namespace DobbleGame
             tbMensaje.Text = mensaje;
         }
 
-        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
+        private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            MainWindow inicioSesion = new MainWindow();
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if(window != inicioSesion)
+                {
+                    window.Close();
+                }
+            }
+            inicioSesion.Show();
         }
     }
 }
