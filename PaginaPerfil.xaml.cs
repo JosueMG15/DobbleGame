@@ -108,49 +108,77 @@ namespace DobbleGame
                 bitmap.UriSource = new Uri(selectedFilePath);
                 bitmap.EndInit();
 
-                ImagenPerfil.Source = bitmap;
-
-                guardarFotoPerfil(selectedFilePath);
-
-                _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);          
+                guardarFotoPerfil(selectedFilePath, bitmap);                          
             }
         }
 
-        private void guardarFotoPerfil(String rutaImagen)
+        private void guardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
         {
-            //try
-            //{
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
+                try
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
 
-                byte[] foto = File.ReadAllBytes(rutaImagen);
-                byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
-                proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
-                Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
-            /*}
-            catch (CommunicationException ex)
-            {
-                //Error de conexión con el servidor
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónServidor,
-                    Properties.Resources.lb_MensajeErrorConexiónServidor
-                    )
+                    byte[] foto = File.ReadAllBytes(rutaImagen);
+                    byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
+                    var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+
+                    var ventanaPrincipal = Window.GetWindow(this);
+
+                    if (respuestaModificarFoto.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(ventanaPrincipal);
+                        return;
+                    }
+                    if (respuestaModificarFoto.Resultado)
+                    {
+                        Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+                        ImagenPerfil.Source = bitmap;
+                        _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
+                    }
+                }
+                catch (CommunicationObjectFaultedException faultEx)
                 {
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
+                    var ventanaPrincipal = Window.GetWindow(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                }
+                catch (CommunicationException commEx)
+                {
+                    var ventanaPrincipal = Window.GetWindow(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    var ventanaPrincipal = Window.GetWindow(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    var ventanaPrincipal = Window.GetWindow(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
+                }
+
             }
-            catch (SqlException ex)
-            {
-                //Error de conexión con la base de datos
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónBD,
-                    Properties.Resources.lb_MensajeErrorConexiónBD
-                    )
-                {
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
-            }*/
         }
 
         private byte[] RedimensionarImagen(byte[] datosImagen, int anchoMaximo, int altoMaximo)
