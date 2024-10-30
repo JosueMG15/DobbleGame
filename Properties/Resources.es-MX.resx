@@ -387,4 +387,7 @@
   <data name="lb_CorreoInválido" xml:space="preserve">
     <value>El correo no es válido</value>
   </data>
+  <data name="lb_ErrorInicioSesión" xml:space="preserve">
+    <value>El usuario y/o contraseña son incorrectos</value>
+  </data>
 </root>

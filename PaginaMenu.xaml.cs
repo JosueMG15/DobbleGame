@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para PaginaMenu.xaml
-    /// </summary>
     public partial class PaginaMenu : Page
     {
         public PaginaMenu()

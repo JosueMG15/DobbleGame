@@ -502,6 +502,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El usuario y/o contraseña son incorrectos.
+        /// </summary>
+        public static string lb_ErrorInicioSesión {
+            get {
+                return ResourceManager.GetString("lb_ErrorInicioSesión", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El formato seleccionado no es válido para la foto de perfil.
         /// </summary>
         public static string lb_FormatoInválido {

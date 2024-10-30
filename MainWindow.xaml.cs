@@ -55,7 +55,7 @@ namespace DobbleGame
                 }
                 else
                 {
-                    MostrarMensaje("No se pudo inciar sesión");
+                    MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
                 }
             }
             

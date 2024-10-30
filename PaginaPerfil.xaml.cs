@@ -110,6 +110,8 @@ namespace DobbleGame
                 byte[] foto = File.ReadAllBytes(selectedFilePath);
                 proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, foto);
                 Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+
+
             }
         }
 

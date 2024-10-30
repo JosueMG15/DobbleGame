@@ -67,6 +67,33 @@
   <wsdl:message name="IGestionJugador_ModificarContraseñaUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:ModificarContraseñaUsuarioResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionJugador_ModificarFotoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarFotoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ModificarFotoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarFotoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ValidarContraseña_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarContraseña" />
+  </wsdl:message>
+  <wsdl:message name="IGestionJugador_ValidarContraseña_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarContraseñaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_CrearNuevaSala_InputMessage">
+    <wsdl:part name="parameters" element="tns:CrearNuevaSala" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_CrearNuevaSala_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CrearNuevaSalaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_UnirseASala_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnirseASala" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_UnirseASala_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnirseASalaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_AbandonarSala_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbandonarSala" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>

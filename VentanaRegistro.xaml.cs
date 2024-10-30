@@ -18,9 +18,7 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaRegistro.xaml
-    /// </summary>
+
     public partial class VentanaRegistro : Window 
     {
         public VentanaRegistro()
@@ -54,40 +52,26 @@ namespace DobbleGame
 
         private void IniciarRegistro()
         {
-            if (TieneCamposVacios())
-            {
-                return;
-            }
-
-            if (!ValidarPatronCorreo())
-            {
-                return;
-            }
-
-            if (!ValidarContraseña())
-            {
-                return;
-            }
-
-            if (!ValidarComparacionContraseña())
-            {
-                return;
-            }
+            if (!CamposValidos()) return;
 
             byte[] foto = CargarFotoDefecto();
-            if (foto == null)
-            {
-                return;
-            }
+            if (foto == null) return;
 
             string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password);
+            string correo = tbCorreo.Text;
+            string usuario = tbNombreUsuario.Text;
 
+            RegistrarUsuario(correo, usuario, contraseñaHasheada, foto);
+        }
+
+        public void RegistrarUsuario(string correo, string nombreUsuario, string contraseñaHasheada, byte[] foto)
+        {
             using (var proxy = new Servidor.GestionJugadorClient())
             {
                 Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
                 {
-                    Correo = tbCorreo.Text,
-                    Usuario = tbNombreUsuario.Text,
+                    Correo = correo,
+                    Usuario = nombreUsuario,
                     Contraseña = contraseñaHasheada,
                     Foto = foto
                 };
@@ -129,11 +113,36 @@ namespace DobbleGame
                          )
                     {
                         Owner = this,
-                        WindowStartupLocation= WindowStartupLocation.CenterOwner
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     ventanaErrorConexion.ShowDialog();
                 }
             }
+        }
+
+        private bool CamposValidos()
+        {
+            if (TieneCamposVacios())
+            {
+                return false;
+            }
+
+            if (!ValidarPatronCorreo())
+            {
+                return false;
+            }
+
+            if (!ValidarContraseña())
+            {
+                return false;
+            }
+
+            if (!ValidarComparacionContraseña())
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool TieneCamposVacios()
