@@ -118,61 +118,6 @@ namespace DobbleGame
                     }
                 }
             }
-            /*
-            try
-            {
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
-
-                if (string.IsNullOrEmpty(nuevoNombre))
-                {
-                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                }
-                else
-                {
-                    if (proxy.ExisteNombreUsuario(nuevoNombre).Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
-                }
-                    else
-                    {
-                        proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
-                        CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
-                        this.Close();
-                    }
-                }
-            }
-            catch (CommunicationException ex)
-            {
-                //Error de conexión con el servidor
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónServidor,
-                    Properties.Resources.lb_MensajeErrorConexiónServidor
-                    )
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
-            }
-            catch (SqlException ex)
-            {
-                //Error de conexión con la base de datos
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónBD,
-                    Properties.Resources.lb_MensajeErrorConexiónBD
-                    )
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                //Excepción generica
-                MostrarMensaje("Ocurrió un error inesperado: " + ex.Message);
-            }
-            */
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)

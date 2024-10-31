@@ -199,7 +199,7 @@
     <value>Reintentar</value>
   </data>
   <data name="btn_CrearSala" xml:space="preserve">
-    <value>CrearSala</value>
+    <value>Crear Sala</value>
   </data>
   <data name="btn_UnirseASala" xml:space="preserve">
     <value>Unirse a sala</value>

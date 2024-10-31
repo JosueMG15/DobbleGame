@@ -47,78 +47,98 @@ namespace DobbleGame
 
         private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
         {
-            try
+            if (Utilidades.Utilidades.EsCampoVacio(contraseñaActual) || Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) 
+                || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
             {
-                Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                return;
+            }
 
-                if (string.IsNullOrEmpty(contraseñaActual) || string.IsNullOrEmpty(nuevaContraseña) ||
-                            string.IsNullOrEmpty(confirmarNuevaContraseña))
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
+                try
                 {
-                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                }
-                else
-                {
-                    if (!proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual)).Resultado)
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    var respuestaUsuario = proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario,
+                        Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual));
+
+                    if (respuestaUsuario.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                    if (!respuestaUsuario.Resultado)
                     {
                         MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
+                        return;
+                    }
+
+                    if(nuevaContraseña != confirmarNuevaContraseña)
+                    {
+                        MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                        return;
+                    }
+
+                    if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) 
+                        && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
+                    {
+                        string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
+                        var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
+
+                        if (respuestaModificarContraseña.ErrorBD)
+                        {
+                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                            return;
+                        }
+                        if (respuestaModificarContraseña.Resultado)
+                        {
+                            this.Close();
+                        }
                     }
                     else
                     {
-                        if (nuevaContraseña != confirmarNuevaContraseña)
-                        {
-                            MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
-                        }
-                        else
-                        {
-                            if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) == true && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) == true
-                                && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña) == true)
-                            {
-                                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
-                                proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
-                                this.Close();
-                            }
-                            else
-                            {
-                                MostrarMensaje(Properties.Resources.lb_DatosInválidos);
-                            }
-                        }
+                        MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                        return;
+                    }                
+                }
+                catch (CommunicationObjectFaultedException faultEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                }
+                catch (CommunicationException commEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
                     }
                 }
 
             }
-            catch (CommunicationException ex)
-            {
-                //Error de conexión con el servidor
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónServidor,
-                    Properties.Resources.lb_MensajeErrorConexiónServidor
-                    )
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
-            }
-            catch (SqlException ex)
-            {
-                //Error de conexión con la base de datos
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                    Properties.Resources.lb_ErrorConexiónBD,
-                    Properties.Resources.lb_MensajeErrorConexiónBD
-                    )
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                ventanaErrorConexion.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                //Excepción generica
-                MostrarMensaje("Ocurrió un error inesperado: " + ex.Message);
-            }
-
-
         }
 
         private void MostrarMensaje(string mensaje)

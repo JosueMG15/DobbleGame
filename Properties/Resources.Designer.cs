@@ -79,7 +79,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a CrearSala.
+        ///   Busca una cadena traducida similar a Crear Sala.
         /// </summary>
         public static string btn_CrearSala {
             get {
