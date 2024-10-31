@@ -30,37 +30,109 @@ namespace DobbleGame
         {
             InitializeComponent();
             this.DataContext = this;
+            proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
         }
 
         public bool CrearSala()
         {
+            if (proxy == null || proxy.State != CommunicationState.Opened)
+                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+
             bool resultado = false;
 
             try
             {
-                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
-                if (EsNuevaSala)
+                if (proxy.State == CommunicationState.Faulted)
                 {
-                    CodigoSala = proxy.GenerarCodigoNuevaSala();
-                    btnCodigoSala.Content = CodigoSala;
-                    proxy.CrearNuevaSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala);
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                 }
+
+                CodigoSala = proxy.GenerarCodigoNuevaSala();
                 btnCodigoSala.Content = CodigoSala;
-                proxy.UnirseASala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Se ha unido a la sala");
+                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                proxy.CrearNuevaSala(usuarioActual.Usuario, CodigoSala);
+                proxy.UnirseASala(usuarioActual.Usuario, usuarioActual.Puntaje, usuarioActual.Foto, CodigoSala, "Se ha unido a la sala");
                 resultado = true;
+            }
+            catch (CommunicationObjectFaultedException faultEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+            }
+            catch (CommunicationException commEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error de comunicación: {commEx.Message}");
+            }
+            catch (TimeoutException timeoutEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error inesperado: {ex.Message}");
             }
-            
+
+            return resultado;
+        }
+
+        public bool UnirseASala()
+        {
+            if (proxy == null || proxy.State != CommunicationState.Opened)
+                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+
+            bool resultado = false;
+
+            try
+            {
+                if (proxy.State == CommunicationState.Faulted)
+                {
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
+
+                btnCodigoSala.Content = CodigoSala;
+                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                resultado = proxy.UnirseASala(usuarioActual.Usuario, usuarioActual.Puntaje, usuarioActual.Foto, CodigoSala, " Se ha unido a la sala");
+            }
+            catch (CommunicationObjectFaultedException faultEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+            }
+            catch (CommunicationException commEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error de comunicación: {commEx.Message}");
+            }
+            catch (TimeoutException timeoutEx)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                Console.WriteLine($"Error inesperado: {ex.Message}");
+            }
+
             return resultado;
         }
 
         private void AbandonarSala()
         {
-            proxy.AbandonarSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Ha abandonado la sala");
-            proxy.Abort();
+            try
+            {
+                proxy.AbandonarSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Ha abandonado la sala");
+                proxy.Close();
+            }
+            catch (CommunicationException)
+            {
+                proxy.Abort();
+            }
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
@@ -96,14 +168,18 @@ namespace DobbleGame
             }
         }
 
-        private void BtnEnviar_Mnesaje(object sender, RoutedEventArgs e)
+        private void BtnEnviar_Mensaje(object sender, RoutedEventArgs e)
         {
             string mensaje = tbChat.Text.Trim();
 
-            if (!string.IsNullOrEmpty(mensaje))
+            if (!string.IsNullOrEmpty(mensaje) && proxy?.State == CommunicationState.Opened)
             {
                 proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
                 tbChat.Text = string.Empty;
+            }
+            else
+            {
+                MessageBox.Show("No se puede enviar el mensaje. Verifique la conexión.");
             }
         }
 

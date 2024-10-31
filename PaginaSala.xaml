@@ -17,7 +17,7 @@
         <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" 
                  Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}"/>
         <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
-                    Click="BtnEnviar_Mnesaje" Height="56">
+                    Click="BtnEnviar_Mensaje" Height="56">
             <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
         </Button>
 

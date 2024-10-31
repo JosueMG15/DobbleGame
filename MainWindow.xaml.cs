@@ -33,44 +33,51 @@ namespace DobbleGame
 
         private void IniciarSesion()
         {
-            if (!HayCamposVacios())
+            using (var proxy = new  Servidor.GestionJugadorClient())
             {
-                try
+                if (!HayCamposVacios())
                 {
-                    Servidor.GestionJugadorClient proxy = new Servidor.GestionJugadorClient();
-                    var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
-                    if (respuestaInicioSesion.ErrorBD)
+                    try
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                    }
-                    if (respuestaInicioSesion.Resultado != null)
-                    {
-                        var cuentaInicioSesion = respuestaInicioSesion.Resultado;
-                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                        if (proxy.State == CommunicationState.Faulted)
                         {
-                            IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
-                            Usuario = cuentaInicioSesion.Usuario,
-                            Correo = cuentaInicioSesion.Correo,
-                            Contraseña = cuentaInicioSesion.Contraseña,
-                            Foto = cuentaInicioSesion.Foto,
-                            Puntaje = cuentaInicioSesion.Puntaje,
-                            Estado = true,
-                        };
-                        VentanaMenu ventanaMenu = new VentanaMenu();
-                        this.Close();
-                        ventanaMenu.Show();
+                            proxy.Abort();
+                            throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                        }
+
+                        var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+                        if (respuestaInicioSesion.ErrorBD)
+                        {
+                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        }
+                        if (respuestaInicioSesion.Resultado != null)
+                        {
+                            var cuentaInicioSesion = respuestaInicioSesion.Resultado;
+                            CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                            {
+                                IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
+                                Usuario = cuentaInicioSesion.Usuario,
+                                Correo = cuentaInicioSesion.Correo,
+                                Contraseña = cuentaInicioSesion.Contraseña,
+                                Foto = cuentaInicioSesion.Foto,
+                                Puntaje = cuentaInicioSesion.Puntaje,
+                                Estado = true,
+                            };
+                            VentanaMenu ventanaMenu = new VentanaMenu();
+                            this.Close();
+                            ventanaMenu.Show();
+                        }
+                        else
+                        {
+                            MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
                     }
-                } 
-                catch (Exception)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
                 }
             }
-            
         }
 
         private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)

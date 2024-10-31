@@ -95,6 +95,9 @@
     <Compile Include="VentanaErrorConexion.xaml.cs">
       <DependentUpon>VentanaErrorConexion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VentanaIngresoCodigoSala.xaml.cs">
+      <DependentUpon>VentanaIngresoCodigoSala.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaIngresoCodigo.xaml.cs">
       <DependentUpon>VentanaIngresoCodigo.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="VentanaErrorConexion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaIngresoCodigoSala.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

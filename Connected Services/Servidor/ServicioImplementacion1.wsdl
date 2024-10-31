@@ -94,6 +94,9 @@
   <wsdl:message name="IGestionSala_AbandonarSala_InputMessage">
     <wsdl:part name="parameters" element="tns:AbandonarSala" />
   </wsdl:message>
+  <wsdl:message name="IGestionSala_AbandonarSala_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbandonarSalaResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
@@ -151,6 +154,7 @@
     </wsdl:operation>
     <wsdl:operation name="AbandonarSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/AbandonarSala" message="tns:IGestionSala_AbandonarSala_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/AbandonarSalaResponse" message="tns:IGestionSala_AbandonarSala_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EnviarMensajeSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/EnviarMensajeSala" message="tns:IGestionSala_EnviarMensajeSala_InputMessage" />
@@ -265,6 +269,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EnviarMensajeSala">
       <soap12:operation soapAction="http://tempuri.org/IGestionSala/EnviarMensajeSala" style="document" />

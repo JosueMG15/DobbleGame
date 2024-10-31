@@ -20,7 +20,6 @@ namespace DobbleGame
     /// </summary>
     public partial class VentanaIngresoCodigo : Window
     {
-        public PaginaSala Sala { get; private set; }
         public VentanaIngresoCodigo()
         {
             InitializeComponent();
@@ -29,36 +28,11 @@ namespace DobbleGame
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
 
-            if (!String.IsNullOrWhiteSpace(tbCodigoSala.Text))
-            {
-                PaginaSala paginaSala = new PaginaSala()
-                {
-                    EsNuevaSala = false,
-                    CodigoSala = tbCodigoSala.Text,
-                };
-
-                if (paginaSala.CrearSala())
-                {
-                    Sala = paginaSala;
-                    this.DialogResult = true;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo unir a la sala");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Campos vacios");
-            }
-
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
-            this.Close();
+
         }
 
         private void BtnReintentar(object sender, RoutedEventArgs e)

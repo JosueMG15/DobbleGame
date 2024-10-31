@@ -75,17 +75,32 @@ namespace DobbleGame.Utilidades
             };
             ventanaErrorConexion.ShowDialog();
         }
-        public static void MostrarVentanaErrorConexionServidor(Window contenedor)
+        public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor)
         {
             var ventanaErrorConexion = new VentanaErrorConexion(
                  Properties.Resources.lb_ErrorConexiónServidor,
                  Properties.Resources.lb_MensajeErrorConexiónServidor
              )
             {
-                Owner = contenedor,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+            }; 
+
+            if (contenedor is Window ventana)
+            {
+                ventanaErrorConexion.Owner = ventana;
+            }
+            else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
+            {
+                ventanaErrorConexion.Owner = ventanaPrincipal;
+            }
+
             ventanaErrorConexion.ShowDialog();
+        }
+
+        public static void MostrarMensajeStackPanel(StackPanel contenedor, Label lbMensaje, string mensaje)
+        {
+            contenedor.Visibility = Visibility.Visible;
+            lbMensaje.Content = mensaje;
         }
     }
 }

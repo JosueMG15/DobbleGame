@@ -137,6 +137,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="puntaje" type="xs:int" />
+        <xs:element minOccurs="0" name="foto" nillable="true" type="xs:base64Binary" />
         <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="mensaje" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -144,7 +146,9 @@
   </xs:element>
   <xs:element name="UnirseASalaResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UnirseASalaResult" type="xs:boolean" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AbandonarSala">
@@ -153,6 +157,13 @@
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="mensaje" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AbandonarSalaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AbandonarSalaResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

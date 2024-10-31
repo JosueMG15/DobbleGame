@@ -81,7 +81,7 @@ namespace DobbleGame
                     }
                     if (respuestaCorreo.Resultado)
                     {
-                        MostrarMensaje(Properties.Resources.lb_CorreoExistente_);
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoExistente_);
                         return;
                     }
 
@@ -93,7 +93,7 @@ namespace DobbleGame
                     }
                     if (respuestaUsuario.Resultado)
                     {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_UsuarioExistente_);
                         return;
                     }
 
@@ -115,7 +115,7 @@ namespace DobbleGame
                     }
                     else
                     {
-                        MostrarMensaje(Properties.Resources.lb_ErrorInesperado);
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
                     }
                 }
                 catch (CommunicationObjectFaultedException faultEx)
@@ -187,7 +187,7 @@ namespace DobbleGame
 
             if (hayCaposVacios)
             {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CamposVacíos);
                 return true;
             }
 
@@ -198,7 +198,7 @@ namespace DobbleGame
         {
             if (!Utilidades.Utilidades.ValidarContraseña(pbContraseña.Password))
             {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaIncorrecta_);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaIncorrecta_);
                 return false;
             }
 
@@ -214,7 +214,7 @@ namespace DobbleGame
             }
             else
             {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaNoCoincide_);
             }
             return validado;
         }
@@ -229,7 +229,7 @@ namespace DobbleGame
             }
             else
             {
-                MostrarMensaje(Properties.Resources.lb_CorreoInválido);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoInválido);
             }
             
             return validado;
@@ -242,12 +242,6 @@ namespace DobbleGame
             ContraseñaHelper.ActualizarVisibilidadTextoSugerido(passwordBox, textoSugerido);
         }
 
-        private void MostrarMensaje(string mensaje)
-        {
-            panelMensaje.Visibility = Visibility.Visible;
-            lbMensaje.Content = mensaje;
-        }
-
         private byte[] CargarFotoDefecto()
         {
             try
@@ -257,7 +251,7 @@ namespace DobbleGame
 
                 if (!File.Exists(rutaFotoDefecto))
                 {
-                    MostrarMensaje("No se encontró la imagen por defecto");
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "No se encontró la imagen por defecto");
                     return null;
                 }
 

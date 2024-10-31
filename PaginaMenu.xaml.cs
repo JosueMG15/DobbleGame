@@ -76,12 +76,12 @@ namespace DobbleGame
 
         private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)
         {
-            VentanaIngresoCodigo paginaIngresoCodigo = new VentanaIngresoCodigo();
-            bool? resultado = paginaIngresoCodigo.ShowDialog();
+            VentanaIngresoCodigoSala paginaIngresoCodigoSala = new VentanaIngresoCodigoSala();
+            bool? resultado = paginaIngresoCodigoSala.ShowDialog();
 
             if (resultado == true)
             {
-                IrPaginaSalaAnimacion(paginaIngresoCodigo.Sala);
+                IrPaginaSalaAnimacion(paginaIngresoCodigoSala.Sala);
             }
         }
     }

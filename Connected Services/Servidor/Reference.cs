@@ -464,16 +464,16 @@ namespace DobbleGame.Servidor {
         System.Threading.Tasks.Task<bool> CrearNuevaSalaAsync(string nombreAnfitrion, string codigoSala);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/UnirseASala", ReplyAction="http://tempuri.org/IGestionSala/UnirseASalaResponse")]
-        void UnirseASala(string nombreUsuario, string codigoSala, string mensaje);
+        bool UnirseASala(string nombreUsuario, int puntaje, byte[] foto, string codigoSala, string mensaje);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/UnirseASala", ReplyAction="http://tempuri.org/IGestionSala/UnirseASalaResponse")]
-        System.Threading.Tasks.Task UnirseASalaAsync(string nombreUsuario, string codigoSala, string mensaje);
+        System.Threading.Tasks.Task<bool> UnirseASalaAsync(string nombreUsuario, int puntaje, byte[] foto, string codigoSala, string mensaje);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/AbandonarSala")]
-        void AbandonarSala(string nombreUsuario, string codigoSala, string mensaje);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/AbandonarSala", ReplyAction="http://tempuri.org/IGestionSala/AbandonarSalaResponse")]
+        bool AbandonarSala(string nombreUsuario, string codigoSala, string mensaje);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/AbandonarSala")]
-        System.Threading.Tasks.Task AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/AbandonarSala", ReplyAction="http://tempuri.org/IGestionSala/AbandonarSalaResponse")]
+        System.Threading.Tasks.Task<bool> AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
         void EnviarMensajeSala(string nombreUsuario, string codigoSala, string mensaje);
@@ -531,19 +531,19 @@ namespace DobbleGame.Servidor {
             return base.Channel.CrearNuevaSalaAsync(nombreAnfitrion, codigoSala);
         }
         
-        public void UnirseASala(string nombreUsuario, string codigoSala, string mensaje) {
-            base.Channel.UnirseASala(nombreUsuario, codigoSala, mensaje);
+        public bool UnirseASala(string nombreUsuario, int puntaje, byte[] foto, string codigoSala, string mensaje) {
+            return base.Channel.UnirseASala(nombreUsuario, puntaje, foto, codigoSala, mensaje);
         }
         
-        public System.Threading.Tasks.Task UnirseASalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
-            return base.Channel.UnirseASalaAsync(nombreUsuario, codigoSala, mensaje);
+        public System.Threading.Tasks.Task<bool> UnirseASalaAsync(string nombreUsuario, int puntaje, byte[] foto, string codigoSala, string mensaje) {
+            return base.Channel.UnirseASalaAsync(nombreUsuario, puntaje, foto, codigoSala, mensaje);
         }
         
-        public void AbandonarSala(string nombreUsuario, string codigoSala, string mensaje) {
-            base.Channel.AbandonarSala(nombreUsuario, codigoSala, mensaje);
+        public bool AbandonarSala(string nombreUsuario, string codigoSala, string mensaje) {
+            return base.Channel.AbandonarSala(nombreUsuario, codigoSala, mensaje);
         }
         
-        public System.Threading.Tasks.Task AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
+        public System.Threading.Tasks.Task<bool> AbandonarSalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
             return base.Channel.AbandonarSalaAsync(nombreUsuario, codigoSala, mensaje);
         }
         
