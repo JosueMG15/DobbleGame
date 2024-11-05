@@ -892,89 +892,6 @@ namespace DobbleGame.Servidor {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionPartida", CallbackContract=typeof(DobbleGame.Servidor.IGestionPartidaCallback))]
-    public interface IGestionPartida {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/CrearNuevaPartida", ReplyAction="http://tempuri.org/IGestionPartida/CrearNuevaPartidaResponse")]
-        bool CrearNuevaPartida(string codigoSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/CrearNuevaPartida", ReplyAction="http://tempuri.org/IGestionPartida/CrearNuevaPartidaResponse")]
-        System.Threading.Tasks.Task<bool> CrearNuevaPartidaAsync(string codigoSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/UnirJugadoresAPartida", ReplyAction="http://tempuri.org/IGestionPartida/UnirJugadoresAPartidaResponse")]
-        void UnirJugadoresAPartida(string codigoSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/UnirJugadoresAPartida", ReplyAction="http://tempuri.org/IGestionPartida/UnirJugadoresAPartidaResponse")]
-        System.Threading.Tasks.Task UnirJugadoresAPartidaAsync(string codigoSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/AbandonarPartida", ReplyAction="http://tempuri.org/IGestionPartida/AbandonarPartidaResponse")]
-        bool AbandonarPartida(string nombreUsuario, string codigoSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/AbandonarPartida", ReplyAction="http://tempuri.org/IGestionPartida/AbandonarPartidaResponse")]
-        System.Threading.Tasks.Task<bool> AbandonarPartidaAsync(string nombreUsuario, string codigoSala);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGestionPartidaCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida")]
-        void ActualizarJugadoresEnPartida(DobbleGame.Servidor.CuentaUsuario[] jugadoresConectados);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGestionPartidaChannel : DobbleGame.Servidor.IGestionPartida, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GestionPartidaClient : System.ServiceModel.DuplexClientBase<DobbleGame.Servidor.IGestionPartida>, DobbleGame.Servidor.IGestionPartida {
-        
-        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance) : 
-                base(callbackInstance) {
-        }
-        
-        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
-                base(callbackInstance, endpointConfigurationName) {
-        }
-        
-        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
-        }
-        
-        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, binding, remoteAddress) {
-        }
-        
-        public bool CrearNuevaPartida(string codigoSala) {
-            return base.Channel.CrearNuevaPartida(codigoSala);
-        }
-        
-        public System.Threading.Tasks.Task<bool> CrearNuevaPartidaAsync(string codigoSala) {
-            return base.Channel.CrearNuevaPartidaAsync(codigoSala);
-        }
-        
-        public void UnirJugadoresAPartida(string codigoSala) {
-            base.Channel.UnirJugadoresAPartida(codigoSala);
-        }
-        
-        public System.Threading.Tasks.Task UnirJugadoresAPartidaAsync(string codigoSala) {
-            return base.Channel.UnirJugadoresAPartidaAsync(codigoSala);
-        }
-        
-        public bool AbandonarPartida(string nombreUsuario, string codigoSala) {
-            return base.Channel.AbandonarPartida(nombreUsuario, codigoSala);
-        }
-        
-        public System.Threading.Tasks.Task<bool> AbandonarPartidaAsync(string nombreUsuario, string codigoSala) {
-            return base.Channel.AbandonarPartidaAsync(nombreUsuario, codigoSala);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionAmigos")]
     public interface IGestionAmigos {
         
@@ -1116,6 +1033,89 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD> ObtenerAmistadAsync(int idAmistad) {
             return base.Channel.ObtenerAmistadAsync(idAmistad);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionPartida", CallbackContract=typeof(DobbleGame.Servidor.IGestionPartidaCallback))]
+    public interface IGestionPartida {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/CrearNuevaPartida", ReplyAction="http://tempuri.org/IGestionPartida/CrearNuevaPartidaResponse")]
+        bool CrearNuevaPartida(string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/CrearNuevaPartida", ReplyAction="http://tempuri.org/IGestionPartida/CrearNuevaPartidaResponse")]
+        System.Threading.Tasks.Task<bool> CrearNuevaPartidaAsync(string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/UnirJugadoresAPartida", ReplyAction="http://tempuri.org/IGestionPartida/UnirJugadoresAPartidaResponse")]
+        void UnirJugadoresAPartida(string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/UnirJugadoresAPartida", ReplyAction="http://tempuri.org/IGestionPartida/UnirJugadoresAPartidaResponse")]
+        System.Threading.Tasks.Task UnirJugadoresAPartidaAsync(string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/AbandonarPartida", ReplyAction="http://tempuri.org/IGestionPartida/AbandonarPartidaResponse")]
+        bool AbandonarPartida(string nombreUsuario, string codigoSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/AbandonarPartida", ReplyAction="http://tempuri.org/IGestionPartida/AbandonarPartidaResponse")]
+        System.Threading.Tasks.Task<bool> AbandonarPartidaAsync(string nombreUsuario, string codigoSala);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IGestionPartidaCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida")]
+        void ActualizarJugadoresEnPartida(DobbleGame.Servidor.CuentaUsuario[] jugadoresConectados);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IGestionPartidaChannel : DobbleGame.Servidor.IGestionPartida, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GestionPartidaClient : System.ServiceModel.DuplexClientBase<DobbleGame.Servidor.IGestionPartida>, DobbleGame.Servidor.IGestionPartida {
+        
+        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GestionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool CrearNuevaPartida(string codigoSala) {
+            return base.Channel.CrearNuevaPartida(codigoSala);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CrearNuevaPartidaAsync(string codigoSala) {
+            return base.Channel.CrearNuevaPartidaAsync(codigoSala);
+        }
+        
+        public void UnirJugadoresAPartida(string codigoSala) {
+            base.Channel.UnirJugadoresAPartida(codigoSala);
+        }
+        
+        public System.Threading.Tasks.Task UnirJugadoresAPartidaAsync(string codigoSala) {
+            return base.Channel.UnirJugadoresAPartidaAsync(codigoSala);
+        }
+        
+        public bool AbandonarPartida(string nombreUsuario, string codigoSala) {
+            return base.Channel.AbandonarPartida(nombreUsuario, codigoSala);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AbandonarPartidaAsync(string nombreUsuario, string codigoSala) {
+            return base.Channel.AbandonarPartidaAsync(nombreUsuario, codigoSala);
         }
     }
 }

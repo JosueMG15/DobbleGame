@@ -50,4 +50,49 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfCuentaUsuario" nillable="true" type="tns:ArrayOfCuentaUsuario" />
+  <xs:complexType name="RespuestaServicioOfArrayOfAmistad6jbaXeYD">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="RespuestaServicioOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Logica" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfAmistad" Namespace="http://schemas.datacontract.org/2004/07/Logica" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorBD" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Resultado" nillable="true" type="tns:ArrayOfAmistad" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RespuestaServicioOfArrayOfAmistad6jbaXeYD" nillable="true" type="tns:RespuestaServicioOfArrayOfAmistad6jbaXeYD" />
+  <xs:complexType name="ArrayOfAmistad">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Amistad" nillable="true" type="tns:Amistad" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAmistad" nillable="true" type="tns:ArrayOfAmistad" />
+  <xs:complexType name="Amistad">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UsuarioAmigoId" type="xs:int" />
+      <xs:element minOccurs="0" name="UsuarioPrincipalId" type="xs:int" />
+      <xs:element minOccurs="0" name="estadoSolicitud" type="xs:boolean" />
+      <xs:element minOccurs="0" name="idAmistad" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Amistad" nillable="true" type="tns:Amistad" />
+  <xs:complexType name="RespuestaServicioOfAmistad6jbaXeYD">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="RespuestaServicioOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Logica" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Amistad" Namespace="http://schemas.datacontract.org/2004/07/Logica" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorBD" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Resultado" nillable="true" type="tns:Amistad" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RespuestaServicioOfAmistad6jbaXeYD" nillable="true" type="tns:RespuestaServicioOfAmistad6jbaXeYD" />
 </xs:schema>
