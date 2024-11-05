@@ -255,6 +255,12 @@
     </EmbeddedResource>
     <Resource Include="Fuentes\Lalezar-Regular.ttf" />
     <Resource Include="Fuentes\LuckiestGuy-Regular.ttf" />
+    <None Include="Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfboolean.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

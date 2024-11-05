@@ -396,6 +396,12 @@
   <data name="lb_ErrorInesperado" xml:space="preserve">
     <value>Ha ocurrido un error inesperado </value>
   </data>
+  <data name="lb_UsuarioInexistente " xml:space="preserve">
+    <value>El nombre de usuario no existe</value>
+  </data>
+  <data name="lb_SolicitudYaEnviada " xml:space="preserve">
+    <value>Ya hay una solicitud pendiente </value>
+  </data>
   <data name="msg_UnionSala" xml:space="preserve">
     <value>Se ha unido a la sala</value>
   </data>
