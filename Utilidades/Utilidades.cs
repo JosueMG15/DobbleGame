@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -101,6 +102,45 @@ namespace DobbleGame.Utilidades
         {
             contenedor.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
+        }
+
+        public static void ManejarExcepciones(ICommunicationObject proxy, Exception ex, FrameworkElement contenedor)
+        {
+            if (proxy != null)
+            {
+                try
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
+                }
+                catch
+                {
+                    proxy.Abort();
+                }
+            }
+
+            if (ex is CommunicationObjectFaultedException)
+            {
+                MostrarVentanaErrorConexionServidor(contenedor);
+            }
+            else if (ex is CommunicationException)
+            {
+                MostrarVentanaErrorConexionServidor(contenedor);
+            }
+            else if (ex is TimeoutException)
+            {
+                MostrarVentanaErrorConexionServidor(contenedor);
+            }
+            else
+            {
+                MostrarVentanaErrorConexionServidor(contenedor);
+            }
         }
     }
 }

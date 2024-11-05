@@ -268,7 +268,7 @@
     <value>Join</value>
   </data>
   <data name="lb_Jugador" xml:space="preserve">
-    <value>Player#</value>
+    <value>Player {0}</value>
   </data>
   <data name="btn_InvitarAmigo" xml:space="preserve">
     <value>Invite friend</value>
@@ -395,5 +395,17 @@
   </data>
   <data name="lb_ErrorInesperado" xml:space="preserve">
     <value>An unexpected error has ocurred</value>
+  </data>
+  <data name="msg_UnionSala" xml:space="preserve">
+    <value>Has joined the room</value>
+  </data>
+  <data name="msg_AbandonoSala" xml:space="preserve">
+    <value>Has left the room</value>
+  </data>
+  <data name="lb_Puntaje" xml:space="preserve">
+    <value>Score: {0}</value>
+  </data>
+  <data name="lb_SesiónActiva" xml:space="preserve">
+    <value>The account already has an active session </value>
   </data>
 </root>

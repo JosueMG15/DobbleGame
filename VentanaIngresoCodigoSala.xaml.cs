@@ -27,13 +27,9 @@ namespace DobbleGame
 
             if (!String.IsNullOrWhiteSpace(tbCodigoSala.Text))
             {
-                PaginaSala paginaSala = new PaginaSala()
-                {
-                    EsNuevaSala = false,
-                    CodigoSala = tbCodigoSala.Text,
-                };
+                PaginaSala paginaSala = new PaginaSala(false, tbCodigoSala.Text);
 
-                if (paginaSala.UnirseASala())
+                if (paginaSala.HayConexionConSala)
                 {
                     Sala = paginaSala;
                     this.DialogResult = true;

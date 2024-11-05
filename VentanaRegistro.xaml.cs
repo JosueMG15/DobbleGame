@@ -1,4 +1,5 @@
-﻿using DobbleGame.Utilidades;
+﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -55,100 +56,65 @@ namespace DobbleGame
 
         public void RegistrarUsuario(string correo, string nombreUsuario, string contraseñaHasheada, byte[] foto)
         {
-            using (var proxy = new Servidor.GestionJugadorClient())
+            var proxy = new GestionJugadorClient();
+            try
             {
-                try
+                Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
+                    Correo = correo,
+                    Usuario = nombreUsuario,
+                    Contraseña = contraseñaHasheada,
+                    Foto = foto
+                };
 
-                    Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
+                var respuestaCorreo = proxy.ExisteCorreoAsociado(cuentaUsuario.Correo);
+                if (respuestaCorreo.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                if (respuestaCorreo.Resultado)
+                {
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoExistente_);
+                    return;
+                }
+
+                var respuestaUsuario = proxy.ExisteNombreUsuario(cuentaUsuario.Usuario);
+                if (respuestaUsuario.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                if (respuestaUsuario.Resultado)
+                {
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_UsuarioExistente_);
+                    return;
+                }
+
+                var respuestaRegistro = proxy.RegistrarUsuario(cuentaUsuario);
+                if (respuestaRegistro.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                if (respuestaRegistro.Resultado)
+                {
+                    VentanaRegistroExitoso ventanaRegistroExitoso = new VentanaRegistroExitoso
                     {
-                        Correo = correo,
-                        Usuario = nombreUsuario,
-                        Contraseña = contraseñaHasheada,
-                        Foto = foto
+                        Owner = this,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
-
-                    var respuestaCorreo = proxy.ExisteCorreoAsociado(cuentaUsuario.Correo);
-                    if (respuestaCorreo.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaCorreo.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoExistente_);
-                        return;
-                    }
-
-                    var respuestaUsuario = proxy.ExisteNombreUsuario(cuentaUsuario.Usuario);
-                    if (respuestaUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaUsuario.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_UsuarioExistente_);
-                        return;
-                    }
-
-                    var respuestaRegistro = proxy.RegistrarUsuario(cuentaUsuario);
-                    if (respuestaRegistro.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaRegistro.Resultado)
-                    {
-                        VentanaRegistroExitoso ventanaRegistroExitoso = new VentanaRegistroExitoso
-                        {
-                            Owner = this,
-                            WindowStartupLocation = WindowStartupLocation.CenterOwner
-                        };
-                        ventanaRegistroExitoso.ShowDialog();
-                        IrMainWindow();
-                    }
-                    else
-                    {
-                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
-                    }
+                    ventanaRegistroExitoso.ShowDialog();
+                    IrMainWindow();
                 }
-                catch (CommunicationObjectFaultedException faultEx)
+                else
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
                 }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
         }
 

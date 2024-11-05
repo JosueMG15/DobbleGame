@@ -7,7 +7,7 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.global_IniciarSesión}" Height="700" Width="550" WindowStartupLocation="CenterScreen" >
+        Title="{x:Static p:Resources.global_IniciarSesión}" Height="700" Width="550" WindowStartupLocation="CenterScreen" PreviewMouseDown="Window_PreviewMouseDown">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="None"/>
@@ -20,9 +20,9 @@
         </Grid.RowDefinitions>
         <Button Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Click="BtnCambioIdioma_Click"/> 
         <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" VerticalAlignment="Top" Height="200" Opacity="0.7" Margin="30"/>
-        <Label Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" VerticalAlignment="Top" 
+        <Label x:Name="lbDobble" Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" VerticalAlignment="Top" 
                Margin="0,120,0,10" />
-        <Label Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
+        <Label x:Name="lbIniciarSesion" Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" VerticalAlignment="Bottom"
                Margin="0,230,0,15" />
         <StackPanel x:Name="panelMensaje" Grid.Row="1" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center" >
             <Image Margin="0,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
@@ -32,15 +32,15 @@
             <TextBox x:Name="tbUsuario" Grid.Row="2" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_Usuario}" Margin="10" MaxLength="15"/>
             <PasswordBox x:Name="pbContraseña" Grid.Row="2" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" Margin="10" 
                          PasswordChanged="PasswordBox_CambioDeContraseña" MaxLength="35"/>
-            <TextBlock Text="{x:Static p:Resources.lb_CrearCuenta}" Style="{StaticResource TextBlock}" Grid.Row="2" 
+            <TextBlock x:Name="tbCrearCuenta" Text="{x:Static p:Resources.lb_CrearCuenta}" Style="{StaticResource TextBlock}" Grid.Row="2" 
                        Margin="0,30,0,10" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonUp="ClicCrearCuentaTf" />
-            <TextBlock Text="{x:Static p:Resources.lb_ContraseñaOlvidada}" Style="{StaticResource TextBlock}" Grid.Row="2" 
+            <TextBlock x:Name="tbContraseñaOlvidada" Text="{x:Static p:Resources.lb_ContraseñaOlvidada}" Style="{StaticResource TextBlock}" Grid.Row="2" 
                        Margin="0,0,120,0" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonUp="ClicRecuperarContraseñaTf" />
         </StackPanel>
 
-        <Button Content="{x:Static p:Resources.btn_Entrar}" Grid.Row="3" Width="200" Margin="0,30,0,80" VerticalAlignment="Top" 
+        <Button x:Name="btnEntrar" Content="{x:Static p:Resources.btn_Entrar}" Grid.Row="3" Width="200" Margin="0,30,0,80" VerticalAlignment="Top" 
                 FontSize="20" Background="#F1EA29" Click="BtnEntrarMenu_Click" />
-        <Button Content="{x:Static p:Resources.btn_EntrarComoInvitado}" Grid.Row="3" Width="160" Margin="0,0,0,30" VerticalAlignment="Bottom"
+        <Button x:Name="btnEntrarComoInvitado" Content="{x:Static p:Resources.btn_EntrarComoInvitado}" Grid.Row="3" Width="160" Margin="0,0,0,30" VerticalAlignment="Bottom"
                 FontSize="14" Background="#D5D4C8" />
     </Grid>
 </Window>

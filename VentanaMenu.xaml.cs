@@ -29,6 +29,12 @@ namespace DobbleGame
             InitializeComponent();
             InicializarDatos();
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
+            this.Closing += VentanaMenu_Closing;
+        }
+
+        private void VentanaMenu_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CerrarSesion();
         }
 
         private void InicializarDatos()
@@ -58,9 +64,16 @@ namespace DobbleGame
 
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
         {
+            CerrarSesion();
             MainWindow mainWindow = new MainWindow();
             this.Close();
             mainWindow.Show();
+        }
+
+        private void CerrarSesion()
+        {
+            var proxy = new GestionJugadorClient();
+            proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)

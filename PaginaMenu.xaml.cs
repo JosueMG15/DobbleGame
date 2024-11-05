@@ -26,18 +26,15 @@ namespace DobbleGame
 
         private void BtnCrearSala_Click(object sender, RoutedEventArgs e)
         {
-            PaginaSala paginaSala = new PaginaSala()
-            {
-                EsNuevaSala = true
-            };
+            PaginaSala paginaSala = new PaginaSala(true, null);
 
-            if (paginaSala.CrearSala())
+            if (paginaSala.HayConexionConSala)
             {
                 IrPaginaSalaAnimacion(paginaSala);
             }
             else
             {
-                Console.WriteLine("No se pudo crear la sala");
+                MessageBox.Show("No se puede");
             }
             
         }
@@ -47,7 +44,6 @@ namespace DobbleGame
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
             fadeOutAnimation.Completed += (s, a) =>
             {
-                //PaginaSala paginaSala = new PaginaSala();
                 this.NavigationService.Navigate(paginaSala);
 
                 AnimateElementsInPaginaSala(paginaSala);

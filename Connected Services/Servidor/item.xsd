@@ -4,10 +4,12 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Contraseña" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EsAnfitrion" type="xs:boolean" />
       <xs:element minOccurs="0" name="Estado" type="xs:boolean" />
       <xs:element minOccurs="0" name="Foto" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="IdCuentaUsuario" type="xs:int" />
       <xs:element minOccurs="0" name="Puntaje" type="xs:int" />
+      <xs:element minOccurs="0" name="PuntosEnPartida" type="xs:int" />
       <xs:element minOccurs="0" name="Usuario" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -42,4 +44,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RespuestaServicioOfCuentaUsuario6jbaXeYD" nillable="true" type="tns:RespuestaServicioOfCuentaUsuario6jbaXeYD" />
+  <xs:complexType name="ArrayOfCuentaUsuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CuentaUsuario" nillable="true" type="tns:CuentaUsuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCuentaUsuario" nillable="true" type="tns:ArrayOfCuentaUsuario" />
 </xs:schema>

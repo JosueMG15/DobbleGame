@@ -1,4 +1,5 @@
-﻿using DobbleGame.Utilidades;
+﻿using DobbleGame.Extensiones;
+using DobbleGame.Utilidades;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -33,49 +34,48 @@ namespace DobbleGame
 
         private void IniciarSesion()
         {
-            using (var proxy = new  Servidor.GestionJugadorClient())
+            if (!HayCamposVacios())
             {
-                if (!HayCamposVacios())
-                {
-                    try
-                    {
-                        if (proxy.State == CommunicationState.Faulted)
-                        {
-                            proxy.Abort();
-                            throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                        }
+                var proxy = new Servidor.GestionJugadorClient();
 
-                        var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
-                        if (respuestaInicioSesion.ErrorBD)
-                        {
-                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        }
-                        if (respuestaInicioSesion.Resultado != null)
-                        {
-                            var cuentaInicioSesion = respuestaInicioSesion.Resultado;
-                            CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
-                            {
-                                IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
-                                Usuario = cuentaInicioSesion.Usuario,
-                                Correo = cuentaInicioSesion.Correo,
-                                Contraseña = cuentaInicioSesion.Contraseña,
-                                Foto = cuentaInicioSesion.Foto,
-                                Puntaje = cuentaInicioSesion.Puntaje,
-                                Estado = true,
-                            };
-                            VentanaMenu ventanaMenu = new VentanaMenu();
-                            this.Close();
-                            ventanaMenu.Show();
-                        }
-                        else
-                        {
-                            MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
-                        }
-                    }
-                    catch (Exception)
+                try
+                {
+                    var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+
+                    if (respuestaInicioSesion.ErrorBD)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
                     }
+                    else if (!respuestaInicioSesion.Exitoso)
+                    {
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SesiónActiva);
+                    }
+                    else if (respuestaInicioSesion.Resultado != null)
+                    {
+                        var cuentaInicioSesion = respuestaInicioSesion.Resultado;
+                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                        {
+                            IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
+                            Usuario = cuentaInicioSesion.Usuario,
+                            Correo = cuentaInicioSesion.Correo,
+                            Contraseña = cuentaInicioSesion.Contraseña,
+                            Foto = cuentaInicioSesion.Foto,
+                            Puntaje = cuentaInicioSesion.Puntaje,
+                            Estado = true,
+                        };
+
+                        VentanaMenu ventanaMenu = new VentanaMenu();
+                        this.Close();
+                        ventanaMenu.Show();
+                    }
+                    else
+                    {
+                        MostrarMensaje(Properties.Resources.lb_ErrorInicioSesión);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
         }
@@ -127,7 +127,21 @@ namespace DobbleGame
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(idiomaEspañol);
             }
-                
+
+            ActualizarIdiomaIU();
+        }
+
+        private void ActualizarIdiomaIU()
+        {
+            this.Title = Properties.Resources.global_IniciarSesión;
+            lbDobble.Content = Properties.Resources.lb_Dobble_NET;
+            lbIniciarSesion.Content = Properties.Resources.global_IniciarSesión;
+            TextBoxExtensiones.SetTextoSugerido(tbUsuario, Properties.Resources.global_Usuario);
+            PasswordBoxExtensiones.SetTextoSugerido(pbContraseña, Properties.Resources.lb_Contraseña);
+            tbCrearCuenta.Text = Properties.Resources.lb_CrearCuenta;
+            tbContraseñaOlvidada.Text = Properties.Resources.lb_ContraseñaOlvidada;
+            btnEntrar.Content = Properties.Resources.btn_Entrar;
+            btnEntrarComoInvitado.Content = Properties.Resources.btn_EntrarComoInvitado;
         }
 
         private void MostrarMensaje(string mensaje)
@@ -141,6 +155,14 @@ namespace DobbleGame
             var passwordBox = sender as PasswordBox;
             var textoSugerido = ContraseñaHelper.EncontrarHijoVisual<TextBlock>(passwordBox, "TextoSugerido");
             ContraseñaHelper.ActualizarVisibilidadTextoSugerido(passwordBox, textoSugerido);
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
+            {
+                panelMensaje.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

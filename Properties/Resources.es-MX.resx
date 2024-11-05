@@ -268,7 +268,7 @@
     <value>Unirse</value>
   </data>
   <data name="lb_Jugador" xml:space="preserve">
-    <value>Jugador#</value>
+    <value>Jugador {0}</value>
   </data>
   <data name="btn_InvitarAmigo" xml:space="preserve">
     <value>Invitar amigo</value>
@@ -395,5 +395,17 @@
   </data>
   <data name="lb_ErrorInesperado" xml:space="preserve">
     <value>Ha ocurrido un error inesperado </value>
+  </data>
+  <data name="msg_UnionSala" xml:space="preserve">
+    <value>Se ha unido a la sala</value>
+  </data>
+  <data name="msg_AbandonoSala" xml:space="preserve">
+    <value>Ha abandonado la sala</value>
+  </data>
+  <data name="lb_Puntaje" xml:space="preserve">
+    <value>Puntaje: {0}</value>
+  </data>
+  <data name="lb_SesiónActiva" xml:space="preserve">
+    <value>La cuenta ya tiene una sesión activa</value>
   </data>
 </root>

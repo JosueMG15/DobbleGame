@@ -10,14 +10,159 @@
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="PaginaSala">
 
+    <Page.Resources>
+        <Style x:Key="SombraBorder" TargetType="Border">
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FotoPerfil" TargetType="Image">
+            <Setter Property="Height" Value="180"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+            <Setter Property="Clip">
+                <Setter.Value>
+                    <EllipseGeometry RadiusX="90" RadiusY="90" Center="90,90"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Fuentes/#Lalezar"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="BtnExpulsar" TargetType="Button">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            CornerRadius="20" 
+                            Padding="10" 
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding EsAnfitrion}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="JugadorRojoPlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FF6464">
+                <Grid>
+                    <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.lb_Jugador}" HorizontalAlignment="Left" Margin="252,45,0,190" FontSize="20" FontFamily="Inter"/>
+                    <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
+                    <Label Content="{Binding Puntaje}" HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="JugadorAzulPlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#908ACAFF">
+                <Grid>
+                    <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.lb_Jugador}" HorizontalAlignment="Left" Margin="252,45,0,190" FontSize="20" FontFamily="Inter"/>
+                    <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
+                    <Label Content="{Binding Puntaje}" HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" Foreground="White" Margin="272,196,88,24"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InvitarAzulPlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#908ACAFF">
+                <Grid>
+                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
+                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
+                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="JugadorVerdePlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#9092FF6A">
+                <Grid>
+                    <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.lb_Jugador}" HorizontalAlignment="Left" Margin="252,45,0,190" FontSize="20" FontFamily="Inter"/>
+                    <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
+                    <Label Content="{Binding Puntaje}" HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" Foreground="White" Margin="272,196,88,24"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InvitarVerdePlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#9092FF6A">
+                <Grid>
+                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
+                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
+                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="JugadorAmarilloPlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FFFA60">
+                <Grid>
+                    <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.lb_Jugador}" HorizontalAlignment="Left" Margin="252,45,0,190" FontSize="20" FontFamily="Inter"/>
+                    <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
+                    <Label Content="{Binding Puntaje}" HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" Foreground="White" Margin="272,196,88,24"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InvitarAmarilloPlantilla">
+            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FFFA60">
+                <Grid>
+                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
+                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
+                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <local:SelectorPlantillaJugador x:Key="SelectorPlantillaJugador"
+                               JugadorRojoPlantilla="{StaticResource JugadorRojoPlantilla}"
+                               JugadorAzulPlantilla="{StaticResource JugadorAzulPlantilla}"
+                               JugadorVerdePlantilla="{StaticResource JugadorVerdePlantilla}"
+                               JugadorAmarilloPlantilla="{StaticResource JugadorAmarilloPlantilla}" />
+
+
+    </Page.Resources>
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <TextBox HorizontalAlignment="Left" Margin="42,714,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="333" Height="54" Background="#FFEDE193" 
-                 Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}"/>
+                 Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}" KeyDown="EnviarMensaje_KeyDown"/>
         <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="307,713,0,0" Background="Transparent"
-                    Click="BtnEnviar_Mensaje" Height="56">
+                    Click="BtnEnviarMensaje" Height="56">
             <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
         </Button>
 
@@ -27,56 +172,26 @@
         </Button>
         <TextBox Panel.ZIndex="1" x:Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
                  Height="309" TextWrapping="Wrap" IsReadOnly="True" Opacity="0.5" Visibility="Hidden"/>
-        <Rectangle HorizontalAlignment="Left" Height="270" Margin="123,103,0,0" VerticalAlignment="Top" Width="460" RadiusX="21" RadiusY="21">
-            <Rectangle.Effect>
-                <DropShadowEffect/>
-            </Rectangle.Effect>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FFFF6464" Opacity="0.6"/>
-            </Rectangle.Fill>
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="#FFFF6464" Opacity="0.6"/>
-            </Rectangle.Stroke>
-        </Rectangle>
-        <Rectangle HorizontalAlignment="Left" Height="270" Margin="617,103,0,0" VerticalAlignment="Top" Width="460" RadiusX="21" RadiusY="21">
-            <Rectangle.Effect>
-                <DropShadowEffect/>
-            </Rectangle.Effect>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FF8ACAFF" Opacity="0.6"/>
-            </Rectangle.Fill>
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="#FF8ACAFF" Opacity="0.6"/>
-            </Rectangle.Stroke>
-        </Rectangle>
-        <Rectangle HorizontalAlignment="Left" Height="270" Margin="120,400,0,0" VerticalAlignment="Top" Width="463" RadiusX="21" RadiusY="21">
-            <Rectangle.Effect>
-                <DropShadowEffect/>
-            </Rectangle.Effect>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FF92FF6A" Opacity="0.6"/>
-            </Rectangle.Fill>
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="#FF92FF6A" Opacity="0.6"/>
-            </Rectangle.Stroke>
-        </Rectangle>
-        <Rectangle HorizontalAlignment="Left" Height="270" Margin="617,400,0,0" VerticalAlignment="Top" Width="460" RadiusX="21" RadiusY="21">
-            <Rectangle.Effect>
-                <DropShadowEffect/>
-            </Rectangle.Effect>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#FFFFFA60" Opacity="0.6"/>
-            </Rectangle.Fill>
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="#FFFFFA60" Opacity="0.6"/>
-            </Rectangle.Stroke>
-        </Rectangle>
+
+        <ItemsControl ItemsSource="{Binding UsuariosConectados}" ItemTemplateSelector="{StaticResource SelectorPlantillaJugador}" Margin="100,50,50,150">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="2" Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+
         <Button x:Name="btnCodigoSala" Content="" HorizontalAlignment="Left" Margin="825,686,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29" Click="BtnCopiarCodigoSala_Click"/>
         <Button Content="" HorizontalAlignment="Left" Margin="825,740,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29"/>
-        <Button Width="238" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="485,682,0,0" Background="Transparent"
-            Click="BtnIniciarPartida_Click" Height="126">
-            <Image Source="/Imagenes/BotonIniciarPartida.png" Stretch="Uniform" Height="111" Width="220" RenderTransformOrigin="0.725,0.455"/>
+
+        <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent"
+                Click="BtnIniciarPartida_Click" Height="126">
+            <Grid>
+                <Image Source="/Imagenes/BotonIniciarPartida.png" Stretch="Uniform" Height="111" Width="220" RenderTransformOrigin="0.725,0.455"/>
+                <Label Content="{x:Static p:Resources.btn_IniciarPartida}" FontSize="28" Foreground="Black" 
+                       FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
         </Button>
     </Grid>
-
 </Page>

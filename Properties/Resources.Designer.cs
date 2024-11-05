@@ -574,7 +574,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Jugador#.
+        ///   Busca una cadena traducida similar a Jugador {0}.
         /// </summary>
         public static string lb_Jugador {
             get {
@@ -673,6 +673,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Puntaje: {0}.
+        /// </summary>
+        public static string lb_Puntaje {
+            get {
+                return ResourceManager.GetString("lb_Puntaje", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Puntos:.
         /// </summary>
         public static string lb_Puntos {
@@ -700,6 +709,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La cuenta ya tiene una sesión activa.
+        /// </summary>
+        public static string lb_SesiónActiva {
+            get {
+                return ResourceManager.GetString("lb_SesiónActiva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Solicitudes de amistad.
         /// </summary>
         public static string lb_SolicitudesAmistad {
@@ -723,6 +741,24 @@ namespace DobbleGame.Properties {
         public static string lb_UsuarioExistente_ {
             get {
                 return ResourceManager.GetString("lb_UsuarioExistente ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ha abandonado la sala.
+        /// </summary>
+        public static string msg_AbandonoSala {
+            get {
+                return ResourceManager.GetString("msg_AbandonoSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha unido a la sala.
+        /// </summary>
+        public static string msg_UnionSala {
+            get {
+                return ResourceManager.GetString("msg_UnionSala", resourceCulture);
             }
         }
         

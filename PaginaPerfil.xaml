@@ -21,7 +21,12 @@
         <Rectangle HorizontalAlignment="Left" Height="501" Margin="511,103,0,0" Stroke="#FFE9E9E9" VerticalAlignment="Top" 
                    Width="577" Fill="#FFE9E9E9" RadiusX="15" RadiusY="15"/>
 
-        <Image Source="pack://application:,,,/Imagenes/PerfilPorDefecto.png" Name="ImagenPerfil" Stretch="Uniform" Margin="85,148,722,258"/>
+        <Image Source="pack://application:,,,/Imagenes/PerfilPorDefecto.png" Name="ImagenPerfil" Stretch="UniformToFill" Margin="100" 
+               HorizontalAlignment="Left" Height="300" Width="300" ClipToBounds="True">
+            <Image.Clip>
+                <EllipseGeometry RadiusX="150" RadiusY="150" Center="150,150"/>
+            </Image.Clip>
+        </Image>
 
         <Label Content="{x:Static p:Resources.global_CorreoElectrónico}" Margin="564,128,0,618" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="292" FontSize="27" FontWeight="Bold" />
         <Label Content="{x:Static p:Resources.global_Usuario}" Margin="564,300,0,446" HorizontalAlignment="Left" FontFamily="Segoe UI" Foreground="Black" Width="124" FontSize="27" FontWeight="Bold" />

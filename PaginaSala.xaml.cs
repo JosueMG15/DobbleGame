@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DobbleGame.Servidor;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -19,104 +21,86 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
     {
-        private Servidor.GestionSalaClient proxy;
-        private Servidor.CuentaUsuario[] cuentaUsuarios;
-        public bool EsNuevaSala { get; set; }
-        public string CodigoSala { get; set; }
+        private Servidor.IGestionSala proxy;
+        private readonly SelectorPlantillaJugador selectorPlantilla = new SelectorPlantillaJugador();
+        public ObservableCollection<CuentaUsuario> UsuariosConectados { get; set; }
+        public bool EsAnfitrion {  get; set; }
+        public string CodigoSala {  get; set; }
+        public bool HayConexionConSala { get; set; }
 
-        public PaginaSala()
+        public PaginaSala(bool esAnfitrion, string codigoSala)
         {
             InitializeComponent();
             this.DataContext = this;
-            proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+            UsuariosConectados = new ObservableCollection<CuentaUsuario>();
+            UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
+            EsAnfitrion = esAnfitrion;
+            HayConexionConSala = false;
+            CodigoSala = codigoSala;
+            IniciarSesionSala();
+            InicializarSala();
         }
 
-        public bool CrearSala()
+        public void IniciarSesionSala()
         {
-            if (proxy == null || proxy.State != CommunicationState.Opened)
-                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+            if (EsAnfitrion)
+            {
+                CrearSala();
+            }
+            else
+            {
+                UnirseASala();
+            }
+        }
+
+        private bool CrearSala()
+        {
+            InicializarProxy();
 
             bool resultado = false;
 
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
                 CodigoSala = proxy.GenerarCodigoNuevaSala();
                 btnCodigoSala.Content = CodigoSala;
+
                 var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
-                proxy.CrearNuevaSala(usuarioActual.Usuario, CodigoSala);
-                proxy.UnirseASala(usuarioActual.Usuario, usuarioActual.Puntaje, usuarioActual.Foto, CodigoSala, "Se ha unido a la sala");
-                resultado = true;
-            }
-            catch (CommunicationObjectFaultedException faultEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-            }
-            catch (CommunicationException commEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error de comunicación: {commEx.Message}");
-            }
-            catch (TimeoutException timeoutEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+
+                resultado = proxy.CrearNuevaSala(usuarioActual.Usuario, CodigoSala);
+
+                if (resultado)
+                {
+                    HayConexionConSala = proxy.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
+                }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error inesperado: {ex.Message}");
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
             }
 
             return resultado;
         }
-
-        public bool UnirseASala()
+        
+        private bool UnirseASala()
         {
-            if (proxy == null || proxy.State != CommunicationState.Opened)
-                proxy = new Servidor.GestionSalaClient(new InstanceContext(this));
+            InicializarProxy();
 
             bool resultado = false;
 
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
                 btnCodigoSala.Content = CodigoSala;
                 var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
-                resultado = proxy.UnirseASala(usuarioActual.Usuario, usuarioActual.Puntaje, usuarioActual.Foto, CodigoSala, " Se ha unido a la sala");
-            }
-            catch (CommunicationObjectFaultedException faultEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-            }
-            catch (CommunicationException commEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error de comunicación: {commEx.Message}");
-            }
-            catch (TimeoutException timeoutEx)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                resultado = proxy.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
+
+                HayConexionConSala = resultado;
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                Console.WriteLine($"Error inesperado: {ex.Message}");
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
             }
 
             return resultado;
@@ -124,14 +108,18 @@ namespace DobbleGame
 
         private void AbandonarSala()
         {
+            InicializarProxy();
+
             try
             {
-                proxy.AbandonarSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, " Ha abandonado la sala");
-                proxy.Close();
+                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                proxy.AbandonarSala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_AbandonoSala);
+                
+                ((ICommunicationObject)proxy).Close();
             }
-            catch (CommunicationException)
+            catch (Exception ex)
             {
-                proxy.Abort();
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
             }
         }
 
@@ -168,11 +156,11 @@ namespace DobbleGame
             }
         }
 
-        private void BtnEnviar_Mensaje(object sender, RoutedEventArgs e)
+        private void BtnEnviarMensaje(object sender, RoutedEventArgs e)
         {
             string mensaje = tbChat.Text.Trim();
 
-            if (!string.IsNullOrEmpty(mensaje) && proxy?.State == CommunicationState.Opened)
+            if (!string.IsNullOrEmpty(mensaje) && ((ICommunicationObject)proxy)?.State == CommunicationState.Opened)
             {
                 proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
                 tbChat.Text = string.Empty;
@@ -183,6 +171,17 @@ namespace DobbleGame
             }
         }
 
+        private void InicializarSala()
+        {
+            proxy.NotificarUsuarioConectado(CodigoSala);
+
+            if (!EsAnfitrion)
+            {
+                btnIniciarPartida.IsEnabled = false;
+                
+            }
+        }
+
         private void TbChat_GotFocus(object sender, RoutedEventArgs e)
         {
             tbContenedor.Visibility = Visibility.Visible;
@@ -190,13 +189,64 @@ namespace DobbleGame
 
         private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
         {
+            if (UsuariosConectados.Count < 2)
+            {
+                MessageBox.Show("Se necesitan al menos 2 jugadores para iniciar la partida");
+                return;
+            }
 
+            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala);
+
+            try
+            {
+                ventanaPartida.CrearPartida();
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+        }
+
+        public void CambiarVentanaAPartida()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Window ventanaActual = Window.GetWindow(this);
+                ventanaActual.Hide();
+                var ventanaPartida = new VentanaPartida(CodigoSala); 
+                ventanaPartida.Show();
+            });
+        }
+
+        private void UsuariosConectados_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (EsAnfitrion)
+            {
+                btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 2;
+            }
         }
 
         public void MostrarMensajeSala(string mensaje)
         {
-            tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
-            tbContenedor.ScrollToEnd();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
+                tbContenedor.ScrollToEnd();
+            });
+        }
+
+        public void ActualizarUsuariosConectados(CuentaUsuario[] cuentaUsuarios)
+        {
+            selectorPlantilla.ReiniciarPlantillas();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                UsuariosConectados.Clear();
+                foreach (var usuario in cuentaUsuarios)
+                {
+                    Console.WriteLine($"Usuario: {usuario.Usuario}, Puntaje: {usuario.Puntaje}, EsAnfitrion: {usuario.EsAnfitrion}");
+                    UsuariosConectados.Add(usuario);
+                }
+            });
         }
 
         private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)
@@ -207,5 +257,47 @@ namespace DobbleGame
             }
         }
 
+        private void EnviarMensaje_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnEnviarMensaje.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
+        private void InicializarProxy()
+        {
+            if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Opened)
+            {
+                return; 
+            }
+
+            if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Faulted)
+            {
+                ((ICommunicationObject)proxy).Abort();
+            }
+
+            var contexto = new InstanceContext(this);
+            var factory = new DuplexChannelFactory<IGestionSala>(contexto, "NetTcpBinding_IGestionSala");
+            proxy = factory.CreateChannel();
+        }
+
+        private ImageSource ConvertirImagenPerfil(byte[] fotoBytes)
+        {
+            if (fotoBytes == null || fotoBytes.Length == 0)
+                return null;
+
+            using (var ms = new MemoryStream(fotoBytes))
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = ms;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                image.Freeze();
+
+                return image;
+            }
+        }
     }
 }
