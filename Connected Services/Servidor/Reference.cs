@@ -308,6 +308,253 @@ namespace DobbleGame.Servidor {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicioOfArrayOfAmistad6jbaXeYD", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class RespuestaServicioOfArrayOfAmistad6jbaXeYD : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorBDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExitosoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DobbleGame.Servidor.Amistad[] ResultadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorBD {
+            get {
+                return this.ErrorBDField;
+            }
+            set {
+                if ((this.ErrorBDField.Equals(value) != true)) {
+                    this.ErrorBDField = value;
+                    this.RaisePropertyChanged("ErrorBD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Exitoso {
+            get {
+                return this.ExitosoField;
+            }
+            set {
+                if ((this.ExitosoField.Equals(value) != true)) {
+                    this.ExitosoField = value;
+                    this.RaisePropertyChanged("Exitoso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DobbleGame.Servidor.Amistad[] Resultado {
+            get {
+                return this.ResultadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultadoField, value) != true)) {
+                    this.ResultadoField = value;
+                    this.RaisePropertyChanged("Resultado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Amistad", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class Amistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UsuarioAmigoIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UsuarioPrincipalIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool estadoSolicitudField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idAmistadField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UsuarioAmigoId {
+            get {
+                return this.UsuarioAmigoIdField;
+            }
+            set {
+                if ((this.UsuarioAmigoIdField.Equals(value) != true)) {
+                    this.UsuarioAmigoIdField = value;
+                    this.RaisePropertyChanged("UsuarioAmigoId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UsuarioPrincipalId {
+            get {
+                return this.UsuarioPrincipalIdField;
+            }
+            set {
+                if ((this.UsuarioPrincipalIdField.Equals(value) != true)) {
+                    this.UsuarioPrincipalIdField = value;
+                    this.RaisePropertyChanged("UsuarioPrincipalId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool estadoSolicitud {
+            get {
+                return this.estadoSolicitudField;
+            }
+            set {
+                if ((this.estadoSolicitudField.Equals(value) != true)) {
+                    this.estadoSolicitudField = value;
+                    this.RaisePropertyChanged("estadoSolicitud");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int idAmistad {
+            get {
+                return this.idAmistadField;
+            }
+            set {
+                if ((this.idAmistadField.Equals(value) != true)) {
+                    this.idAmistadField = value;
+                    this.RaisePropertyChanged("idAmistad");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicioOfAmistad6jbaXeYD", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class RespuestaServicioOfAmistad6jbaXeYD : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorBDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExitosoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DobbleGame.Servidor.Amistad ResultadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorBD {
+            get {
+                return this.ErrorBDField;
+            }
+            set {
+                if ((this.ErrorBDField.Equals(value) != true)) {
+                    this.ErrorBDField = value;
+                    this.RaisePropertyChanged("ErrorBD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Exitoso {
+            get {
+                return this.ExitosoField;
+            }
+            set {
+                if ((this.ExitosoField.Equals(value) != true)) {
+                    this.ExitosoField = value;
+                    this.RaisePropertyChanged("Exitoso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DobbleGame.Servidor.Amistad Resultado {
+            get {
+                return this.ResultadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultadoField, value) != true)) {
+                    this.ResultadoField = value;
+                    this.RaisePropertyChanged("Resultado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionJugador")]
     public interface IGestionJugador {
@@ -481,6 +728,12 @@ namespace DobbleGame.Servidor {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeSala")]
         System.Threading.Tasks.Task EnviarMensajeSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeConexionSala")]
+        void EnviarMensajeConexionSala(string nombreUsuario, string codigoSala, string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/EnviarMensajeConexionSala")]
+        System.Threading.Tasks.Task EnviarMensajeConexionSalaAsync(string nombreUsuario, string codigoSala, string mensaje);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSala", ReplyAction="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSalaResponse")]
         string GenerarCodigoNuevaSala();
         
@@ -555,12 +808,165 @@ namespace DobbleGame.Servidor {
             return base.Channel.EnviarMensajeSalaAsync(nombreUsuario, codigoSala, mensaje);
         }
         
+        public void EnviarMensajeConexionSala(string nombreUsuario, string codigoSala, string mensaje) {
+            base.Channel.EnviarMensajeConexionSala(nombreUsuario, codigoSala, mensaje);
+        }
+        
+        public System.Threading.Tasks.Task EnviarMensajeConexionSalaAsync(string nombreUsuario, string codigoSala, string mensaje) {
+            return base.Channel.EnviarMensajeConexionSalaAsync(nombreUsuario, codigoSala, mensaje);
+        }
+        
         public string GenerarCodigoNuevaSala() {
             return base.Channel.GenerarCodigoNuevaSala();
         }
         
         public System.Threading.Tasks.Task<string> GenerarCodigoNuevaSalaAsync() {
             return base.Channel.GenerarCodigoNuevaSalaAsync();
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionAmigos")]
+    public interface IGestionAmigos {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistadResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfboolean EnviarSolicitudAmistad(int idUsuarioPrincipal, string nombreUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistadResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> EnviarSolicitudAmistadAsync(int idUsuarioPrincipal, string nombreUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AmistadYaExiste", ReplyAction="http://tempuri.org/IGestionAmigos/AmistadYaExisteResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfboolean AmistadYaExiste(int idUsuarioPrincipal, string nombreUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AmistadYaExiste", ReplyAction="http://tempuri.org/IGestionAmigos/AmistadYaExisteResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> AmistadYaExisteAsync(int idUsuarioPrincipal, string nombreUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientes", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientesResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD ObtenerSolicitudesPendientes(int idUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientes", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientesResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD> ObtenerSolicitudesPendientesAsync(int idUsuarioAmigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerUsuarioResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD ObtenerUsuario(int idUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerUsuarioResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioAsync(int idUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AceptarSolicitud", ReplyAction="http://tempuri.org/IGestionAmigos/AceptarSolicitudResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfboolean AceptarSolicitud(int idAmistad);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AceptarSolicitud", ReplyAction="http://tempuri.org/IGestionAmigos/AceptarSolicitudResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> AceptarSolicitudAsync(int idAmistad);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/EliminarAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/EliminarAmistadResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfboolean EliminarAmistad(int idAmistad);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/EliminarAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/EliminarAmistadResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> EliminarAmistadAsync(int idAmistad);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerAmistades", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerAmistadesResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD ObtenerAmistades(int idUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerAmistades", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerAmistadesResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD> ObtenerAmistadesAsync(int idUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerAmistadResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD ObtenerAmistad(int idAmistad);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerAmistad", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerAmistadResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD> ObtenerAmistadAsync(int idAmistad);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IGestionAmigosChannel : DobbleGame.Servidor.IGestionAmigos, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GestionAmigosClient : System.ServiceModel.ClientBase<DobbleGame.Servidor.IGestionAmigos>, DobbleGame.Servidor.IGestionAmigos {
+        
+        public GestionAmigosClient() {
+        }
+        
+        public GestionAmigosClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public GestionAmigosClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GestionAmigosClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GestionAmigosClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfboolean EnviarSolicitudAmistad(int idUsuarioPrincipal, string nombreUsuarioAmigo) {
+            return base.Channel.EnviarSolicitudAmistad(idUsuarioPrincipal, nombreUsuarioAmigo);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> EnviarSolicitudAmistadAsync(int idUsuarioPrincipal, string nombreUsuarioAmigo) {
+            return base.Channel.EnviarSolicitudAmistadAsync(idUsuarioPrincipal, nombreUsuarioAmigo);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfboolean AmistadYaExiste(int idUsuarioPrincipal, string nombreUsuarioAmigo) {
+            return base.Channel.AmistadYaExiste(idUsuarioPrincipal, nombreUsuarioAmigo);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> AmistadYaExisteAsync(int idUsuarioPrincipal, string nombreUsuarioAmigo) {
+            return base.Channel.AmistadYaExisteAsync(idUsuarioPrincipal, nombreUsuarioAmigo);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD ObtenerSolicitudesPendientes(int idUsuarioAmigo) {
+            return base.Channel.ObtenerSolicitudesPendientes(idUsuarioAmigo);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD> ObtenerSolicitudesPendientesAsync(int idUsuarioAmigo) {
+            return base.Channel.ObtenerSolicitudesPendientesAsync(idUsuarioAmigo);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD ObtenerUsuario(int idUsuario) {
+            return base.Channel.ObtenerUsuario(idUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioAsync(int idUsuario) {
+            return base.Channel.ObtenerUsuarioAsync(idUsuario);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfboolean AceptarSolicitud(int idAmistad) {
+            return base.Channel.AceptarSolicitud(idAmistad);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> AceptarSolicitudAsync(int idAmistad) {
+            return base.Channel.AceptarSolicitudAsync(idAmistad);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfboolean EliminarAmistad(int idAmistad) {
+            return base.Channel.EliminarAmistad(idAmistad);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> EliminarAmistadAsync(int idAmistad) {
+            return base.Channel.EliminarAmistadAsync(idAmistad);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD ObtenerAmistades(int idUsuario) {
+            return base.Channel.ObtenerAmistades(idUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD> ObtenerAmistadesAsync(int idUsuario) {
+            return base.Channel.ObtenerAmistadesAsync(idUsuario);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD ObtenerAmistad(int idAmistad) {
+            return base.Channel.ObtenerAmistad(idAmistad);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD> ObtenerAmistadAsync(int idAmistad) {
+            return base.Channel.ObtenerAmistadAsync(idAmistad);
         }
     }
 }

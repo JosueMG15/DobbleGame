@@ -396,4 +396,10 @@
   <data name="lb_ErrorInesperado" xml:space="preserve">
     <value>An unexpected error has ocurred</value>
   </data>
+  <data name="lb_UsuarioInexistente " xml:space="preserve">
+    <value>The username doesn’t exist </value>
+  </data>
+  <data name="lb_SolicitudYaEnviada " xml:space="preserve">
+    <value>There is already a pending request </value>
+  </data>
 </root>

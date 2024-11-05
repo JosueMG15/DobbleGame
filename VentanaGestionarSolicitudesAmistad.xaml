@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DobbleGame"
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
-        xmlns:Properties="clr-namespace:DobbleGame.Properties" x:Class="DobbleGame.VentanaGestionarSolicitudesAmistad"
+        xmlns:Properties="clr-namespace:DobbleGame.Properties" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="DobbleGame.VentanaGestionarSolicitudesAmistad"
         mc:Ignorable="d"
         Title="VentanaGestionarSolicitudesAmistad" Height="650" Width="700" WindowStyle="None">
     <Grid Background="#FFE1DD8B">
@@ -14,10 +14,12 @@
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform" Height="46" Width="39"/>
         </Button>
         <Label Content="{x:Static Properties:Resources.lb_SolicitudesAmistad}" Style="{StaticResource TituloLalezar1}"  Width="532" FontSize="55" Margin="0,54,0,492" />
-        <Rectangle HorizontalAlignment="Center" Height="440" Margin="0,142,0,0" Stroke="White" VerticalAlignment="Top" Width="570" Fill="White" RadiusX="15" RadiusY="15">
-            <Rectangle.Effect>
-                <DropShadowEffect/>
-            </Rectangle.Effect>
-        </Rectangle>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="58,158,58,53" Background="#FFF3F3F3">
+            <StackPanel x:Name="ContenedorNotificaciones" Orientation="Vertical" Margin="10" Background="#FFF3F3F3">
+                <!-- Aquí se agregarán las notificaciones dinámicamente -->
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </Window>

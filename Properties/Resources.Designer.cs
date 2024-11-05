@@ -709,6 +709,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ya hay una solicitud pendiente .
+        /// </summary>
+        public static string lb_SolicitudYaEnviada_ {
+            get {
+                return ResourceManager.GetString("lb_SolicitudYaEnviada ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Unirse a partida.
         /// </summary>
         public static string lb_UnirseAPartida {
@@ -723,6 +732,15 @@ namespace DobbleGame.Properties {
         public static string lb_UsuarioExistente_ {
             get {
                 return ResourceManager.GetString("lb_UsuarioExistente ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El nombre de usuario no existe.
+        /// </summary>
+        public static string lb_UsuarioInexistente_ {
+            get {
+                return ResourceManager.GetString("lb_UsuarioInexistente ", resourceCulture);
             }
         }
         

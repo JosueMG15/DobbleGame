@@ -24,6 +24,18 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IGestionAmigos_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -100,6 +112,9 @@
   <wsdl:message name="IGestionSala_EnviarMensajeSala_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeSala" />
   </wsdl:message>
+  <wsdl:message name="IGestionSala_EnviarMensajeConexionSala_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMensajeConexionSala" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_GenerarCodigoNuevaSala_InputMessage">
     <wsdl:part name="parameters" element="tns:GenerarCodigoNuevaSala" />
   </wsdl:message>
@@ -108,6 +123,54 @@
   </wsdl:message>
   <wsdl:message name="IGestionSala_MostrarMensajeSala_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:MostrarMensajeSala" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_EnviarSolicitudAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistad" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_EnviarSolicitudAmistad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_AmistadYaExiste_InputMessage">
+    <wsdl:part name="parameters" element="tns:AmistadYaExiste" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_AmistadYaExiste_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AmistadYaExisteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerSolicitudesPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSolicitudesPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerSolicitudesPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSolicitudesPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_AceptarSolicitud_InputMessage">
+    <wsdl:part name="parameters" element="tns:AceptarSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_AceptarSolicitud_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AceptarSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_EliminarAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmistad" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_EliminarAmistad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmistadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerAmistades_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmistades" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerAmistades_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmistadesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmistad" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_ObtenerAmistad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmistadResponse" />
   </wsdl:message>
   <wsdl:portType name="IGestionJugador">
     <wsdl:operation name="RegistrarUsuario">
@@ -159,12 +222,49 @@
     <wsdl:operation name="EnviarMensajeSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/EnviarMensajeSala" message="tns:IGestionSala_EnviarMensajeSala_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EnviarMensajeConexionSala">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/EnviarMensajeConexionSala" message="tns:IGestionSala_EnviarMensajeConexionSala_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GenerarCodigoNuevaSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSala" message="tns:IGestionSala_GenerarCodigoNuevaSala_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSalaResponse" message="tns:IGestionSala_GenerarCodigoNuevaSala_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="MostrarMensajeSala">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/MostrarMensajeSala" message="tns:IGestionSala_MostrarMensajeSala_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IGestionAmigos">
+    <wsdl:operation name="EnviarSolicitudAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistad" message="tns:IGestionAmigos_EnviarSolicitudAmistad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistadResponse" message="tns:IGestionAmigos_EnviarSolicitudAmistad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AmistadYaExiste">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/AmistadYaExiste" message="tns:IGestionAmigos_AmistadYaExiste_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/AmistadYaExisteResponse" message="tns:IGestionAmigos_AmistadYaExiste_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSolicitudesPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientes" message="tns:IGestionAmigos_ObtenerSolicitudesPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientesResponse" message="tns:IGestionAmigos_ObtenerSolicitudesPendientes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerUsuario" message="tns:IGestionAmigos_ObtenerUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerUsuarioResponse" message="tns:IGestionAmigos_ObtenerUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AceptarSolicitud">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/AceptarSolicitud" message="tns:IGestionAmigos_AceptarSolicitud_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/AceptarSolicitudResponse" message="tns:IGestionAmigos_AceptarSolicitud_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/EliminarAmistad" message="tns:IGestionAmigos_EliminarAmistad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/EliminarAmistadResponse" message="tns:IGestionAmigos_EliminarAmistad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmistades">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerAmistades" message="tns:IGestionAmigos_ObtenerAmistades_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerAmistadesResponse" message="tns:IGestionAmigos_ObtenerAmistades_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerAmistad" message="tns:IGestionAmigos_ObtenerAmistad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerAmistadResponse" message="tns:IGestionAmigos_ObtenerAmistad_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IGestionJugador" type="tns:IGestionJugador">
@@ -279,6 +379,12 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="EnviarMensajeConexionSala">
+      <soap12:operation soapAction="http://tempuri.org/IGestionSala/EnviarMensajeConexionSala" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="GenerarCodigoNuevaSala">
       <soap12:operation soapAction="http://tempuri.org/IGestionSala/GenerarCodigoNuevaSala" style="document" />
       <wsdl:input>
@@ -295,6 +401,82 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IGestionAmigos" type="tns:IGestionAmigos">
+    <wsp:PolicyReference URI="#NetTcpBinding_IGestionAmigos_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="EnviarSolicitudAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/EnviarSolicitudAmistad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AmistadYaExiste">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/AmistadYaExiste" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSolicitudesPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ObtenerSolicitudesPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ObtenerUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AceptarSolicitud">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/AceptarSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/EliminarAmistad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmistades">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ObtenerAmistades" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ObtenerAmistad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
       <soap12:address location="net.tcp://localhost:8081/IGestionJugador" />
@@ -306,6 +488,12 @@
       <soap12:address location="net.tcp://localhost:8081/IGestionSala" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/IGestionSala</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IGestionAmigos" binding="tns:NetTcpBinding_IGestionAmigos">
+      <soap12:address location="net.tcp://localhost:8081/IGestionAmigos" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
