@@ -1,0 +1,23 @@
+﻿<Page x:Class="DobbleGame.PaginaNuevaContraseña"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DobbleGame"
+      xmlns:p="clr-namespace:DobbleGame.Properties"
+      xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
+      mc:Ignorable="d" 
+      d:DesignHeight="420" d:DesignWidth="500"
+      Title="PaginaNuevaContraseña">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
+        </Grid.Background>
+        <Label Content="{x:Static p:Resources.lb_CambioContraseña}"  Style="{StaticResource TituloLalezar1}" Width="424" FontSize="45" Margin="0,28,0,315" />
+        <TextBox x:Name="tbNuevaContraseña" Width="NaN" Height="NaN" Margin="98,136,98,237" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.titulo_NuevaContraseña}"/>
+        <Button Content="{x:Static p:Resources.global_Actualizar}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnActualizar" Margin="74,326,274,43"/>
+        <Button Content="{x:Static p:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="280,326,68,43"/>
+        <TextBox x:Name="tbConfirmarContraseña" Width="NaN" Height="NaN" Margin="98,197,98,176" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}"/>
+    </Grid>
+</Page>

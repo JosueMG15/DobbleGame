@@ -343,7 +343,7 @@
     <value>Solicitudes de amistad</value>
   </data>
   <data name="titulo_EliminarAmigo" xml:space="preserve">
-    <value>Eliminar amigo</value>
+    <value>¿Seguro que deseas eliminar a este amigo? </value>
   </data>
   <data name="titulo_Sala" xml:space="preserve">
     <value>Sala</value>

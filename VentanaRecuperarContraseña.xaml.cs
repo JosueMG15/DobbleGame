@@ -24,17 +24,12 @@ namespace DobbleGame
         public VentanaRecuperarContraseña()
         {
             InitializeComponent();
+            MainWindow.NavigationService.Navigate(new PaginaRecuperarContraseña(this));
         }
 
-
-        private void BtnCancelar(object sender, RoutedEventArgs e)
+        private void MainWindow_Navigated(object sender, NavigationEventArgs e)
         {
-            this.Close();
-        }
 
-        private void BtnEnviarCodigo(object sender, RoutedEventArgs e)
-        {
-            //this.NavigationService.Navigate(new PaginaIngresoCodigo());
         }
     }
 }

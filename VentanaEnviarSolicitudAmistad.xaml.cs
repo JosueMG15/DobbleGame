@@ -24,15 +24,14 @@ using System.ServiceModel;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaEnviarSolicitudAmistad.xaml
-    /// </summary>
     public partial class VentanaEnviarSolicitudAmistad : Window
     {
         public VentanaEnviarSolicitudAmistad()
         {
             InitializeComponent();
         }
+
+
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {

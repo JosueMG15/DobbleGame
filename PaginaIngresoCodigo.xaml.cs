@@ -18,21 +18,19 @@ namespace DobbleGame
     /// <summary>
     /// Lógica de interacción para PaginaIngresoCodigo.xaml
     /// </summary>
-    public partial class VentanaIngresoCodigo : Window
+    public partial class PaginaIngresoCodigo : Page
     {
-        public VentanaIngresoCodigo()
+        VentanaRecuperarContraseña _marcoPrincipal;
+        public PaginaIngresoCodigo(VentanaRecuperarContraseña marcoPrincipal)
         {
             InitializeComponent();
+            _marcoPrincipal = marcoPrincipal;
         }
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void BtnCancelar(object sender, RoutedEventArgs e)
-        {
-
+            var paginaNuevaContraseña = new PaginaNuevaContraseña(_marcoPrincipal);
+            this.NavigationService.Navigate(paginaNuevaContraseña);
         }
 
         private void BtnReintentar(object sender, RoutedEventArgs e)
@@ -40,6 +38,9 @@ namespace DobbleGame
 
         }
 
-
+        private void BtnCancelar(object sender, RoutedEventArgs e)
+        {
+            _marcoPrincipal.Close();
+        }
     }
 }

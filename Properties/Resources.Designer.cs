@@ -835,7 +835,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Eliminar amigo.
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas eliminar a este amigo? .
         /// </summary>
         public static string titulo_EliminarAmigo {
             get {

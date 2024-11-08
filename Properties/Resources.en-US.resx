@@ -343,7 +343,7 @@
     <value>Friend requests</value>
   </data>
   <data name="titulo_EliminarAmigo" xml:space="preserve">
-    <value>Remove friend</value>
+    <value>Are you sure you want to delete this friend? </value>
   </data>
   <data name="titulo_Sala" xml:space="preserve">
     <value>Lobby</value>

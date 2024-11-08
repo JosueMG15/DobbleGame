@@ -83,6 +83,17 @@ namespace DobbleGame
                     if (respuestaModificarUsuario.Resultado)
                     {
                         CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
+                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                        {
+                            IdCuentaUsuario = Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario,
+                            Usuario = nuevoNombre,
+                            Correo = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo,
+                            Contraseña = Dominio.CuentaUsuario.cuentaUsuarioActual.Contraseña,
+                            Foto = Dominio.CuentaUsuario.cuentaUsuarioActual.Foto,
+                            Puntaje = Dominio.CuentaUsuario.cuentaUsuarioActual.Puntaje,
+                            Estado = true,
+                        };
+
                         this.Close();
                     }
                 }

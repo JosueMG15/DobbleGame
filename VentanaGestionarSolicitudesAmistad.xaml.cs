@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DobbleGame.Servidor;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -15,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaGestionarSolicitudesAmistad.xaml
-    /// </summary>
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class VentanaGestionarSolicitudesAmistad : Window
     {
         private VentanaMenu _ventanaMenu;
@@ -45,7 +45,7 @@ namespace DobbleGame
 
                     if (respuesta.ErrorBD)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_ventanaMenu);
                         return;
                     }
 
@@ -71,22 +71,22 @@ namespace DobbleGame
                 }
                 catch (CommunicationObjectFaultedException faultEx)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
                     Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
                 }
                 catch (CommunicationException commEx)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
                     Console.WriteLine($"Error de comunicación: {commEx.Message}");
                 }
                 catch (TimeoutException timeoutEx)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
                     Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
                     Console.WriteLine($"Error inesperado: {ex.Message}");
                 }
                 finally
@@ -103,7 +103,6 @@ namespace DobbleGame
             }
         }
 
-
         private void MostrarNotificacionSolicitud(Dominio.Amistad solicitud)
         {
             var proxy = new Servidor.GestionAmigosClient();
@@ -117,26 +116,51 @@ namespace DobbleGame
 
             var panelSolicitud = new Border
             {
-                Background = new SolidColorBrush(Colors.Transparent), // Fondo transparente
-                Padding = new Thickness(10), // Espaciado interno en lugar de margen externo
+                Background = new SolidColorBrush(Colors.Transparent), 
+                Padding = new Thickness(10), 
                 BorderBrush = new SolidColorBrush(Colors.LightGray),
                 BorderThickness = new Thickness(1)
             };
 
             var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.4, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.25, GridUnitType.Star) }); 
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.75, GridUnitType.Star) }); 
 
+            // Crear la imagen del usuario y hacerla circular
+            var fotoUsuario = new Image
+            {
+                Width = 70, 
+                Height = 70, 
+                Stretch = Stretch.UniformToFill,
+                Margin = new Thickness(0, 0, 15, 0) 
+            };
+
+            byte[] fotoBytes = cuenta.Foto; 
+            if (fotoBytes != null)
+            {
+                fotoUsuario.Source = ConvertirBytesAImagen(fotoBytes);
+            }
+
+            fotoUsuario.Clip = new EllipseGeometry
+            {
+                Center = new Point(35, 35), 
+                RadiusX = 35,
+                RadiusY = 35
+            };
+            Grid.SetColumn(fotoUsuario, 0);
+
+            // Crear el TextBlock con el nombre de usuario
             var nombreUsuario = new TextBlock
             {
                 Text = cuentaUsuarioAmigo.Usuario,
-                FontSize = 16,
+                FontSize = 21, 
                 FontWeight = FontWeights.Bold,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 5)
+                VerticalAlignment = VerticalAlignment.Center, 
+                Margin = new Thickness(0, 0, 0, 0) 
             };
-            Grid.SetColumn(nombreUsuario, 0);
+            Grid.SetColumn(nombreUsuario, 1);
 
+            // Crear los botones de aceptar y rechazar
             var stackBotones = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
@@ -162,14 +186,39 @@ namespace DobbleGame
 
             stackBotones.Children.Add(botonAceptar);
             stackBotones.Children.Add(botonRechazar);
-            Grid.SetColumn(stackBotones, 1);
 
-            grid.Children.Add(nombreUsuario);
-            grid.Children.Add(stackBotones);
+            var contenidoStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Vertical,
+                VerticalAlignment = VerticalAlignment.Center // Centrar verticalmente todo el contenido
+            };
+            contenidoStackPanel.Children.Add(nombreUsuario);
+            contenidoStackPanel.Children.Add(stackBotones);
+
+            Grid.SetColumn(contenidoStackPanel, 1);
+
+            grid.Children.Add(fotoUsuario);
+            grid.Children.Add(contenidoStackPanel);
 
             panelSolicitud.Child = grid;
 
             ContenedorNotificaciones.Children.Add(panelSolicitud);
+        }
+
+        private ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
+        {
+            if (fotoBytes == null || fotoBytes.Length == 0)
+                return null;
+
+            using (var stream = new MemoryStream(fotoBytes))
+            {
+                var imagen = new BitmapImage();
+                imagen.BeginInit();
+                imagen.CacheOption = BitmapCacheOption.OnLoad;
+                imagen.StreamSource = stream;
+                imagen.EndInit();
+                return imagen;
+            }
         }
 
         private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
@@ -292,7 +341,6 @@ namespace DobbleGame
                     }
                 }
             }
-
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
