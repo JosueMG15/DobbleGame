@@ -1,0 +1,44 @@
+﻿C:\Users\sosue\source\repos\DobbleGame\SelectorPlantillaJugador.cs
+C:\Users\sosue\source\repos\DobbleGame\Utilidades\Registro.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaErrorConexion.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigoSala.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigo.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\PaginaMenu.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\PaginaPerfil.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\PaginaSala.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\Utilidades\CadenaVisibilidadConverter.cs
+C:\Users\sosue\source\repos\DobbleGame\Extensiones\PasswordBoxExtensiones.cs
+C:\Users\sosue\source\repos\DobbleGame\Extensiones\TextBoxExtensiones.cs
+C:\Users\sosue\source\repos\DobbleGame\Utilidades\ContraseñaHelper.cs
+C:\Users\sosue\source\repos\DobbleGame\Utilidades\EncriptadorContraseña.cs
+C:\Users\sosue\source\repos\DobbleGame\Utilidades\Utilidades.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaCambioContraseña.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaCambioNombre.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaEnviarSolicitudAmistad.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaGestionarSolicitudesAmistad.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaMenu.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaPartida.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaRecuperarContraseña.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaRegistro.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\VentanaRegistroExitoso.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\App.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\MainWindow.xaml.cs
+C:\Users\sosue\source\repos\DobbleGame\Properties\AssemblyInfo.cs
+C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.en-US.resx
+C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.es-MX.resx
+C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.resx
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD.datasource
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD.datasource
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfboolean.datasource
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD.datasource
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item.xsd
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item1.xsd
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item2.xsd
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\ServicioImplementacion.wsdl
+C:\Users\sosue\source\repos\DobbleGame\packages.config
+C:\Users\sosue\source\repos\DobbleGame\Properties\Settings.settings
+C:\Users\sosue\source\repos\DobbleGame\App.config
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item.disco
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\configuration91.svcinfo
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\configuration.svcinfo
+C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\Reference.svcmap

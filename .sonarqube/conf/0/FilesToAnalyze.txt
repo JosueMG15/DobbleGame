@@ -1,0 +1,4 @@
+﻿C:\Users\sosue\source\repos\Dominio\Amistad.cs
+C:\Users\sosue\source\repos\Dominio\CuentaUsuario.cs
+C:\Users\sosue\source\repos\Dominio\CuentaUsuarioAmigos.cs
+C:\Users\sosue\source\repos\Dominio\Properties\AssemblyInfo.cs

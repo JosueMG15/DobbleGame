@@ -173,7 +173,7 @@
         <TextBox Panel.ZIndex="1" x:Name="tbContenedor" HorizontalAlignment="Left" Margin="42,400,0,0" VerticalAlignment="Top" Width="333" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
                  Height="309" TextWrapping="Wrap" IsReadOnly="True" Opacity="0.5" Visibility="Hidden"/>
 
-        <ItemsControl ItemsSource="{Binding UsuariosConectados}" ItemTemplateSelector="{StaticResource SelectorPlantillaJugador}" Margin="100,50,50,150">
+        <ItemsControl ItemsSource="{Binding UsuariosConectados}" ItemTemplateSelector="{StaticResource SelectorPlantillaJugador}" Margin="100,50,50,200">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="2" Columns="2" />
@@ -185,7 +185,7 @@
         <Button x:Name="btnCodigoSala" Content="" HorizontalAlignment="Left" Margin="825,686,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29" Click="BtnCopiarCodigoSala_Click"/>
         <Button Content="" HorizontalAlignment="Left" Margin="825,740,0,0" VerticalAlignment="Top" Width="252" Height="49" Background="#FFF1EA29"/>
 
-        <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent"
+        <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Opacity="0.7"
                 Click="BtnIniciarPartida_Click" Height="126">
             <Grid>
                 <Image Source="/Imagenes/BotonIniciarPartida.png" Stretch="Uniform" Height="111" Width="220" RenderTransformOrigin="0.725,0.455"/>

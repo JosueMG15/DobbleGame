@@ -113,33 +113,46 @@ namespace DobbleGame.Utilidades
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
+                        Registro.Error($"Proxy en estado 'Faulted'. Se abortó la conexión: {proxy}");
                     }
                     else
                     {
                         proxy.Close();
+                        Registro.Informacion($"Proxy cerrado correctamente. Estado: {proxy.State}");
                     }
                 }
-                catch
+                catch (Exception proxyEx)
                 {
-                    proxy.Abort();
+                    {
+                        proxy.Abort();
+                        Registro.Fatal($"Error al intentar cerrar el proxy: {proxyEx.Message}. Proxy abortado");
+                    }
                 }
-            }
 
-            if (ex is CommunicationObjectFaultedException)
-            {
-                MostrarVentanaErrorConexionServidor(contenedor);
-            }
-            else if (ex is CommunicationException)
-            {
-                MostrarVentanaErrorConexionServidor(contenedor);
-            }
-            else if (ex is TimeoutException)
-            {
-                MostrarVentanaErrorConexionServidor(contenedor);
-            }
-            else
-            {
-                MostrarVentanaErrorConexionServidor(contenedor);
+                if (ex is CommunicationObjectFaultedException)
+                {
+                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationObjectFaultedException: {ex.Message}. " +
+                                   $"\nTraza: {ex.StackTrace}");
+                    MostrarVentanaErrorConexionServidor(contenedor);
+                }
+                else if (ex is CommunicationException)
+                {
+                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationException: {ex.Message}. " +
+                                   $"\nTraza: {ex.StackTrace}");
+                    MostrarVentanaErrorConexionServidor(contenedor);
+                }
+                else if (ex is TimeoutException)
+                {
+                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de TimeoutException: {ex.Message}. " +
+                                   $"\nTraza: {ex.StackTrace}");
+                    MostrarVentanaErrorConexionServidor(contenedor);
+                }
+                else
+                {
+                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}. " + 
+                                   $"\nTraza: {ex.StackTrace}");
+                    MostrarVentanaErrorConexionServidor(contenedor);
+                }
             }
         }
     }

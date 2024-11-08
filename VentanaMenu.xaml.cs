@@ -31,12 +31,6 @@ namespace DobbleGame
             InicializarDatos();
             CargarAmistades();
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
-            this.Closing += VentanaMenu_Closing;
-        }
-
-        private void VentanaMenu_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CerrarSesion();
         }
 
         private void InicializarDatos()

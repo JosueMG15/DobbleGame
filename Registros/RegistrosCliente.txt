@@ -1,0 +1,16 @@
+2024-11-07 21:47:19,054 [1] FATAL DobbleGame.Utilidades.Registro - Error al intentar cerrar el proxy: La operación no se completó en el tiempo de espera asignado de 00:00:59.9969973. El tiempo asignado a esta operación puede haber sido una parte de un tiempo de espera mayor.. Proxy abortado
+2024-11-07 21:47:19,078 [1] ERROR DobbleGame.Utilidades.Registro - Estado del proxy: Closed. 
+Excepción de TimeoutException: La operación de solicitud enviada a net.tcp://localhost:8081/IGestionSala no recibió una respuesta en el tiempo de espera configurado (00:01:00). El tiempo asignado a esta operación puede haber sido una parte de un tiempo de espera mayor. La razón puede ser que el servicio sigue procesando la operación o que no pudo enviar un mensaje de respuesta. Considere la posibilidad de aumentar el tiempo de espera de la operación (convirtiendo el canal/proxy en IContextChannel y estableciendo la propiedad OperationTimeout) y asegúrese de que el servicio pueda conectarse al cliente.. 
+Traza: 
+Server stack trace: 
+   en System.ServiceModel.Dispatcher.DuplexChannelBinder.SyncDuplexRequest.WaitForReply(TimeSpan timeout)
+   en System.ServiceModel.Dispatcher.DuplexChannelBinder.Request(Message message, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   en System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   en System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   en System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   en System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   en DobbleGame.Servidor.IGestionSala.AbandonarSala(String nombreUsuario, String codigoSala, String mensaje)
+   en DobbleGame.PaginaSala.AbandonarSala() en C:\Users\sosue\source\repos\DobbleGame\PaginaSala.xaml.cs:línea 116

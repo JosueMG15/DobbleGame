@@ -22,10 +22,11 @@ namespace DobbleGame
     {
         private Servidor.IGestionPartida proxy;
         public ObservableCollection<CuentaUsuario> UsuariosEnPartida { get; set; }
+        private Window VentanaMenu;
         public string CodigoSala {  get; set; }
         public bool HayConexionPartida { get; set; }
 
-        public VentanaPartida(string codigoSala)
+        public VentanaPartida(string codigoSala, Window ventanaMenu)
         {
             InicializarProxy();
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace DobbleGame
             UsuariosEnPartida = new ObservableCollection<CuentaUsuario>();
             HayConexionPartida = false;
             CodigoSala = codigoSala;
+            VentanaMenu = ventanaMenu;
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
@@ -45,7 +47,9 @@ namespace DobbleGame
                 proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala);
 
                 ((ICommunicationObject)proxy).Close();
+                VentanaMenu.Show();
                 this.Close();
+
             }
             catch (Exception ex)
             {

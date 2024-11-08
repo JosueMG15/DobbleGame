@@ -36,7 +36,7 @@ namespace DobbleGame
             InitializeComponent();
             this.DataContext = this;
             UsuariosConectados = new ObservableCollection<CuentaUsuario>();
-            UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
+            //UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
             EsAnfitrion = esAnfitrion;
             HayConexionConSala = false;
             CodigoSala = codigoSala;
@@ -58,7 +58,7 @@ namespace DobbleGame
 
         private bool CrearSala()
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
 
             bool resultado = false;
 
@@ -86,7 +86,7 @@ namespace DobbleGame
         
         private bool UnirseASala()
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
 
             bool resultado = false;
 
@@ -108,7 +108,7 @@ namespace DobbleGame
 
         private void AbandonarSala()
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
 
             try
             {
@@ -160,19 +160,26 @@ namespace DobbleGame
         {
             string mensaje = tbChat.Text.Trim();
 
+            InicializarProxySiEsNecesario();
+
             if (!string.IsNullOrEmpty(mensaje) && ((ICommunicationObject)proxy)?.State == CommunicationState.Opened)
             {
-                proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
-                tbChat.Text = string.Empty;
-            }
-            else
-            {
-                MessageBox.Show("No se puede enviar el mensaje. Verifique la conexión.");
+                try
+                {
+                    proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    tbChat.Text = string.Empty;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("No se puede enviar el mensaje. Verifique la conexión.");
+                }
             }
         }
 
         private void InicializarSala()
         {
+            InicializarProxySiEsNecesario();
+
             proxy.NotificarUsuarioConectado(CodigoSala);
 
             if (!EsAnfitrion)
@@ -189,13 +196,13 @@ namespace DobbleGame
 
         private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
         {
-            if (UsuariosConectados.Count < 2)
+            /*if (UsuariosConectados.Count < 2)
             {
                 MessageBox.Show("Se necesitan al menos 2 jugadores para iniciar la partida");
                 return;
-            }
+            }*/
 
-            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala);
+            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
 
             try
             {
@@ -209,36 +216,33 @@ namespace DobbleGame
 
         public void CambiarVentanaAPartida()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 Window ventanaActual = Window.GetWindow(this);
                 ventanaActual.Hide();
-                var ventanaPartida = new VentanaPartida(CodigoSala); 
+                var ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this)); 
                 ventanaPartida.Show();
-            });
+            }));
         }
 
         private void UsuariosConectados_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (EsAnfitrion)
-            {
-                btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 2;
-            }
+            btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 2;
         }
 
         public void MostrarMensajeSala(string mensaje)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
                 tbContenedor.ScrollToEnd();
-            });
+            }));
         }
 
         public void ActualizarUsuariosConectados(CuentaUsuario[] cuentaUsuarios)
         {
             selectorPlantilla.ReiniciarPlantillas();
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 UsuariosConectados.Clear();
                 foreach (var usuario in cuentaUsuarios)
@@ -246,7 +250,7 @@ namespace DobbleGame
                     Console.WriteLine($"Usuario: {usuario.Usuario}, Puntaje: {usuario.Puntaje}, EsAnfitrion: {usuario.EsAnfitrion}");
                     UsuariosConectados.Add(usuario);
                 }
-            });
+            }));
         }
 
         private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)
@@ -282,21 +286,11 @@ namespace DobbleGame
             proxy = factory.CreateChannel();
         }
 
-        private ImageSource ConvertirImagenPerfil(byte[] fotoBytes)
+        private void InicializarProxySiEsNecesario()
         {
-            if (fotoBytes == null || fotoBytes.Length == 0)
-                return null;
-
-            using (var ms = new MemoryStream(fotoBytes))
+            if (proxy == null || ((ICommunicationObject)proxy).State != CommunicationState.Opened)
             {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = ms;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                image.Freeze();
-
-                return image;
+                InicializarProxy();
             }
         }
     }

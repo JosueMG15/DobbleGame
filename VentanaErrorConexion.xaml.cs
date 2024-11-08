@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,14 +32,44 @@ namespace DobbleGame
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             MainWindow inicioSesion = new MainWindow();
+            var proxy = new GestionJugadorClient();
 
-            foreach (Window window in Application.Current.Windows)
+            try
             {
-                if(window != inicioSesion)
+                if (proxy != null && proxy.State == CommunicationState.Opened)
                 {
-                    window.Close();
+                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
+                    proxy.Close();
+                }
+                
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window != inicioSesion)
+                    {
+                        window.Close();
+                    }
                 }
             }
+            catch (CommunicationException ex)
+            {
+                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationException: {ex.Message}." +
+                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
+                proxy.Abort();
+            }
+            catch (TimeoutException ex)
+            {
+                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de TimeoutException: {ex.Message}." +
+                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
+                proxy.Abort();
+            }
+            catch (Exception ex)
+            {
+                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}." +
+                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
+                proxy.Abort();
+            }
+
+            
             inicioSesion.Show();
         }
     }
