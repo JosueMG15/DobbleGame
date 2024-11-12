@@ -105,13 +105,12 @@ namespace DobbleGame
             try
             {
                 proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+                CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
             }
             catch (Exception ex)
             {
                 Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
-            proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
-            CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)

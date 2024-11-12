@@ -54,7 +54,7 @@ namespace DobbleGame
                     else if (respuestaInicioSesion.Resultado != null)
                     {
                         var cuentaInicioSesion = respuestaInicioSesion.Resultado;
-                        Dominio.CuentaUsuario.cuentaUsuarioActual = new Dominio.CuentaUsuario
+                        Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                         {
                             IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
                             Usuario = cuentaInicioSesion.Usuario,

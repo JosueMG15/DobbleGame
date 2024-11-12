@@ -85,7 +85,7 @@ namespace DobbleGame
                     }
 
                     var respuestaAmistadYaExiste = proxyGestionAmigos.AmistadYaExiste(
-                        Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
                     if (respuestaAmistadYaExiste.ErrorBD)
                     {
@@ -99,7 +99,7 @@ namespace DobbleGame
                     }
 
                     var respuestaEnviarSolicitudAmistad = proxyGestionAmigos.EnviarSolicitudAmistad(
-                        Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
                     if (respuestaEnviarSolicitudAmistad.ErrorBD)
                     {
