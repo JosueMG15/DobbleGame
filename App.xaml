@@ -9,9 +9,7 @@
              >
     <Application.Resources>
         <utilidades:CadenaVisibilidadConverter x:Key="CadenaVisibilidadConverter" />
-        <Style TargetType="Window">
-            <Setter Property="Icon" Value="pack://application:,,,/DobbleGame;component/Imagenes/AbejaMenu.png"/>
-        </Style>
+
         <Style TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>

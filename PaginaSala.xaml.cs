@@ -25,7 +25,8 @@ namespace DobbleGame
     public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
     {
         private Servidor.IGestionSala proxy;
-        private readonly SelectorPlantillaJugador selectorPlantilla = new SelectorPlantillaJugador();
+        private readonly SelectorPlantillaJugador selectorPlantilla;
+        private VentanaPartida ventanaPartida;
         public ObservableCollection<CuentaUsuario> UsuariosConectados { get; set; }
         public bool EsAnfitrion {  get; set; }
         public string CodigoSala {  get; set; }
@@ -36,23 +37,22 @@ namespace DobbleGame
             InitializeComponent();
             this.DataContext = this;
             UsuariosConectados = new ObservableCollection<CuentaUsuario>();
-            //UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
+            UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
             EsAnfitrion = esAnfitrion;
             HayConexionConSala = false;
             CodigoSala = codigoSala;
-            IniciarSesionSala();
-            InicializarSala();
+            selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
         }
 
-        public void IniciarSesionSala()
+        public bool IniciarSesionSala()
         {
             if (EsAnfitrion)
             {
-                CrearSala();
+                return CrearSala();
             }
             else
             {
-                UnirseASala();
+                return UnirseASala();
             }
         }
 
@@ -67,13 +67,14 @@ namespace DobbleGame
                 CodigoSala = proxy.GenerarCodigoNuevaSala();
                 btnCodigoSala.Content = CodigoSala;
 
-                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
 
                 resultado = proxy.CrearNuevaSala(usuarioActual.Usuario, CodigoSala);
 
                 if (resultado)
                 {
                     HayConexionConSala = proxy.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
+                    proxy.NotificarUsuarioConectado(CodigoSala);
                 }
             }
             catch (Exception ex)
@@ -93,9 +94,9 @@ namespace DobbleGame
             try
             {
                 btnCodigoSala.Content = CodigoSala;
-                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
                 resultado = proxy.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
-
+                proxy.NotificarUsuarioConectado(CodigoSala);
                 HayConexionConSala = resultado;
             }
             catch (Exception ex)
@@ -112,7 +113,7 @@ namespace DobbleGame
 
             try
             {
-                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
                 proxy.AbandonarSala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_AbandonoSala);
                 
                 ((ICommunicationObject)proxy).Close();
@@ -123,9 +124,44 @@ namespace DobbleGame
             }
         }
 
+        public bool HayEspacioEnSala()
+        {
+            InicializarProxySiEsNecesario();
+
+            try
+            {
+                return proxy.HayEspacioSala(CodigoSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                return false;
+            }
+        }
+
+        public bool ExisteSala()
+        {
+            InicializarProxySiEsNecesario();
+
+            try
+            {
+                return proxy.ExisteSala(CodigoSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                return false;
+            }
+        }
+
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
             AbandonarSala();
+            IrPaginaMenu();
+        }
+
+        private void IrPaginaMenu()
+        {
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
             fadeOutAnimation.Completed += (s, a) =>
             {
@@ -135,7 +171,6 @@ namespace DobbleGame
                 AnimateElementsInPaginaMenu(paginaMenu);
             };
             this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
-
         }
 
         private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
@@ -166,7 +201,7 @@ namespace DobbleGame
             {
                 try
                 {
-                    proxy.EnviarMensajeSala(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    proxy.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
                     tbChat.Text = string.Empty;
                 }
                 catch (Exception)
@@ -176,36 +211,13 @@ namespace DobbleGame
             }
         }
 
-        private void InicializarSala()
-        {
-            InicializarProxySiEsNecesario();
-
-            proxy.NotificarUsuarioConectado(CodigoSala);
-
-            if (!EsAnfitrion)
-            {
-                btnIniciarPartida.IsEnabled = false;
-                
-            }
-        }
-
-        private void TbChat_GotFocus(object sender, RoutedEventArgs e)
-        {
-            tbContenedor.Visibility = Visibility.Visible;
-        }
-
         private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
         {
-            /*if (UsuariosConectados.Count < 2)
-            {
-                MessageBox.Show("Se necesitan al menos 2 jugadores para iniciar la partida");
-                return;
-            }*/
-
-            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
+            ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
 
             try
             {
+                proxy.NotificarInstanciaVentanaPartida(CodigoSala);
                 ventanaPartida.CrearPartida();
             }
             catch (Exception ex)
@@ -214,20 +226,51 @@ namespace DobbleGame
             }
         }
 
-        public void CambiarVentanaAPartida()
+        private void BtnExpulsar_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+            Button boton = sender as Button;
+
+            var jugadorAExpulsar = boton?.DataContext as CuentaUsuario;
+
+            if (jugadorAExpulsar != null)
             {
-                Window ventanaActual = Window.GetWindow(this);
-                ventanaActual.Hide();
-                var ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this)); 
-                ventanaPartida.Show();
-            }));
+                VentanaConfirmarExpulsion ventanaConfirmarExpulsion = new VentanaConfirmarExpulsion(jugadorAExpulsar.Usuario);
+                bool? respuesta = ventanaConfirmarExpulsion.ShowDialog();
+
+                if (respuesta == true)
+                {
+                    ExpulsarJugador(jugadorAExpulsar.Usuario);
+                }
+            }
+        }
+
+        private void ExpulsarJugador(string nombreUsuario)
+        {
+            InicializarProxySiEsNecesario();
+
+            try
+            {
+                proxy.ExpulsarJugador(nombreUsuario, CodigoSala, Properties.Resources.msg_ExpulsionSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+        }
+
+        public void NotificarExpulsionAJugador()
+        {
+            ((ICommunicationObject)proxy).Close();
+            IrPaginaMenu();
+            MessageBox.Show(Properties.Resources.lb_HasSidoExpulsado);
         }
 
         private void UsuariosConectados_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 2;
+            if (EsAnfitrion)
+            {
+                btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 1;
+            }
         }
 
         public void MostrarMensajeSala(string mensaje)
@@ -235,22 +278,37 @@ namespace DobbleGame
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
             {
                 tbContenedor.Text += $"{mensaje}{Environment.NewLine}";
-                tbContenedor.ScrollToEnd();
+                scrollViewer.ScrollToEnd();
             }));
         }
 
         public void ActualizarUsuariosConectados(CuentaUsuario[] cuentaUsuarios)
         {
+            UsuariosConectados.Clear();
             selectorPlantilla.ReiniciarPlantillas();
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-            {
-                UsuariosConectados.Clear();
+            { 
                 foreach (var usuario in cuentaUsuarios)
                 {
                     Console.WriteLine($"Usuario: {usuario.Usuario}, Puntaje: {usuario.Puntaje}, EsAnfitrion: {usuario.EsAnfitrion}");
                     UsuariosConectados.Add(usuario);
                 }
             }));
+        }
+
+        public void ConvertirEnAnfitrion()
+        {
+            EsAnfitrion = true;
+        }
+
+        public void InstanciarVentanaPartida()
+        {
+            if (ventanaPartida == null)
+            {
+                ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
+            }
+            Window.GetWindow(this).Hide();
+            ventanaPartida.Show();
         }
 
         private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)
@@ -292,6 +350,54 @@ namespace DobbleGame
             {
                 InicializarProxy();
             }
+        }
+
+        private void TbChat_GotFocus(object sender, RoutedEventArgs e)
+        {
+            borderContenedor.OpacityMask = null;
+        }
+
+        private void TbChat_LostFocus(object sender, RoutedEventArgs e)
+        {
+            borderContenedor.OpacityMask = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 4),
+                EndPoint = new Point(0, 0),
+                GradientStops = new GradientStopCollection
+                {
+                    new GradientStop(Colors.Black, 0.5),
+                    new GradientStop(Colors.Transparent, 1)
+                }
+            };
+        }
+
+        private void Pagina_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!(e.OriginalSource is TextBox)) 
+            { 
+                var scope = FocusManager.GetFocusScope(this); 
+                FocusManager.SetFocusedElement(scope, this as IInputElement); 
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void BtnEnviarMensaje_GotFocus(object sender, RoutedEventArgs e)
+        {
+            borderContenedor.OpacityMask = null;
+        }
+
+        private void BtnEnviarMensaje_LostFocus(object sender, RoutedEventArgs e)
+        {
+            borderContenedor.OpacityMask = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 4),
+                EndPoint = new Point(0, 0),
+                GradientStops = new GradientStopCollection
+                {
+                    new GradientStop(Colors.Black, 0.5),
+                    new GradientStop(Colors.Transparent, 1)
+                }
+            };
         }
     }
 }

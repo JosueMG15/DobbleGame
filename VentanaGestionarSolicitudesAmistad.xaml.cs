@@ -41,7 +41,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuesta = proxy.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario);
+                    var respuesta = proxy.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
                     if (respuesta.ErrorBD)
                     {

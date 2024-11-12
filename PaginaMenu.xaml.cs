@@ -28,7 +28,7 @@ namespace DobbleGame
         {
             PaginaSala paginaSala = new PaginaSala(true, null);
 
-            if (paginaSala.HayConexionConSala)
+            if (paginaSala.IniciarSesionSala())
             {
                 IrPaginaSalaAnimacion(paginaSala);
             }
@@ -37,6 +37,17 @@ namespace DobbleGame
                 MessageBox.Show("No se puede");
             }
             
+        }
+
+        private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)
+        {
+            VentanaIngresoCodigoSala paginaIngresoCodigoSala = new VentanaIngresoCodigoSala();
+            bool? resultado = paginaIngresoCodigoSala.ShowDialog();
+
+            if (resultado == true)
+            {
+                IrPaginaSalaAnimacion(paginaIngresoCodigoSala.Sala);
+            }
         }
 
         public void IrPaginaSalaAnimacion(PaginaSala paginaSala)
@@ -67,17 +78,6 @@ namespace DobbleGame
 
                     element.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
                 }
-            }
-        }
-
-        private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)
-        {
-            VentanaIngresoCodigoSala paginaIngresoCodigoSala = new VentanaIngresoCodigoSala();
-            bool? resultado = paginaIngresoCodigoSala.ShowDialog();
-
-            if (resultado == true)
-            {
-                IrPaginaSalaAnimacion(paginaIngresoCodigoSala.Sala);
             }
         }
     }

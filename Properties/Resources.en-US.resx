@@ -199,7 +199,7 @@
     <value>Retry</value>
   </data>
   <data name="btn_CrearSala" xml:space="preserve">
-    <value>Create lobby</value>
+    <value>Create Lobby</value>
   </data>
   <data name="btn_UnirseASala" xml:space="preserve">
     <value>Join lobby</value>
@@ -295,7 +295,7 @@
     <value>Are you sure you want to leave the game?</value>
   </data>
   <data name="lb_MensajeExpulsarJugador" xml:space="preserve">
-    <value>Are you sure you want to kick ...?</value>
+    <value>Are you sure you want to kick {0}?</value>
   </data>
   <data name="lb_Puntos" xml:space="preserve">
     <value>Score:</value>
@@ -403,15 +403,27 @@
     <value>There is already a pending request </value>
   </data>
   <data name="msg_UnionSala" xml:space="preserve">
-    <value>Has joined the room</value>
+    <value>has joined the room</value>
   </data>
   <data name="msg_AbandonoSala" xml:space="preserve">
-    <value>Has left the room</value>
+    <value>has left the room</value>
   </data>
   <data name="lb_Puntaje" xml:space="preserve">
     <value>Score: {0}</value>
   </data>
   <data name="lb_SesiónActiva" xml:space="preserve">
     <value>The account already has an active session </value>
+  </data>
+  <data name="msg_ExpulsionSala" xml:space="preserve">
+    <value>have been expelled</value>
+  </data>
+  <data name="lb_HasSidoExpulsado" xml:space="preserve">
+    <value>You have been expelled from the lobby</value>
+  </data>
+  <data name="btn_CerrarSesión" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="lb_MensajeCerrarSesion" xml:space="preserve">
+    <value>Are you sure you want to log out?</value>
   </data>
 </root>

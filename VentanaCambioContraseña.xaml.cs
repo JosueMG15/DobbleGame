@@ -64,7 +64,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuestaUsuario = proxy.ValidarContraseña(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario,
+                    var respuestaUsuario = proxy.ValidarContraseña(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
                         Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual));
 
                     if (respuestaUsuario.ErrorBD)
@@ -88,7 +88,7 @@ namespace DobbleGame
                         && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
                     {
                         string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
-                        var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
+                        var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
 
                         if (respuestaModificarContraseña.ErrorBD)
                         {

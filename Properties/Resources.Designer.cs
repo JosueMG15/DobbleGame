@@ -79,6 +79,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cerrar sesión.
+        /// </summary>
+        public static string btn_CerrarSesión {
+            get {
+                return ResourceManager.GetString("btn_CerrarSesión", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Crear Sala.
         /// </summary>
         public static string btn_CrearSala {
@@ -538,6 +547,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Has sido expulsado de la sala.
+        /// </summary>
+        public static string lb_HasSidoExpulsado {
+            get {
+                return ResourceManager.GetString("lb_HasSidoExpulsado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ingresar código.
         /// </summary>
         public static string lb_IngresarCódigo {
@@ -592,6 +610,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas cerrar sesión?.
+        /// </summary>
+        public static string lb_MensajeCerrarSesion {
+            get {
+                return ResourceManager.GetString("lb_MensajeCerrarSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Seguro que deseas eliminar a ...?.
         /// </summary>
         public static string lb_MensajeEliminarAmigo {
@@ -628,7 +655,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¿Seguro que deseas expulsar a...?.
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas expulsar a {0}?.
         /// </summary>
         public static string lb_MensajeExpulsarJugador {
             get {
@@ -763,7 +790,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ha abandonado la sala.
+        ///   Busca una cadena traducida similar a ha abandonado la sala.
         /// </summary>
         public static string msg_AbandonoSala {
             get {
@@ -772,7 +799,16 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Se ha unido a la sala.
+        ///   Busca una cadena traducida similar a ha sido expulsado.
+        /// </summary>
+        public static string msg_ExpulsionSala {
+            get {
+                return ResourceManager.GetString("msg_ExpulsionSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a se ha unido a la sala.
         /// </summary>
         public static string msg_UnionSala {
             get {

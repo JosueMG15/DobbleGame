@@ -11,6 +11,11 @@ namespace DobbleGame
 {
     public class SelectorPlantillaJugador : DataTemplateSelector
     {
+        private static SelectorPlantillaJugador _instancia = new SelectorPlantillaJugador();
+        public static SelectorPlantillaJugador Instancia => _instancia;
+
+        public SelectorPlantillaJugador() { }
+
         public DataTemplate JugadorRojoPlantilla {  get; set; }
         public DataTemplate JugadorAzulPlantilla {  get; set; }
         public DataTemplate JugadorVerdePlantilla { get; set; }
@@ -19,13 +24,7 @@ namespace DobbleGame
         public DataTemplate InvitarVerdePlantilla { get; set; }
         public DataTemplate InvitarAmarilloPlantilla { get; set; }
 
-        private readonly Dictionary<string, bool> plantillasDisponibles = new Dictionary<string, bool>
-        {
-            {"JugadorRojoPlantilla", true},
-            {"JugadorAzulPlantilla", true },
-            {"JugadorVerdePlantilla", true },
-            {"JugadorAmarilloPlantilla", true }
-        };
+        private int contadorPlantillas = 0;
 
         public override DataTemplate SelectTemplate(object item, DependencyObject contenedor)
         {
@@ -33,50 +32,33 @@ namespace DobbleGame
 
             if (usuario == null) return null;
 
+            usuario.NumeroJugador = contadorPlantillas + 1;
+
             if (usuario.EsAnfitrion)
             {
-                OcuparPlantilla("JugadorRojoPlantilla");
+                contadorPlantillas += 1;
                 return JugadorRojoPlantilla;
             }
 
-            string nombrePlantillaDisponible = ObtenerPlantillaDisponible();
-            if (nombrePlantillaDisponible == null)
-                return null;
-
-            OcuparPlantilla(nombrePlantillaDisponible);
-
-            switch (nombrePlantillaDisponible)
+            switch (contadorPlantillas)
             {
-                case "JugadorAzulPlantilla":
+                case 1:
+                    contadorPlantillas += 1;
                     return JugadorAzulPlantilla;
-                case "JugadorVerdePlantilla":
+                case 2:
+                    contadorPlantillas += 1;
                     return JugadorVerdePlantilla;
-                case "JugadorAmarilloPlantilla":
+                case 3:
+                    contadorPlantillas += 1;
                     return JugadorAmarilloPlantilla;
                 default:
                     return null;
             }
         }
 
-        private string ObtenerPlantillaDisponible()
-        {
-            return plantillasDisponibles.FirstOrDefault(p => p.Value).Key;
-        }
-
-        private void OcuparPlantilla(string nombrePlantilla)
-        {
-            if (plantillasDisponibles.ContainsKey(nombrePlantilla))
-            {
-                plantillasDisponibles[nombrePlantilla] = false;
-            }
-        }
-
         public void ReiniciarPlantillas()
         {
-            foreach (var plantilla in plantillasDisponibles.Keys.ToList())
-            {
-                plantillasDisponibles[plantilla] = true;
-            }
+            contadorPlantillas = 0;
         }
     }
 }

@@ -78,24 +78,37 @@ namespace DobbleGame.Utilidades
         }
         public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor)
         {
-            var ventanaErrorConexion = new VentanaErrorConexion(
+            try
+            {
+                var ventanaErrorConexion = new VentanaErrorConexion(
                  Properties.Resources.lb_ErrorConexiónServidor,
                  Properties.Resources.lb_MensajeErrorConexiónServidor
              )
-            {
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            }; 
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
 
-            if (contenedor is Window ventana)
-            {
-                ventanaErrorConexion.Owner = ventana;
-            }
-            else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
-            {
-                ventanaErrorConexion.Owner = ventanaPrincipal;
-            }
+                if (contenedor is Window ventana)
+                {
+                    ventanaErrorConexion.Owner = ventana;
+                }
+                else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
+                {
+                    ventanaErrorConexion.Owner = ventanaPrincipal;
+                }
 
-            ventanaErrorConexion.ShowDialog();
+                ventanaErrorConexion.ShowDialog();
+            }
+            catch (QuotaExceededException ex)
+            {
+                Registro.Error("Excepción de CommunicationObjectFaultedException: { ex.Message}. " +
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
+            }
+            catch (Exception ex)
+            {
+                Registro.Error("Excepción no manejada: { ex.Message}. " +
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
+            }
         }
 
         public static void MostrarMensajeStackPanel(StackPanel contenedor, Label lbMensaje, string mensaje)
@@ -132,25 +145,25 @@ namespace DobbleGame.Utilidades
                 if (ex is CommunicationObjectFaultedException)
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationObjectFaultedException: {ex.Message}. " +
-                                   $"\nTraza: {ex.StackTrace}");
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
                     MostrarVentanaErrorConexionServidor(contenedor);
                 }
                 else if (ex is CommunicationException)
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationException: {ex.Message}. " +
-                                   $"\nTraza: {ex.StackTrace}");
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
                     MostrarVentanaErrorConexionServidor(contenedor);
                 }
                 else if (ex is TimeoutException)
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de TimeoutException: {ex.Message}. " +
-                                   $"\nTraza: {ex.StackTrace}");
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
                     MostrarVentanaErrorConexionServidor(contenedor);
                 }
                 else
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}. " + 
-                                   $"\nTraza: {ex.StackTrace}");
+                                   $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
                     MostrarVentanaErrorConexionServidor(contenedor);
                 }
             }

@@ -38,7 +38,7 @@ namespace DobbleGame
             {
                 if (proxy != null && proxy.State == CommunicationState.Opened)
                 {
-                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
+                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                     proxy.Close();
                 }
                 

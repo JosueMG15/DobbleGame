@@ -76,7 +76,7 @@ namespace DobbleGame
                         return;
                     }
 
-                    var respuestaAmistadYaExiste = proxy.AmistadYaExiste(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+                    var respuestaAmistadYaExiste = proxy.AmistadYaExiste(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
                     if (respuestaAmistadYaExiste.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -88,7 +88,7 @@ namespace DobbleGame
                         return;
                     }
 
-                    var respuestaEnviarSolicitudAmistad = proxy.EnviarSolicitudAmistad(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+                    var respuestaEnviarSolicitudAmistad = proxy.EnviarSolicitudAmistad(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
                     if (respuestaEnviarSolicitudAmistad.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);

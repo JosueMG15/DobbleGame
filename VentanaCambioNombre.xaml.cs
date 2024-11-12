@@ -40,8 +40,8 @@ namespace DobbleGame
             String nuevoNombre = tbNuevoNombre.Text.Trim();
             GuardarCambioNombre(nuevoNombre);
 
-            _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
-            _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.Usuario);
+            _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.Usuario);
+            _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.Usuario);
         }
 
         private void GuardarCambioNombre(string nuevoNombre)
@@ -74,7 +74,7 @@ namespace DobbleGame
                         return;
                     }
 
-                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
                     if (respuestaModificarUsuario.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -82,15 +82,15 @@ namespace DobbleGame
                     }
                     if (respuestaModificarUsuario.Resultado)
                     {
-                        CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
-                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
+                        CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
+                        CuentaUsuario.CuentaUsuarioActual = new CuentaUsuario
                         {
-                            IdCuentaUsuario = Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario,
+                            IdCuentaUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
                             Usuario = nuevoNombre,
-                            Correo = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo,
-                            Contraseña = Dominio.CuentaUsuario.cuentaUsuarioActual.Contraseña,
-                            Foto = Dominio.CuentaUsuario.cuentaUsuarioActual.Foto,
-                            Puntaje = Dominio.CuentaUsuario.cuentaUsuarioActual.Puntaje,
+                            Correo = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo,
+                            Contraseña = Dominio.CuentaUsuario.CuentaUsuarioActual.Contraseña,
+                            Foto = Dominio.CuentaUsuario.CuentaUsuarioActual.Foto,
+                            Puntaje = Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje,
                             Estado = true,
                         };
 

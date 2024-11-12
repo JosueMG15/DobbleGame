@@ -107,6 +107,12 @@
       <DependentUpon>PaginaRecuperarContraseña.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectorPlantillaJugador.cs" />
+    <Compile Include="VentanaConfirmarCierreDeSesion.xaml.cs">
+      <DependentUpon>VentanaConfirmarCierreDeSesion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaConfirmarExpulsion.xaml.cs">
+      <DependentUpon>VentanaConfirmarExpulsion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaEliminarAmigo.xaml.cs">
       <DependentUpon>VentanaEliminarAmigo.xaml</DependentUpon>
     </Compile>
@@ -190,6 +196,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PaginaRecuperarContraseña.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaConfirmarCierreDeSesion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaConfirmarExpulsion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -468,6 +482,9 @@
     <Resource Include="Iconos\Sombrilla.png" />
     <Resource Include="Iconos\Tren.png" />
     <Resource Include="Iconos\Trsite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

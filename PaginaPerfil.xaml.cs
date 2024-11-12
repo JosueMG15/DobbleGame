@@ -37,10 +37,10 @@ namespace DobbleGame
 
         private void InicializarDatos()
         {
-            lbCorreoElectronico.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo;
-            lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
-            lbPuntaje.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Puntaje;
-            ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
+            lbCorreoElectronico.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo;
+            lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
+            lbPuntaje.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje;
+            ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
@@ -126,7 +126,7 @@ namespace DobbleGame
 
                     byte[] foto = File.ReadAllBytes(rutaImagen);
                     byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
-                    var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+                    var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
 
                     var ventanaPrincipal = Window.GetWindow(this);
 
@@ -137,9 +137,9 @@ namespace DobbleGame
                     }
                     if (respuestaModificarFoto.Resultado)
                     {
-                        Dominio.CuentaUsuario.cuentaUsuarioActual.Foto = foto;
+                        Dominio.CuentaUsuario.CuentaUsuarioActual.Foto = foto;
                         ImagenPerfil.Source = bitmap;
-                        _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
+                        _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
                     }
                 }
                 catch (CommunicationObjectFaultedException faultEx)

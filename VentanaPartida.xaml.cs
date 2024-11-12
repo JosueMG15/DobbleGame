@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace DobbleGame
 {
@@ -21,33 +22,37 @@ namespace DobbleGame
     public partial class VentanaPartida : Window, Servidor.IGestionPartidaCallback
     {
         private Servidor.IGestionPartida proxy;
+        private DispatcherTimer cronometro;
+        private int contador;
         public ObservableCollection<CuentaUsuario> UsuariosEnPartida { get; set; }
-        private Window VentanaMenu;
+        private readonly Window _ventanaMenu;
         public string CodigoSala {  get; set; }
         public bool HayConexionPartida { get; set; }
+        public string Contador {  get; set; }
 
         public VentanaPartida(string codigoSala, Window ventanaMenu)
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
             InitializeComponent();
             this.DataContext = this;
             UsuariosEnPartida = new ObservableCollection<CuentaUsuario>();
             HayConexionPartida = false;
             CodigoSala = codigoSala;
-            VentanaMenu = ventanaMenu;
+            _ventanaMenu = ventanaMenu;
+            IniciarContador();
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
 
             try
             {
-                var usuarioActual = Dominio.CuentaUsuario.cuentaUsuarioActual;
+                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
                 proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala);
 
                 ((ICommunicationObject)proxy).Close();
-                VentanaMenu.Show();
+                _ventanaMenu.Show();
                 this.Close();
 
             }
@@ -59,7 +64,7 @@ namespace DobbleGame
 
         public bool CrearPartida()
         {
-            InicializarProxy();
+            InicializarProxySiEsNecesario();
 
             bool resultado = false;
 
@@ -70,6 +75,7 @@ namespace DobbleGame
                 if (resultado)
                 {
                     proxy.UnirJugadoresAPartida(CodigoSala);
+                    proxy.NotificarActualizacionDeJugadoresEnPartida(CodigoSala);
                     HayConexionPartida = true;
                 }
             }
@@ -103,6 +109,14 @@ namespace DobbleGame
             proxy = factory.CreateChannel();
         }
 
+        private void InicializarProxySiEsNecesario()
+        {
+            if (proxy == null || ((ICommunicationObject)proxy).State != CommunicationState.Opened)
+            {
+                InicializarProxy();
+            }
+        }
+
         public void ActualizarJugadoresEnPartida(CuentaUsuario[] jugadoresConectados)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -113,6 +127,34 @@ namespace DobbleGame
                     UsuariosEnPartida.Add(jugador);
                 }
             });
+
+            //IniciarContador();
+        }
+
+        private void IniciarContador()
+        {
+            contador = 10;
+            cronometro = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            cronometro.Tick += Cronometro_Tick;
+            cronometro.Start();
+        }
+
+        private void Cronometro_Tick(object sender, EventArgs e)
+        {
+            if (contador > 0)
+            {
+                tbContador.Text = contador.ToString();
+                contador--;
+                
+            }
+            else
+            {
+                cronometro.Stop();
+                tbContador.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

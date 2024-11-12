@@ -24,20 +24,35 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
+            var codigoSala = tbCodigoSala.Text;
 
-            if (!String.IsNullOrWhiteSpace(tbCodigoSala.Text))
+            if (!String.IsNullOrWhiteSpace(codigoSala))
             {
-                PaginaSala paginaSala = new PaginaSala(false, tbCodigoSala.Text);
+                PaginaSala paginaSala = new PaginaSala(false, codigoSala);
 
-                if (paginaSala.HayConexionConSala)
+                if (paginaSala.ExisteSala())
                 {
-                    Sala = paginaSala;
-                    this.DialogResult = true;
-                    this.Close();
+                    if (paginaSala.HayEspacioEnSala())
+                    {
+                        if (paginaSala.IniciarSesionSala())
+                        {
+                            Sala = paginaSala;
+                            this.DialogResult = true;
+                            this.Close();
+                        }
+                        else
+                        {
+                            Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "Ocurrio un error inesperado");
+                        }
+                    }
+                    else
+                    {
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "La sala esta llena");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo unir a la sala");
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "No existe la sala");
                 }
             }
             else

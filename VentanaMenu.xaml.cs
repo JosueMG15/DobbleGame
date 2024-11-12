@@ -34,10 +34,10 @@ namespace DobbleGame
 
         private void InicializarDatos()
         {
-            lbNombreUsuario.Content = Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario;
+            lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
             btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
             lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
-            ConvertirImagenPerfil(Dominio.CuentaUsuario.cuentaUsuarioActual.Foto);
+            ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
             CargarAmistades();
         }
 
@@ -60,16 +60,29 @@ namespace DobbleGame
 
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
         {
-            CerrarSesion();
-            MainWindow mainWindow = new MainWindow();
-            this.Close();
-            mainWindow.Show();
+            VentanaConfirmarCierreDeSesion ventana = new VentanaConfirmarCierreDeSesion();
+            bool? respuesta = ventana.ShowDialog();
+
+            if (respuesta == true)
+            {
+                CerrarSesion();
+                MainWindow mainWindow = new MainWindow();
+                this.Close();
+                mainWindow.Show();
+            }
         }
 
         private void CerrarSesion()
         {
             var proxy = new GestionJugadorClient();
-            proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
+            try
+            {
+                proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+            }
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
@@ -88,17 +101,17 @@ namespace DobbleGame
 
         private void BtnCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
-            if (Dominio.CuentaUsuario.cuentaUsuarioActual.Estado == true)
+            if (Dominio.CuentaUsuario.CuentaUsuarioActual.Estado == true)
             {
                 btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#F44545");
                 lbEstadoUsuario.Content = Properties.Resources.lb_Ausente;
-                Dominio.CuentaUsuario.cuentaUsuarioActual.Estado = false;
+                Dominio.CuentaUsuario.CuentaUsuarioActual.Estado = false;
             }
             else
             {
                 btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
                 lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
-                Dominio.CuentaUsuario.cuentaUsuarioActual.Estado = true;
+                Dominio.CuentaUsuario.CuentaUsuarioActual.Estado = true;
             }
       
         }
@@ -138,7 +151,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuesta = proxy.ObtenerAmistades(Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario);
+                    var respuesta = proxy.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
                     if (respuesta.ErrorBD)
                     {
@@ -162,7 +175,7 @@ namespace DobbleGame
                         // Mostrar las notificaciones
                         foreach (var amistad in amistades)
                         {
-                            if(amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario)
+                            if(amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
                             {
                                 MostrarAmigo(amistad, true);
                             }

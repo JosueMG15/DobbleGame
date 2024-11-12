@@ -295,7 +295,7 @@
     <value>¿Seguro que deseas abandonar la partida?</value>
   </data>
   <data name="lb_MensajeExpulsarJugador" xml:space="preserve">
-    <value>¿Seguro que deseas expulsar a...?</value>
+    <value>¿Seguro que deseas expulsar a {0}?</value>
   </data>
   <data name="lb_Puntos" xml:space="preserve">
     <value>Puntos:</value>
@@ -403,15 +403,27 @@
     <value>Ya hay una solicitud pendiente </value>
   </data>
   <data name="msg_UnionSala" xml:space="preserve">
-    <value>Se ha unido a la sala</value>
+    <value>se ha unido a la sala</value>
   </data>
   <data name="msg_AbandonoSala" xml:space="preserve">
-    <value>Ha abandonado la sala</value>
+    <value>ha abandonado la sala</value>
   </data>
   <data name="lb_Puntaje" xml:space="preserve">
     <value>Puntaje: {0}</value>
   </data>
   <data name="lb_SesiónActiva" xml:space="preserve">
     <value>La cuenta ya tiene una sesión activa</value>
+  </data>
+  <data name="msg_ExpulsionSala" xml:space="preserve">
+    <value>ha sido expulsado</value>
+  </data>
+  <data name="lb_HasSidoExpulsado" xml:space="preserve">
+    <value>Has sido expulsado de la sala</value>
+  </data>
+  <data name="btn_CerrarSesión" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="lb_MensajeCerrarSesion" xml:space="preserve">
+    <value>¿Seguro que deseas cerrar sesión?</value>
   </data>
 </root>
