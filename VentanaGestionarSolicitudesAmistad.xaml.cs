@@ -1,4 +1,5 @@
 ﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +18,6 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class VentanaGestionarSolicitudesAmistad : Window
     {
         private VentanaMenu _ventanaMenu;
@@ -27,6 +27,24 @@ namespace DobbleGame
             _ventanaMenu = ventanaMenu;
             InitializeComponent();
             CargarSolicitudesAmistad();
+
+            // Suscribirse a eventos de NotificacionesManager
+            CallbackManager.Instance.NotificarSolicitudAmistadEvent += NotificarSolicitudAmistad;
+        }
+
+        private void VentanaGestionarSolicitudesAmistad_Closed(object sender, EventArgs e)
+        {
+            CallbackManager.Instance.NotificarSolicitudAmistadEvent -= NotificarSolicitudAmistad;
+        }
+
+
+        // Métodos de callback 
+        public void NotificarSolicitudAmistad()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                CargarSolicitud();
+            });
         }
 
         private void CargarSolicitudesAmistad()
@@ -87,6 +105,76 @@ namespace DobbleGame
                 catch (Exception ex)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
+                }
+            }
+        }
+
+        public void CargarSolicitud()
+        {
+            using (var proxy = new Servidor.GestionAmigosClient())
+            {
+                try
+                {
+                    // Verificar si el canal de comunicación está en estado Faulted
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    var respuesta = proxy.ObtenerSolicitud();
+                    if (respuesta.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+
+                    // Si no hay error, cargar la amistad
+                    if (respuesta.Resultado != null)
+                    {
+                        var amistadDominio = new Dominio.Amistad
+                        {
+                            IdAmistad = respuesta.Resultado.idAmistad,
+                            EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
+                            UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
+                            UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
+                        };
+
+                        // Crear y mostrar la notificación con el objeto mapeado
+                        MostrarNotificacionSolicitud(amistadDominio);
+
+                    }
+                }
+                catch (CommunicationObjectFaultedException faultEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                }
+                catch (CommunicationException commEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
                     Console.WriteLine($"Error inesperado: {ex.Message}");
                 }
                 finally
@@ -174,7 +262,7 @@ namespace DobbleGame
                 Background = new SolidColorBrush(Colors.Green),
                 Foreground = new SolidColorBrush(Colors.White)
             };
-            botonAceptar.Click += (s, e) => AceptarSolicitud(solicitud, panelSolicitud);
+            botonAceptar.Click += (s, e) => AceptarSolicitud(solicitud, panelSolicitud, cuentaUsuarioAmigo.Usuario);
 
             var botonRechazar = new Button
             {
@@ -221,7 +309,7 @@ namespace DobbleGame
             }
         }
 
-        private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
+        private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud, String nombreUsuario)
         {
             using (var proxy = new Servidor.GestionAmigosClient())
             {
@@ -233,7 +321,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuesta = proxy.AceptarSolicitud(solicitud.IdAmistad);
+                    var respuesta = proxy.AceptarSolicitud(solicitud.IdAmistad, nombreUsuario);
 
                     if (respuesta.ErrorBD)
                     {
@@ -244,9 +332,9 @@ namespace DobbleGame
                     if (respuesta.Resultado)
                     {
                         ContenedorNotificaciones.Children.Remove(panelSolicitud);
-                        _ventanaMenu.CargarAmistad(solicitud.IdAmistad);
+                        _ventanaMenu.ContenedorNotificaciones.Children.Clear();
+                        _ventanaMenu.CargarAmistades();
                     }
-
                 }
                 catch (CommunicationObjectFaultedException faultEx)
                 {
@@ -295,7 +383,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad);
+                    var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad, null);
 
                     if (respuesta.ErrorBD)
                     {

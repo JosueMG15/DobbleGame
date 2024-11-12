@@ -1,4 +1,5 @@
 ﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
 using Dominio;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -32,6 +33,7 @@ namespace DobbleGame
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
         }
 
+
         private void InicializarDatos()
         {
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
@@ -39,6 +41,31 @@ namespace DobbleGame
             lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
             CargarAmistades();
+
+            CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
+            CallbackManager.Instance.EstaEnLineaEvent += EstaEnLinea;
+        }
+
+        private void Instance_EstaEnLineaEvent(bool obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NotificarCambio()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ContenedorNotificaciones.Children.Clear();
+                CargarAmistades();
+            });
+        }
+
+        public void EstaEnLinea(bool estaEnLinea)
+        {
+            Dispatcher.Invoke(() =>
+            {
+
+            });
         }
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
@@ -83,6 +110,8 @@ namespace DobbleGame
             {
                 Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
+            proxy.CerrarSesionJugador(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
+            CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.cuentaUsuarioActual.Usuario);
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
@@ -177,11 +206,25 @@ namespace DobbleGame
                         {
                             if(amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
                             {
-                                MostrarAmigo(amistad, true);
+                                //if (estaEnLinea == true)
+                                //{
+                                    MostrarAmigo(amistad, true, true);
+                                //}
+                                //else
+                                //{
+                                    //MostrarAmigo(amistad, true, false);
+                                //}            
                             }
                             else
                             {
-                                MostrarAmigo(amistad, false);
+                                //if(estaEnLinea == true)
+                                //{
+                                    MostrarAmigo(amistad, false, true);
+                                //}
+                                //else
+                                //{
+                                //    MostrarAmigo(amistad, false, false);
+                                //}                               
                             }
                         }
                     }
@@ -220,78 +263,7 @@ namespace DobbleGame
             }
         }
 
-        public void CargarAmistad(int idAmistad)
-        {
-            using (var proxy = new Servidor.GestionAmigosClient())
-            {
-                try
-                {
-                    // Verificar si el canal de comunicación está en estado Faulted
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    // Llamar al método del servidor para obtener la amistad por id
-                    var respuesta = proxy.ObtenerAmistad(idAmistad);
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    // Si no hay error, cargar la amistad
-                    if (respuesta.Resultado != null)
-                    {
-                        var amistadDominio = new Dominio.Amistad
-                        {
-                            IdAmistad = respuesta.Resultado.idAmistad,
-                            EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
-                            UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
-                            UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
-                        };
-
-                        // Crear y mostrar la notificación con el objeto mapeado
-                        MostrarAmigo(amistadDominio, true);
-
-                    }
-                }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
-                }
-            }
-        }
-
-        private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
+        private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno, bool estaEnLinea)
         {
             Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
             {
@@ -335,7 +307,7 @@ namespace DobbleGame
             Grid.SetRowSpan(fotoUsuario, 2);
             grid.Children.Add(fotoUsuario);
 
-            // Nombre de usuario y Estado en línea
+            // Nombre de usuario y Estado 
             var stackNombreEstado = new StackPanel
             {
                 Orientation = Orientation.Vertical,
@@ -359,16 +331,17 @@ namespace DobbleGame
 
             var circuloRojo = new Ellipse
             {
-                Width = 10,
-                Height = 10,
+                Width = 15,
+                Height = 15,
                 Fill = Brushes.Red,
                 Margin = new Thickness(0, 0, 5, 0)
             };
             estadoEnLinea.Children.Add(circuloRojo);
 
-            var textoEnLinea = new TextBlock
+            var textoEnLinea = new Label
             {
-                Text = "Ausente",
+                
+                Content = Properties.Resources.lb_Ausente,
                 FontSize = 12
             };
             estadoEnLinea.Children.Add(textoEnLinea);

@@ -1,4 +1,5 @@
 ﻿using DobbleGame.Extensiones;
+using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
 using Dominio;
 using System;
@@ -53,7 +54,7 @@ namespace DobbleGame
                     else if (respuestaInicioSesion.Resultado != null)
                     {
                         var cuentaInicioSesion = respuestaInicioSesion.Resultado;
-                        CuentaUsuario.CuentaUsuarioActual = new CuentaUsuario
+                        Dominio.CuentaUsuario.cuentaUsuarioActual = new Dominio.CuentaUsuario
                         {
                             IdCuentaUsuario = cuentaInicioSesion.IdCuentaUsuario,
                             Usuario = cuentaInicioSesion.Usuario,
@@ -64,8 +65,11 @@ namespace DobbleGame
                             Estado = true,
                         };
 
+                        // Conectar a las notificaciones
+                        CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
+
                         VentanaMenu ventanaMenu = new VentanaMenu();
-                        this.Close();
+                        this.Close();                     
                         ventanaMenu.Show();
                     }
                     else
@@ -79,6 +83,7 @@ namespace DobbleGame
                 }
             }
         }
+
 
         private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
         {
