@@ -156,5 +156,17 @@ namespace DobbleGame
                 tbContador.Visibility = Visibility.Collapsed;
             }
         }
+
+        //
+        // String casa = "[DobblGame/Iconos/Casa]";
+        // *presionar boton*
+        // if(boton.
+
+        // FICHA array[8 iconos]
+        // PARTIDA array [58 fichas]
+
+        // for each (array [fichas] 
+        // {
+        //   [1].[1] = 
     }
 }

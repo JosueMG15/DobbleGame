@@ -33,7 +33,6 @@ namespace DobbleGame
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
         }
 
-
         private void InicializarDatos()
         {
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
@@ -43,13 +42,8 @@ namespace DobbleGame
             CargarAmistades();
 
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
-            CallbackManager.Instance.EstaEnLineaEvent += EstaEnLinea;
         }
 
-        private void Instance_EstaEnLineaEvent(bool obj)
-        {
-            throw new NotImplementedException();
-        }
 
         public void NotificarCambio()
         {
@@ -57,14 +51,6 @@ namespace DobbleGame
             {
                 ContenedorNotificaciones.Children.Clear();
                 CargarAmistades();
-            });
-        }
-
-        public void EstaEnLinea(bool estaEnLinea)
-        {
-            Dispatcher.Invoke(() =>
-            {
-
             });
         }
 
@@ -205,25 +191,11 @@ namespace DobbleGame
                         {
                             if(amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
                             {
-                                //if (estaEnLinea == true)
-                                //{
-                                    MostrarAmigo(amistad, true, true);
-                                //}
-                                //else
-                                //{
-                                    //MostrarAmigo(amistad, true, false);
-                                //}            
+                                MostrarAmigo(amistad, true);          
                             }
                             else
                             {
-                                //if(estaEnLinea == true)
-                                //{
-                                    MostrarAmigo(amistad, false, true);
-                                //}
-                                //else
-                                //{
-                                //    MostrarAmigo(amistad, false, false);
-                                //}                               
+                                MostrarAmigo(amistad, false);                            
                             }
                         }
                     }
@@ -262,7 +234,7 @@ namespace DobbleGame
             }
         }
 
-        private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno, bool estaEnLinea)
+        private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
             Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
             {
@@ -321,31 +293,54 @@ namespace DobbleGame
             };
             stackNombreEstado.Children.Add(nombreUsuario);
 
-            var estadoEnLinea = new StackPanel
+            var estado = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 5, 0, 0)
             };
 
-            var circuloRojo = new Ellipse
+            var proxyUsuario = new Servidor.GestionAmigosClient();
+            //Si esta en línea
+            if (proxyUsuario.ObtenerUsuarioConectado(cuentaUsuarioAmigo.Usuario))
             {
-                Width = 15,
-                Height = 15,
-                Fill = Brushes.Red,
-                Margin = new Thickness(0, 0, 5, 0)
-            };
-            estadoEnLinea.Children.Add(circuloRojo);
+                var circulo = new Ellipse
+                {
+                    Width = 15,
+                    Height = 15,
+                    Fill = Brushes.LightGreen,
+                    Margin = new Thickness(0, 0, 5, 0)
+                };
+                estado.Children.Add(circulo);
 
-            var textoEnLinea = new Label
+                var textoEnLinea = new Label
+                {
+                    Content = Properties.Resources.lb_EnLínea,
+                    FontSize = 12
+                };
+                estado.Children.Add(textoEnLinea);
+            }
+            //Si esta ausente
+            else
             {
-                
-                Content = Properties.Resources.lb_Ausente,
-                FontSize = 12
-            };
-            estadoEnLinea.Children.Add(textoEnLinea);
+                var circulo = new Ellipse
+                {
+                    Width = 15,
+                    Height = 15,
+                    Fill = Brushes.Red,
+                    Margin = new Thickness(0, 0, 5, 0)
+                };
+                estado.Children.Add(circulo);
 
-            stackNombreEstado.Children.Add(estadoEnLinea);
+                var textoEnLinea = new Label
+                {
+                    Content = Properties.Resources.lb_Ausente,
+                    FontSize = 12
+                };
+                estado.Children.Add(textoEnLinea);
+            }
+
+            stackNombreEstado.Children.Add(estado);
             Grid.SetColumn(stackNombreEstado, 1);
             Grid.SetRow(stackNombreEstado, 0);
             grid.Children.Add(stackNombreEstado);

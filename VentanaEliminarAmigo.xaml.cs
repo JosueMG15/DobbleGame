@@ -42,11 +42,17 @@ namespace DobbleGame
                         proxy.Abort();
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
-                    var proxy2 = new Servidor.GestionAmigosClient();
-                    var respuesta2 = proxy2.ObtenerUsuario(_amistad.UsuarioAmigoId);
-                    var cuenta = respuesta2.Resultado;
+                    //Usuario principal de la amistad
+                    var proxyUsuarioPrincipal = new Servidor.GestionAmigosClient();
+                    var respuestaUsuarioPrincipal = proxyUsuarioPrincipal.ObtenerUsuario(_amistad.UsuarioPrincipalId);
+                    var cuentaPrincipal = respuestaUsuarioPrincipal.Resultado;
 
-                    var respuesta = proxy.EliminarAmistad(_amistad.IdAmistad, cuenta.Usuario);
+                    //Usuario amigo de la amistad
+                    var proxyUsuarioAmigo = new Servidor.GestionAmigosClient();
+                    var respuestaUsuarioAmigo = proxyUsuarioAmigo.ObtenerUsuario(_amistad.UsuarioAmigoId);
+                    var cuentaAmigo = respuestaUsuarioAmigo.Resultado;
+
+                    var respuesta = proxy.EliminarAmistad(_amistad.IdAmistad, cuentaPrincipal.Usuario, cuentaAmigo.Usuario);
 
                     if (respuesta.ErrorBD)
                     {

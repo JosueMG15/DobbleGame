@@ -383,7 +383,7 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad, null);
+                    var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad, null, null);
 
                     if (respuesta.ErrorBD)
                     {

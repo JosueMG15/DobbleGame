@@ -100,11 +100,18 @@ namespace DobbleGame
             openFileDialog.ShowDialog();
             string selectedFilePath = openFileDialog.FileName;
 
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-
             if (!string.IsNullOrEmpty(selectedFilePath) && File.Exists(selectedFilePath))
             {
+                FileInfo fileInfo = new FileInfo(selectedFilePath);
+
+                if (fileInfo.Length > 10 * 1024) // 10 KB en bytes
+                {
+                MostrarMensaje(Properties.Resources.lb_FormatoInválido);
+                return;
+                }
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
                 bitmap.UriSource = new Uri(selectedFilePath);
                 bitmap.EndInit();
 
@@ -231,6 +238,11 @@ namespace DobbleGame
         public void ActualizarNombreUsuario(string nuevoTexto)
         {
             lbNombreUsuario.Content = nuevoTexto;
+        }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            lbMensaje.Content = mensaje;
         }
     }
 }
