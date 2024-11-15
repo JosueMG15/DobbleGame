@@ -1,4 +1,0 @@
-2024-11-14 20:02:46,686 [1] ERROR DobbleGame.Utilidades.Registro - Excepción no manejada: { ex.Message}. 
-Traza:    en System.Windows.Window.set_Owner(Window value)
-   en DobbleGame.Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(FrameworkElement contenedor) en C:\Users\sosue\source\repos\DobbleGame\Utilidades\Utilidades.cs:línea 93. 
-Fuente: PresentationFramework.

@@ -68,6 +68,10 @@ namespace DobbleGame
                         // Conectar a las notificaciones
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
 
+                        // Alacenar el usuario que inicio sesión en una lista
+                        var proxyUsuario = new Servidor.GestionAmigosClient();
+                        proxyUsuario.AgregarUsuario(cuentaInicioSesion.Usuario);
+
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     
                         ventanaMenu.Show();

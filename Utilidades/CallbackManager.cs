@@ -18,7 +18,6 @@ namespace DobbleGame.Utilidades
         // Eventos para las notificaciones de amistad
         public event Action NotificarSolicitudAmistadEvent;
         public event Action NotificarCambioEvent;
-        public event Action<bool> EstaEnLineaEvent;
 
         // Propiedad para acceder a la única instancia de la clase
         public static CallbackManager Instance
@@ -61,7 +60,6 @@ namespace DobbleGame.Utilidades
             }
         }
 
-
         // Método de callback de solicitud de amistad
         public void NotificarSolicitudAmistad()
         {
@@ -72,12 +70,6 @@ namespace DobbleGame.Utilidades
         public void NotificarCambio()
         {
             NotificarCambioEvent?.Invoke();
-        }
-
-        //Método de callback para mostrar si se encuentra en línea o desconectado
-        public void EstaEnLinea(bool estaEnLinea)
-        {
-            EstaEnLineaEvent?.Invoke(estaEnLinea);
         }
 
         public GestionNotificacionesAmigosClient ObtenerProxy()

@@ -14,10 +14,39 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
         </Grid.Background>
-        <Label Content="{x:Static p:Resources.lb_CambioContraseña}"  Style="{StaticResource TituloLalezar1}" Width="424" FontSize="45" Margin="0,28,0,315" />
-        <TextBox x:Name="tbNuevaContraseña" Width="NaN" Height="NaN" Margin="98,136,98,237" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.titulo_NuevaContraseña}"/>
+
+        <Image Name="advertenciaIcono" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Stretch="Uniform" Visibility="Hidden" Margin="105,102,349,277" RenderTransformOrigin="1.721,0.639"/>
+        <Label Name="lbMensaje" HorizontalAlignment="Left" Margin="158,106,0,0" VerticalAlignment="Top" FontSize="16" Foreground="Red" RenderTransformOrigin="0.218,0.569" Width="273" Height="25"/>
+
+        <Label Content="{x:Static p:Resources.lb_CambioContraseña}"  Style="{StaticResource TituloLalezar1}" Width="424" FontSize="45" Margin="0,28,0,334" />
+        <PasswordBox x:Name="tbNuevaContraseña" Width="NaN" Height="NaN" MaxLength="35" Margin="98,163,98,210" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_NuevaContraseña}" PasswordChanged="PasswordBox_CambioDeContraseña"/>
         <Button Content="{x:Static p:Resources.global_Actualizar}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnActualizar" Margin="74,326,274,43"/>
         <Button Content="{x:Static p:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="280,326,68,43"/>
-        <TextBox x:Name="tbConfirmarContraseña" Width="NaN" Height="NaN" Margin="98,197,98,176" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}"/>
+        <PasswordBox x:Name="tbConfirmarContraseña" Width="NaN" Height="NaN" MaxLength="35" Margin="98,232,98,141" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" PasswordChanged="PasswordBox_CambioDeContraseña"/>
+
+        <Button Width="46" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="408,160,0,0" Background="Transparent" RenderTransformOrigin="0.555,0.514" Height="45">
+            <Button.ToolTip>
+                <ToolTip>
+                    <ToolTip.Template>
+                        <ControlTemplate TargetType="ToolTip">
+                            <Border Background="#FF2D2D30" BorderBrush="#FF1C97EA" BorderThickness="2" CornerRadius="10" Padding="10">
+                                <StackPanel>
+                                    <TextBlock Text="Reglas para la contraseña" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                                    <Separator Margin="0,5"/>
+                                    <TextBlock Text="La contraseña debe tener:" Foreground="LightGray" FontSize="12" Margin="0,5"/>
+                                    <StackPanel Margin="10,5,0,0">
+                                        <TextBlock Text="- Mínimo una letra mayúscula" Foreground="LightGray" FontSize="12"/>
+                                        <TextBlock Text="- 8 caracteres" Foreground="LightGray" FontSize="12"/>
+                                        <TextBlock Text="- 2 números" Foreground="LightGray" FontSize="12"/>
+                                        <TextBlock Text="- No espacios" Foreground="LightGray" FontSize="12"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </ToolTip.Template>
+                </ToolTip>
+            </Button.ToolTip>
+            <Image Source="pack://application:,,,/Imagenes/IconoInformacion.png" Stretch="Uniform" Height="27" Width="25"/>
+        </Button>
     </Grid>
 </Page>

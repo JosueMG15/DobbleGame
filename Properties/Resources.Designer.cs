@@ -286,6 +286,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No puedes tener la misma contraseña .
+        /// </summary>
+        public static string global_MismaContraseña_ {
+            get {
+                return ResourceManager.GetString("global_MismaContraseña ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nueva contraseña.
         /// </summary>
         public static string global_NuevaContraseña {
@@ -363,6 +372,15 @@ namespace DobbleGame.Properties {
         public static string lb_CódigoEnviado {
             get {
                 return ResourceManager.GetString("lb_CódigoEnviado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código invalido.
+        /// </summary>
+        public static string lb_CodigoInvalido {
+            get {
+                return ResourceManager.GetString("lb_CodigoInvalido", resourceCulture);
             }
         }
         
@@ -547,6 +565,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La imagen es demasiado grande, selecciona una que no supere los 10 kb .
         ///   Busca una cadena traducida similar a ¿Estás listo?.
         /// </summary>
         public static string lb_EstasListo {
@@ -768,6 +787,15 @@ namespace DobbleGame.Properties {
         public static string lb_SesiónActiva {
             get {
                 return ResourceManager.GetString("lb_SesiónActiva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No puedes mandar una solicitud de amistad a ti mismo .
+        /// </summary>
+        public static string lb_SolicitudATiMismo_ {
+            get {
+                return ResourceManager.GetString("lb_SolicitudATiMismo ", resourceCulture);
             }
         }
         

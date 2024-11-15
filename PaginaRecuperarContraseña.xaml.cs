@@ -32,20 +32,17 @@ namespace DobbleGame
         {
             String correo = tbCorreo.Text.Trim();
             EnviarCodigo(correo);
-            var paginaIngresoCodigo = new PaginaIngresoCodigo(_marcoPrincipal);
-            this.NavigationService.Navigate(paginaIngresoCodigo);
         }
 
         private void EnviarCodigo(string correo)
         {
-            /*if (Utilidades.Utilidades.EsCampoVacio(correo))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-
             using (var proxy = new Servidor.GestionCorreosClient())
             {
+                if (Utilidades.Utilidades.EsCampoVacio(correo))
+                {
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    return;
+                }
                 try
                 {
                     if (proxy.State == CommunicationState.Faulted)
@@ -54,39 +51,25 @@ namespace DobbleGame
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
-                    var respuestaUsuario = proxy.EnviarCodigo(correo);
-                    if (respuestaUsuario.ErrorBD)
+                    if (ValidarCorreo(correo) == false)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaUsuario.Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                        MostrarMensaje(Properties.Resources.lb_CorreoNoExiste_);
                         return;
                     }
 
-                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
-                    if (respuestaModificarUsuario.ErrorBD)
+                    string codigo = GenerarCodigo();
+                    var respuesta = proxy.EnviarCodigo(correo, codigo);
+
+                    if (respuesta.ErrorBD)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
                         return;
                     }
-                    if (respuestaModificarUsuario.Resultado)
-                    {
-                        CuentaUsuario.cuentaUsuarioActual.Usuario = nuevoNombre;
-                        CuentaUsuario.cuentaUsuarioActual = new CuentaUsuario
-                        {
-                            IdCuentaUsuario = Dominio.CuentaUsuario.cuentaUsuarioActual.IdCuentaUsuario,
-                            Usuario = nuevoNombre,
-                            Correo = Dominio.CuentaUsuario.cuentaUsuarioActual.Correo,
-                            Contraseña = Dominio.CuentaUsuario.cuentaUsuarioActual.Contraseña,
-                            Foto = Dominio.CuentaUsuario.cuentaUsuarioActual.Foto,
-                            Puntaje = Dominio.CuentaUsuario.cuentaUsuarioActual.Puntaje,
-                            Estado = true,
-                        };
 
-                        this.Close();
+                    if (respuesta.Resultado)
+                    {
+                        PaginaIngresoCodigo paginaIngresoCodigo = new PaginaIngresoCodigo(_marcoPrincipal, correo, codigo);
+                        this.NavigationService.Navigate(paginaIngresoCodigo);
                     }
                 }
                 catch (CommunicationObjectFaultedException faultEx)
@@ -120,7 +103,80 @@ namespace DobbleGame
                         proxy.Close();
                     }
                 }
-            }*/
+            }
+        }
+
+        public string GenerarCodigo()
+        {
+            return new Random().Next(100000, 999999).ToString(); // Código de 6 dígitos
+        }
+
+        public bool ValidarCorreo(string correo)
+        {
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
+                try
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    var respuesta = proxy.ExisteCorreoAsociado(correo);
+
+                    if (respuesta.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                        return false;
+                    }
+
+                    if (respuesta.Resultado)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (CommunicationObjectFaultedException faultEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
+                    return false;
+                }
+                catch (CommunicationException commEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
+                    return false;
+                }
+                catch (TimeoutException timeoutEx)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                    return false;
+                }
+                finally
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                    }
+                    else
+                    {
+                        proxy.Close();
+                    }
+                }
+            }
+
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)

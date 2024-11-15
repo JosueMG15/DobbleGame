@@ -84,6 +84,12 @@ namespace DobbleGame
                         return;
                     }
 
+                    if (contraseñaActual == confirmarNuevaContraseña && confirmarNuevaContraseña == nuevaContraseña)
+                    {
+                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
+                        return;
+                    }
+
                     if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) 
                         && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
                     {

@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dynamitey, Version=2.0.10.189, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
       <HintPath>packages\Dynamitey.2.0.10.189\lib\net40\Dynamitey.dll</HintPath>
@@ -109,9 +112,6 @@
       <DependentUpon>PaginaRecuperarContraseña.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProxyConexion.cs" />
-    <Compile Include="prueba.xaml.cs">
-      <DependentUpon>prueba.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SelectorPlantillaJugador.cs" />
     <Compile Include="SelectorPlantillaJugadorPartida.cs" />
     <Compile Include="VentanaConfirmarCierreDeSesion.xaml.cs">
@@ -212,10 +212,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VentanaConfirmarExpulsion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="prueba.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -220,7 +220,7 @@
     <value>Update photo</value>
   </data>
   <data name="lb_FormatoInválido" xml:space="preserve">
-    <value>The selected format is not valid for the profile picture</value>
+    <value>The image is too large, please select one no larger than 10kb </value>
   </data>
   <data name="lb_CambioNombre" xml:space="preserve">
     <value>Change name</value>
@@ -425,6 +425,15 @@
   </data>
   <data name="lb_MensajeCerrarSesion" xml:space="preserve">
     <value>Are you sure you want to log out?</value>
+  </data>
+  <data name="lb_SolicitudATiMismo " xml:space="preserve">
+    <value>You cannot send a friend request to yourself </value>
+  </data>
+  <data name="global_MismaContraseña " xml:space="preserve">
+    <value>You can't have the same password </value>
+  </data>
+  <data name="lb_CodigoInvalido" xml:space="preserve">
+    <value>Invalid code</value>
   </data>
   <data name="lb_PuntosEnJuego" xml:space="preserve">
     <value>{0} points</value>

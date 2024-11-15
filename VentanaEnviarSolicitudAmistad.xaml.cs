@@ -97,6 +97,12 @@ namespace DobbleGame
                         MostrarMensaje(Properties.Resources.lb_SolicitudYaEnviada_);
                         return;
                     }
+                    if(nombreUsuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario)
+                    {
+                        MostrarMensaje(Properties.Resources.lb_SolicitudATiMismo_);
+                        return;
+                    }
+
 
                     var respuestaEnviarSolicitudAmistad = proxyGestionAmigos.EnviarSolicitudAmistad(
                         Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
