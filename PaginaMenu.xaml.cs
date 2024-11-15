@@ -32,11 +32,6 @@ namespace DobbleGame
             {
                 IrPaginaSalaAnimacion(paginaSala);
             }
-            else
-            {
-                MessageBox.Show("No se puede");
-            }
-            
         }
 
         private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)

@@ -97,6 +97,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="LogicaDobble\GeneradorDeCartas.cs" />
+    <Compile Include="LogicaDobble\Icono.cs" />
     <Compile Include="PaginaIngresoCodigo.xaml.cs">
       <DependentUpon>PaginaIngresoCodigo.xaml</DependentUpon>
     </Compile>
@@ -111,6 +113,7 @@
       <DependentUpon>prueba.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectorPlantillaJugador.cs" />
+    <Compile Include="SelectorPlantillaJugadorPartida.cs" />
     <Compile Include="VentanaConfirmarCierreDeSesion.xaml.cs">
       <DependentUpon>VentanaConfirmarCierreDeSesion.xaml</DependentUpon>
     </Compile>
@@ -340,9 +343,6 @@
     <Resource Include="Imagenes\FondoPanal.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\AbejaMenu.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Imagenes\BotonRegresar.png" />
   </ItemGroup>
   <ItemGroup>
@@ -490,10 +490,13 @@
     <Resource Include="Iconos\Sol.png" />
     <Resource Include="Iconos\Sombrilla.png" />
     <Resource Include="Iconos\Tren.png" />
-    <Resource Include="Iconos\Trsite.png" />
+    <Resource Include="Iconos\Triste.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\Ficha.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\AbejaMenu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

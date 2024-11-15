@@ -45,12 +45,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RespuestaServicioOfCuentaUsuario6jbaXeYD" nillable="true" type="tns:RespuestaServicioOfCuentaUsuario6jbaXeYD" />
-  <xs:complexType name="ArrayOfCuentaUsuario">
+  <xs:complexType name="ArrayOfJugador">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CuentaUsuario" nillable="true" type="tns:CuentaUsuario" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Jugador" nillable="true" type="tns:Jugador" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfCuentaUsuario" nillable="true" type="tns:ArrayOfCuentaUsuario" />
+  <xs:element name="ArrayOfJugador" nillable="true" type="tns:ArrayOfJugador" />
+  <xs:complexType name="Jugador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EsAnfitrion" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Foto" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="NumeroJugador" type="xs:int" />
+      <xs:element minOccurs="0" name="Puntaje" type="xs:int" />
+      <xs:element minOccurs="0" name="PuntosEnPartida" type="xs:int" />
+      <xs:element minOccurs="0" name="Usuario" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Jugador" nillable="true" type="tns:Jugador" />
   <xs:complexType name="RespuestaServicioOfArrayOfAmistad6jbaXeYD">
     <xs:annotation>
       <xs:appinfo>
@@ -96,4 +107,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RespuestaServicioOfAmistad6jbaXeYD" nillable="true" type="tns:RespuestaServicioOfAmistad6jbaXeYD" />
+  <xs:complexType name="Carta">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Iconos" nillable="true" type="tns:ArrayOfIcono" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Carta" nillable="true" type="tns:Carta" />
+  <xs:complexType name="ArrayOfIcono">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Icono" nillable="true" type="tns:Icono" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIcono" nillable="true" type="tns:ArrayOfIcono" />
+  <xs:complexType name="Icono">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdIcono" type="xs:int" />
+      <xs:element minOccurs="0" name="Ruta" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Icono" nillable="true" type="tns:Icono" />
 </xs:schema>

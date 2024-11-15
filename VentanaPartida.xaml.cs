@@ -1,4 +1,5 @@
-﻿using DobbleGame.Servidor;
+﻿using DobbleGame.LogicaDobble;
+using DobbleGame.Servidor;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,22 +25,28 @@ namespace DobbleGame
         private Servidor.IGestionPartida proxy;
         private DispatcherTimer cronometro;
         private int contador;
-        public ObservableCollection<CuentaUsuario> UsuariosEnPartida { get; set; }
+        private readonly SelectorPlantillaJugadorPartida selectorPlantilla;
         private readonly Window _ventanaMenu;
+        private readonly int _numeroJugadoresEsperados;
+        private bool partidaIniciada = false;
+        
+        public ObservableCollection<Jugador> JugadoresEnPartida { get; set; }
         public string CodigoSala {  get; set; }
         public bool HayConexionPartida { get; set; }
-        public string Contador {  get; set; }
+        public bool EsAnfitrion {  get; set; }
 
-        public VentanaPartida(string codigoSala, Window ventanaMenu)
+        public VentanaPartida(string codigoSala, bool esAnfitrion, int numeroJugadoresEsperados, Window ventanaMenu)
         {
-            InicializarProxySiEsNecesario();
             InitializeComponent();
             this.DataContext = this;
-            UsuariosEnPartida = new ObservableCollection<CuentaUsuario>();
+            JugadoresEnPartida = new ObservableCollection<Jugador>();
+            JugadoresEnPartida.CollectionChanged += JugadoresEnPartida_IniciarPartida;
             HayConexionPartida = false;
             CodigoSala = codigoSala;
+            EsAnfitrion = esAnfitrion;
+            _numeroJugadoresEsperados = numeroJugadoresEsperados;
             _ventanaMenu = ventanaMenu;
-            IniciarContador();
+            selectorPlantilla = (SelectorPlantillaJugadorPartida)this.Resources["SelectorPlantillaJugadorPartida"];
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
@@ -62,7 +69,19 @@ namespace DobbleGame
             }
         }
 
-        public bool CrearPartida()
+        public bool IniciarSesionPartida()
+        {
+            if (EsAnfitrion)
+            {
+                return CrearPartida();
+            }
+            else
+            {
+                return UnirseAPartida();
+            }
+        }
+
+        private bool CrearPartida()
         {
             InicializarProxySiEsNecesario();
 
@@ -74,7 +93,7 @@ namespace DobbleGame
 
                 if (resultado)
                 {
-                    proxy.UnirJugadoresAPartida(CodigoSala);
+                    proxy.UnirJugadorAPartida(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala);
                     proxy.NotificarActualizacionDeJugadoresEnPartida(CodigoSala);
                     HayConexionPartida = true;
                 }
@@ -87,16 +106,119 @@ namespace DobbleGame
             return resultado;
         }
 
-        private void Icon_MouseDown(object sender, MouseButtonEventArgs e)
+        private bool UnirseAPartida()
         {
+            InicializarProxySiEsNecesario();
 
+            bool resultado = false;
+
+            try
+            {
+                proxy.UnirJugadorAPartida(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala);
+                proxy.NotificarActualizacionDeJugadoresEnPartida(CodigoSala);
+                resultado = true;
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+
+            return resultado;
+        }
+
+       
+
+        private void JugadoresEnPartida_IniciarPartida(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (!partidaIniciada && JugadoresEnPartida.Count == _numeroJugadoresEsperados)
+            {
+                partidaIniciada = true;
+                if (EsAnfitrion)
+                {
+                    proxy.NotificarInicioPartida(CodigoSala);
+                }
+            }
+        }
+
+        public void ActualizarJugadoresEnPartida(Jugador[] jugadoresConectados)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                foreach (var jugador in jugadoresConectados)
+                {
+                    if (!JugadoresEnPartida.Any(j => j.Usuario == jugador.Usuario))
+                    {
+                        JugadoresEnPartida.Add(jugador);
+                    }
+                }
+            });
+        }
+
+        public void AsignarCarta(Carta carta)
+        {
+            Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
+            Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
+            Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
+            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
+            Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
+            Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
+        }
+
+        public void AsignarCartaCentral(Carta cartaCentral)
+        {
+            IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
+            IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
+            IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
+            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
+            IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
+            IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
+        }
+
+        public void IniciarPartida()
+        {
+            IniciarContador();
+        }
+
+        private void IniciarContador()
+        {
+            contador = 5;
+            cronometro = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            cronometro.Tick += Cronometro_Tick;
+            cronometro.Start();
+        }
+
+        private void Cronometro_Tick(object sender, EventArgs e)
+        {
+            if (contador > 0)
+            {
+                tbContador.Text = contador.ToString();
+                contador--;
+            }
+            else
+            {
+                cronometro.Stop();
+                cartaCentral.Visibility = Visibility.Visible;
+                tbContador.Visibility = Visibility.Collapsed;
+
+                if (EsAnfitrion)
+                {
+                    proxy.NotificarDistribucionCartas(CodigoSala);
+                }
+            }
         }
 
         private void InicializarProxy()
         {
             if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Opened)
             {
-                return; 
+                return;
             }
 
             if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Faulted)
@@ -114,46 +236,6 @@ namespace DobbleGame
             if (proxy == null || ((ICommunicationObject)proxy).State != CommunicationState.Opened)
             {
                 InicializarProxy();
-            }
-        }
-
-        public void ActualizarJugadoresEnPartida(CuentaUsuario[] jugadoresConectados)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                UsuariosEnPartida.Clear();
-                foreach (var jugador in jugadoresConectados)
-                {
-                    UsuariosEnPartida.Add(jugador);
-                }
-            });
-
-            //IniciarContador();
-        }
-
-        private void IniciarContador()
-        {
-            contador = 10;
-            cronometro = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            cronometro.Tick += Cronometro_Tick;
-            cronometro.Start();
-        }
-
-        private void Cronometro_Tick(object sender, EventArgs e)
-        {
-            if (contador > 0)
-            {
-                tbContador.Text = contador.ToString();
-                contador--;
-                
-            }
-            else
-            {
-                cronometro.Stop();
-                tbContador.Visibility = Visibility.Collapsed;
             }
         }
     }

@@ -178,6 +178,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listo.
+        /// </summary>
+        public static string btn_Listo {
+            get {
+                return ResourceManager.GetString("btn_Listo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Rechazar.
         /// </summary>
         public static string btn_Rechazar {
@@ -538,6 +547,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estás listo?.
+        /// </summary>
+        public static string lb_EstasListo {
+            get {
+                return ResourceManager.GetString("lb_EstasListo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El formato seleccionado no es válido para la foto de perfil.
         /// </summary>
         public static string lb_FormatoInválido {
@@ -714,6 +732,15 @@ namespace DobbleGame.Properties {
         public static string lb_Puntos {
             get {
                 return ResourceManager.GetString("lb_Puntos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} puntos.
+        /// </summary>
+        public static string lb_PuntosEnJuego {
+            get {
+                return ResourceManager.GetString("lb_PuntosEnJuego", resourceCulture);
             }
         }
         

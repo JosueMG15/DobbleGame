@@ -27,7 +27,7 @@ namespace DobbleGame
         private Servidor.IGestionSala proxy;
         private readonly SelectorPlantillaJugador selectorPlantilla;
         private VentanaPartida ventanaPartida;
-        public ObservableCollection<CuentaUsuario> UsuariosConectados { get; set; }
+        public ObservableCollection<Jugador> UsuariosConectados { get; set; }
         public bool EsAnfitrion {  get; set; }
         public string CodigoSala {  get; set; }
         public bool HayConexionConSala { get; set; }
@@ -36,7 +36,7 @@ namespace DobbleGame
         {
             InitializeComponent();
             this.DataContext = this;
-            UsuariosConectados = new ObservableCollection<CuentaUsuario>();
+            UsuariosConectados = new ObservableCollection<Jugador>();
             UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
             EsAnfitrion = esAnfitrion;
             HayConexionConSala = false;
@@ -213,12 +213,16 @@ namespace DobbleGame
 
         private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
         {
-            ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
-
             try
             {
-                proxy.NotificarInstanciaVentanaPartida(CodigoSala);
-                ventanaPartida.CrearPartida();
+                int numeroJugadores = UsuariosConectados.Count;
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this));
+                if (ventanaPartida.IniciarSesionPartida())
+                {
+                    proxy.CambiarVentanaParaTodos(CodigoSala);
+                    ventanaPartida.Show();
+                    Window.GetWindow(this).Hide();
+                }
             }
             catch (Exception ex)
             {
@@ -230,7 +234,7 @@ namespace DobbleGame
         {
             Button boton = sender as Button;
 
-            var jugadorAExpulsar = boton?.DataContext as CuentaUsuario;
+            var jugadorAExpulsar = boton?.DataContext as Jugador;
 
             if (jugadorAExpulsar != null)
             {
@@ -282,7 +286,7 @@ namespace DobbleGame
             }));
         }
 
-        public void ActualizarUsuariosConectados(CuentaUsuario[] cuentaUsuarios)
+        public void ActualizarUsuariosConectados(Jugador[] cuentaUsuarios)
         {
             UsuariosConectados.Clear();
             selectorPlantilla.ReiniciarPlantillas();
@@ -301,14 +305,19 @@ namespace DobbleGame
             EsAnfitrion = true;
         }
 
-        public void InstanciarVentanaPartida()
+        public void CambiarVentana()
         {
-            if (ventanaPartida == null)
+            if (!EsAnfitrion)
             {
-                ventanaPartida = new VentanaPartida(CodigoSala, Window.GetWindow(this));
+                int numeroJugadores = UsuariosConectados.Count;
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this));
+                if (ventanaPartida.IniciarSesionPartida())
+                {
+                    proxy.CambiarVentanaParaTodos(CodigoSala);
+                    ventanaPartida.Show();
+                    Window.GetWindow(this).Hide();
+                }
             }
-            Window.GetWindow(this).Hide();
-            ventanaPartida.Show();
         }
 
         private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)

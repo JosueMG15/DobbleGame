@@ -11,8 +11,8 @@ namespace DobbleGame
 {
     public class SelectorPlantillaJugador : DataTemplateSelector
     {
-        private static SelectorPlantillaJugador _instancia = new SelectorPlantillaJugador();
-        public static SelectorPlantillaJugador Instancia => _instancia;
+        //private static SelectorPlantillaJugador _instancia = new SelectorPlantillaJugador();
+        //public static SelectorPlantillaJugador Instancia => _instancia;
 
         public SelectorPlantillaJugador() { }
 
@@ -28,7 +28,7 @@ namespace DobbleGame
 
         public override DataTemplate SelectTemplate(object item, DependencyObject contenedor)
         {
-            var usuario = item as CuentaUsuario;
+            var usuario = item as Jugador;
 
             if (usuario == null) return null;
 

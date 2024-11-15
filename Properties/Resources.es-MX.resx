@@ -426,4 +426,13 @@
   <data name="lb_MensajeCerrarSesion" xml:space="preserve">
     <value>¿Seguro que deseas cerrar sesión?</value>
   </data>
+  <data name="lb_PuntosEnJuego" xml:space="preserve">
+    <value>{0} puntos</value>
+  </data>
+  <data name="lb_EstasListo" xml:space="preserve">
+    <value>¿Estás listo?</value>
+  </data>
+  <data name="btn_Listo" xml:space="preserve">
+    <value>Listo</value>
+  </data>
 </root>

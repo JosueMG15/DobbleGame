@@ -426,4 +426,13 @@
   <data name="lb_MensajeCerrarSesion" xml:space="preserve">
     <value>Are you sure you want to log out?</value>
   </data>
+  <data name="lb_PuntosEnJuego" xml:space="preserve">
+    <value>{0} points</value>
+  </data>
+  <data name="lb_EstasListo" xml:space="preserve">
+    <value>Are you ready?</value>
+  </data>
+  <data name="btn_Listo" xml:space="preserve">
+    <value>Ready</value>
+  </data>
 </root>
