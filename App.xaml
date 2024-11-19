@@ -144,7 +144,9 @@
                     <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style> 
+
+
 
         <Style x:Key="BotonGrande" TargetType="Button">
             <Setter Property="Template">
@@ -168,7 +170,8 @@
                     <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style> 
+
 
         <Style x:Key="BotonPerfil" TargetType="Button">
             <Setter Property="Template">
@@ -179,7 +182,8 @@
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
+            </Setter> 
+        
 
             <Setter Property="Effect">
                 <Setter.Value>

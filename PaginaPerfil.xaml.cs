@@ -149,42 +149,10 @@ namespace DobbleGame
                         _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    var ventanaPrincipal = Window.GetWindow(this);
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    var ventanaPrincipal = Window.GetWindow(this);
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    var ventanaPrincipal = Window.GetWindow(this);
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    var ventanaPrincipal = Window.GetWindow(this);
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventanaPrincipal);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
-                }
-
             }
         }
 

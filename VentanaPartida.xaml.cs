@@ -1,4 +1,5 @@
 ﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +41,7 @@ namespace DobbleGame
             Page paginaSala)
         {
             InitializeComponent();
+            this.Closing += VentanaMenu_Closing;
             this.DataContext = this;
             JugadoresEnPartida = new ObservableCollection<Jugador>();
             JugadoresEnPartida.CollectionChanged += JugadoresEnPartida_IniciarPartida;
@@ -50,6 +52,26 @@ namespace DobbleGame
             _ventanaMenu = ventanaMenu;
             _paginaSala = paginaSala;
             selectorPlantilla = (SelectorPlantillaJugadorPartida)this.Resources["SelectorPlantillaJugadorPartida"];
+        }
+
+        private void VentanaMenu_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var proxyUsuario = new Servidor.GestionAmigosClient();
+            var proxy = new GestionJugadorClient();
+            try
+            {
+                if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
+                {
+                    proxyUsuario.QuitarUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+
+                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+                    CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+            }
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)

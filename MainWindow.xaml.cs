@@ -35,7 +35,7 @@ namespace DobbleGame
 
         private void IniciarSesion()
         {
-            if (!HayCamposVacios())
+            if (!Utilidades.Utilidades.EsCampoVacio(tbUsuario.Text) || !Utilidades.Utilidades.EsCampoVacio(pbContraseña.Password))
             {
                 var proxy = new Servidor.GestionJugadorClient();
 
@@ -86,27 +86,16 @@ namespace DobbleGame
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
+            else
+            {
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+            }
         }
 
 
         private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
         {
             IniciarSesion();
-        }
-
-        private bool HayCamposVacios()
-        {
-            bool hayCamposVacios =
-                string.IsNullOrEmpty(tbUsuario.Text) ||
-                string.IsNullOrEmpty(pbContraseña.Password);
-
-            if (hayCamposVacios)
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return true;
-            }
-
-            return false;
         }
 
         private void ClicCrearCuentaTf(object sender, System.Windows.Input.MouseButtonEventArgs e)

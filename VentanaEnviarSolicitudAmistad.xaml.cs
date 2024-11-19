@@ -68,10 +68,9 @@ namespace DobbleGame
                 }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado en verificar usuario: {ex.Message}");
-                    return;
+                    Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
                 }
+
             }
 
             using (var proxyGestionAmigos = new Servidor.GestionAmigosClient())
@@ -122,36 +121,9 @@ namespace DobbleGame
                         MostrarMensaje("No se pudo enviar la solicitud de amistad. Inténtalo nuevamente.");
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxyGestionAmigos.State == CommunicationState.Faulted)
-                    {
-                        proxyGestionAmigos.Abort();
-                    }
-                    else
-                    {
-                        proxyGestionAmigos.Close();
-                    }
+                    Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
                 }
             }
         }

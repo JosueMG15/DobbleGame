@@ -363,7 +363,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonMandarSolicitud.png" />
-    <Resource Include="Imagenes\BotonSolicitudes.png" />
     <Resource Include="Imagenes\BuscarAmistad.png" />
   </ItemGroup>
   <ItemGroup>
@@ -498,6 +497,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\AbejaMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\BotonSolicitudes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

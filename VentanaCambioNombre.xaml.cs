@@ -97,37 +97,11 @@ namespace DobbleGame
                         this.Close();
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
-                }
+
             }
         }
 

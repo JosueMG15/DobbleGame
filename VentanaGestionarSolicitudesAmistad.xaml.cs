@@ -87,36 +87,9 @@ namespace DobbleGame
                         }
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(_ventanaMenu);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
         }
@@ -157,36 +130,9 @@ namespace DobbleGame
 
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
         }
@@ -336,39 +282,11 @@ namespace DobbleGame
                         _ventanaMenu.CargarAmistades();
                     }
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
-
         }
 
         private void RechazarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
@@ -397,36 +315,9 @@ namespace DobbleGame
                     }
 
                 }
-                catch (CommunicationObjectFaultedException faultEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error en el objeto de comunicación: {faultEx.Message}");
-                }
-                catch (CommunicationException commEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de comunicación: {commEx.Message}");
-                }
-                catch (TimeoutException timeoutEx)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error de tiempo de espera: {timeoutEx.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this);
-                    Console.WriteLine($"Error inesperado: {ex.Message}");
-                }
-                finally
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                    }
-                    else
-                    {
-                        proxy.Close();
-                    }
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
         }
