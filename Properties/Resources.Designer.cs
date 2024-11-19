@@ -484,6 +484,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Dobble!.
+        /// </summary>
+        public static string lb_Dobble {
+            get {
+                return ResourceManager.GetString("lb_Dobble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a DOBBLE.NET.
         /// </summary>
         public static string lb_Dobble_NET {
@@ -565,7 +574,6 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La imagen es demasiado grande, selecciona una que no supere los 10 kb .
         ///   Busca una cadena traducida similar a ¿Estás listo?.
         /// </summary>
         public static string lb_EstasListo {
@@ -575,7 +583,16 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El formato seleccionado no es válido para la foto de perfil.
+        ///   Busca una cadena traducida similar a ¡Fin del juego!.
+        /// </summary>
+        public static string lb_FinDelJuego {
+            get {
+                return ResourceManager.GetString("lb_FinDelJuego", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La imagen es demasiado grande, selecciona una que no supere los 10 kb .
         /// </summary>
         public static string lb_FormatoInválido {
             get {
@@ -778,6 +795,33 @@ namespace DobbleGame.Properties {
         public static string lb_RegistroExitoso {
             get {
                 return ResourceManager.GetString("lb_RegistroExitoso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La sala se encuentra en partida.
+        /// </summary>
+        public static string lb_SalaEnPartida {
+            get {
+                return ResourceManager.GetString("lb_SalaEnPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No existe la sala.
+        /// </summary>
+        public static string lb_SalaInexistente {
+            get {
+                return ResourceManager.GetString("lb_SalaInexistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La sala está llena.
+        /// </summary>
+        public static string lb_SalaLlena {
+            get {
+                return ResourceManager.GetString("lb_SalaLlena", resourceCulture);
             }
         }
         

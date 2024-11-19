@@ -27,10 +27,17 @@ namespace DobbleGame
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
         {
             var proxyUsuario = new Servidor.GestionAmigosClient();
-            proxyUsuario.QuitarUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            try
+            {
+                proxyUsuario.QuitarUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
 
-            this.DialogResult = true;
-            this.Close();
+                this.DialogResult = true;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+            }
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)

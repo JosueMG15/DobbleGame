@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="VentanaErrorConexion" Height="200" Width="400" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
 
-    <Border Background="#FFFBB8" CornerRadius="20">
+    <Border Background="#EDE193" CornerRadius="20">
         <Grid >
             <StackPanel >
                 <Label x:Name="lbTitulo" Style="{StaticResource Titulo2}" Content="" HorizontalAlignment="Left" Margin="30,30,0,0" FontSize="20" Foreground="Black"/>

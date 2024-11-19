@@ -100,8 +100,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="LogicaDobble\GeneradorDeCartas.cs" />
-    <Compile Include="LogicaDobble\Icono.cs" />
     <Compile Include="PaginaIngresoCodigo.xaml.cs">
       <DependentUpon>PaginaIngresoCodigo.xaml</DependentUpon>
     </Compile>
@@ -167,6 +165,9 @@
     </Compile>
     <Compile Include="VentanaGestionarSolicitudesAmistad.xaml.cs">
       <DependentUpon>VentanaGestionarSolicitudesAmistad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaMarcadorPartida.xaml.cs">
+      <DependentUpon>VentanaMarcadorPartida.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaMenu.xaml.cs">
       <DependentUpon>VentanaMenu.xaml</DependentUpon>
@@ -252,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VentanaGestionarSolicitudesAmistad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaMarcadorPartida.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

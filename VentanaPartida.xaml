@@ -106,17 +106,17 @@
         <ItemsControl ItemsSource="{Binding JugadoresEnPartida}" 
                       ItemTemplateSelector="{StaticResource SelectorPlantillaJugadorPartida}" />
 
-        <TextBlock x:Name="tbContador" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="400" Panel.ZIndex="1"
+        <TextBlock x:Name="tbTexto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="400" Panel.ZIndex="1"
                    FontFamily="pack://application:,,,/Fuentes/#Lalezar"/>
 
-        <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Background="Transparent"
-                    Click="BtnRegresar_Click" Height="91">
+        <Button x:Name="btnRegresar" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Background="Transparent"
+                    Click="BtnRegresar_Click" Height="91" IsEnabled="False" Opacity="0.7">
             <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform"/>
         </Button>
 
         <Viewbox Stretch="Uniform" Width="300" Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="50" Panel.ZIndex="1">
             <Canvas Width="300" Height="300">
-                <Button Style="{StaticResource BotonTriangular}"
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
                         RenderTransformOrigin="0.5,0.5" Canvas.Left="29" Canvas.Top="131" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Button.RenderTransform>
                         <TransformGroup>
@@ -128,10 +128,12 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono1" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" Canvas.Left="86" Canvas.Top="152" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" Canvas.Left="86" Canvas.Top="152" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Image x:Name="Icono2" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" Canvas.Left="141" Canvas.Top="127" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" Canvas.Left="141" Canvas.Top="127" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -142,7 +144,8 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono3" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Canvas.Top="76" VerticalAlignment="Center" Canvas.Left="3">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Canvas.Top="76" VerticalAlignment="Center" Canvas.Left="3">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -153,7 +156,8 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono4" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Canvas.Left="24" Canvas.Top="19" VerticalAlignment="Center">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Canvas.Left="24" Canvas.Top="19" VerticalAlignment="Center">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -164,7 +168,8 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono5" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" Canvas.Left="80" Canvas.Top="-6" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" Canvas.Left="80" Canvas.Top="-6" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -175,7 +180,8 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono6" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Canvas.Left="137" Canvas.Top="15" VerticalAlignment="Top">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Canvas.Left="137" Canvas.Top="15" VerticalAlignment="Top">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -186,7 +192,8 @@
                     </Button.RenderTransform>
                     <Image x:Name="Icono7" Height="70" Width="70" Margin="0,50,0,0"/>
                 </Button>
-                <Button Style="{StaticResource BotonTriangular}" RenderTransformOrigin="0.5,0.5" Canvas.Left="163" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
+                        RenderTransformOrigin="0.5,0.5" Canvas.Left="163" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -203,7 +210,7 @@
         <Viewbox x:Name="cartaCentral" Stretch="Uniform" Width="300" Height="300" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False"
                  Visibility="Collapsed">
             <Canvas Width="300" Height="300">
-                <Button Style="{StaticResource BotonTriangular}"
+                <Button Style="{StaticResource BotonTriangular}" Click="BtnValidarIcono_Click"
                         RenderTransformOrigin="0.5,0.5" Canvas.Left="29" Canvas.Top="131" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Button.RenderTransform>
                         <TransformGroup>

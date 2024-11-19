@@ -262,6 +262,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="EsSalaDisponible">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EsSalaDisponibleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EsSalaDisponibleResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CambiarVentanaParaTodos">
     <xs:complexType>
       <xs:sequence>
@@ -557,6 +571,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ValidarCarta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="rutaIcono" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ActualizarJugadoresEnPartida">
     <xs:complexType>
       <xs:sequence>
@@ -565,6 +588,11 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="IniciarPartida">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinalizarPartida">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -580,6 +608,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="cartaCentral" nillable="true" type="q23:Carta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarPuntosEnPartida">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="puntosEnPartida" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

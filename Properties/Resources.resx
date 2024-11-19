@@ -444,4 +444,19 @@
   <data name="btn_Listo" xml:space="preserve">
     <value>Listo</value>
   </data>
+  <data name="lb_SalaLlena" xml:space="preserve">
+    <value>La sala está llena</value>
+  </data>
+  <data name="lb_SalaEnPartida" xml:space="preserve">
+    <value>La sala se encuentra en partida</value>
+  </data>
+  <data name="lb_SalaInexistente" xml:space="preserve">
+    <value>No existe la sala</value>
+  </data>
+  <data name="lb_Dobble" xml:space="preserve">
+    <value>¡Dobble!</value>
+  </data>
+  <data name="lb_FinDelJuego" xml:space="preserve">
+    <value>¡Fin del juego!</value>
+  </data>
 </root>

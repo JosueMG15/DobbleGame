@@ -32,27 +32,34 @@ namespace DobbleGame
 
                 if (paginaSala.ExisteSala())
                 {
-                    if (paginaSala.HayEspacioEnSala())
+                    if (paginaSala.EsSalaDisponible())
                     {
-                        if (paginaSala.IniciarSesionSala())
+                        if (paginaSala.HayEspacioEnSala())
                         {
-                            Sala = paginaSala;
-                            this.DialogResult = true;
-                            this.Close();
+                            if (paginaSala.IniciarSesionSala())
+                            {
+                                Sala = paginaSala;
+                                this.DialogResult = true;
+                                this.Close();
+                            }
+                            else
+                            {
+                                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
+                            }
                         }
                         else
                         {
-                            Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "Ocurrio un error inesperado");
+                            Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaLlena);
                         }
                     }
                     else
                     {
-                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "La sala esta llena");
+                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaEnPartida);
                     }
                 }
                 else
                 {
-                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "No existe la sala");
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaInexistente);
                 }
             }
             else

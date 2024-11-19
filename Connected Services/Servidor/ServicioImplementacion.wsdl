@@ -184,6 +184,12 @@
   <wsdl:message name="IGestionSala_ExisteSala_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExisteSalaResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionSala_EsSalaDisponible_InputMessage">
+    <wsdl:part name="parameters" element="tns:EsSalaDisponible" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_EsSalaDisponible_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EsSalaDisponibleResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionSala_CambiarVentanaParaTodos_InputMessage">
     <wsdl:part name="parameters" element="tns:CambiarVentanaParaTodos" />
   </wsdl:message>
@@ -316,17 +322,26 @@
   <wsdl:message name="IGestionPartida_NotificarDistribucionCartas_InputMessage">
     <wsdl:part name="parameters" element="tns:NotificarDistribucionCartas" />
   </wsdl:message>
+  <wsdl:message name="IGestionPartida_ValidarCarta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarCarta" />
+  </wsdl:message>
   <wsdl:message name="IGestionPartida_ActualizarJugadoresEnPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ActualizarJugadoresEnPartida" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_IniciarPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:IniciarPartida" />
   </wsdl:message>
+  <wsdl:message name="IGestionPartida_FinalizarPartida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:FinalizarPartida" />
+  </wsdl:message>
   <wsdl:message name="IGestionPartida_AsignarCarta_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarCarta" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_AsignarCartaCentral_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarCartaCentral" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_ActualizarPuntosEnPartida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPuntosEnPartida" />
   </wsdl:message>
   <wsdl:message name="IGestionCorreos_EnviarCodigo_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarCodigo" />
@@ -411,6 +426,10 @@
     <wsdl:operation name="ExisteSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/ExisteSala" message="tns:IGestionSala_ExisteSala_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/ExisteSalaResponse" message="tns:IGestionSala_ExisteSala_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EsSalaDisponible">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/EsSalaDisponible" message="tns:IGestionSala_EsSalaDisponible_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/EsSalaDisponibleResponse" message="tns:IGestionSala_EsSalaDisponible_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CambiarVentanaParaTodos">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/CambiarVentanaParaTodos" message="tns:IGestionSala_CambiarVentanaParaTodos_InputMessage" />
@@ -518,17 +537,26 @@
     <wsdl:operation name="NotificarDistribucionCartas">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/NotificarDistribucionCartas" message="tns:IGestionPartida_NotificarDistribucionCartas_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ValidarCarta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/ValidarCarta" message="tns:IGestionPartida_ValidarCarta_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="ActualizarJugadoresEnPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida" message="tns:IGestionPartida_ActualizarJugadoresEnPartida_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="IniciarPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/IniciarPartida" message="tns:IGestionPartida_IniciarPartida_OutputCallbackMessage" />
     </wsdl:operation>
+    <wsdl:operation name="FinalizarPartida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/FinalizarPartida" message="tns:IGestionPartida_FinalizarPartida_OutputCallbackMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AsignarCarta">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/AsignarCarta" message="tns:IGestionPartida_AsignarCarta_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="AsignarCartaCentral">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/AsignarCartaCentral" message="tns:IGestionPartida_AsignarCartaCentral_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntosEnPartida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/ActualizarPuntosEnPartida" message="tns:IGestionPartida_ActualizarPuntosEnPartida_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionCorreos">
@@ -702,6 +730,15 @@
     </wsdl:operation>
     <wsdl:operation name="ExisteSala">
       <soap12:operation soapAction="http://tempuri.org/IGestionSala/ExisteSala" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EsSalaDisponible">
+      <soap12:operation soapAction="http://tempuri.org/IGestionSala/EsSalaDisponible" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -937,6 +974,12 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="ValidarCarta">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ValidarCarta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="ActualizarJugadoresEnPartida">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida" style="document" />
       <wsdl:output>
@@ -949,6 +992,12 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FinalizarPartida">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/FinalizarPartida" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AsignarCarta">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/AsignarCarta" style="document" />
       <wsdl:output>
@@ -957,6 +1006,12 @@
     </wsdl:operation>
     <wsdl:operation name="AsignarCartaCentral">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/AsignarCartaCentral" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntosEnPartida">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ActualizarPuntosEnPartida" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

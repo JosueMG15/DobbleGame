@@ -26,7 +26,6 @@ namespace DobbleGame
     {
         private Servidor.IGestionSala proxy;
         private readonly SelectorPlantillaJugador selectorPlantilla;
-        private VentanaPartida ventanaPartida;
         public ObservableCollection<Jugador> UsuariosConectados { get; set; }
         public bool EsAnfitrion {  get; set; }
         public string CodigoSala {  get; set; }
@@ -154,6 +153,21 @@ namespace DobbleGame
             }
         }
 
+        public bool EsSalaDisponible()
+        {
+            InicializarProxySiEsNecesario();
+
+            try
+            {
+                return proxy.EsSalaDisponible(CodigoSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                return false;
+            }
+        }
+
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
             AbandonarSala();
@@ -216,7 +230,7 @@ namespace DobbleGame
             try
             {
                 int numeroJugadores = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this));
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this), this);
                 if (ventanaPartida.IniciarSesionPartida())
                 {
                     proxy.CambiarVentanaParaTodos(CodigoSala);
@@ -310,7 +324,7 @@ namespace DobbleGame
             if (!EsAnfitrion)
             {
                 int numeroJugadores = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this));
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this), this);
                 if (ventanaPartida.IniciarSesionPartida())
                 {
                     proxy.CambiarVentanaParaTodos(CodigoSala);
