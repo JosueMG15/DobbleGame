@@ -46,6 +46,7 @@ namespace DobbleGame
                     if (respuestaInicioSesion.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
                     }
                     else if (!respuestaInicioSesion.Exitoso)
                     {
@@ -68,9 +69,8 @@ namespace DobbleGame
                         // Conectar a las notificaciones
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
 
-                        // Alacenar el usuario que inicio sesión en una lista
                         var proxyUsuario = new Servidor.GestionAmigosClient();
-                        proxyUsuario.AgregarUsuario(cuentaInicioSesion.Usuario);
+                        proxyUsuario.NotificarCambios();
 
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     

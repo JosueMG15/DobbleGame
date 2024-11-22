@@ -209,7 +209,16 @@ namespace DobbleGame
 
         private void MostrarMensaje(string mensaje)
         {
+            panelMensaje.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
+            {
+                panelMensaje.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

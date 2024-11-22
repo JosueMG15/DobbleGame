@@ -33,15 +33,30 @@ namespace DobbleGame
         {
             MainWindow inicioSesion = new MainWindow();
             var proxy = new GestionJugadorClient();
+            var proxyUsuario = new GestionAmigosClient();
+
+            bool isLoginWindowOpen = false;
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    isLoginWindowOpen = true;
+                    break; // Salir del bucle al encontrar la ventana
+                }
+            }
 
             try
             {
-                if (proxy != null && proxy.State == CommunicationState.Opened)
+                if (!isLoginWindowOpen)
                 {
                     proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-                    proxy.Close();
+                    CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                 }
-                
+
+                proxy.Close();
+
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window != inicioSesion)
@@ -69,7 +84,6 @@ namespace DobbleGame
                 proxy.Abort();
             }
 
-            
             inicioSesion.Show();
         }
     }

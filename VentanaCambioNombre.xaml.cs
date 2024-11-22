@@ -82,6 +82,8 @@ namespace DobbleGame
                     }
                     if (respuestaModificarUsuario.Resultado)
                     {
+                        var proxyUsuario = new Servidor.GestionAmigosClient();
+
                         CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
                         CuentaUsuario.CuentaUsuarioActual = new CuentaUsuario
                         {

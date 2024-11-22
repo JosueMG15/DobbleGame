@@ -7,7 +7,7 @@
       xmlns:p="clr-namespace:DobbleGame.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
-      Title="PaginaPerfil">
+      Title="PaginaPerfil" PreviewMouseDown="Window_PreviewMouseDown">
 
     <Grid>
         <Grid.Background>
@@ -47,6 +47,9 @@
         <Label Name="lbNombreUsuario" HorizontalAlignment="Left" Margin="600,366,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Variable Display Semibold"/>
         <Label Content = "{x:Static p:Resources.lb_Puntos}" Style="{StaticResource TituloLalezar1}" Margin="82,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
         <Label Name="lbPuntaje" Style="{StaticResource TituloLalezar1}" Margin="213,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
-        <Label Name="lbMensaje" HorizontalAlignment="Left" Margin="189,680,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Red" RenderTransformOrigin="0.218,0.569"/>
+
+        <StackPanel Name="panelMensaje" Margin="119,693,0,58" Visibility="Hidden" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="774" Orientation="Horizontal">
+            <Label x:Name="lbMensaje"  Foreground="Red" FontSize="21" Width="770"/>
+        </StackPanel>
     </Grid>
 </Page>
