@@ -78,12 +78,23 @@ namespace DobbleGame.Utilidades
         }
         public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor)
         {
+            MainWindow inicioSesion = new MainWindow();
             try
             {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window != inicioSesion)
+                    {
+                        window.Close();
+                    }
+                }
+                inicioSesion.Show();
+                contenedor = inicioSesion;
+
                 var ventanaErrorConexion = new VentanaErrorConexion(
                  Properties.Resources.lb_ErrorConexiónServidor,
                  Properties.Resources.lb_MensajeErrorConexiónServidor
-             )
+                 )
                 {
                     WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };

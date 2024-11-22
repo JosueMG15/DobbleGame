@@ -18,6 +18,7 @@ namespace DobbleGame.Utilidades
         // Eventos para las notificaciones de amistad
         public event Action NotificarSolicitudAmistadEvent;
         public event Action NotificarCambioEvent;
+        public event Action<string> NotificarSalidaEvent;
 
         // Propiedad para acceder a la única instancia de la clase
         public static CallbackManager Instance
@@ -34,20 +35,19 @@ namespace DobbleGame.Utilidades
 
         private CallbackManager()
         {
-            // Configuración del contexto de instancia
             var context = new InstanceContext(this);
             _proxyNotificaciones = new GestionNotificacionesAmigosClient(context);
         }
 
         public void Conectar(string usuario)
         {
+            _proxyNotificaciones.ConectarCliente(usuario);
             try
             {
                 _proxyNotificaciones.ConectarCliente(usuario);
             }
             catch (Exception ex)
             {
-                // Manejar errores de conexión
                 MessageBox.Show("Error al conectar para recibir notificaciones: " + ex.Message);
             }
         }
@@ -70,6 +70,12 @@ namespace DobbleGame.Utilidades
         public void NotificarCambio()
         {
             NotificarCambioEvent?.Invoke();
+        }
+
+        //Método callback para notificar una desconexión
+        public void NotificarSalida(string nombreUsuario)
+        {
+            NotificarSalidaEvent?.Invoke(nombreUsuario);
         }
 
         public GestionNotificacionesAmigosClient ObtenerProxy()

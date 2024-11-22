@@ -29,8 +29,6 @@ namespace DobbleGame
             var proxyUsuario = new Servidor.GestionAmigosClient();
             try
             {
-                proxyUsuario.QuitarUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-
                 this.DialogResult = true;
                 this.Close();
             }

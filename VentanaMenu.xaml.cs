@@ -43,6 +43,7 @@ namespace DobbleGame
             CargarAmistades();
 
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
+            CallbackManager.Instance.NotificarSalidaEvent += NotificarSalida;
         }
 
 
@@ -53,6 +54,57 @@ namespace DobbleGame
                 ContenedorNotificaciones.Children.Clear();
                 CargarAmistades();
             });
+        }
+
+
+        public void NotificarSalida(string nombreUsuario)
+        {
+            foreach (var child in ContenedorNotificaciones.Children)
+            {
+                if (child is Border border && border.Child is Grid grid)
+                {
+                    // Busca dentro del Grid en el Border
+                    foreach (var gridChild in grid.Children)
+                    {
+                        if (gridChild is StackPanel stackPanel)
+                        {
+                            // Busca el StackPanel que contiene el nombre del usuario
+                            foreach (var stackChild in stackPanel.Children)
+                            {
+                                if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
+                                {
+                                    // Nombre encontrado, actualizar estado
+                                    CambiarEstadoAAusente(stackPanel);
+                                    return; // Salir del método después de actualizar
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CambiarEstadoAAusente(StackPanel stackPanel)
+        {
+            foreach (var child in stackPanel.Children)
+            {
+                if (child is StackPanel estadoPanel)
+                {
+                    foreach (var estadoChild in estadoPanel.Children)
+                    {
+                        if (estadoChild is Ellipse circulo)
+                        {
+                            // Cambiar color del círculo a rojo
+                            circulo.Fill = Brushes.Red;
+                        }
+                        else if (estadoChild is Label estadoTexto)
+                        {
+                            // Actualizar el texto del estado a "Ausente"
+                            estadoTexto.Content = Properties.Resources.lb_Ausente;
+                        }
+                    }
+                }
+            }
         }
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
@@ -94,10 +146,9 @@ namespace DobbleGame
             {
                 if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
                 {
-                    proxyUsuario.QuitarUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-
                     proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                     CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                 }
             }
             catch (Exception ex)
@@ -109,10 +160,12 @@ namespace DobbleGame
         private void CerrarSesion()
         {
             var proxy = new GestionJugadorClient();
+            var proxyUsuario = new GestionAmigosClient();
             try
             {
                 proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                 CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
             }
             catch (Exception ex)
             {
@@ -230,171 +283,190 @@ namespace DobbleGame
 
         private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
+            var proxy = new Servidor.GestionAmigosClient();
+            try
             {
-                Usuario = UsuarioAmigo(solicitud, esAgeno).Usuario,
-                Puntaje = UsuarioAmigo(solicitud, esAgeno).Puntaje,
-                Foto = UsuarioAmigo(solicitud, esAgeno).Foto
-            };
-
-            var panelSolicitud = new Border
-            {
-                Background = new SolidColorBrush(Colors.Transparent),
-                Padding = new Thickness(10),
-                BorderBrush = new SolidColorBrush(Colors.LightGray),
-                BorderThickness = new Thickness(1),
-                Margin = new Thickness(5)
-            };
-
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
-
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-            // Imagen circular del usuario
-            var fotoUsuario = new Image
-            {
-                Width = 60,
-                Height = 60,
-                Stretch = Stretch.UniformToFill,
-                Margin = new Thickness(0, 0, 15, 0),
-                Clip = new EllipseGeometry { Center = new Point(30, 30), RadiusX = 30, RadiusY = 30 }
-            };
-            byte[] fotoBytes = cuentaUsuarioAmigo.Foto;
-            if (fotoBytes != null)
-            {
-                fotoUsuario.Source = ConvertirBytesAImagen(fotoBytes);
-            }
-            Grid.SetColumn(fotoUsuario, 0);
-            Grid.SetRowSpan(fotoUsuario, 2);
-            grid.Children.Add(fotoUsuario);
-
-            // Nombre de usuario y Estado 
-            var stackNombreEstado = new StackPanel
-            {
-                Orientation = Orientation.Vertical,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            var nombreUsuario = new TextBlock
-            {
-                Text = cuentaUsuarioAmigo.Usuario,
-                FontSize = 18,
-                FontWeight = FontWeights.Bold
-            };
-            stackNombreEstado.Children.Add(nombreUsuario);
-
-            var estado = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 5, 0, 0)
-            };
-
-            var proxyUsuario = new Servidor.GestionAmigosClient();
-            //Si esta en línea
-            if (proxyUsuario.ObtenerUsuarioConectado(cuentaUsuarioAmigo.Usuario))
-            {
-                var circulo = new Ellipse
+                Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
                 {
-                    Width = 15,
-                    Height = 15,
-                    Fill = Brushes.LightGreen,
+                    Usuario = UsuarioAmigo(solicitud, esAgeno).Usuario,
+                    Puntaje = UsuarioAmigo(solicitud, esAgeno).Puntaje,
+                    Foto = UsuarioAmigo(solicitud, esAgeno).Foto
+                };
+
+                var panelSolicitud = new Border
+                {
+                    Background = new SolidColorBrush(Colors.Transparent),
+                    Padding = new Thickness(10),
+                    BorderBrush = new SolidColorBrush(Colors.LightGray),
+                    BorderThickness = new Thickness(1),
+                    Margin = new Thickness(5)
+                };
+
+                var grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
+
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                // Imagen circular del usuario
+                var fotoUsuario = new Image
+                {
+                    Width = 60,
+                    Height = 60,
+                    Stretch = Stretch.UniformToFill,
+                    Margin = new Thickness(0, 0, 15, 0),
+                    Clip = new EllipseGeometry { Center = new Point(30, 30), RadiusX = 30, RadiusY = 30 }
+                };
+                byte[] fotoBytes = cuentaUsuarioAmigo.Foto;
+                if (fotoBytes != null)
+                {
+                    fotoUsuario.Source = ConvertirBytesAImagen(fotoBytes);
+                }
+                Grid.SetColumn(fotoUsuario, 0);
+                Grid.SetRowSpan(fotoUsuario, 2);
+                grid.Children.Add(fotoUsuario);
+
+                // Nombre de usuario y Estado 
+                var stackNombreEstado = new StackPanel
+                {
+                    Orientation = Orientation.Vertical,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                var nombreUsuario = new TextBlock
+                {
+                    Text = cuentaUsuarioAmigo.Usuario,
+                    FontSize = 18,
+                    FontWeight = FontWeights.Bold
+                };
+                stackNombreEstado.Children.Add(nombreUsuario);
+
+                var estado = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 5, 0, 0)
+                };
+
+                var respuesta = proxy.UsuarioConectado(cuentaUsuarioAmigo.Usuario);
+                if (proxy.State == CommunicationState.Faulted)
+                {
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
+                if (respuesta.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+
+                //Si esta en línea
+                if (respuesta.Resultado)
+                {
+                    var circulo = new Ellipse
+                    {
+                        Width = 15,
+                        Height = 15,
+                        Fill = Brushes.LightGreen,
+                        Margin = new Thickness(0, 0, 5, 0)
+                    };
+                    estado.Children.Add(circulo);
+
+                    var textoEnLinea = new Label
+                    {
+                        Content = Properties.Resources.lb_EnLínea,
+                        FontSize = 12
+                    };
+                    estado.Children.Add(textoEnLinea);
+                }
+                //Si esta ausente
+                else
+                {
+                    var circulo = new Ellipse
+                    {
+                        Width = 15,
+                        Height = 15,
+                        Fill = Brushes.Red,
+                        Margin = new Thickness(0, 0, 5, 0)
+                    };
+                    estado.Children.Add(circulo);
+
+                    var textoEnLinea = new Label
+                    {
+                        Content = Properties.Resources.lb_Ausente,
+                        FontSize = 12
+                    };
+                    estado.Children.Add(textoEnLinea);
+                }
+
+                stackNombreEstado.Children.Add(estado);
+                Grid.SetColumn(stackNombreEstado, 1);
+                Grid.SetRow(stackNombreEstado, 0);
+                grid.Children.Add(stackNombreEstado);
+
+                // Puntos del usuario
+                var puntosUsuario = new TextBlock
+                {
+                    Text = $"Puntos: {cuentaUsuarioAmigo.Puntaje}",
+                    FontSize = 12,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 10, 0, 0)
+                };
+                Grid.SetColumn(puntosUsuario, 1);
+                Grid.SetRow(puntosUsuario, 1);
+                grid.Children.Add(puntosUsuario);
+
+                // Botones de "EliminarAmistad" e "Invitar"
+                var botonesPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                var botonEliminar = new Button
+                {
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.Black,
+                    BorderBrush = Brushes.Transparent,
+                    Padding = new Thickness(5),
                     Margin = new Thickness(0, 0, 5, 0)
                 };
-                estado.Children.Add(circulo);
-
-                var textoEnLinea = new Label
+                var imagenEliminar = new Image
                 {
-                    Content = Properties.Resources.lb_EnLínea,
-                    FontSize = 12
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Imagenes/BotonEliminarAmigo.png")),
+                    Width = 30,
+                    Height = 30
                 };
-                estado.Children.Add(textoEnLinea);
+                botonEliminar.Content = imagenEliminar;
+                botonEliminar.Click += (s, e) => EliminarAmistad(solicitud, panelSolicitud);
+
+                botonesPanel.Children.Add(botonEliminar);
+
+                var botonInvitar = new Button
+                {
+                    Content = "Invitar",
+                    Background = Brushes.Gray,
+                    Foreground = Brushes.White,
+                    Padding = new Thickness(5)
+                };
+                botonesPanel.Children.Add(botonInvitar);
+
+                Grid.SetColumn(botonesPanel, 2);
+                Grid.SetRowSpan(botonesPanel, 2);
+                grid.Children.Add(botonesPanel);
+
+                panelSolicitud.Child = grid;
+
+                // Añadir la notificación al StackPanel de notificaciones principal
+                ContenedorNotificaciones.Children.Add(panelSolicitud);
             }
-            //Si esta ausente
-            else
+            catch (Exception ex)
             {
-                var circulo = new Ellipse
-                {
-                    Width = 15,
-                    Height = 15,
-                    Fill = Brushes.Red,
-                    Margin = new Thickness(0, 0, 5, 0)
-                };
-                estado.Children.Add(circulo);
-
-                var textoEnLinea = new Label
-                {
-                    Content = Properties.Resources.lb_Ausente,
-                    FontSize = 12
-                };
-                estado.Children.Add(textoEnLinea);
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
-
-            stackNombreEstado.Children.Add(estado);
-            Grid.SetColumn(stackNombreEstado, 1);
-            Grid.SetRow(stackNombreEstado, 0);
-            grid.Children.Add(stackNombreEstado);
-
-            // Puntos del usuario
-            var puntosUsuario = new TextBlock
-            {
-                Text = $"Puntos: {cuentaUsuarioAmigo.Puntaje}",
-                FontSize = 12,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 10, 0, 0)
-            };
-            Grid.SetColumn(puntosUsuario, 1);
-            Grid.SetRow(puntosUsuario, 1);
-            grid.Children.Add(puntosUsuario);
-
-            // Botones de "EliminarAmistad" e "Invitar"
-            var botonesPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            var botonEliminar = new Button
-            {
-                Background = Brushes.Transparent,
-                Foreground = Brushes.Black,
-                BorderBrush = Brushes.Transparent,
-                Padding = new Thickness(5),
-                Margin = new Thickness(0, 0, 5, 0)
-            };
-            var imagenEliminar = new Image
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Imagenes/BotonEliminarAmigo.png")),
-                Width = 30,
-                Height = 30
-            };
-            botonEliminar.Content = imagenEliminar;
-            botonEliminar.Click += (s, e) => EliminarAmistad(solicitud, panelSolicitud);
-
-            botonesPanel.Children.Add(botonEliminar);
-
-            var botonInvitar = new Button
-            {
-                Content = "Invitar",
-                Background = Brushes.Gray,
-                Foreground = Brushes.White,
-                Padding = new Thickness(5)
-            };
-            botonesPanel.Children.Add(botonInvitar);
-
-            Grid.SetColumn(botonesPanel, 2);
-            Grid.SetRowSpan(botonesPanel, 2);
-            grid.Children.Add(botonesPanel);
-
-            panelSolicitud.Child = grid;
-
-            // Añadir la notificación al StackPanel de notificaciones principal
-            ContenedorNotificaciones.Children.Add(panelSolicitud);
         }
 
         private DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)

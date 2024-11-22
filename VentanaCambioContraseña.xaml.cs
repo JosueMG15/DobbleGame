@@ -45,7 +45,7 @@ namespace DobbleGame
             ActualizarContraseña(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña);
         }
 
-        private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
+        /*private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
         {
             if (Utilidades.Utilidades.EsCampoVacio(contraseñaActual) || Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) 
                 || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
@@ -117,7 +117,106 @@ namespace DobbleGame
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
             }
+        }*/
+        private void ActualizarContraseña(string contraseñaActual, string nuevaContraseña, string confirmarNuevaContraseña)
+        {
+            if (ValidarEntradas(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña))
+            {
+                return;
+            }
+
+            using (var proxy = new Servidor.GestionJugadorClient())
+            {
+                try
+                {
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    if (!ValidarContraseñaActual(proxy, contraseñaActual))
+                    {
+                        return;
+                    }
+
+                    string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(nuevaContraseña);
+                    var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(
+                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
+                        contraseñaHasheada);
+
+                    if (respuestaModificarContraseña.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+
+                    if (respuestaModificarContraseña.Resultado)
+                    {
+                        Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                }
+            }
         }
+
+        private bool ValidarEntradas(string contraseñaActual, string nuevaContraseña, string confirmarNuevaContraseña)
+        {
+            if (Utilidades.Utilidades.EsCampoVacio(contraseñaActual) ||
+                Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) ||
+                Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
+            {
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                return true;
+            }
+
+            if (nuevaContraseña != confirmarNuevaContraseña)
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                return true;
+            }
+
+            if (contraseñaActual == nuevaContraseña)
+            {
+                MostrarMensaje(Properties.Resources.global_MismaContraseña_);
+                return true;
+            }
+
+            if (!Utilidades.Utilidades.ValidarContraseña(contraseñaActual) ||
+                !Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) ||
+                !Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
+            {
+                MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ValidarContraseñaActual(Servidor.GestionJugadorClient proxy, string contraseñaActual)
+        {
+            var respuestaUsuario = proxy.ValidarContraseña(
+                Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
+                Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual));
+
+            if (respuestaUsuario.ErrorBD)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                return false;
+            }
+
+            if (!respuestaUsuario.Resultado)
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void MostrarMensaje(string mensaje)
         {

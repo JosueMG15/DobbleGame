@@ -262,23 +262,23 @@
   <wsdl:message name="IGestionAmigos_ObtenerSolicitud_OutputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSolicitudResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_AgregarUsuario_InputMessage">
-    <wsdl:part name="parameters" element="tns:AgregarUsuario" />
+  <wsdl:message name="IGestionAmigos_UsuarioConectado_InputMessage">
+    <wsdl:part name="parameters" element="tns:UsuarioConectado" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_AgregarUsuario_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AgregarUsuarioResponse" />
+  <wsdl:message name="IGestionAmigos_UsuarioConectado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UsuarioConectadoResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_QuitarUsuario_InputMessage">
-    <wsdl:part name="parameters" element="tns:QuitarUsuario" />
+  <wsdl:message name="IGestionAmigos_NotificarCambios_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarCambios" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_QuitarUsuario_OutputMessage">
-    <wsdl:part name="parameters" element="tns:QuitarUsuarioResponse" />
+  <wsdl:message name="IGestionAmigos_NotificarCambios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarCambiosResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_ObtenerUsuarioConectado_InputMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerUsuarioConectado" />
+  <wsdl:message name="IGestionAmigos_NotificarDesconexion_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarDesconexion" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_ObtenerUsuarioConectado_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerUsuarioConectadoResponse" />
+  <wsdl:message name="IGestionAmigos_NotificarDesconexion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarDesconexionResponse" />
   </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_ConectarCliente_InputMessage">
     <wsdl:part name="parameters" element="tns:ConectarCliente" />
@@ -297,6 +297,9 @@
   </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_NotificarCambio_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotificarCambio" />
+  </wsdl:message>
+  <wsdl:message name="IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotificarSalida" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_CrearNuevaPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearNuevaPartida" />
@@ -334,6 +337,9 @@
   <wsdl:message name="IGestionPartida_FinalizarPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:FinalizarPartida" />
   </wsdl:message>
+  <wsdl:message name="IGestionPartida_ConvertirEnAnfitrionDesdePartida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ConvertirEnAnfitrionDesdePartida" />
+  </wsdl:message>
   <wsdl:message name="IGestionPartida_AsignarCarta_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarCarta" />
   </wsdl:message>
@@ -342,6 +348,12 @@
   </wsdl:message>
   <wsdl:message name="IGestionPartida_ActualizarPuntosEnPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ActualizarPuntosEnPartida" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_BloquearCarta_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:BloquearCarta" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_DesbloquearCarta_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:DesbloquearCarta" />
   </wsdl:message>
   <wsdl:message name="IGestionCorreos_EnviarCodigo_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarCodigo" />
@@ -487,17 +499,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitud" message="tns:IGestionAmigos_ObtenerSolicitud_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitudResponse" message="tns:IGestionAmigos_ObtenerSolicitud_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AgregarUsuario">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/AgregarUsuario" message="tns:IGestionAmigos_AgregarUsuario_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/AgregarUsuarioResponse" message="tns:IGestionAmigos_AgregarUsuario_OutputMessage" />
+    <wsdl:operation name="UsuarioConectado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/UsuarioConectado" message="tns:IGestionAmigos_UsuarioConectado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/UsuarioConectadoResponse" message="tns:IGestionAmigos_UsuarioConectado_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="QuitarUsuario">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/QuitarUsuario" message="tns:IGestionAmigos_QuitarUsuario_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/QuitarUsuarioResponse" message="tns:IGestionAmigos_QuitarUsuario_OutputMessage" />
+    <wsdl:operation name="NotificarCambios">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarCambios" message="tns:IGestionAmigos_NotificarCambios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse" message="tns:IGestionAmigos_NotificarCambios_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerUsuarioConectado">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectado" message="tns:IGestionAmigos_ObtenerUsuarioConectado_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectadoResponse" message="tns:IGestionAmigos_ObtenerUsuarioConectado_OutputMessage" />
+    <wsdl:operation name="NotificarDesconexion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion" message="tns:IGestionAmigos_NotificarDesconexion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse" message="tns:IGestionAmigos_NotificarDesconexion_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionNotificacionesAmigos">
@@ -514,6 +526,9 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarCambio">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarCambio" message="tns:IGestionNotificacionesAmigos_NotificarCambio_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarSalida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" message="tns:IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionPartida">
@@ -549,6 +564,9 @@
     <wsdl:operation name="FinalizarPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/FinalizarPartida" message="tns:IGestionPartida_FinalizarPartida_OutputCallbackMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ConvertirEnAnfitrionDesdePartida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/ConvertirEnAnfitrionDesdePartida" message="tns:IGestionPartida_ConvertirEnAnfitrionDesdePartida_OutputCallbackMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AsignarCarta">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/AsignarCarta" message="tns:IGestionPartida_AsignarCarta_OutputCallbackMessage" />
     </wsdl:operation>
@@ -557,6 +575,12 @@
     </wsdl:operation>
     <wsdl:operation name="ActualizarPuntosEnPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/ActualizarPuntosEnPartida" message="tns:IGestionPartida_ActualizarPuntosEnPartida_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BloquearCarta">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/BloquearCarta" message="tns:IGestionPartida_BloquearCarta_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DesbloquearCarta">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/DesbloquearCarta" message="tns:IGestionPartida_DesbloquearCarta_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionCorreos">
@@ -867,8 +891,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AgregarUsuario">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/AgregarUsuario" style="document" />
+    <wsdl:operation name="UsuarioConectado">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/UsuarioConectado" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -876,8 +900,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="QuitarUsuario">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/QuitarUsuario" style="document" />
+    <wsdl:operation name="NotificarCambios">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarCambios" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -885,8 +909,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerUsuarioConectado">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectado" style="document" />
+    <wsdl:operation name="NotificarDesconexion">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarDesconexion" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -924,6 +948,12 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarCambio">
       <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarCambio" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarSalida">
+      <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -998,6 +1028,12 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ConvertirEnAnfitrionDesdePartida">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ConvertirEnAnfitrionDesdePartida" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AsignarCarta">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/AsignarCarta" style="document" />
       <wsdl:output>
@@ -1012,6 +1048,18 @@
     </wsdl:operation>
     <wsdl:operation name="ActualizarPuntosEnPartida">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ActualizarPuntosEnPartida" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BloquearCarta">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/BloquearCarta" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesbloquearCarta">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/DesbloquearCarta" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
