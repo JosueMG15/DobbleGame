@@ -41,11 +41,12 @@ namespace DobbleGame
             HayConexionConSala = false;
             CodigoSala = codigoSala;
             selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
+            selectorPlantilla.IniciarlizarPlantillas();
         }
 
         public bool IniciarSesionSala()
         {
-            if (EsAnfitrion)
+            if (EsAnfitrion && CodigoSala == null)
             {
                 return CrearSala();
             }
@@ -229,8 +230,8 @@ namespace DobbleGame
         {
             try
             {
-                int numeroJugadores = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this), this);
+                int numeroJugadoresEsperados = UsuariosConectados.Count;
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this), this);
                 if (ventanaPartida.IniciarSesionPartida())
                 {
                     proxy.CambiarVentanaParaTodos(CodigoSala);
@@ -321,16 +322,12 @@ namespace DobbleGame
 
         public void CambiarVentana()
         {
-            if (!EsAnfitrion)
+            int numeroJugadoresEsperados = UsuariosConectados.Count;
+            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this), this);
+            if (ventanaPartida.IniciarSesionPartida())
             {
-                int numeroJugadores = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadores, Window.GetWindow(this), this);
-                if (ventanaPartida.IniciarSesionPartida())
-                {
-                    proxy.CambiarVentanaParaTodos(CodigoSala);
-                    ventanaPartida.Show();
-                    Window.GetWindow(this).Hide();
-                }
+                ventanaPartida.Show();
+                Window.GetWindow(this).Hide();
             }
         }
 

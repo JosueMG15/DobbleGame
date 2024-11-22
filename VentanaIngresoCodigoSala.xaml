@@ -7,7 +7,8 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         xmlns:Properties="clr-namespace:DobbleGame.Properties" 
         mc:Ignorable="d"
-        Title="VentanaIngresoCodigoSala" Height="430" Width="500" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        Title="VentanaIngresoCodigoSala" Height="430" Width="500" WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" PreviewMouseDown="Window_PreviewMouseDown">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>

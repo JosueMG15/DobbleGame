@@ -1238,23 +1238,23 @@ namespace DobbleGame.Servidor {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerSolicitud", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerSolicitudResponse")]
         System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD> ObtenerSolicitudAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AgregarUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/AgregarUsuarioResponse")]
-        void AgregarUsuario(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/UsuarioConectado", ReplyAction="http://tempuri.org/IGestionAmigos/UsuarioConectadoResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfboolean UsuarioConectado(string nombreUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/AgregarUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/AgregarUsuarioResponse")]
-        System.Threading.Tasks.Task AgregarUsuarioAsync(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/UsuarioConectado", ReplyAction="http://tempuri.org/IGestionAmigos/UsuarioConectadoResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> UsuarioConectadoAsync(string nombreUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/QuitarUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/QuitarUsuarioResponse")]
-        void QuitarUsuario(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarCambios", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse")]
+        void NotificarCambios();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/QuitarUsuario", ReplyAction="http://tempuri.org/IGestionAmigos/QuitarUsuarioResponse")]
-        System.Threading.Tasks.Task QuitarUsuarioAsync(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarCambios", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse")]
+        System.Threading.Tasks.Task NotificarCambiosAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectado", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectadoResponse")]
-        bool ObtenerUsuarioConectado(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse")]
+        void NotificarDesconexion(string nombreUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectado", ReplyAction="http://tempuri.org/IGestionAmigos/ObtenerUsuarioConectadoResponse")]
-        System.Threading.Tasks.Task<bool> ObtenerUsuarioConectadoAsync(string nombreUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse")]
+        System.Threading.Tasks.Task NotificarDesconexionAsync(string nombreUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1356,28 +1356,28 @@ namespace DobbleGame.Servidor {
             return base.Channel.ObtenerSolicitudAsync();
         }
         
-        public void AgregarUsuario(string nombreUsuario) {
-            base.Channel.AgregarUsuario(nombreUsuario);
+        public DobbleGame.Servidor.RespuestaServicioOfboolean UsuarioConectado(string nombreUsuario) {
+            return base.Channel.UsuarioConectado(nombreUsuario);
         }
         
-        public System.Threading.Tasks.Task AgregarUsuarioAsync(string nombreUsuario) {
-            return base.Channel.AgregarUsuarioAsync(nombreUsuario);
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> UsuarioConectadoAsync(string nombreUsuario) {
+            return base.Channel.UsuarioConectadoAsync(nombreUsuario);
         }
         
-        public void QuitarUsuario(string nombreUsuario) {
-            base.Channel.QuitarUsuario(nombreUsuario);
+        public void NotificarCambios() {
+            base.Channel.NotificarCambios();
         }
         
-        public System.Threading.Tasks.Task QuitarUsuarioAsync(string nombreUsuario) {
-            return base.Channel.QuitarUsuarioAsync(nombreUsuario);
+        public System.Threading.Tasks.Task NotificarCambiosAsync() {
+            return base.Channel.NotificarCambiosAsync();
         }
         
-        public bool ObtenerUsuarioConectado(string nombreUsuario) {
-            return base.Channel.ObtenerUsuarioConectado(nombreUsuario);
+        public void NotificarDesconexion(string nombreUsuario) {
+            base.Channel.NotificarDesconexion(nombreUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> ObtenerUsuarioConectadoAsync(string nombreUsuario) {
-            return base.Channel.ObtenerUsuarioConectadoAsync(nombreUsuario);
+        public System.Threading.Tasks.Task NotificarDesconexionAsync(string nombreUsuario) {
+            return base.Channel.NotificarDesconexionAsync(nombreUsuario);
         }
     }
     
@@ -1406,6 +1406,9 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarCambio")]
         void NotificarCambio();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida")]
+        void NotificarSalida(string nombreUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1512,6 +1515,9 @@ namespace DobbleGame.Servidor {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/FinalizarPartida")]
         void FinalizarPartida();
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/ConvertirEnAnfitrionDesdePartida")]
+        void ConvertirEnAnfitrionDesdePartida();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/AsignarCarta")]
         void AsignarCarta(DobbleGame.Servidor.Carta carta);
         
@@ -1520,6 +1526,12 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/ActualizarPuntosEnPartida")]
         void ActualizarPuntosEnPartida(string nombreUsuario, int puntosEnPartida);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/BloquearCarta")]
+        void BloquearCarta();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/DesbloquearCarta")]
+        void DesbloquearCarta();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

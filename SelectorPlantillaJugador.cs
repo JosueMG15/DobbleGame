@@ -11,20 +11,27 @@ namespace DobbleGame
 {
     public class SelectorPlantillaJugador : DataTemplateSelector
     {
-        //private static SelectorPlantillaJugador _instancia = new SelectorPlantillaJugador();
-        //public static SelectorPlantillaJugador Instancia => _instancia;
+        public DataTemplate JugadorRojoPlantilla { get; set; }
+        public DataTemplate JugadorAzulPlantilla { get; set; }
+        public DataTemplate JugadorVerdePlantilla { get; set; }
+        public DataTemplate JugadorAmarilloPlantilla { get; set; }
+
+        private int contadorPlantillas = 0;
+        private Dictionary<DataTemplate, bool> plantillasDisponibles;
 
         public SelectorPlantillaJugador() { }
 
-        public DataTemplate JugadorRojoPlantilla {  get; set; }
-        public DataTemplate JugadorAzulPlantilla {  get; set; }
-        public DataTemplate JugadorVerdePlantilla { get; set; }
-        public DataTemplate JugadorAmarilloPlantilla { get; set; }
-        public DataTemplate InvitarAzulPlantilla { get; set; }
-        public DataTemplate InvitarVerdePlantilla { get; set; }
-        public DataTemplate InvitarAmarilloPlantilla { get; set; }
+        public void IniciarlizarPlantillas()
+        {
+            plantillasDisponibles = new Dictionary<DataTemplate, bool>();
 
-        private int contadorPlantillas = 0;
+            if (JugadorAzulPlantilla != null)
+                plantillasDisponibles.Add(JugadorAzulPlantilla, true);
+            if (JugadorVerdePlantilla != null)
+                plantillasDisponibles.Add(JugadorVerdePlantilla, true);
+            if (JugadorAmarilloPlantilla != null)
+                plantillasDisponibles.Add(JugadorAmarilloPlantilla, true);
+        }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject contenedor)
         {
@@ -37,28 +44,33 @@ namespace DobbleGame
             if (usuario.EsAnfitrion)
             {
                 contadorPlantillas += 1;
-                return JugadorRojoPlantilla;
+                
+                if (JugadorRojoPlantilla != null)
+                {
+                    return JugadorRojoPlantilla;
+                }
             }
 
-            switch (contadorPlantillas)
+            var plantillaDisponible = plantillasDisponibles.FirstOrDefault(p => p.Value).Key;
+            
+            if (plantillaDisponible != null)
             {
-                case 1:
-                    contadorPlantillas += 1;
-                    return JugadorAzulPlantilla;
-                case 2:
-                    contadorPlantillas += 1;
-                    return JugadorVerdePlantilla;
-                case 3:
-                    contadorPlantillas += 1;
-                    return JugadorAmarilloPlantilla;
-                default:
-                    return null;
+                contadorPlantillas += 1;
+                plantillasDisponibles[plantillaDisponible] = false;
+                return plantillaDisponible;
             }
+
+            return JugadorAmarilloPlantilla;
         }
 
         public void ReiniciarPlantillas()
         {
             contadorPlantillas = 0;
+
+            foreach (var key in plantillasDisponibles.Keys.ToList())
+            {
+                plantillasDisponibles[key] = true;
+            }
         }
     }
 }

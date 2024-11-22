@@ -55,5 +55,13 @@ namespace DobbleGame
 
             return base.SelectTemplate(item, container);
         }
+
+        public void ReiniciarPlantillasPartida()
+        {
+            foreach (var key in plantillasDisponibles.Keys.ToList())
+            {
+                plantillasDisponibles[key] = true;
+            }
+        }
     }
 }

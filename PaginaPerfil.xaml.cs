@@ -54,7 +54,6 @@ namespace DobbleGame
                 AnimateElementsInPaginaMenu(paginaMenu);
             };
             this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
-
         }
 
         private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
