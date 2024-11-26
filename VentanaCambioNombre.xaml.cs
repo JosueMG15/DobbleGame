@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Xml.Serialization;
 using System.Data.SqlClient;
 using System.ServiceModel;
+using DobbleGame.Servidor;
 
 namespace DobbleGame
 {
@@ -40,8 +41,8 @@ namespace DobbleGame
             String nuevoNombre = tbNuevoNombre.Text.Trim();
             GuardarCambioNombre(nuevoNombre);
 
-            _paginaPerfil.ActualizarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.Usuario);
-            _ventanaMenu.ActualizarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.Usuario);
+            _paginaPerfil.ActualizarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            _ventanaMenu.ActualizarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
         }
 
         private void GuardarCambioNombre(string nuevoNombre)
@@ -54,8 +55,16 @@ namespace DobbleGame
 
             using (var proxy = new Servidor.GestionJugadorClient())
             {
+                var proxyUsuario = new GestionAmigosClient();
                 try
                 {
+                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
@@ -74,7 +83,7 @@ namespace DobbleGame
                         return;
                     }
 
-                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
                     if (respuestaModificarUsuario.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -82,10 +91,9 @@ namespace DobbleGame
                     }
                     if (respuestaModificarUsuario.Resultado)
                     {
-                        var proxyUsuario = new Servidor.GestionAmigosClient();
 
-                        CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
-                        CuentaUsuario.CuentaUsuarioActual = new CuentaUsuario
+                        Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
+                        Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                         {
                             IdCuentaUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
                             Usuario = nuevoNombre,
@@ -102,6 +110,7 @@ namespace DobbleGame
                 catch (Exception ex)
                 {
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
                 }
 
             }

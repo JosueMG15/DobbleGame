@@ -459,4 +459,13 @@
   <data name="lb_FinDelJuego" xml:space="preserve">
     <value>¡Fin del juego!</value>
   </data>
+  <data name="btn_IrInicioSesion " xml:space="preserve">
+    <value>Ir a la pantalla de inicio de sesión </value>
+  </data>
+  <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
+    <value>Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. </value>
+  </data>
+  <data name="titulo_TeEstaInvitando " xml:space="preserve">
+    <value>te está invitando a jugar! </value>
+  </data>
 </root>

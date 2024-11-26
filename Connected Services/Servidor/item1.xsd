@@ -477,6 +477,31 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotificarBotonInvitacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotificarBotonInvitacionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotificarInvitacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nombreUsuarioInvitacion" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotificarInvitacionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ConectarCliente">
     <xs:complexType>
       <xs:sequence>
@@ -515,6 +540,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotificarInvitacionActiva">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotificarVentanaInvitacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuarioInvitacion" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -585,10 +624,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GuardarPuntosJugador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreJugador" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="puntosGanados" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuardarPuntosJugadorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="GuardarPuntosJugadorResult" nillable="true" type="q22:RespuestaServicioOfboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ActualizarJugadoresEnPartida">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="jugadoresConectados" nillable="true" type="q22:ArrayOfJugador" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="jugadoresConectados" nillable="true" type="q23:ArrayOfJugador" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -610,14 +664,14 @@
   <xs:element name="AsignarCarta">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="carta" nillable="true" type="q23:Carta" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="carta" nillable="true" type="q24:Carta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AsignarCartaCentral">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="cartaCentral" nillable="true" type="q24:Carta" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="cartaCentral" nillable="true" type="q25:Carta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -650,7 +704,7 @@
   <xs:element name="EnviarCodigoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarCodigoResult" nillable="true" type="q25:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarCodigoResult" nillable="true" type="q26:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

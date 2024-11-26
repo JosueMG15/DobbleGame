@@ -37,19 +37,31 @@ namespace DobbleGame
             {
                 try
                 {
+                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
                         throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
-                    //Usuario principal de la amistad
-                    var proxyUsuarioPrincipal = new Servidor.GestionAmigosClient();
-                    var respuestaUsuarioPrincipal = proxyUsuarioPrincipal.ObtenerUsuario(_amistad.UsuarioPrincipalId);
+
+                    var respuestaUsuarioPrincipal = proxy.ObtenerUsuario(_amistad.UsuarioPrincipalId);
+                    if (respuestaUsuarioPrincipal.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+
                     var cuentaPrincipal = respuestaUsuarioPrincipal.Resultado;
 
+
                     //Usuario amigo de la amistad
-                    var proxyUsuarioAmigo = new Servidor.GestionAmigosClient();
-                    var respuestaUsuarioAmigo = proxyUsuarioAmigo.ObtenerUsuario(_amistad.UsuarioAmigoId);
+                    var respuestaUsuarioAmigo = proxy.ObtenerUsuario(_amistad.UsuarioAmigoId);
                     var cuentaAmigo = respuestaUsuarioAmigo.Resultado;
 
                     var respuesta = proxy.EliminarAmistad(_amistad.IdAmistad, cuentaPrincipal.Usuario, cuentaAmigo.Usuario);
@@ -71,9 +83,7 @@ namespace DobbleGame
                 {
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
                 }
-
             }
-
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)

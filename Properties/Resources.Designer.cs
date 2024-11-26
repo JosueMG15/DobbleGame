@@ -178,6 +178,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ir a la pantalla de inicio de sesión .
+        /// </summary>
+        public static string btn_IrInicioSesion_ {
+            get {
+                return ResourceManager.GetString("btn_IrInicioSesion ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listo.
         /// </summary>
         public static string btn_Listo {
@@ -691,6 +700,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. .
+        /// </summary>
+        public static string lb_MensajeErrorCanalServidor_ {
+            get {
+                return ResourceManager.GetString("lb_MensajeErrorCanalServidor ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lo sentimos, parece que hemos perdido la conexión con la base de datos, favor de intentarlo más tarde.
         /// </summary>
         public static string lb_MensajeErrorConexiónBD {
@@ -1083,6 +1101,15 @@ namespace DobbleGame.Properties {
         public static string titulo_SolicitudesAmistad {
             get {
                 return ResourceManager.GetString("titulo_SolicitudesAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a te está invitando a jugar! .
+        /// </summary>
+        public static string titulo_TeEstaInvitando_ {
+            get {
+                return ResourceManager.GetString("titulo_TeEstaInvitando ", resourceCulture);
             }
         }
     }

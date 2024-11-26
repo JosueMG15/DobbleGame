@@ -71,6 +71,12 @@ namespace DobbleGame
                         var respuestaUsuario = proxy.ObtenerUsuarioPorCorreo(correo);
                         var usuario = respuestaUsuario.Resultado;
 
+                        if (respuestaUsuario.ErrorBD)
+                        {
+                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                            return;
+                        }
+
                         Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                         {
                             IdCuentaUsuario = usuario.IdCuentaUsuario,
