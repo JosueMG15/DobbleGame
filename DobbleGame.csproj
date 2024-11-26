@@ -369,11 +369,6 @@
     <Resource Include="Imagenes\bob.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\PerfilPorDefecto.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Imagenes\BotonEdicion.png" />
   </ItemGroup>
   <ItemGroup>
@@ -487,9 +482,6 @@
     <WCFMetadataStorage Include="Connected Services\Servidor\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Servidor\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\Servidor\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +492,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Servidor\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\PerfilPorDefecto.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.5.1.0\build\MaterialDesignThemes.targets')" />

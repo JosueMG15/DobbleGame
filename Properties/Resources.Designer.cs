@@ -736,6 +736,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Se necesitan al menos 2 jugadores para iniciar la partida.
+        /// </summary>
+        public static string lb_MinimoJugadores {
+            get {
+                return ResourceManager.GetString("lb_MinimoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre de usuario.
         /// </summary>
         public static string lb_NombreUsuario {

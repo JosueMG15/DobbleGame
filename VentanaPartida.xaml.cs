@@ -31,22 +31,20 @@ namespace DobbleGame
         private readonly Page _paginaSala;
         private readonly int _numeroJugadoresEsperados;
         private bool partidaIniciada = false;
+        private bool permitirCierreInesperado = true;
         
         public ObservableCollection<Jugador> JugadoresEnPartida { get; set; }
         public string CodigoSala {  get; set; }
-        //public bool HayConexionPartida { get; set; }
         public bool EsAnfitrion {  get; set; }
 
         public VentanaPartida(string codigoSala, bool esAnfitrion, int numeroJugadoresEsperados, Window ventanaMenu,
             Page paginaSala)
         {
             InitializeComponent();
-            InicializarBotones();
-            //this.Closing += VentanaMenu_Closing;
+            this.Closing += VentanaMenu_Closing;
             this.DataContext = this;
             JugadoresEnPartida = new ObservableCollection<Jugador>();
             JugadoresEnPartida.CollectionChanged += JugadoresEnPartida_IniciarPartida;
-            //HayConexionPartida = false;
             CodigoSala = codigoSala;
             EsAnfitrion = esAnfitrion;
             _numeroJugadoresEsperados = numeroJugadoresEsperados;
@@ -57,26 +55,31 @@ namespace DobbleGame
 
         private void VentanaMenu_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var proxyUsuario = new Servidor.GestionAmigosClient();
-            var proxy = new GestionJugadorClient();
-            try
+            if (permitirCierreInesperado)
             {
-                if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
+                var proxyUsuario = new Servidor.GestionAmigosClient();
+                var proxyJugador = new GestionJugadorClient();
+                try
                 {
-                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-                    CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    proxyUsuario.NotificarCambios();
+                    if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
+                    {
+                        proxy.AbandonarPartida(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala);
+                        proxyJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+                        CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                        proxyUsuario.NotificarCambios();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones(proxyJugador, ex, this);
+                }
             }
         }
 
         private void BtnRegresar_Click(object sender, RoutedEventArgs e)
         {
             InicializarProxySiEsNecesario();
+            permitirCierreInesperado = false;
 
             try
             {
@@ -124,7 +127,6 @@ namespace DobbleGame
                 {
                     proxy.UnirJugadorAPartida(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala);
                     proxy.NotificarActualizacionDeJugadoresEnPartida(CodigoSala);
-                    //HayConexionPartida = true;
                 }
             }
             catch (Exception ex)
@@ -212,11 +214,11 @@ namespace DobbleGame
             Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
             Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
             Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
             Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
             Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
             Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
         }
 
         public void AsignarCartaCentral(Carta cartaCentral)
@@ -224,41 +226,43 @@ namespace DobbleGame
             IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
             IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
             IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
             IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
             IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
             IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
         }
 
         public void BloquearCarta()
         {
-            Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
-
-            foreach (var boton in botones)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                if (boton.Tag is Polygon triangulo)
+                Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
+
+                foreach (var boton in botones)
                 {
+                    var triangulo = (Polygon)boton.Template.FindName("Triangulo", boton);
                     triangulo.Fill = new SolidColorBrush(Colors.IndianRed);
                 }
-            }
 
-            cartaJugador.IsEnabled = false;
+                cartaJugador.IsEnabled = false;
+            });
         }
 
         public void DesbloquearCarta()
         {
-            Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
-
-            foreach (var boton in botones)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                if (boton.Tag is Polygon triangulo)
-                {
-                    triangulo.Fill = new SolidColorBrush(Colors.White);
-                }
-            }
+                Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
 
-            cartaJugador.IsEnabled = true;
+                foreach (var boton in botones)
+                {
+                    var tringulo = (Polygon)boton.Template.FindName("Triangulo", boton);
+                    tringulo.Fill = new SolidColorBrush(Colors.White);
+                }
+
+                cartaJugador.IsEnabled = true;
+            });
         }
 
         public void IniciarPartida()
@@ -312,6 +316,7 @@ namespace DobbleGame
 
         public void FinalizarPartida()
         {
+            RegistrarPuntosDelJugador();
             cartaCentral.Visibility = Visibility.Collapsed;
             tbTexto.FontSize = 200;
             tbTexto.Text = Properties.Resources.lb_FinDelJuego;
@@ -319,7 +324,28 @@ namespace DobbleGame
             cartaJugador.Visibility = Visibility.Collapsed;
             controlJugadores.Visibility = Visibility.Collapsed;
             AnimacionFinalizarPartida();
+        }
 
+        private async void RegistrarPuntosDelJugador()
+        {
+            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+
+            if (jugador != null)
+            {
+                try
+                {
+                    var respuestaRegistroPuntos = await Task.Run(() => proxy.GuardarPuntosJugador(jugador.Usuario, jugador.PuntosEnPartida));
+                    if (respuestaRegistroPuntos.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                }
+            }
         }
 
         private void AnimacionFinalizarPartida()
@@ -368,7 +394,7 @@ namespace DobbleGame
 
             if (resultado == true)
             {
-                this.Closing -= VentanaMenu_Closing;
+                permitirCierreInesperado = false;
                 this.Close();
                 PaginaSala paginaSala = new PaginaSala(EsAnfitrion, CodigoSala);
                 if (paginaSala.IniciarSesionSala())
@@ -406,25 +432,6 @@ namespace DobbleGame
             if (proxy == null || ((ICommunicationObject)proxy).State != CommunicationState.Opened)
             {
                 InicializarProxy();
-            }
-        }
-
-        private void InicializarBotones()
-        {
-            Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
-
-            foreach (var boton in botones)
-            {
-                var plantilla = boton.Template;
-                if (plantilla != null)
-                {
-                    var triangulo = (Polygon)plantilla.FindName("Triangulo", boton);
-
-                    if (triangulo != null)
-                    {
-                        boton.Tag = triangulo;
-                    }
-                }
             }
         }
 

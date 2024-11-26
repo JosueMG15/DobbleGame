@@ -213,7 +213,7 @@ namespace DobbleGame
             try
             {
                 string rutaProyecto = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
-                string rutaFotoDefecto = System.IO.Path.Combine(rutaProyecto, "Imagenes", "PerfilPorDefecto.png");
+                string rutaFotoDefecto = System.IO.Path.Combine(rutaProyecto, "Imagenes", "PerfilPorDefecto.jpg");
 
                 if (!File.Exists(rutaFotoDefecto))
                 {

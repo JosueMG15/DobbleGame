@@ -280,6 +280,18 @@
   <wsdl:message name="IGestionAmigos_NotificarDesconexion_OutputMessage">
     <wsdl:part name="parameters" element="tns:NotificarDesconexionResponse" />
   </wsdl:message>
+  <wsdl:message name="IGestionAmigos_NotificarBotonInvitacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarBotonInvitacion" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_NotificarBotonInvitacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarBotonInvitacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_NotificarInvitacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarInvitacion" />
+  </wsdl:message>
+  <wsdl:message name="IGestionAmigos_NotificarInvitacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarInvitacionResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_ConectarCliente_InputMessage">
     <wsdl:part name="parameters" element="tns:ConectarCliente" />
   </wsdl:message>
@@ -300,6 +312,12 @@
   </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotificarSalida" />
+  </wsdl:message>
+  <wsdl:message name="IGestionNotificacionesAmigos_NotificarInvitacionActiva_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotificarInvitacionActiva" />
+  </wsdl:message>
+  <wsdl:message name="IGestionNotificacionesAmigos_NotificarVentanaInvitacion_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotificarVentanaInvitacion" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_CrearNuevaPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearNuevaPartida" />
@@ -327,6 +345,12 @@
   </wsdl:message>
   <wsdl:message name="IGestionPartida_ValidarCarta_InputMessage">
     <wsdl:part name="parameters" element="tns:ValidarCarta" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_GuardarPuntosJugador_InputMessage">
+    <wsdl:part name="parameters" element="tns:GuardarPuntosJugador" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_GuardarPuntosJugador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GuardarPuntosJugadorResponse" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_ActualizarJugadoresEnPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ActualizarJugadoresEnPartida" />
@@ -511,6 +535,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion" message="tns:IGestionAmigos_NotificarDesconexion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse" message="tns:IGestionAmigos_NotificarDesconexion_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="NotificarBotonInvitacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacion" message="tns:IGestionAmigos_NotificarBotonInvitacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacionResponse" message="tns:IGestionAmigos_NotificarBotonInvitacion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarInvitacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarInvitacion" message="tns:IGestionAmigos_NotificarInvitacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarInvitacionResponse" message="tns:IGestionAmigos_NotificarInvitacion_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionNotificacionesAmigos">
     <wsdl:operation name="ConectarCliente">
@@ -529,6 +561,12 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarSalida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" message="tns:IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarInvitacionActiva">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarInvitacionActiva" message="tns:IGestionNotificacionesAmigos_NotificarInvitacionActiva_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarVentanaInvitacion">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarVentanaInvitacion" message="tns:IGestionNotificacionesAmigos_NotificarVentanaInvitacion_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionPartida">
@@ -554,6 +592,10 @@
     </wsdl:operation>
     <wsdl:operation name="ValidarCarta">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/ValidarCarta" message="tns:IGestionPartida_ValidarCarta_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarPuntosJugador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugador" message="tns:IGestionPartida_GuardarPuntosJugador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorResponse" message="tns:IGestionPartida_GuardarPuntosJugador_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ActualizarJugadoresEnPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida" message="tns:IGestionPartida_ActualizarJugadoresEnPartida_OutputCallbackMessage" />
@@ -918,6 +960,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="NotificarBotonInvitacion">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarInvitacion">
+      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarInvitacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionNotificacionesAmigos" type="tns:IGestionNotificacionesAmigos">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionNotificacionesAmigos_policy" />
@@ -954,6 +1014,18 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarSalida">
       <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarInvitacionActiva">
+      <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarInvitacionActiva" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarVentanaInvitacion">
+      <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarVentanaInvitacion" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -1009,6 +1081,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarPuntosJugador">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/GuardarPuntosJugador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ActualizarJugadoresEnPartida">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/ActualizarJugadoresEnPartida" style="document" />

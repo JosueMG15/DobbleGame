@@ -25,6 +25,7 @@ namespace DobbleGame
     public partial class PaginaSala : Page, Servidor.IGestionSalaCallback
     {
         private Servidor.IGestionSala proxy;
+        private const int NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA = 2;
         private readonly SelectorPlantillaJugador selectorPlantilla;
         public ObservableCollection<Jugador> UsuariosConectados { get; set; }
         public bool EsAnfitrion {  get; set; }
@@ -42,6 +43,7 @@ namespace DobbleGame
             CodigoSala = codigoSala;
             selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
             selectorPlantilla.IniciarlizarPlantillas();
+            
         }
 
         public bool IniciarSesionSala()
@@ -286,9 +288,9 @@ namespace DobbleGame
 
         private void UsuariosConectados_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (EsAnfitrion)
+            if (EsAnfitrion && UsuariosConectados.Count >= NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA)
             {
-                btnIniciarPartida.IsEnabled = UsuariosConectados.Count >= 1;
+                btnIniciarPartida.IsEnabled = true;
             }
         }
 

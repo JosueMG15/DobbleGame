@@ -104,16 +104,6 @@
             </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="InvitarAzulPlantilla">
-            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#908ACAFF">
-                <Grid>
-                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
-                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
-                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
-                </Grid>
-            </Border>
-        </DataTemplate>
-
         <DataTemplate x:Key="JugadorVerdePlantilla">
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#9092FF6A">
                 <Grid>
@@ -125,16 +115,6 @@
                                HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
                     <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" 
                             Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar_Click"/>
-                </Grid>
-            </Border>
-        </DataTemplate>
-
-        <DataTemplate x:Key="InvitarVerdePlantilla">
-            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#9092FF6A">
-                <Grid>
-                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
-                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
-                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -154,22 +134,11 @@
             </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="InvitarAmarilloPlantilla">
-            <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FFFA60">
-                <Grid>
-                    <Image Source="/Imagenes/AbejaLobbyGris.png" Width="120" Height="120" Margin="170,59,170,91"/>
-                    <Button Width="200" Height="50" Content="{x:Static p:Resources.btn_InvitarPorCorreo}" 
-                        FontFamily="pack://application:,,,/Fuentes/#Lalezar" FontSize="20" Foreground="White" Background="#939D94" Margin="105,194,105,26"/>
-                </Grid>
-            </Border>
-        </DataTemplate>
-
         <local:SelectorPlantillaJugador x:Key="SelectorPlantillaJugador"
                                JugadorRojoPlantilla="{StaticResource JugadorRojoPlantilla}"
                                JugadorAzulPlantilla="{StaticResource JugadorAzulPlantilla}"
                                JugadorVerdePlantilla="{StaticResource JugadorVerdePlantilla}"
                                JugadorAmarilloPlantilla="{StaticResource JugadorAmarilloPlantilla}" />
-
 
     </Page.Resources>
 

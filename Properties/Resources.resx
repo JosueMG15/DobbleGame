@@ -459,4 +459,7 @@
   <data name="lb_FinDelJuego" xml:space="preserve">
     <value>¡Fin del juego!</value>
   </data>
+  <data name="lb_MinimoJugadores" xml:space="preserve">
+    <value>Se necesitan al menos 2 jugadores para iniciar la partida</value>
+  </data>
 </root>
