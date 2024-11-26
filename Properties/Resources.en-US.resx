@@ -459,6 +459,15 @@
   <data name="lb_FinDelJuego" xml:space="preserve">
     <value>Game over!</value>
   </data>
+  <data name="btn_IrInicioSesion " xml:space="preserve">
+    <value>Go to login screen </value>
+  </data>
+  <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
+    <value>Sorry, it seems the client is not on the current server channel, please log in again. </value>
+  </data>
+  <data name="titulo_TeEstaInvitando " xml:space="preserve">
+    <value>is inviting you to play! </value>
+  </data>
   <data name="lb_MinimoJugadores" xml:space="preserve">
     <value>At least 2 players are required to start the game</value>
   </data>

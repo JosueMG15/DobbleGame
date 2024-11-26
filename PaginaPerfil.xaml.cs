@@ -1,4 +1,5 @@
-﻿using DobbleGame.Utilidades;
+﻿using DobbleGame.Servidor;
+using DobbleGame.Utilidades;
 using Microsoft.Win32;
 using System;
 using System.Collections;
@@ -122,8 +123,16 @@ namespace DobbleGame
         {
             using (var proxy = new Servidor.GestionJugadorClient())
             {
+                var proxyUsuario = new GestionAmigosClient();
                 try
                 {
+                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
@@ -151,6 +160,7 @@ namespace DobbleGame
                 catch (Exception ex)
                 {
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
                 }
             }
         }

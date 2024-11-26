@@ -45,79 +45,6 @@ namespace DobbleGame
             ActualizarContraseña(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña);
         }
 
-        /*private void ActualizarContraseña(String contraseñaActual, String nuevaContraseña, String confirmarNuevaContraseña)
-        {
-            if (Utilidades.Utilidades.EsCampoVacio(contraseñaActual) || Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) 
-                || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-
-            using (var proxy = new Servidor.GestionJugadorClient())
-            {
-                try
-                {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuestaUsuario = proxy.ValidarContraseña(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
-                        Utilidades.EncriptadorContraseña.GenerarHashSHA512(contraseñaActual));
-
-                    if (respuestaUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (!respuestaUsuario.Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_ContraseñaActualInvalida);
-                        return;
-                    }
-
-                    if(nuevaContraseña != confirmarNuevaContraseña)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
-                        return;
-                    }
-
-                    if (contraseñaActual == confirmarNuevaContraseña && confirmarNuevaContraseña == nuevaContraseña)
-                    {
-                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                        return;
-                    }
-
-                    if (Utilidades.Utilidades.ValidarContraseña(contraseñaActual) && Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) 
-                        && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
-                    {
-                        string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbNuevaContraseña.Password);
-                        var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
-
-                        if (respuestaModificarContraseña.ErrorBD)
-                        {
-                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                            return;
-                        }
-                        if (respuestaModificarContraseña.Resultado)
-                        {
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        MostrarMensaje(Properties.Resources.lb_DatosInválidos);
-                        return;
-                    }                
-                }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                }
-            }
-        }*/
         private void ActualizarContraseña(string contraseñaActual, string nuevaContraseña, string confirmarNuevaContraseña)
         {
             if (ValidarEntradas(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña))
@@ -127,8 +54,16 @@ namespace DobbleGame
 
             using (var proxy = new Servidor.GestionJugadorClient())
             {
+                var proxyUsuario = new Servidor.GestionAmigosClient();
                 try
                 {
+                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
@@ -159,6 +94,7 @@ namespace DobbleGame
                 catch (Exception ex)
                 {
                     Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
                 }
             }
         }

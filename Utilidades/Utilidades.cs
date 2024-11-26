@@ -66,7 +66,7 @@ namespace DobbleGame.Utilidades
         }
         public static void MostrarVentanaErrorConexionBD(Window contenedor)
         {
-            var ventanaErrorConexion = new VentanaErrorConexion(
+            var ventanaErrorBD = new VentanaErrorBD(
                              Properties.Resources.lb_ErrorConexiónBD,
                              Properties.Resources.lb_MensajeErrorConexiónBD
                          )
@@ -74,9 +74,9 @@ namespace DobbleGame.Utilidades
                 Owner = contenedor,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
-            ventanaErrorConexion.ShowDialog();
+            ventanaErrorBD.ShowDialog();
         }
-        public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor)
+        public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor, bool estaEnCanal)
         {
             MainWindow inicioSesion = new MainWindow();
             try
@@ -91,24 +91,44 @@ namespace DobbleGame.Utilidades
                 inicioSesion.Show();
                 contenedor = inicioSesion;
 
-                var ventanaErrorConexion = new VentanaErrorConexion(
-                 Properties.Resources.lb_ErrorConexiónServidor,
-                 Properties.Resources.lb_MensajeErrorConexiónServidor
-                 )
+                if (estaEnCanal == true)
                 {
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
+                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor, 
+                        Properties.Resources.lb_MensajeErrorConexiónServidor)
+                    {
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
+                    };
 
-                if (contenedor is Window ventana)
-                {
-                    ventanaErrorConexion.Owner = ventana;
-                }
-                else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
-                {
-                    ventanaErrorConexion.Owner = ventanaPrincipal;
-                }
+                    if (contenedor is Window ventana)
+                    {
+                        ventanaErrorConexion.Owner = ventana;
+                    }
+                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
+                    {
+                        ventanaErrorConexion.Owner = ventanaPrincipal;
+                    }
 
-                ventanaErrorConexion.ShowDialog();
+                    ventanaErrorConexion.ShowDialog();
+                }
+                else
+                {
+                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor,
+                        Properties.Resources.lb_MensajeErrorCanalServidor_)
+                    {
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
+                    };
+
+                    if (contenedor is Window ventana)
+                    {
+                        ventanaErrorConexion.Owner = ventana;
+                    }
+                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
+                    {
+                        ventanaErrorConexion.Owner = ventanaPrincipal;
+                    }
+
+                    ventanaErrorConexion.ShowDialog();
+                }
             }
             catch (QuotaExceededException ex)
             {
@@ -157,25 +177,25 @@ namespace DobbleGame.Utilidades
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationObjectFaultedException: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
-                    MostrarVentanaErrorConexionServidor(contenedor);
+                    MostrarVentanaErrorConexionServidor(contenedor, true);
                 }
                 else if (ex is CommunicationException)
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationException: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
-                    MostrarVentanaErrorConexionServidor(contenedor);
+                    MostrarVentanaErrorConexionServidor(contenedor, true);
                 }
                 else if (ex is TimeoutException)
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de TimeoutException: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
-                    MostrarVentanaErrorConexionServidor(contenedor);
+                    MostrarVentanaErrorConexionServidor(contenedor, true);
                 }
                 else
                 {
                     Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}. " + 
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
-                    MostrarVentanaErrorConexionServidor(contenedor);
+                    MostrarVentanaErrorConexionServidor(contenedor, true);
                 }
             }
         }

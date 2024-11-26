@@ -123,6 +123,9 @@
       <DependentUpon>VentanaEliminarAmigo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidades\Registro.cs" />
+    <Compile Include="VentanaErrorBD.xaml.cs">
+      <DependentUpon>VentanaErrorBD.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VentanaErrorConexion.xaml.cs">
       <DependentUpon>VentanaErrorConexion.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,9 @@
     </Compile>
     <Compile Include="VentanaGestionarSolicitudesAmistad.xaml.cs">
       <DependentUpon>VentanaGestionarSolicitudesAmistad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaInvitacion.xaml.cs">
+      <DependentUpon>VentanaInvitacion.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaMarcadorPartida.xaml.cs">
       <DependentUpon>VentanaMarcadorPartida.xaml</DependentUpon>
@@ -220,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="VentanaErrorBD.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VentanaErrorConexion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VentanaGestionarSolicitudesAmistad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaInvitacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

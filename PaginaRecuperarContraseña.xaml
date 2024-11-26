@@ -17,7 +17,7 @@
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
 
         <Label Content="{x:Static Properties:Resources.lb_EnvíoDeCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" />
-        <TextBox Name="tbCorreo" MaxLength="64" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_CorreoElectrónico}" TextWrapping="Wrap" Width="NaN" Height="NaN" Margin="98,161,97,210" />
+        <TextBox Name="tbCorreo" MaxLength="64" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_CorreoElectrónico}" TextWrapping="NoWrap" Width="NaN" Height="NaN" Margin="98,161,97,210" />
         <Button Content="{x:Static Properties:Resources.btn_EnviarCódigo}" FontSize="13" Background="#FF62E02C" Foreground="White" Click="BtnEnviarCodigo" Margin="68,287,277,77"/>
         <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="13" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="281,287,63,80"/>
 

@@ -27,8 +27,7 @@ namespace DobbleGame
             _ventanaMenu = ventanaMenu;
             InitializeComponent();
             CargarSolicitudesAmistad();
-
-            // Suscribirse a eventos de NotificacionesManager
+   
             CallbackManager.Instance.NotificarSolicitudAmistadEvent += NotificarSolicitudAmistad;
         }
 
@@ -63,7 +62,7 @@ namespace DobbleGame
 
                     if (respuesta.ErrorBD)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_ventanaMenu);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
                         return;
                     }
 
@@ -261,6 +260,13 @@ namespace DobbleGame
             {
                 try
                 {
+                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
@@ -295,6 +301,13 @@ namespace DobbleGame
             {
                 try
                 {
+                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();

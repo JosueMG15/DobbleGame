@@ -41,9 +41,12 @@ namespace DobbleGame
             lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
             CargarAmistades();
+            CambiarBotonInvitar(ContenedorNotificaciones);
 
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
             CallbackManager.Instance.NotificarSalidaEvent += NotificarSalida;
+            CallbackManager.Instance.NotificarInvitacionActivaEvent += NotificarInvitacionActiva;
+            CallbackManager.Instance.NotificarVentanaInvitacionEvent += NotificarVentanaInvitacion;
         }
 
 
@@ -55,7 +58,6 @@ namespace DobbleGame
                 CargarAmistades();
             });
         }
-
 
         public void NotificarSalida(string nombreUsuario)
         {
@@ -84,6 +86,31 @@ namespace DobbleGame
             }
         }
 
+        public void NotificarInvitacionActiva(string nombreUsuario)
+        {
+
+        }
+
+        public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion)
+        {
+            bool sePuedeEnviar = true;
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is MainWindow || window is VentanaPartida)
+                {
+                    sePuedeEnviar = false;
+                }
+            }
+
+            if(sePuedeEnviar == true)
+            {
+                VentanaInvitacion ventanaInvitacion = new VentanaInvitacion(nombreUsuarioInvitacion);
+                ventanaInvitacion.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                ventanaInvitacion.ShowDialog();
+            }
+        }
+
         private void CambiarEstadoAAusente(StackPanel stackPanel)
         {
             foreach (var child in stackPanel.Children)
@@ -105,6 +132,10 @@ namespace DobbleGame
                     }
                 }
             }
+        }
+
+        private void CambiarBotonInvitar(StackPanel stackPanel)
+        {
         }
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
@@ -175,6 +206,14 @@ namespace DobbleGame
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
+            var proxy = new GestionAmigosClient();
+            var respuesta = proxy.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+
+            if (respuesta.ErrorBD)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                return;
+            }
             VentanaGestionarSolicitudesAmistad ventanaGestionarSolicitudesAmistad = new VentanaGestionarSolicitudesAmistad(this);
             ventanaGestionarSolicitudesAmistad.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaGestionarSolicitudesAmistad.ShowDialog();
@@ -442,7 +481,6 @@ namespace DobbleGame
                 };
                 botonEliminar.Content = imagenEliminar;
                 botonEliminar.Click += (s, e) => EliminarAmistad(solicitud, panelSolicitud);
-
                 botonesPanel.Children.Add(botonEliminar);
 
                 var botonInvitar = new Button
@@ -452,6 +490,13 @@ namespace DobbleGame
                     Foreground = Brushes.White,
                     Padding = new Thickness(5)
                 };
+
+                if (respuesta.Resultado)
+                {
+                    //if(validarQueEstaEnSala)
+                    botonInvitar.Click += (s, e) => InvitarAmistad(solicitud);
+                }
+
                 botonesPanel.Children.Add(botonInvitar);
 
                 Grid.SetColumn(botonesPanel, 2);
@@ -507,6 +552,55 @@ namespace DobbleGame
             VentanaEliminarAmigo ventanaEliminarAmigo = new VentanaEliminarAmigo(this, amistad, panelSolicitud);
             ventanaEliminarAmigo.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaEliminarAmigo.ShowDialog();
+        }
+
+        private void InvitarAmistad(Dominio.Amistad solicitud)
+        {
+            using (var proxy = new Servidor.GestionAmigosClient())
+            {
+                try
+                {
+                    string nombreUsuario;
+
+                    Dominio.CuentaUsuarioAmigo cuentaUsuarioPrincipal = new Dominio.CuentaUsuarioAmigo
+                    {
+                        Usuario = UsuarioAmigo(solicitud, true).Usuario,
+                    };
+                    Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
+                    {
+                        Usuario = UsuarioAmigo(solicitud, false).Usuario,
+                    };
+
+                    if(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario)
+                    {
+                        nombreUsuario = cuentaUsuarioPrincipal.Usuario;
+                    }
+                    else
+                    {                      
+                        nombreUsuario = cuentaUsuarioAmigo.Usuario;
+                    }
+
+                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!estaConectado.Resultado)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                        return;
+                    }
+
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        proxy.Abort();
+                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    }
+
+                    proxy.NotificarInvitacion(nombreUsuario, Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                }
+
+            }
         }
     }
 }
