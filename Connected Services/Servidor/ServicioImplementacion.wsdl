@@ -136,12 +136,6 @@
   <wsdl:message name="IGestionJugador_ObtenerUsuarioPorCorreo_OutputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerUsuarioPorCorreoResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionJugador_Ping_InputMessage">
-    <wsdl:part name="parameters" element="tns:Ping" />
-  </wsdl:message>
-  <wsdl:message name="IGestionJugador_Ping_OutputMessage">
-    <wsdl:part name="parameters" element="tns:PingResponse" />
-  </wsdl:message>
   <wsdl:message name="IGestionSala_GenerarCodigoNuevaSala_InputMessage">
     <wsdl:part name="parameters" element="tns:GenerarCodigoNuevaSala" />
   </wsdl:message>
@@ -430,10 +424,6 @@
     <wsdl:operation name="ObtenerUsuarioPorCorreo">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreo" message="tns:IGestionJugador_ObtenerUsuarioPorCorreo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreoResponse" message="tns:IGestionJugador_ObtenerUsuarioPorCorreo_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Ping">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/Ping" message="tns:IGestionJugador_Ping_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionJugador/PingResponse" message="tns:IGestionJugador_Ping_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionSala">
@@ -724,15 +714,6 @@
     </wsdl:operation>
     <wsdl:operation name="ObtenerUsuarioPorCorreo">
       <soap12:operation soapAction="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Ping">
-      <soap12:operation soapAction="http://tempuri.org/IGestionJugador/Ping" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
