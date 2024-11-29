@@ -34,33 +34,30 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
-            using (var proxy = new Servidor.GestionCorreosClient())
-            {
+            var proxy = new Servidor.GestionCorreosClient();
                 try
+            {
+                String codigo = tbCodigoSala.Text.Trim();
+                if (Utilidades.Utilidades.EsCampoVacio(codigo))
                 {
-                    String codigo = tbCodigoSala.Text.Trim();
-                    if (Utilidades.Utilidades.EsCampoVacio(codigo))
-                    {
-                        MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                        return;
-                    }
-
-                    if (codigo == _codigo)
-                    {
-                        var paginaNuevaContraseña = new PaginaNuevaContraseña(_marcoPrincipal, _correo);
-                        this.NavigationService.Navigate(paginaNuevaContraseña);
-                    }
-                    else
-                    {
-                        MostrarMensaje(Properties.Resources.lb_CodigoInvalido);
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    return;
                 }
 
+                if (codigo == _codigo)
+                {
+                    var paginaNuevaContraseña = new PaginaNuevaContraseña(_marcoPrincipal, _correo);
+                    this.NavigationService.Navigate(paginaNuevaContraseña);
+                }
+                else
+                {
+                    MostrarMensaje(Properties.Resources.lb_CodigoInvalido);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
         }
 
@@ -71,29 +68,27 @@ namespace DobbleGame
 
         private void EnviarCodigo(string correo)
         {
-            using (var proxy = new Servidor.GestionCorreosClient())
-            {
+            var proxy = new Servidor.GestionCorreosClient();
                 try
+            {
+                if (proxy.State == CommunicationState.Faulted)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
 
-                    string codigo = GenerarCodigo();
-                    _codigo = codigo;
-                    var respuesta = proxy.EnviarCodigo(correo, codigo);
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                        return;
-                    }
-                }
-                catch (Exception ex)
+                string codigo = GenerarCodigo();
+                _codigo = codigo;
+                var respuesta = proxy.EnviarCodigo(correo, codigo);
+                if (respuesta.ErrorBD)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                    return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
         }
 

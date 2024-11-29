@@ -76,6 +76,7 @@ namespace DobbleGame.Utilidades
             };
             ventanaErrorBD.ShowDialog();
         }
+
         public static void MostrarVentanaErrorConexionServidor(FrameworkElement contenedor, bool estaEnCanal)
         {
             MainWindow inicioSesion = new MainWindow();

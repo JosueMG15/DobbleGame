@@ -52,50 +52,48 @@ namespace DobbleGame
                 return;
             }
 
-            using (var proxy = new Servidor.GestionJugadorClient())
+            var proxy = new Servidor.GestionJugadorClient();
+            var proxyUsuario = new Servidor.GestionAmigosClient();
+            try
             {
-                var proxyUsuario = new Servidor.GestionAmigosClient();
-                try
+                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
                 {
-                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    if (!ValidarContraseñaActual(proxy, contraseñaActual))
-                    {
-                        return;
-                    }
-
-                    string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(nuevaContraseña);
-                    var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(
-                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
-                        contraseñaHasheada);
-
-                    if (respuestaModificarContraseña.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuestaModificarContraseña.Resultado)
-                    {
-                        Close();
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (proxy.State == CommunicationState.Faulted)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                 }
+
+                if (!ValidarContraseñaActual(proxy, contraseñaActual))
+                {
+                    return;
+                }
+
+                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(nuevaContraseña);
+                var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(
+                    Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
+                    contraseñaHasheada);
+
+                if (respuestaModificarContraseña.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+
+                if (respuestaModificarContraseña.Resultado)
+                {
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
             }
         }
 

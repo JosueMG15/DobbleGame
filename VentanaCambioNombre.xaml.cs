@@ -53,67 +53,65 @@ namespace DobbleGame
                 return;
             }
 
-            using (var proxy = new Servidor.GestionJugadorClient())
+            var proxy = new Servidor.GestionJugadorClient();
+            var proxyUsuario = new GestionAmigosClient();
+            try
             {
-                var proxyUsuario = new GestionAmigosClient();
-                try
+                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
                 {
-                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuestaUsuario = proxy.ExisteNombreUsuario(nuevoNombre);
-                    if (respuestaUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaUsuario.Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
-                        return;
-                    }
-
-                    var respuestaModificarUsuario = proxy.ModificarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
-                    if (respuestaModificarUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaModificarUsuario.Resultado)
-                    {
-
-                        Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
-                        Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
-                        {
-                            IdCuentaUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
-                            Usuario = nuevoNombre,
-                            Correo = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo,
-                            Contraseña = Dominio.CuentaUsuario.CuentaUsuarioActual.Contraseña,
-                            Foto = Dominio.CuentaUsuario.CuentaUsuarioActual.Foto,
-                            Puntaje = Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje,
-                            Estado = true,
-                        };
-
-                        this.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
                 }
 
+                if (proxy.State == CommunicationState.Faulted)
+                {
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
+
+                var respuestaUsuario = proxy.ExisteNombreUsuario(nuevoNombre);
+                if (respuestaUsuario.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                if (respuestaUsuario.Resultado)
+                {
+                    MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                    return;
+                }
+
+                var respuestaModificarUsuario = proxy.ModificarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                if (respuestaModificarUsuario.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                if (respuestaModificarUsuario.Resultado)
+                {
+
+                    Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
+                    Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
+                    {
+                        IdCuentaUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario,
+                        Usuario = nuevoNombre,
+                        Correo = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo,
+                        Contraseña = Dominio.CuentaUsuario.CuentaUsuarioActual.Contraseña,
+                        Foto = Dominio.CuentaUsuario.CuentaUsuarioActual.Foto,
+                        Puntaje = Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje,
+                        Estado = true,
+                    };
+
+                    this.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+            }
+
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)

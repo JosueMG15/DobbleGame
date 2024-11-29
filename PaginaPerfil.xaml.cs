@@ -121,47 +121,45 @@ namespace DobbleGame
 
         private void guardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
         {
-            using (var proxy = new Servidor.GestionJugadorClient())
+            var proxy = new Servidor.GestionJugadorClient();
+            var proxyUsuario = new GestionAmigosClient();
+            try
             {
-                var proxyUsuario = new GestionAmigosClient();
-                try
+                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
                 {
-                    var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    byte[] foto = File.ReadAllBytes(rutaImagen);
-                    byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
-                    var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
-
-                    var ventanaPrincipal = Window.GetWindow(this);
-
-                    if (respuestaModificarFoto.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(ventanaPrincipal);
-                        return;
-                    }
-                    if (respuestaModificarFoto.Resultado)
-                    {
-                        Dominio.CuentaUsuario.CuentaUsuarioActual.Foto = foto;
-                        ImagenPerfil.Source = bitmap;
-                        _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (proxy.State == CommunicationState.Faulted)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                    Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                 }
+
+                byte[] foto = File.ReadAllBytes(rutaImagen);
+                byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
+                var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+
+                var ventanaPrincipal = Window.GetWindow(this);
+
+                if (respuestaModificarFoto.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(ventanaPrincipal);
+                    return;
+                }
+                if (respuestaModificarFoto.Resultado)
+                {
+                    Dominio.CuentaUsuario.CuentaUsuarioActual.Foto = foto;
+                    ImagenPerfil.Source = bitmap;
+                    _ventanaMenu.ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
             }
         }
 

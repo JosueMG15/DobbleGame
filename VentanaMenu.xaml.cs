@@ -52,37 +52,48 @@ namespace DobbleGame
 
         public void NotificarCambio()
         {
-            Dispatcher.Invoke(() =>
+            try
             {
-                ContenedorNotificaciones.Children.Clear();
-                CargarAmistades();
-            });
+                Dispatcher.Invoke(() =>
+                {
+                    ContenedorNotificaciones.Children.Clear();
+                    CargarAmistades();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
         public void NotificarSalida(string nombreUsuario)
         {
-            foreach (var child in ContenedorNotificaciones.Children)
+            try
             {
-                if (child is Border border && border.Child is Grid grid)
+                foreach (var child in ContenedorNotificaciones.Children)
                 {
-                    // Busca dentro del Grid en el Border
-                    foreach (var gridChild in grid.Children)
+                    if (child is Border border && border.Child is Grid grid)
                     {
-                        if (gridChild is StackPanel stackPanel)
+                        foreach (var gridChild in grid.Children)
                         {
-                            // Busca el StackPanel que contiene el nombre del usuario
-                            foreach (var stackChild in stackPanel.Children)
+                            if (gridChild is StackPanel stackPanel)
                             {
-                                if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
+                                foreach (var stackChild in stackPanel.Children)
                                 {
-                                    // Nombre encontrado, actualizar estado
-                                    CambiarEstadoAAusente(stackPanel);
-                                    return; // Salir del método después de actualizar
+                                    if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
+                                    {
+                                        CambiarEstadoAAusente(stackPanel);
+                                        return;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
 
@@ -93,15 +104,17 @@ namespace DobbleGame
 
         public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion)
         {
-            bool sePuedeEnviar = true;
-
-            foreach (Window window in Application.Current.Windows)
+            try
             {
-                if (window is MainWindow || window is VentanaPartida)
+                bool sePuedeEnviar = true;
+
+                foreach (Window window in Application.Current.Windows)
                 {
-                    sePuedeEnviar = false;
+                    if (window is MainWindow || window is VentanaPartida)
+                    {
+                        sePuedeEnviar = false;
+                    }
                 }
-            }
 
             if (sePuedeEnviar == true)
             {
@@ -122,12 +135,10 @@ namespace DobbleGame
                     {
                         if (estadoChild is Ellipse circulo)
                         {
-                            // Cambiar color del círculo a rojo
                             circulo.Fill = Brushes.Red;
                         }
                         else if (estadoChild is Label estadoTexto)
                         {
-                            // Actualizar el texto del estado a "Ausente"
                             estadoTexto.Content = Properties.Resources.lb_Ausente;
                         }
                     }
@@ -230,6 +241,7 @@ namespace DobbleGame
             catch (Exception ex)
             {
                 Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);   
             }
         }
 
@@ -297,36 +309,35 @@ namespace DobbleGame
 
         public void CargarAmistades()
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            var proxy = new Servidor.GestionAmigosClient();
+            try
             {
-                try
+                if (proxy.State == CommunicationState.Faulted)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
 
-                    var respuesta = proxy.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+                var respuesta = proxy.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
+                if (respuesta.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
 
-                    if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
-                    {
-                        // Mapeo de objetos del servicio a la capa de dominio
-                        List<Dominio.Amistad> amistades = respuesta.Resultado
-                            .Select(amistad => new Dominio.Amistad
-                            {
-                                IdAmistad = amistad.idAmistad,
-                                EstadoSolicitud = amistad.estadoSolicitud,
-                                UsuarioPrincipalId = amistad.UsuarioPrincipalId,
-                                UsuarioAmigoId = amistad.UsuarioAmigoId
-                            })
-                            .ToList();
+                if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
+                {
+                    // Mapeo de objetos del servicio a la capa de dominio
+                    List<Dominio.Amistad> amistades = respuesta.Resultado
+                        .Select(amistad => new Dominio.Amistad
+                        {
+                            IdAmistad = amistad.idAmistad,
+                            EstadoSolicitud = amistad.estadoSolicitud,
+                            UsuarioPrincipalId = amistad.UsuarioPrincipalId,
+                            UsuarioAmigoId = amistad.UsuarioAmigoId
+                        })
+                        .ToList();
 
                         // Mostrar las notificaciones
                         foreach (var amistad in amistades)
@@ -585,50 +596,47 @@ namespace DobbleGame
 
         private void InvitarAmistad(Dominio.Amistad solicitud)
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            var proxy = new Servidor.GestionAmigosClient();
+            try
             {
-                try
+                string nombreUsuario;
+
+                Dominio.CuentaUsuarioAmigo cuentaUsuarioPrincipal = new Dominio.CuentaUsuarioAmigo
                 {
-                    string nombreUsuario;
+                    Usuario = UsuarioAmigo(solicitud, true).Usuario,
+                };
+                Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
+                {
+                    Usuario = UsuarioAmigo(solicitud, false).Usuario,
+                };
 
-                    Dominio.CuentaUsuarioAmigo cuentaUsuarioPrincipal = new Dominio.CuentaUsuarioAmigo
-                    {
-                        Usuario = UsuarioAmigo(solicitud, true).Usuario,
-                    };
-                    Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
-                    {
-                        Usuario = UsuarioAmigo(solicitud, false).Usuario,
-                    };
-
-                    if (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario)
-                    {
-                        nombreUsuario = cuentaUsuarioPrincipal.Usuario;
-                    }
-                    else
-                    {
-                        nombreUsuario = cuentaUsuarioAmigo.Usuario;
-                    }
-
-                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    proxy.NotificarInvitacion(nombreUsuario, Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario)
+                {
+                    nombreUsuario = cuentaUsuarioPrincipal.Usuario;
                 }
-                catch (Exception ex)
+                else
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    nombreUsuario = cuentaUsuarioAmigo.Usuario;
                 }
 
+                var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
+                }
+
+                if (proxy.State == CommunicationState.Faulted)
+                {
+                    proxy.Abort();
+                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                }
+
+                proxy.NotificarInvitacion(nombreUsuario, Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
         }
     }

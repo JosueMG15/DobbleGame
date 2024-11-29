@@ -36,14 +36,19 @@ namespace DobbleGame
             CallbackManager.Instance.NotificarSolicitudAmistadEvent -= NotificarSolicitudAmistad;
         }
 
-
-        // Métodos de callback 
         public void NotificarSolicitudAmistad()
         {
-            Dispatcher.Invoke(() =>
+            try
             {
-                CargarSolicitud();
-            });
+                Dispatcher.Invoke(() =>
+                {
+                    CargarSolicitud();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
         private void CargarSolicitudesAmistad()
