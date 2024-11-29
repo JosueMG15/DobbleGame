@@ -849,6 +849,12 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreo", ReplyAction="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreoResponse")]
         System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioPorCorreoAsync(string correo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Ping", ReplyAction="http://tempuri.org/IGestionJugador/PingResponse")]
+        bool Ping(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Ping", ReplyAction="http://tempuri.org/IGestionJugador/PingResponse")]
+        System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -956,6 +962,14 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioPorCorreoAsync(string correo) {
             return base.Channel.ObtenerUsuarioPorCorreoAsync(correo);
+        }
+        
+        public bool Ping(string nombreUsuario) {
+            return base.Channel.Ping(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario) {
+            return base.Channel.PingAsync(nombreUsuario);
         }
     }
     

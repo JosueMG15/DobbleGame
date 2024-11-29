@@ -103,11 +103,12 @@ namespace DobbleGame
                 }
             }
 
-            if(sePuedeEnviar == true)
+            if (sePuedeEnviar == true)
             {
-                VentanaInvitacion ventanaInvitacion = new VentanaInvitacion(nombreUsuarioInvitacion);
-                ventanaInvitacion.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                ventanaInvitacion.ShowDialog();
+                string mensaje = String.Format(Properties.Resources.lb_TeEstaInvitando_, nombreUsuarioInvitacion);
+                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(mensaje);
+                ventanaModalDecision.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                ventanaModalDecision.ShowDialog();
             }
         }
 
@@ -140,29 +141,57 @@ namespace DobbleGame
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
         {
-            if(!(MarcoPrincipal.Content is PaginaPerfil))
+            if (MarcoPrincipal.Content is PaginaSala paginasala)
             {
-                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-                fadeOutAnimation.Completed += (s, a) =>
-                {
-                    PaginaPerfil paginaPerfil = new PaginaPerfil(this);
-                    MarcoPrincipal.Navigate(paginaPerfil);
+                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_ConfirmarIrPerfil);
+                bool? respuesta = ventanaModalDecision.ShowDialog();
 
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
-                    MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeInAnimation);
-                };
-                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+                if (respuesta == true)
+                {
+                    paginasala.AbandonarSala();
+                    IrPaginaPerfil();
+                }
+                else
+                {
+                    return;
+                }
             }
+
+            if (!(MarcoPrincipal.Content is PaginaPerfil))
+            {
+                IrPaginaPerfil();
+            }
+        }
+
+        private void IrPaginaPerfil()
+        {
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+            fadeOutAnimation.Completed += (s, a) =>
+            {
+                PaginaPerfil paginaPerfil = new PaginaPerfil(this);
+                MarcoPrincipal.Navigate(paginaPerfil);
+
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
+                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeInAnimation);
+            };
+            MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
         }
 
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
         {
-            VentanaConfirmarCierreDeSesion ventana = new VentanaConfirmarCierreDeSesion();
+            VentanaModalDecision ventana = new VentanaModalDecision(Properties.Resources.lb_MensajeCerrarSesion,
+                Properties.Resources.btn_CerrarSesión, Properties.Resources.global_Cancelar);
             bool? respuesta = ventana.ShowDialog();
 
             if (respuesta == true)
             {
                 CerrarSesion();
+
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    ((App)Application.Current).DetenerPing();
+                });
+
                 MainWindow mainWindow = new MainWindow();
                 this.Close();
                 mainWindow.Show();
@@ -240,7 +269,7 @@ namespace DobbleGame
                 lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
                 Dominio.CuentaUsuario.CuentaUsuarioActual.Estado = true;
             }
-      
+
         }
 
         public void ActualizarNombreUsuario(string nuevoTexto)
@@ -302,13 +331,13 @@ namespace DobbleGame
                         // Mostrar las notificaciones
                         foreach (var amistad in amistades)
                         {
-                            if(amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
+                            if (amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
                             {
-                                MostrarAmigo(amistad, true);          
+                                MostrarAmigo(amistad, true);
                             }
                             else
                             {
-                                MostrarAmigo(amistad, false);                            
+                                MostrarAmigo(amistad, false);
                             }
                         }
                     }
@@ -571,12 +600,12 @@ namespace DobbleGame
                         Usuario = UsuarioAmigo(solicitud, false).Usuario,
                     };
 
-                    if(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario)
+                    if (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario)
                     {
                         nombreUsuario = cuentaUsuarioPrincipal.Usuario;
                     }
                     else
-                    {                      
+                    {
                         nombreUsuario = cuentaUsuarioAmigo.Usuario;
                     }
 

@@ -28,8 +28,8 @@ namespace DobbleGame
         private const int NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA = 2;
         private readonly SelectorPlantillaJugador selectorPlantilla;
         public ObservableCollection<Jugador> UsuariosConectados { get; set; }
-        public bool EsAnfitrion {  get; set; }
-        public string CodigoSala {  get; set; }
+        public bool EsAnfitrion { get; set; }
+        public string CodigoSala { get; set; }
         public bool HayConexionConSala { get; set; }
 
         public PaginaSala(bool esAnfitrion, string codigoSala)
@@ -43,7 +43,7 @@ namespace DobbleGame
             CodigoSala = codigoSala;
             selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
             selectorPlantilla.IniciarlizarPlantillas();
-            
+
         }
 
         public bool IniciarSesionSala()
@@ -86,7 +86,7 @@ namespace DobbleGame
 
             return resultado;
         }
-        
+
         private bool UnirseASala()
         {
             InicializarProxySiEsNecesario();
@@ -109,7 +109,7 @@ namespace DobbleGame
             return resultado;
         }
 
-        private void AbandonarSala()
+        public void AbandonarSala()
         {
             InicializarProxySiEsNecesario();
 
@@ -117,7 +117,7 @@ namespace DobbleGame
             {
                 var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
                 proxy.AbandonarSala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_AbandonoSala);
-                
+
                 ((ICommunicationObject)proxy).Close();
             }
             catch (Exception ex)
@@ -214,16 +214,28 @@ namespace DobbleGame
 
             InicializarProxySiEsNecesario();
 
-            if (!string.IsNullOrEmpty(mensaje) && ((ICommunicationObject)proxy)?.State == CommunicationState.Opened)
+            try
+            {
+                proxy.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                tbChat.Text = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+        }
+
+        private void EnviarMensaje_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
                 try
                 {
-                    proxy.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
-                    tbChat.Text = string.Empty;
+                    btnEnviarMensaje.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No se puede enviar el mensaje. Verifique la conexión.");
+                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
                 }
             }
         }
@@ -255,8 +267,10 @@ namespace DobbleGame
 
             if (jugadorAExpulsar != null)
             {
-                VentanaConfirmarExpulsion ventanaConfirmarExpulsion = new VentanaConfirmarExpulsion(jugadorAExpulsar.Usuario);
-                bool? respuesta = ventanaConfirmarExpulsion.ShowDialog();
+                string mensaje = String.Format(Properties.Resources.lb_MensajeExpulsarJugador, jugadorAExpulsar.Usuario);
+                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(mensaje,
+                    Properties.Resources.btn_Expulsar, Properties.Resources.global_Cancelar);
+                bool? respuesta = ventanaModalDecision.ShowDialog();
 
                 if (respuesta == true)
                 {
@@ -308,7 +322,7 @@ namespace DobbleGame
             UsuariosConectados.Clear();
             selectorPlantilla.ReiniciarPlantillas();
             Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-            { 
+            {
                 foreach (var usuario in cuentaUsuarios)
                 {
                     Console.WriteLine($"Usuario: {usuario.Usuario}, Puntaje: {usuario.Puntaje}, EsAnfitrion: {usuario.EsAnfitrion}");
@@ -341,19 +355,11 @@ namespace DobbleGame
             }
         }
 
-        private void EnviarMensaje_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                btnEnviarMensaje.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            }
-        }
-
         private void InicializarProxy()
         {
             if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Opened)
             {
-                return; 
+                return;
             }
 
             if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Faulted)
@@ -395,10 +401,10 @@ namespace DobbleGame
 
         private void Pagina_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!(e.OriginalSource is TextBox)) 
-            { 
-                var scope = FocusManager.GetFocusScope(this); 
-                FocusManager.SetFocusedElement(scope, this as IInputElement); 
+            if (!(e.OriginalSource is TextBox))
+            {
+                var scope = FocusManager.GetFocusScope(this);
+                FocusManager.SetFocusedElement(scope, this as IInputElement);
                 Keyboard.ClearFocus();
             }
         }

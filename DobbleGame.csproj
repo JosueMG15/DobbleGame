@@ -112,12 +112,6 @@
     <Compile Include="ProxyConexion.cs" />
     <Compile Include="SelectorPlantillaJugador.cs" />
     <Compile Include="SelectorPlantillaJugadorPartida.cs" />
-    <Compile Include="VentanaConfirmarCierreDeSesion.xaml.cs">
-      <DependentUpon>VentanaConfirmarCierreDeSesion.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="VentanaConfirmarExpulsion.xaml.cs">
-      <DependentUpon>VentanaConfirmarExpulsion.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Utilidades\CallbackManager.cs" />
     <Compile Include="VentanaEliminarAmigo.xaml.cs">
       <DependentUpon>VentanaEliminarAmigo.xaml</DependentUpon>
@@ -169,14 +163,14 @@
     <Compile Include="VentanaGestionarSolicitudesAmistad.xaml.cs">
       <DependentUpon>VentanaGestionarSolicitudesAmistad.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VentanaInvitacion.xaml.cs">
-      <DependentUpon>VentanaInvitacion.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VentanaMarcadorPartida.xaml.cs">
       <DependentUpon>VentanaMarcadorPartida.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaMenu.xaml.cs">
       <DependentUpon>VentanaMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaModalDecision.xaml.cs">
+      <DependentUpon>VentanaModalDecision.xaml</DependentUpon>
     </Compile>
     <Compile Include="VentanaPartida.xaml.cs">
       <DependentUpon>VentanaPartida.xaml</DependentUpon>
@@ -211,14 +205,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PaginaRecuperarContraseña.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VentanaConfirmarCierreDeSesion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VentanaConfirmarExpulsion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -266,15 +252,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VentanaInvitacion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="VentanaMarcadorPartida.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VentanaMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VentanaModalDecision.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

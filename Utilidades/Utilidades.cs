@@ -93,7 +93,7 @@ namespace DobbleGame.Utilidades
 
                 if (estaEnCanal == true)
                 {
-                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor, 
+                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor,
                         Properties.Resources.lb_MensajeErrorConexiónServidor)
                     {
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -132,12 +132,12 @@ namespace DobbleGame.Utilidades
             }
             catch (QuotaExceededException ex)
             {
-                Registro.Error("Excepción de CommunicationObjectFaultedException: { ex.Message}. " +
+                Registro.Error($"Excepción de QuotaExceededException: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
             }
             catch (Exception ex)
             {
-                Registro.Error("Excepción no manejada: { ex.Message}. " +
+                Registro.Error($"Excepción no manejada: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
             }
         }
@@ -193,7 +193,7 @@ namespace DobbleGame.Utilidades
                 }
                 else
                 {
-                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}. " + 
+                    Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
                     MostrarVentanaErrorConexionServidor(contenedor, true);
                 }

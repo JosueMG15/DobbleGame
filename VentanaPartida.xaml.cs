@@ -32,10 +32,10 @@ namespace DobbleGame
         private readonly int _numeroJugadoresEsperados;
         private bool partidaIniciada = false;
         private bool permitirCierreInesperado = true;
-        
+
         public ObservableCollection<Jugador> JugadoresEnPartida { get; set; }
-        public string CodigoSala {  get; set; }
-        public bool EsAnfitrion {  get; set; }
+        public string CodigoSala { get; set; }
+        public bool EsAnfitrion { get; set; }
 
         public VentanaPartida(string codigoSala, bool esAnfitrion, int numeroJugadoresEsperados, Window ventanaMenu,
             Page paginaSala)
@@ -80,24 +80,29 @@ namespace DobbleGame
         {
             InicializarProxySiEsNecesario();
             permitirCierreInesperado = false;
+            VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_MensajeAbandonarPartida);
+            bool? respuesta = ventanaModalDecision.ShowDialog();
 
-            try
+            if (respuesta == true)
             {
-                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
-                
-                if (proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala))
+                try
                 {
-                    ((ICommunicationObject)proxy).Close();
+                    var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
 
-                    PaginaMenu paginaMenu = new PaginaMenu();
-                    _paginaSala.NavigationService.Navigate(paginaMenu);
-                    _ventanaMenu.Show();
-                    this.Close();
+                    if (proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala))
+                    {
+                        ((ICommunicationObject)proxy).Close();
+
+                        PaginaMenu paginaMenu = new PaginaMenu();
+                        _paginaSala.NavigationService.Navigate(paginaMenu);
+                        _ventanaMenu.Show();
+                        this.Close();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                }
             }
         }
 
@@ -157,7 +162,7 @@ namespace DobbleGame
             return resultado;
         }
 
-       
+
 
         private void JugadoresEnPartida_IniciarPartida(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -166,7 +171,14 @@ namespace DobbleGame
                 partidaIniciada = true;
                 if (EsAnfitrion)
                 {
-                    proxy.NotificarInicioPartida(CodigoSala);
+                    try
+                    {
+                        proxy.NotificarInicioPartida(CodigoSala);
+                    }
+                    catch (Exception ex)
+                    {
+                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                    }
                 }
             }
         }
@@ -214,11 +226,11 @@ namespace DobbleGame
             Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
             Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
             Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
             Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
             Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
             Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
         }
 
         public void AsignarCartaCentral(Carta cartaCentral)
@@ -226,11 +238,11 @@ namespace DobbleGame
             IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
             IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
             IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
             IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
             IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
             IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
         }
 
         public void BloquearCarta()
@@ -306,7 +318,14 @@ namespace DobbleGame
 
                 if (EsAnfitrion)
                 {
-                    proxy.NotificarDistribucionCartas(CodigoSala);
+                    try
+                    {
+                        proxy.NotificarDistribucionCartas(CodigoSala);
+                    }
+                    catch (Exception ex)
+                    {
+                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                    }
                 }
 
                 btnRegresar.IsEnabled = true;
@@ -360,9 +379,9 @@ namespace DobbleGame
 
             DoubleAnimation fontSizeAnimation = new DoubleAnimation
             {
-                From = 50, 
-                To = 200,  
-                Duration = TimeSpan.FromSeconds(1) 
+                From = 50,
+                To = 200,
+                Duration = TimeSpan.FromSeconds(1)
             };
 
             fontSizeAnimation.Completed += (s, e) =>
