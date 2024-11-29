@@ -76,6 +76,11 @@ namespace DobbleGame
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     
                         ventanaMenu.Show();
+
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            ((App)Application.Current).IniciarPing();
+                        });
                     }
                     else
                     {

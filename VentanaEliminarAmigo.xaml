@@ -9,7 +9,7 @@
         Title="VentanaEliminarAmigo" Height="200" Width="400" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
     <Border Background="#FFFBB8" CornerRadius="20">
         <Grid >
-            <TextBlock x:Name="tbMensaje" Text="{x:Static p:Resources.titulo_EliminarAmigo}" FontSize="15" TextWrapping="Wrap" FontWeight="Bold" Margin="46,67,46,111"/>
+            <TextBlock x:Name="tbMensaje" Text="{x:Static p:Resources.lb_EliminarAmigo}" FontSize="15" TextWrapping="Wrap" FontWeight="Bold" Margin="46,67,46,111"/>
             <Button Width="100" Content="{x:Static p:Resources.global_Aceptar}" VerticalAlignment="Top" Margin="67,138,233,0" Background="#FFF12424" Foreground="White" Click="BtnAceptar_Click" Height="32"/>
             <Button Width="100" Content="{x:Static p:Resources.global_Cancelar}" VerticalAlignment="Top" Margin="233,138,67,0" Background="#FF959595" Foreground="White" Click="BtnCancelar_Click" Height="32"/>
         </Grid>

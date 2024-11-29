@@ -132,12 +132,12 @@ namespace DobbleGame.Utilidades
             }
             catch (QuotaExceededException ex)
             {
-                Registro.Error("Excepción de CommunicationObjectFaultedException: { ex.Message}. " +
+                Registro.Error($"Excepción de QuotaExceededException: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
             }
             catch (Exception ex)
             {
-                Registro.Error("Excepción no manejada: { ex.Message}. " +
+                Registro.Error($"Excepción no manejada: {ex.Message}. " +
                                    $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}.");
             }
         }

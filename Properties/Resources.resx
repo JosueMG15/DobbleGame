@@ -342,7 +342,7 @@
   <data name="titulo_SolicitudesAmistad" xml:space="preserve">
     <value>Solicitudes de amistad</value>
   </data>
-  <data name="titulo_EliminarAmigo" xml:space="preserve">
+  <data name="lb_EliminarAmigo" xml:space="preserve">
     <value>¿Seguro que deseas eliminar a este amigo? </value>
   </data>
   <data name="titulo_Sala" xml:space="preserve">
@@ -465,10 +465,14 @@
   <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
     <value>Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. </value>
   </data>
-  <data name="titulo_TeEstaInvitando " xml:space="preserve">
-    <value>te está invitando a jugar! </value>
+  <data name="lb_TeEstaInvitando " xml:space="preserve">
+    <value>¡{0} te está invitando a jugar! </value>
   </data>
   <data name="lb_MinimoJugadores" xml:space="preserve">
     <value>Se necesitan al menos 2 jugadores para iniciar la partida</value>
+  </data>
+  <data name="lb_ConfirmarIrPerfil" xml:space="preserve">
+    <value>Hacer esto te hará abandonar la sala  
+¿Seguro que deseas ir al perfil? </value>
   </data>
 </root>
