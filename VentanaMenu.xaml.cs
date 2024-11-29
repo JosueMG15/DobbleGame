@@ -105,10 +105,9 @@ namespace DobbleGame
 
             if(sePuedeEnviar == true)
             {
-                string mensaje = String.Format(Properties.Resources.lb_TeEstaInvitando_, nombreUsuarioInvitacion);
-                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(mensaje);
-                ventanaModalDecision.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                ventanaModalDecision.ShowDialog();
+                VentanaInvitacion ventanaInvitacion = new VentanaInvitacion(nombreUsuarioInvitacion);
+                ventanaInvitacion.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                ventanaInvitacion.ShowDialog();
             }
         }
 
@@ -141,57 +140,29 @@ namespace DobbleGame
 
         private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
         {
-            if (MarcoPrincipal.Content is PaginaSala paginasala)
+            if(!(MarcoPrincipal.Content is PaginaPerfil))
             {
-                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_ConfirmarIrPerfil);
-                bool? respuesta = ventanaModalDecision.ShowDialog();
-
-                if (respuesta == true)
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+                fadeOutAnimation.Completed += (s, a) =>
                 {
-                    paginasala.AbandonarSala();
-                    IrPaginaPerfil();
-                }
-                else
-                {
-                    return;
-                }
+                    PaginaPerfil paginaPerfil = new PaginaPerfil(this);
+                    MarcoPrincipal.Navigate(paginaPerfil);
+
+                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
+                    MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeInAnimation);
+                };
+                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
             }
-
-            if (!(MarcoPrincipal.Content is PaginaPerfil))
-            {
-                IrPaginaPerfil();
-            }
-        }
-
-        private void IrPaginaPerfil()
-        {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
-            {
-                PaginaPerfil paginaPerfil = new PaginaPerfil(this);
-                MarcoPrincipal.Navigate(paginaPerfil);
-
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
-                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeInAnimation);
-            };
-            MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
         }
 
         private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
         {
-            VentanaModalDecision ventana = new VentanaModalDecision(Properties.Resources.lb_MensajeCerrarSesion, 
-                Properties.Resources.btn_CerrarSesión, Properties.Resources.global_Cancelar);
+            VentanaConfirmarCierreDeSesion ventana = new VentanaConfirmarCierreDeSesion();
             bool? respuesta = ventana.ShowDialog();
 
             if (respuesta == true)
             {
                 CerrarSesion();
-
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    ((App)Application.Current).DetenerPing();
-                });
-
                 MainWindow mainWindow = new MainWindow();
                 this.Close();
                 mainWindow.Show();

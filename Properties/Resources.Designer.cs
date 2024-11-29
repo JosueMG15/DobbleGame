@@ -394,16 +394,6 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Hacer esto te hará abandonar la sala  
-        ///¿Seguro que deseas ir al perfil? .
-        /// </summary>
-        public static string lb_ConfirmarIrPerfil {
-            get {
-                return ResourceManager.GetString("lb_ConfirmarIrPerfil", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Contraseña.
         /// </summary>
         public static string lb_Contraseña {
@@ -517,15 +507,6 @@ namespace DobbleGame.Properties {
         public static string lb_Dobble_NET {
             get {
                 return ResourceManager.GetString("lb_Dobble.NET", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a ¿Seguro que deseas eliminar a este amigo? .
-        /// </summary>
-        public static string lb_EliminarAmigo {
-            get {
-                return ResourceManager.GetString("lb_EliminarAmigo", resourceCulture);
             }
         }
         
@@ -908,15 +889,6 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¡{0} te está invitando a jugar! .
-        /// </summary>
-        public static string lb_TeEstaInvitando_ {
-            get {
-                return ResourceManager.GetString("lb_TeEstaInvitando ", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Unirse a partida.
         /// </summary>
         public static string lb_UnirseAPartida {
@@ -1025,6 +997,15 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que deseas eliminar a este amigo? .
+        /// </summary>
+        public static string titulo_EliminarAmigo {
+            get {
+                return ResourceManager.GetString("titulo_EliminarAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Envío de código.
         /// </summary>
         public static string titulo_EnvíoDeCódigo {
@@ -1129,6 +1110,15 @@ namespace DobbleGame.Properties {
         public static string titulo_SolicitudesAmistad {
             get {
                 return ResourceManager.GetString("titulo_SolicitudesAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a te está invitando a jugar! .
+        /// </summary>
+        public static string titulo_TeEstaInvitando_ {
+            get {
+                return ResourceManager.GetString("titulo_TeEstaInvitando ", resourceCulture);
             }
         }
     }

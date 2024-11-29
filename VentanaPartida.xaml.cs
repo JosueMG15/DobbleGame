@@ -80,29 +80,24 @@ namespace DobbleGame
         {
             InicializarProxySiEsNecesario();
             permitirCierreInesperado = false;
-            VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_MensajeAbandonarPartida);
-            bool? respuesta = ventanaModalDecision.ShowDialog();
 
-            if (respuesta == true)
+            try
             {
-                try
+                var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
+                
+                if (proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala))
                 {
-                    var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
+                    ((ICommunicationObject)proxy).Close();
 
-                    if (proxy.AbandonarPartida(usuarioActual.Usuario, CodigoSala))
-                    {
-                        ((ICommunicationObject)proxy).Close();
-
-                        PaginaMenu paginaMenu = new PaginaMenu();
-                        _paginaSala.NavigationService.Navigate(paginaMenu);
-                        _ventanaMenu.Show();
-                        this.Close();
-                    }
+                    PaginaMenu paginaMenu = new PaginaMenu();
+                    _paginaSala.NavigationService.Navigate(paginaMenu);
+                    _ventanaMenu.Show();
+                    this.Close();
                 }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
-                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
             }
         }
 
@@ -171,14 +166,7 @@ namespace DobbleGame
                 partidaIniciada = true;
                 if (EsAnfitrion)
                 {
-                    try
-                    {
-                        proxy.NotificarInicioPartida(CodigoSala);
-                    }
-                    catch (Exception ex)
-                    {
-                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
-                    }
+                    proxy.NotificarInicioPartida(CodigoSala);
                 }
             }
         }
@@ -226,11 +214,11 @@ namespace DobbleGame
             Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
             Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
             Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
             Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
             Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
             Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
         }
 
         public void AsignarCartaCentral(Carta cartaCentral)
@@ -238,11 +226,11 @@ namespace DobbleGame
             IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
             IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
             IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
             IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
             IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
             IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
         }
 
         public void BloquearCarta()
@@ -318,14 +306,7 @@ namespace DobbleGame
 
                 if (EsAnfitrion)
                 {
-                    try
-                    {
-                        proxy.NotificarDistribucionCartas(CodigoSala);
-                    }
-                    catch (Exception ex) 
-                    { 
-                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this); 
-                    }
+                    proxy.NotificarDistribucionCartas(CodigoSala);
                 }
 
                 btnRegresar.IsEnabled = true;

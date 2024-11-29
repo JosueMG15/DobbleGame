@@ -109,7 +109,7 @@ namespace DobbleGame
             return resultado;
         }
 
-        public void AbandonarSala()
+        private void AbandonarSala()
         {
             InicializarProxySiEsNecesario();
 
@@ -214,28 +214,16 @@ namespace DobbleGame
 
             InicializarProxySiEsNecesario();
 
-            try
-            {
-                proxy.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
-                tbChat.Text = string.Empty;
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
-            }
-        }
-
-        private void EnviarMensaje_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
+            if (!string.IsNullOrEmpty(mensaje) && ((ICommunicationObject)proxy)?.State == CommunicationState.Opened)
             {
                 try
                 {
-                    btnEnviarMensaje.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    proxy.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    tbChat.Text = string.Empty;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+                    MessageBox.Show("No se puede enviar el mensaje. Verifique la conexión.");
                 }
             }
         }
@@ -267,10 +255,8 @@ namespace DobbleGame
 
             if (jugadorAExpulsar != null)
             {
-                string mensaje = String.Format(Properties.Resources.lb_MensajeExpulsarJugador, jugadorAExpulsar.Usuario);
-                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(mensaje, 
-                    Properties.Resources.btn_Expulsar, Properties.Resources.global_Cancelar);
-                bool? respuesta = ventanaModalDecision.ShowDialog();
+                VentanaConfirmarExpulsion ventanaConfirmarExpulsion = new VentanaConfirmarExpulsion(jugadorAExpulsar.Usuario);
+                bool? respuesta = ventanaConfirmarExpulsion.ShowDialog();
 
                 if (respuesta == true)
                 {
@@ -352,6 +338,14 @@ namespace DobbleGame
             if (sender is Button boton)
             {
                 Clipboard.SetText(boton.Content.ToString());
+            }
+        }
+
+        private void EnviarMensaje_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnEnviarMensaje.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
 
