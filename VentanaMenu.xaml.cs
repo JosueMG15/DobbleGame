@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DobbleGame
@@ -35,13 +36,10 @@ namespace DobbleGame
 
         private void InicializarDatos()
         {
-            this.Closing += VentanaMenu_Closing;
+            this.Closing += VentanaMenuCierreAbrupto;
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
-            btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
-            lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
             CargarAmistades();
-            CambiarBotonInvitar(ContenedorNotificaciones);
 
             if (ControlDeUsuarioNotificacion.Instancia.Parent is Panel parentPanel)
             {
@@ -52,10 +50,11 @@ namespace DobbleGame
 
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
             CallbackManager.Instance.NotificarSalidaEvent += NotificarSalida;
-            CallbackManager.Instance.NotificarInvitacionActivaEvent += NotificarInvitacionActiva;
+            CallbackManager.Instance.NotificarInvitacionCambioEvent += NotificarInvitacionCambio;
             CallbackManager.Instance.NotificarVentanaInvitacionEvent += NotificarVentanaInvitacion;
-        }
 
+            MarcoPrincipal.Navigated += PaginaSalaActiva;
+        }
 
         public void NotificarCambio()
         {
@@ -67,9 +66,9 @@ namespace DobbleGame
                     CargarAmistades();
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
             }
         }
 
@@ -89,7 +88,7 @@ namespace DobbleGame
                                 {
                                     if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
                                     {
-                                        CambiarEstadoAAusente(stackPanel);
+                                        CambiarEstadoAusente(stackPanel);
                                         return;
                                     }
                                 }
@@ -98,15 +97,41 @@ namespace DobbleGame
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
             }
         }
 
-        public void NotificarInvitacionActiva(string nombreUsuario)
+        public void NotificarInvitacionCambio(string nombreUsuario)
         {
-
+            try
+            {
+                foreach (var child in ContenedorNotificaciones.Children)
+                {
+                    if (child is Border border && border.Child is Grid grid)
+                    {
+                        foreach (var gridChild in grid.Children)
+                        {
+                            if (gridChild is StackPanel stackPanel)
+                            {
+                                foreach (var stackChild in stackPanel.Children)
+                                {
+                                    if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
+                                    {
+                                        CambiarInvitacion(grid);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
+            }
         }
 
         public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion, string codigoSala)
@@ -162,16 +187,15 @@ namespace DobbleGame
             }
         }
 
-        private void CambiarEstadoAAusente(StackPanel stackPanel)
+        private void CambiarEstadoAusente(StackPanel stackPanel)
         {
-            foreach (var child in stackPanel.Children)
+            foreach ( var child in stackPanel.Children)
             {
-                if (child is StackPanel estadoPanel)
+                if(child is StackPanel estadoPanel)
                 {
                     foreach (var estadoChild in estadoPanel.Children)
                     {
-                        if (estadoChild is Ellipse circulo)
-                        {
+                        if(estadoChild is Ellipse circulo){
                             circulo.Fill = Brushes.Red;
                         }
                         else if (estadoChild is Label estadoTexto)
@@ -181,17 +205,59 @@ namespace DobbleGame
                     }
                 }
             }
+
         }
 
-        private void CambiarBotonInvitar(StackPanel stackPanel)
+        private void CambiarInvitacion(Grid grid)
         {
+            foreach (var child in grid.Children)
+            {
+                if (child is Panel panel)
+                {
+                    CambiarEstadoEnHijos(panel);
+                }
+            }
         }
 
-        private void BtnIrPerfil_Click(object sender, RoutedEventArgs e)
+        private void CambiarEstadoEnHijos(Panel parent)
+        {
+            foreach (var child in parent.Children)
+            {
+                if (child is Button botonInvitar && botonInvitar.Content?.ToString() == Properties.Resources.btn_Invitar)
+                {
+                    botonInvitar.Background = Brushes.Gray;
+                    botonInvitar.IsEnabled = false;
+                }
+
+                if (child is Panel panel)
+                {
+                    CambiarEstadoEnHijos(panel); 
+                }
+            }
+        }
+
+        private void PaginaSalaActiva(object sender, NavigationEventArgs e)
+        {
+            if (e.Content is PaginaSala paginaSala)
+            {
+                var proxyGestionAmigos = new GestionAmigosClient();
+                proxyGestionAmigos.NotificarCambios();
+                return;
+            }
+            if (!(e.Content is PaginaSala paginaSala1))
+            {
+                var proxyGestionAmigos = new GestionAmigosClient();
+                proxyGestionAmigos.NotificarCambios(); 
+                return;
+            }
+        }
+
+        private void BtnIrPerfil(object sender, RoutedEventArgs e)
         {
             if (MarcoPrincipal.Content is PaginaSala paginasala)
             {
-                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_ConfirmarIrPerfil);
+                VentanaModalDecision ventanaModalDecision = new 
+                    VentanaModalDecision(Properties.Resources.lb_ConfirmarIrPerfil);
                 bool? respuesta = ventanaModalDecision.ShowDialog();
 
                 if (respuesta == true)
@@ -213,19 +279,19 @@ namespace DobbleGame
 
         private void IrPaginaPerfil()
         {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
+            DoubleAnimation animacionDesvanecimiento = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+            animacionDesvanecimiento.Completed += (s, a) =>
             {
                 PaginaPerfil paginaPerfil = new PaginaPerfil(this);
                 MarcoPrincipal.Navigate(paginaPerfil);
 
-                DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
-                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeInAnimation);
+                DoubleAnimation animacionAparicion = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
+                MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, animacionAparicion);
             };
-            MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+            MarcoPrincipal.BeginAnimation(Frame.OpacityProperty, animacionDesvanecimiento);
         }
 
-        private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
+        private void BtnCerrarSesion(object sender, RoutedEventArgs e)
         {
             VentanaModalDecision ventana = new VentanaModalDecision(Properties.Resources.lb_MensajeCerrarSesion,
                 Properties.Resources.btn_CerrarSesión, Properties.Resources.global_Cancelar);
@@ -246,15 +312,21 @@ namespace DobbleGame
             }
         }
 
-        private void VentanaMenu_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void VentanaMenuCierreAbrupto(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var proxyUsuario = new Servidor.GestionAmigosClient();
-            var proxy = new GestionJugadorClient();
+            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
+            var proxyGestionJugador = new GestionJugadorClient();
             try
             {
+                var estaConectado = proxyGestionAmigos.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
+                }
                 if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
                 {
-                    proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+                    proxyGestionJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                     CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                     proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                     
@@ -263,41 +335,42 @@ namespace DobbleGame
                         ((App)Application.Current).DetenerPing();
                     });
                     
+                    proxyGestionAmigos.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                 }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 
         private void CerrarSesion()
         {
-            var proxy = new GestionJugadorClient();
-            var proxyUsuario = new GestionAmigosClient();
+            var proxyGestionJugador = new GestionJugadorClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             try
             {
-                proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
+                proxyGestionJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                 CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                
+                proxyGestionAmigos.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+
                 App.Current.Dispatcher.Invoke(() =>
                 {
                     ((App)Application.Current).DetenerPing();
                 });
-                
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
-            var proxy = new GestionAmigosClient();
-            var respuesta = proxy.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+            var proxyGestionAmigos = new GestionAmigosClient();
+            var respuesta = proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
             if (respuesta.ErrorBD)
             {
@@ -316,23 +389,6 @@ namespace DobbleGame
             ventanaEnviarSolicitudAmistad.ShowDialog();
         }
 
-        private void BtnCambiarEstado_Click(object sender, RoutedEventArgs e)
-        {
-            if (Dominio.CuentaUsuario.CuentaUsuarioActual.Estado == true)
-            {
-                btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#F44545");
-                lbEstadoUsuario.Content = Properties.Resources.lb_Ausente;
-                Dominio.CuentaUsuario.CuentaUsuarioActual.Estado = false;
-            }
-            else
-            {
-                btnEstadoUsuario.Background = Utilidades.Utilidades.StringABrush("#59B01E");
-                lbEstadoUsuario.Content = Properties.Resources.lb_EnLínea;
-                Dominio.CuentaUsuario.CuentaUsuarioActual.Estado = true;
-            }
-
-        }
-
         public void ActualizarNombreUsuario(string nuevoTexto)
         {
             lbNombreUsuario.Content = nuevoTexto;
@@ -343,31 +399,25 @@ namespace DobbleGame
             if (fotoBytes == null || fotoBytes.Length == 0)
                 return;
 
-            using (var ms = new MemoryStream(fotoBytes))
+            using (var flujoMemoria = new MemoryStream(fotoBytes))
             {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = ms;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                image.Freeze();
+                BitmapImage imagen = new BitmapImage();
+                imagen.BeginInit();
+                imagen.StreamSource = flujoMemoria;
+                imagen.CacheOption = BitmapCacheOption.OnLoad;
+                imagen.EndInit();
+                imagen.Freeze();
 
-                ImagenPerfil.Source = image;
+                ImagenPerfil.Source = imagen;
             }
         }
 
         public void CargarAmistades()
         {
-            var proxy = new Servidor.GestionAmigosClient();
+            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
-                var respuesta = proxy.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+                var respuesta = proxyGestionAmigos.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
                 if (respuesta.ErrorBD)
                 {
@@ -377,7 +427,6 @@ namespace DobbleGame
 
                 if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
                 {
-                    // Mapeo de objetos del servicio a la capa de dominio
                     List<Dominio.Amistad> amistades = respuesta.Resultado
                         .Select(amistad => new Dominio.Amistad
                         {
@@ -388,7 +437,6 @@ namespace DobbleGame
                         })
                         .ToList();
 
-                    // Mostrar las notificaciones
                     foreach (var amistad in amistades)
                     {
                         if (amistad.UsuarioPrincipalId != Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario)
@@ -404,14 +452,13 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
             }
         }
-    
 
         private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var proxy = new Servidor.GestionAmigosClient();
+            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
             try
             {
                 Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
@@ -420,6 +467,8 @@ namespace DobbleGame
                     Puntaje = UsuarioAmigo(solicitud, esAgeno).Puntaje,
                     Foto = UsuarioAmigo(solicitud, esAgeno).Foto
                 };
+
+                var respuesta = proxyGestionAmigos.UsuarioConectado(cuentaUsuarioAmigo.Usuario);
 
                 var panelSolicitud = new Border
                 {
@@ -438,8 +487,8 @@ namespace DobbleGame
                 grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-                // Imagen circular del usuario
-                var fotoUsuario = new Image
+                
+                var fotoUsuario = new Image    // Foto del usuario
                 {
                     Width = 60,
                     Height = 60,
@@ -456,8 +505,8 @@ namespace DobbleGame
                 Grid.SetRowSpan(fotoUsuario, 2);
                 grid.Children.Add(fotoUsuario);
 
-                // Nombre de usuario y Estado 
-                var stackNombreEstado = new StackPanel
+                 
+                var stackNombreEstado = new StackPanel    // Nombre de usuario y Estado
                 {
                     Orientation = Orientation.Vertical,
                     VerticalAlignment = VerticalAlignment.Center
@@ -478,67 +527,10 @@ namespace DobbleGame
                     Margin = new Thickness(0, 5, 0, 0)
                 };
 
-                var respuesta = proxy.UsuarioConectado(cuentaUsuarioAmigo.Usuario);
-                if (proxy.State == CommunicationState.Faulted)
+                
+                var puntosUsuario = new TextBlock    // Puntos del usuario
                 {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-                if (respuesta.ErrorBD)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                    return;
-                }
-
-                //Si esta en línea
-                if (respuesta.Resultado)
-                {
-                    var circulo = new Ellipse
-                    {
-                        Width = 15,
-                        Height = 15,
-                        Fill = Brushes.LightGreen,
-                        Margin = new Thickness(0, 0, 5, 0)
-                    };
-                    estado.Children.Add(circulo);
-
-                    var textoEnLinea = new Label
-                    {
-                        Content = Properties.Resources.lb_EnLínea,
-                        FontSize = 12
-                    };
-                    estado.Children.Add(textoEnLinea);
-                }
-                //Si esta ausente
-                else
-                {
-                    var circulo = new Ellipse
-                    {
-                        Width = 15,
-                        Height = 15,
-                        Fill = Brushes.Red,
-                        Margin = new Thickness(0, 0, 5, 0)
-                    };
-                    estado.Children.Add(circulo);
-
-                    var textoEnLinea = new Label
-                    {
-                        Content = Properties.Resources.lb_Ausente,
-                        FontSize = 12
-                    };
-                    estado.Children.Add(textoEnLinea);
-                }
-
-                stackNombreEstado.Children.Add(estado);
-                Grid.SetColumn(stackNombreEstado, 1);
-                Grid.SetRow(stackNombreEstado, 0);
-                grid.Children.Add(stackNombreEstado);
-
-                // Puntos del usuario
-                var puntosUsuario = new TextBlock
-                {
-                    //Text = $"Puntos: {cuentaUsuarioAmigo.Puntaje}",
-                    Text = String.Format(Properties.Resources.lb_Puntos, cuentaUsuarioAmigo.Puntaje),
+                    Text = $"Puntos: {cuentaUsuarioAmigo.Puntaje}",
                     FontSize = 12,
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = new Thickness(0, 10, 0, 0)
@@ -547,8 +539,8 @@ namespace DobbleGame
                 Grid.SetRow(puntosUsuario, 1);
                 grid.Children.Add(puntosUsuario);
 
-                // Botones de "EliminarAmistad" e "Invitar"
-                var botonesPanel = new StackPanel
+                
+                var botonesPanel = new StackPanel    // Botones de "EliminarAmistad" e "Invitar"
                 {
                     Orientation = Orientation.Horizontal,
                     HorizontalAlignment = HorizontalAlignment.Right,
@@ -574,21 +566,57 @@ namespace DobbleGame
                 botonEliminar.Click += (s, e) => EliminarAmistad(solicitud, panelSolicitud);
                 botonesPanel.Children.Add(botonEliminar);
 
+
+                var circulo = new Ellipse
+                {
+                    Width = 15,
+                    Height = 15,
+                    Margin = new Thickness(0, 0, 5, 0)
+                };
+                estado.Children.Add(circulo);
+
+                var textoEstado = new Label
+                {
+                    FontSize = 12
+                };
+                estado.Children.Add(textoEstado);
+
                 var botonInvitar = new Button
                 {
                     Content = Properties.Resources.btn_Invitar,
                     Background = Brushes.Gray,
                     Foreground = Brushes.White,
+                    IsEnabled = false,
                     Padding = new Thickness(5)
                 };
+                botonesPanel.Children.Add(botonInvitar);
 
-                if (respuesta.Resultado)
+                if (respuesta.Resultado)    //Si esta en línea
                 {
-                    //if(validarQueEstaEnSala)
+                    circulo.Fill = Brushes.LightGreen;
+                    textoEstado.Content = Properties.Resources.lb_EnLínea;
+
+                    foreach (Window ventana in Application.Current.Windows)
+                    {
+                        if(ventana is VentanaMenu ventanaMenu && ventanaMenu.MarcoPrincipal.Content is PaginaSala paginaSala)
+                        {
+                            botonInvitar.Background = Brushes.Blue;
+                            botonInvitar.IsEnabled = true;
+                        }
+                    }
+
                     botonInvitar.Click += (s, e) => InvitarAmistad(solicitud);
                 }
+                else    //Si esta ausente
+                {
+                    circulo.Fill = Brushes.Red;
+                    textoEstado.Content = Properties.Resources.lb_Ausente;
+                }
 
-                botonesPanel.Children.Add(botonInvitar);
+                stackNombreEstado.Children.Add(estado);
+                Grid.SetColumn(stackNombreEstado, 1);
+                Grid.SetRow(stackNombreEstado, 0);
+                grid.Children.Add(stackNombreEstado);
 
                 Grid.SetColumn(botonesPanel, 2);
                 Grid.SetRowSpan(botonesPanel, 2);
@@ -596,27 +624,26 @@ namespace DobbleGame
 
                 panelSolicitud.Child = grid;
 
-                // Añadir la notificación al StackPanel de notificaciones principal
                 ContenedorNotificaciones.Children.Add(panelSolicitud);
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
             }
         }
 
         private DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var proxy = new Servidor.GestionAmigosClient();
+            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
             if (esAgeno == true)
             {
-                var respuesta = proxy.ObtenerUsuario(solicitud.UsuarioPrincipalId);
+                var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
                 var cuenta = respuesta.Resultado;
                 return cuenta;
             }
             else
             {
-                var respuesta = proxy.ObtenerUsuario(solicitud.UsuarioAmigoId);
+                var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioAmigoId);
                 var cuenta = respuesta.Resultado;
                 return cuenta;
             }
@@ -627,12 +654,12 @@ namespace DobbleGame
             if (fotoBytes == null || fotoBytes.Length == 0)
                 return null;
 
-            using (var stream = new MemoryStream(fotoBytes))
+            using (var flujoMemoria = new MemoryStream(fotoBytes))
             {
                 var imagen = new BitmapImage();
                 imagen.BeginInit();
                 imagen.CacheOption = BitmapCacheOption.OnLoad;
-                imagen.StreamSource = stream;
+                imagen.StreamSource = flujoMemoria;
                 imagen.EndInit();
                 return imagen;
             }

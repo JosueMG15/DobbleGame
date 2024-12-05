@@ -23,8 +23,9 @@ namespace DobbleGame
     {
         VentanaRecuperarContraseña _marcoPrincipal;
         string _correo;
-        String _codigo;
-        public PaginaIngresoCodigo(VentanaRecuperarContraseña marcoPrincipal, string correo, String codigo)
+        string _codigo;
+
+        public PaginaIngresoCodigo(VentanaRecuperarContraseña marcoPrincipal, string correo, string codigo)
         {
             InitializeComponent();
             _marcoPrincipal = marcoPrincipal;
@@ -34,10 +35,10 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
-            var proxy = new Servidor.GestionCorreosClient();
-                try
+            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
+            try
             {
-                String codigo = tbCodigoSala.Text.Trim();
+                string codigo = tbCodigoSala.Text.Trim();
                 if (Utilidades.Utilidades.EsCampoVacio(codigo))
                 {
                     MostrarMensaje(Properties.Resources.lb_CamposVacíos);
@@ -57,7 +58,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
             }
         }
 
@@ -68,18 +69,18 @@ namespace DobbleGame
 
         private void EnviarCodigo(string correo)
         {
-            var proxy = new Servidor.GestionCorreosClient();
-                try
+            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
+            try
             {
-                if (proxy.State == CommunicationState.Faulted)
+                if (proxyGestionCorreos.State == CommunicationState.Faulted)
                 {
-                    proxy.Abort();
+                    proxyGestionCorreos.Abort();
                     throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                 }
 
                 string codigo = GenerarCodigo();
                 _codigo = codigo;
-                var respuesta = proxy.EnviarCodigo(correo, codigo);
+                var respuesta = proxyGestionCorreos.EnviarCodigo(correo, codigo);
                 if (respuesta.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
@@ -88,13 +89,13 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
             }
         }
 
         public string GenerarCodigo()
         {
-            return new Random().Next(100000, 999999).ToString(); // Código de 6 dígitos
+            return new Random().Next(100000, 999999).ToString(); 
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)
@@ -104,7 +105,7 @@ namespace DobbleGame
 
         private void MostrarMensaje(string mensaje)
         {
-            advertenciaIcono.Visibility = Visibility.Visible;
+            IconoAdvertencia.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
         }
     }

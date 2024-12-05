@@ -46,6 +46,7 @@ namespace DobbleGame
             btnIniciarPartida.DataContext = UsuariosConectados;
         }
 
+
         public bool IniciarSesionSala()
         {
             if (EsAnfitrion && CodigoSala == null)
@@ -176,6 +177,9 @@ namespace DobbleGame
         {
             AbandonarSala();
             IrPaginaMenu();
+
+            var proxyGestionAmigos = new GestionAmigosClient();
+            proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
         }
 
         private void IrPaginaMenu()

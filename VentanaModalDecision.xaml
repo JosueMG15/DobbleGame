@@ -9,17 +9,12 @@
         Title="VentanaModalDecision" Height="200" Width="400" WindowStyle="None" AllowsTransparency="True" 
         Background="Transparent" WindowStartupLocation="CenterScreen">
     <Border Background="#E1DD8B" CornerRadius="20">
-        <StackPanel >
-            <TextBlock x:Name="tbMensaje" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap" 
-                       Margin="30,30,30,10" FontWeight="Bold" Height="105"/>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnAceptar" Width="100" Content="{x:Static p:Resources.btn_Expulsar}" 
-                        VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="60,0,30,40" Background="#F12424" 
-                        Foreground="White" Click="BtnAceptar"/>
-                <Button x:Name="btnCancelar" Width="100" Content="{x:Static p:Resources.global_Cancelar}" 
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="60,0,60,40" Background="#AAA7A7" 
-                        Foreground="White" Click="BtnCancelar"/>
-            </StackPanel>
-        </StackPanel>
+        <Grid>
+            <TextBlock x:Name="tbMensaje" FontSize="16" TextWrapping="Wrap" Width="328" Margin="0,63,0,83" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"/>
+            <Button x:Name="btnAceptar" Width="100" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F12424" 
+                        Foreground="White" Click="BtnAceptar_Click" Margin="75,144,225,14"/>
+            <Button x:Name="btnCancelar" Width="100" Content="{x:Static p:Resources.global_Cancelar}" Background="#AAA7A7" 
+                        Foreground="White" Click="BtnCancelar_Click" Margin="225,140,75,10"/>
+        </Grid>
     </Border>
 </Window>

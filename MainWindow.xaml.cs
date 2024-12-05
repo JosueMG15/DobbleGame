@@ -68,12 +68,10 @@ namespace DobbleGame
                             Estado = true,
                         };
 
-                        // Conectar a la lista de clientes
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
 
                         var proxyUsuario = new Servidor.GestionAmigosClient();
                         proxyUsuario.NotificarCambios();
-                        //proxyUsuario.NotificarBotonInvitacion(cuentaInicioSesion.Usuario);
 
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     

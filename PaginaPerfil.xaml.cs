@@ -44,33 +44,33 @@ namespace DobbleGame
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
         }
 
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        private void BtnRegresar(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
+            DoubleAnimation animacionDesvanecimiento = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+            animacionDesvanecimiento.Completed += (s, a) =>
             {
                 PaginaMenu paginaMenu = new PaginaMenu();
                 this.NavigationService.Navigate(paginaMenu);
 
-                AnimateElementsInPaginaMenu(paginaMenu);
+                AnimarElementos(paginaMenu);
             };
-            this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+            this.BeginAnimation(Frame.OpacityProperty, animacionDesvanecimiento);
         }
 
-        private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
+        private void AnimarElementos(PaginaMenu paginaMenu)
         {
             if (paginaMenu.Content is Panel panel)
             {
-                foreach (UIElement element in panel.Children)
+                foreach (UIElement elemento in panel.Children)
                 {
-                    element.Opacity = 0;
+                    elemento.Opacity = 0;
 
-                    DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)))
+                    DoubleAnimation animacionAparicion = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)))
                     {
                         BeginTime = TimeSpan.FromMilliseconds(200) 
                     };
 
-                    element.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    elemento.BeginAnimation(UIElement.OpacityProperty, animacionAparicion);
                 }
             }
         }
@@ -87,22 +87,27 @@ namespace DobbleGame
             VentanaCambioContraseña ventanaCambioContraseña = new VentanaCambioContraseña();
             ventanaCambioContraseña.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaCambioContraseña.ShowDialog();
-
         }
 
         private void BtnActualizarFoto(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog dialogo = new OpenFileDialog();
 
-            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
-            openFileDialog.Title = "Selecciona una imagen";
+            dialogo.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+            dialogo.Title = "Selecciona una imagen";
 
-            openFileDialog.ShowDialog();
-            string selectedFilePath = openFileDialog.FileName;
+            dialogo.ShowDialog();
+            string rutaArchivo = dialogo.FileName;
 
-            if (!string.IsNullOrEmpty(selectedFilePath) && File.Exists(selectedFilePath))
+            if (EsArchivoImagen(rutaArchivo) == false)
             {
-                FileInfo fileInfo = new FileInfo(selectedFilePath);
+                MostrarMensaje(Properties.Resources.lb_FormatoInválido);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(rutaArchivo) && File.Exists(rutaArchivo))
+            {
+                FileInfo fileInfo = new FileInfo(rutaArchivo);
 
                 if (fileInfo.Length > 10 * 1024) // 10 KB en bytes
                 {
@@ -112,28 +117,21 @@ namespace DobbleGame
 
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(selectedFilePath);
+                bitmap.UriSource = new Uri(rutaArchivo);
                 bitmap.EndInit();
 
-                GuardarFotoPerfil(selectedFilePath, bitmap);                          
+                GuardarFotoPerfil(rutaArchivo, bitmap);                          
             }
         }
 
         private void GuardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
         {
-            var proxy = new Servidor.GestionJugadorClient();
-            var proxyUsuario = new GestionAmigosClient();
+            var proxyGestionJugador = new Servidor.GestionJugadorClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
                 byte[] foto = File.ReadAllBytes(rutaImagen);
-                byte[] fotoRedimencionada = RedimensionarImagen(foto, 800, 600);
-                var respuestaModificarFoto = proxy.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, fotoRedimencionada);
+
+                var respuestaModificarFoto = proxyGestionJugador.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, foto);
 
                 var ventanaPrincipal = Window.GetWindow(this);
 
@@ -151,37 +149,22 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 
-        private byte[] RedimensionarImagen(byte[] datosImagen, int anchoMaximo, int altoMaximo)
+        private bool EsArchivoImagen(string rutaArchivo)
         {
-            using (MemoryStream memoriaEntrada = new MemoryStream(datosImagen))
+            try
             {
-                System.Drawing.Image imagenOriginal = System.Drawing.Image.FromStream(memoriaEntrada);
-                int nuevoAncho = imagenOriginal.Width;
-                int nuevoAlto = imagenOriginal.Height;
-
-                if (imagenOriginal.Width > anchoMaximo || imagenOriginal.Height > altoMaximo)
+                using (var imagen = System.Drawing.Image.FromFile(rutaArchivo))
                 {
-                    float proporcionAncho = (float)anchoMaximo / imagenOriginal.Width;
-                    float proporcionAlto = (float)altoMaximo / imagenOriginal.Height;
-                    float proporcion = Math.Min(proporcionAncho, proporcionAlto); 
-
-                    nuevoAncho = (int)(imagenOriginal.Width * proporcion);
-                    nuevoAlto = (int)(imagenOriginal.Height * proporcion);
+                    return true;
                 }
-
-                Bitmap imagenRedimensionada = new Bitmap(imagenOriginal, new System.Drawing.Size(nuevoAncho, nuevoAlto));
-
-                using (MemoryStream memoriaSalida = new MemoryStream())
-                {
-                    imagenRedimensionada.Save(memoriaSalida, ImageFormat.Jpeg);
-
-                    return memoriaSalida.ToArray();
-                }
+            }
+            catch (OutOfMemoryException)
+            {
+                return false;
             }
         }
 
@@ -192,14 +175,14 @@ namespace DobbleGame
 
             using (var ms = new MemoryStream(fotoBytes))
             {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = ms;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                image.Freeze();
+                BitmapImage imagen = new BitmapImage();
+                imagen.BeginInit();
+                imagen.StreamSource = ms;
+                imagen.CacheOption = BitmapCacheOption.OnLoad;
+                imagen.EndInit();
+                imagen.Freeze();
 
-                ImagenPerfil.Source = image;
+                ImagenPerfil.Source = imagen;
             }
         }
 
@@ -214,7 +197,7 @@ namespace DobbleGame
             lbMensaje.Content = mensaje;
         }
 
-        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        private void OcultarDialogo(object sender, MouseEventArgs e)
         {
             if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
             {

@@ -26,7 +26,7 @@
             </Button>
             
         </StackPanel>
-        <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" Opacity="0.5" Width="650" 
+        <Image Source="pack://application:,,,/Imagenes/IconoAbejaMenu.png" Opacity="0.5" Width="650" 
                Margin="-700,0,0,-400"/>
     </Grid>
 </Page>

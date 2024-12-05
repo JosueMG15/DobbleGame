@@ -7,7 +7,7 @@
       xmlns:p="clr-namespace:DobbleGame.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
-      Title="PaginaPerfil" PreviewMouseDown="Window_PreviewMouseDown">
+      Title="PaginaPerfil" PreviewMouseDown="OcultarDialogo">
 
     <Grid>
         <Grid.Background>
@@ -15,7 +15,7 @@
         </Grid.Background>
 
         <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Background="Transparent"
-                    Click="BtnRegresar_Click">
+                    Click="BtnRegresar">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
         <Rectangle HorizontalAlignment="Left" Height="501" Margin="511,103,0,0" Stroke="#FFE9E9E9" VerticalAlignment="Top" 
@@ -48,8 +48,8 @@
         <Label Content = "{x:Static p:Resources.lb_Puntos}" Style="{StaticResource TituloLalezar1}" Margin="82,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
         <Label Name="lbPuntaje" Style="{StaticResource TituloLalezar1}" Margin="213,167,0,583" Width="131" FontSize="35" HorizontalAlignment="Left" Foreground="#FFF6F106" />
 
-        <StackPanel Name="panelMensaje" Margin="119,693,0,58" Visibility="Hidden" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="774" Orientation="Horizontal">
-            <Label x:Name="lbMensaje"  Foreground="Red" FontSize="21" Width="770"/>
+        <StackPanel Name="panelMensaje" Margin="119,693,0,58" Visibility="Hidden" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="1024" Orientation="Horizontal">
+            <Label x:Name="lbMensaje" Foreground="Red" FontSize="21" Width="893"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -57,10 +57,11 @@ namespace DobbleGame
             var proxyUsuario = new GestionAmigosClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
+                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
                 {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
                 }
 
                 var respuestaUsuario = proxy.ExisteNombreUsuario(nuevoNombre);

@@ -15,7 +15,7 @@
         <Image Name="advertenciaIcono" Margin="142,122,452,441" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Stretch="Uniform" Visibility="Hidden"/>
         <Label Name="lbMensaje" HorizontalAlignment="Left" Margin="238,133,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Red" RenderTransformOrigin="0.218,0.569"/>
 
-        <Label Content="{x:Static Properties:Resources.lb_CambioContraseña}" Style="{StaticResource TituloLalezar1}" Margin="0,22,0,512" Width="616" FontSize="65" />
+        <Label Content="{x:Static Properties:Resources.lb_CambioContraseña}" Style="{StaticResource TituloLalezar1}" Margin="0,22,0,512" Width="616" FontSize="65" HorizontalAlignment="Center" HorizontalContentAlignment="Center" />
         <PasswordBox MaxLength="35" Name="pbNuevaContraseña" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static Properties:Resources.global_NuevaContraseña}" Width="NaN" Height="NaN" Margin="122,307,122,261" PasswordChanged="PasswordBox_CambioDeContraseña"/>
 
         <Button Content="{x:Static Properties:Resources.global_Actualizar}" FontSize="20" Background="#FF62E02C" Foreground="White" Margin="71,493,417,44" Click="BtnActualizarContraseña" />

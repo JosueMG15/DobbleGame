@@ -24,7 +24,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Button VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Height="100"
-                    Margin="20,20,10,0" Click="BtnIrPerfil_Click" Background="{x:Null}" >
+                    Margin="20,20,10,0" Click="BtnIrPerfil" Background="{x:Null}" >
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
@@ -35,12 +35,11 @@
                     </Image.Clip>
                 </Image>
             </Button>
-            <Label x:Name="lbNombreUsuario" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" FontSize="20" Margin="130,40,0,0" FontWeight="SemiBold" Width="180" 
-                   />
-            <Button x:Name="btnEstadoUsuario" Width="20" Height="20" Margin="130,85,250,195" Click="BtnCambiarEstado_Click" />
-            <Label x:Name="lbEstadoUsuario" Style="{StaticResource EstadoUsuario}"  Height="30" Margin="155,80,0,190" HorizontalAlignment="Left"/>
+            <Label x:Name="lbNombreUsuario" VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" FontSize="20" Margin="130,40,0,0" FontWeight="SemiBold" Width="180"/>
+            <Label x:Name="lbEstadoUsuario" Style="{StaticResource EstadoUsuario}" Content="{x:Static p:Resources.lb_EnLínea}"  Height="30" Margin="155,80,0,190" HorizontalAlignment="Left"/>
+
             <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Background="Transparent" Margin="0,35,10,0"
-                    Padding="0" Click="BtnCerrarSesion_Click" ToolTip="{x:Static p:Resources.btn_CerrarSesión}">
+                    Padding="0" Click="BtnCerrarSesion">
                 <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform">
                     <Image.Effect>
                         <DropShadowEffect/>
@@ -62,9 +61,10 @@
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="30,217,31,24" Background="#FFC9BD75" Grid.RowSpan="2">
                 <StackPanel x:Name="ContenedorNotificaciones" Orientation="Vertical" Margin="10" Background="#FFC9BD75">
-                    <!-- Aquí se agregarán las notificaciones dinámicamente -->
+
                 </StackPanel>
             </ScrollViewer>
+            <Ellipse HorizontalAlignment="Left" Height="20" Margin="130,85,0,0" VerticalAlignment="Top" Width="20" Stroke="#FF59B01E" Fill="#FF59B01E"/>
         </Grid>
     </Grid>
 </Window>

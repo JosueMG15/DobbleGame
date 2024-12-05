@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DobbleGame.Servidor;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,10 +53,9 @@ namespace DobbleGame
             {
                 this.NavigationService.Navigate(paginaSala);
 
-                AnimateElementsInPaginaSala(paginaSala);
+                AnimateElementsInPaginaSala(paginaSala);                
             };
             this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
-
         }
 
         private void AnimateElementsInPaginaSala(PaginaSala paginaSala)

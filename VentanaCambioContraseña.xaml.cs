@@ -56,12 +56,6 @@ namespace DobbleGame
             var proxyUsuario = new Servidor.GestionAmigosClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
                 if (!ValidarContraseñaActual(proxy, contraseñaActual))
                 {
                     return;
@@ -100,13 +94,13 @@ namespace DobbleGame
                 return true;
             }
 
-            if (nuevaContraseña != confirmarNuevaContraseña)
+            if (!Utilidades.Utilidades.EsMismaContraseña(nuevaContraseña, confirmarNuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
                 return true;
             }
 
-            if (contraseñaActual == nuevaContraseña)
+            if (Utilidades.Utilidades.EsMismaContraseña(contraseñaActual, nuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.global_MismaContraseña_);
                 return true;

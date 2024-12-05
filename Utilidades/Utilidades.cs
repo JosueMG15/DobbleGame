@@ -64,6 +64,7 @@ namespace DobbleGame.Utilidades
         {
             return CorreoRegex.IsMatch(correo);
         }
+
         public static System.Windows.Media.Brush StringABrush(string colorString)
         {
             var convertidorBrush = new BrushConverter();

@@ -196,6 +196,16 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invitar amigo.
+        ///   Busca una cadena traducida similar a Invitar.
+        /// </summary>
+        public static string btn_Invitar {
+            get {
+                return ResourceManager.GetString("btn_Invitar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Invitar por correo.
         /// </summary>
         public static string btn_InvitarPorCorreo {
@@ -683,7 +693,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La imagen es demasiado grande, selecciona una que no supere los 10 kb .
+        ///   Busca una cadena traducida similar a El archivo es invalido o es demasiado grande, selecciona una que no supere los 10 kb .
         /// </summary>
         public static string lb_FormatoInválido {
             get {
@@ -962,7 +972,7 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ya hay una solicitud pendiente .
+        ///   Busca una cadena traducida similar a Ya hay una solicitud pendiente o una amistad con este usuario .
         /// </summary>
         public static string lb_SolicitudYaEnviada_ {
             get {
@@ -1156,6 +1166,15 @@ namespace DobbleGame.Properties {
         public static string titulo_CambioNombre {
             get {
                 return ResourceManager.GetString("titulo_CambioNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string titulo_EliminarAmigo {
+            get {
+                return ResourceManager.GetString("titulo_EliminarAmigo", resourceCulture);
             }
         }
         

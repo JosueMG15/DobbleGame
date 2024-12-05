@@ -220,7 +220,7 @@
     <value>Actualizar foto</value>
   </data>
   <data name="lb_FormatoInválido" xml:space="preserve">
-    <value>La imagen es demasiado grande, selecciona una que no supere los 10 kb </value>
+    <value>El archivo es invalido o es demasiado grande, selecciona una que no supere los 10 kb </value>
   </data>
   <data name="lb_CambioNombre" xml:space="preserve">
     <value>Cambio de nombre</value>
@@ -400,7 +400,7 @@
     <value>El nombre de usuario no existe</value>
   </data>
   <data name="lb_SolicitudYaEnviada " xml:space="preserve">
-    <value>Ya hay una solicitud pendiente </value>
+    <value>Ya hay una solicitud pendiente o una amistad con este usuario </value>
   </data>
   <data name="msg_UnionSala" xml:space="preserve">
     <value>se ha unido a la sala</value>
@@ -474,6 +474,12 @@
   <data name="lb_ConfirmarIrPerfil" xml:space="preserve">
     <value>Hacer esto te hará abandonar la sala  
 ¿Seguro que deseas ir al perfil?</value>
+  </data>
+  <data name="titulo_EliminarAmigo" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btn_Invitar" xml:space="preserve">
+    <value>Invitar</value>
   </data>
   <data name="lb_Invitado" xml:space="preserve">
     <value>Invitado{0}</value>

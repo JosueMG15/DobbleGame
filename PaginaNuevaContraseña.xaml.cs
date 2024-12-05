@@ -36,12 +36,12 @@ namespace DobbleGame
 
         private void BtnActualizar(object sender, RoutedEventArgs e)
         {
-            String nuevaContraseña = tbNuevaContraseña.Password.Trim();
-            String confirmarNuevaContraseña = tbConfirmarContraseña.Password.Trim();
+            string nuevaContraseña = tbNuevaContraseña.Password.Trim();
+            string confirmarNuevaContraseña = tbConfirmarContraseña.Password.Trim();
             ActualizarContraseña(nuevaContraseña, confirmarNuevaContraseña, _correo);
         }
 
-        private void ActualizarContraseña(String nuevaContraseña, String confirmarNuevaContraseña, string correo)
+        private void ActualizarContraseña(string nuevaContraseña, string confirmarNuevaContraseña, string correo)
         {
             if (Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
             {
@@ -49,79 +49,72 @@ namespace DobbleGame
                 return;
             }
 
-            using (var proxy = new Servidor.GestionJugadorClient())
+            var proxyGestionJugador = new Servidor.GestionJugadorClient();
+            try
             {
-                try
+                if (nuevaContraseña != confirmarNuevaContraseña)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
+                    MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                    return;
+                }
 
-                    if (nuevaContraseña != confirmarNuevaContraseña)
+                if (Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
+                {
+                    string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(tbNuevaContraseña.Password);
+                    var respuestaUsuario = proxyGestionJugador.ObtenerUsuarioPorCorreo(correo);
+                    var usuario = respuestaUsuario.Resultado;
+
+                    if (respuestaUsuario.ErrorBD)
                     {
-                        MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
                         return;
                     }
 
-                    if (Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
+                    Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                     {
-                        string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(tbNuevaContraseña.Password);
-                        var respuestaUsuario = proxy.ObtenerUsuarioPorCorreo(correo);
-                        var usuario = respuestaUsuario.Resultado;
+                        IdCuentaUsuario = usuario.IdCuentaUsuario,
+                        Contraseña = usuario.Contraseña
+                    };
 
-                        if (respuestaUsuario.ErrorBD)
-                        {
-                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                            return;
-                        }
-
-                        Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
-                        {
-                            IdCuentaUsuario = usuario.IdCuentaUsuario,
-                            Contraseña = usuario.Contraseña
-                        };
-
-                        var respuestaModificarContraseña = proxy.ModificarContraseñaUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
+                    var respuestaModificarContraseña = proxyGestionJugador.ModificarContraseñaUsuario
+                        (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
 
 
-                        if (respuestaModificarContraseña.ErrorBD)
-                        {
-                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                            return;
-                        }
-                        if (nuevaContraseña == usuario.Contraseña)
-                        {
-                            MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                            return;
-                        }
-                        if (respuestaModificarContraseña.Resultado)
-                        {
-                            _marcoPrincipal.Close();
-                        }
-                        else
-                        {
-                            MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                            return;
-                        }
+                    if (respuestaModificarContraseña.ErrorBD)
+                    {
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                        return;
+                    }
+                    if (nuevaContraseña == usuario.Contraseña)
+                    {
+                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
+                        return;
+                    }
+                    if (respuestaModificarContraseña.Resultado)
+                    {
+                        _marcoPrincipal.Close();
                     }
                     else
                     {
-                        MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
                         return;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                    return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 
         private void MostrarMensaje(string mensaje)
         {
-            advertenciaIcono.Visibility = Visibility.Visible;
+            IconoAdvertencia.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
         }
 
@@ -130,7 +123,7 @@ namespace DobbleGame
             _marcoPrincipal.Close();
 
         }
-        private void PasswordBox_CambioDeContraseña(object sender, RoutedEventArgs e)
+        private void PbCambioDeContraseña(object sender, RoutedEventArgs e)
         {
             var passwordBox = sender as PasswordBox;
             var textoSugerido = ContraseñaHelper.EncontrarHijoVisual<TextBlock>(passwordBox, "TextoSugerido");

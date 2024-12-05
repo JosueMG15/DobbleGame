@@ -220,7 +220,7 @@
     <value>Update photo</value>
   </data>
   <data name="lb_FormatoInválido" xml:space="preserve">
-    <value>The image is too large, please select one no larger than 10kb </value>
+    <value>The file is invalid or too large, select one that does not exceed 10 kb</value>
   </data>
   <data name="lb_CambioNombre" xml:space="preserve">
     <value>Change name</value>
@@ -400,7 +400,7 @@
     <value>The username doesn’t exist </value>
   </data>
   <data name="lb_SolicitudYaEnviada " xml:space="preserve">
-    <value>There is already a pending request </value>
+    <value>There is already a pending request or friendship with this user </value>
   </data>
   <data name="msg_UnionSala" xml:space="preserve">
     <value>has joined the room</value>
@@ -474,6 +474,9 @@
   <data name="lb_ConfirmarIrPerfil" xml:space="preserve">
     <value>Doing this will make you leave the lobby 
 Are you sure you want to go to the profile?</value>
+  </data>
+  <data name="btn_Invitar" xml:space="preserve">
+    <value>Invite</value>
   </data>
   <data name="lb_Invitado" xml:space="preserve">
     <value>Guest{0}</value>

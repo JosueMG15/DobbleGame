@@ -50,84 +50,63 @@ namespace DobbleGame
                 return;
             }
 
-            using (var proxyGestionJugador = new Servidor.GestionJugadorClient())
+            var proxyGestionJugador = new Servidor.GestionJugadorClient();
+            var proxy = new Servidor.GestionAmigosClient();
+            try
             {
-                var proxy = new Servidor.GestionAmigosClient();
-                try
+                var respuestaUsuario = proxyGestionJugador.ExisteNombreUsuario(nombreUsuario);
+
+
+                if (respuestaUsuario.ErrorBD)
                 {
-                    var respuestaUsuario = proxyGestionJugador.ExisteNombreUsuario(nombreUsuario);
-                    if (respuestaUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (!respuestaUsuario.Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_UsuarioInexistente_);
-                        return;
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+                if (!respuestaUsuario.Resultado)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    MostrarMensaje(Properties.Resources.lb_UsuarioInexistente_);
+                    return;
                 }
 
-            }
+                var respuestaAmistadYaExiste = proxy.AmistadYaExiste(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
-            using (var proxyGestionAmigos = new Servidor.GestionAmigosClient())
-            {
-                try
+
+                if (respuestaAmistadYaExiste.ErrorBD)
                 {
-                    if (proxyGestionAmigos.State == CommunicationState.Faulted)
-                    {
-                        proxyGestionAmigos.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuestaAmistadYaExiste = proxyGestionAmigos.AmistadYaExiste(
-                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
-
-                    if (respuestaAmistadYaExiste.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaAmistadYaExiste.Resultado)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_SolicitudYaEnviada_);
-                        return;
-                    }
-                    if(nombreUsuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario)
-                    {
-                        MostrarMensaje(Properties.Resources.lb_SolicitudATiMismo_);
-                        return;
-                    }
-
-
-                    var respuestaEnviarSolicitudAmistad = proxyGestionAmigos.EnviarSolicitudAmistad(
-                        Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
-
-                    if (respuestaEnviarSolicitudAmistad.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-                    if (respuestaEnviarSolicitudAmistad.Resultado)
-                    {
-                        MostrarMensaje("Solicitud de amistad enviada exitosamente.");
-                        this.Close();
-                    }
-                    else
-                    {
-                        MostrarMensaje("No se pudo enviar la solicitud de amistad. Inténtalo nuevamente.");
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (respuestaAmistadYaExiste.Resultado)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
+                    MostrarMensaje(Properties.Resources.lb_SolicitudYaEnviada_);
+                    return;
+                }
+
+                if (nombreUsuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario)
+                {
+                    MostrarMensaje(Properties.Resources.lb_SolicitudATiMismo_);
+                    return;
+                }
+
+                var respuestaEnviarSolicitudAmistad = proxy.EnviarSolicitudAmistad(
+                    Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+
+                if (respuestaEnviarSolicitudAmistad.Resultado)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    MostrarMensaje("No se pudo enviar la solicitud de amistad. Inténtalo nuevamente.");
                 }
             }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+            }
+
         }
 
         private void MostrarMensaje(string mensaje)

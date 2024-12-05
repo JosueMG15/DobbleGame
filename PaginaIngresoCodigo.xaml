@@ -14,15 +14,15 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
         </Grid.Background>
-        <Label Content="{x:Static p:Resources.lb_IngresarCódigo}"  Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" />
+        <Label Content="{x:Static p:Resources.lb_IngresarCódigo}"  Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" HorizontalContentAlignment="Center" />
         <TextBox x:Name="tbCodigoSala" Width="NaN" Height="NaN" Margin="97,183,98,183" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_Código}"/>
         <Button Content="{x:Static p:Resources.global_Aceptar}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnAceptar" Margin="74,326,274,43"/>
         <Button Content="{x:Static p:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="280,326,68,43"/>
         <Button Content="{x:Static p:Resources.btn_Reintentar}" FontSize="14" Background="#FFF1F1F1" Foreground="Black" Click="BtnReintentar" Margin="182,265,182,106"/>
         <Label Content="{x:Static p:Resources.lb_CódigoEnviado}" HorizontalAlignment="Center" FontFamily="Segoe UI" 
-            Foreground="White" Width="424" FontSize="15" Margin="0,85,0,290" />
+            Foreground="White" Width="424" FontSize="15" Margin="0,85,0,290" HorizontalContentAlignment="Center" />
 
-        <Image Name="advertenciaIcono" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Stretch="Uniform" Visibility="Hidden" Margin="103,122,350,247"/>
+        <Image Name="IconoAdvertencia" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Stretch="Uniform" Visibility="Hidden" Margin="103,122,350,247"/>
         <Label Name="lbMensaje" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Foreground="Red" RenderTransformOrigin="0.218,0.569" Margin="150,132,0,0" Width="291" Height="32"/>
     </Grid>
 </Page>

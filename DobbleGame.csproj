@@ -364,13 +364,10 @@
     <Resource Include="Imagenes\BotonSalir.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\AbejaInvitado.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Imagenes\FondoPanalSala.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\enviarMensaje.png" />
+    <Resource Include="Imagenes\BotonEnviarMensaje.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -378,9 +375,6 @@
   <ItemGroup>
     <Resource Include="Imagenes\BotonMandarSolicitud.png" />
     <Resource Include="Imagenes\BuscarAmistad.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Imagenes\bob.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonEdicion.png" />
@@ -417,9 +411,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\FondoPanalPartida.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Imagenes\IconoCaballo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonEliminarAmigo.png" />
@@ -487,7 +478,7 @@
     <Resource Include="Imagenes\Ficha.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\AbejaMenu.png" />
+    <Resource Include="Imagenes\IconoAbejaMenu.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\BotonSolicitudes.png" />

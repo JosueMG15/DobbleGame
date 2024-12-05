@@ -30,7 +30,7 @@ namespace DobbleGame
 
         private void BtnEnviarCodigo(object sender, RoutedEventArgs e)
         {
-            String correo = tbCorreo.Text.Trim();
+            string correo = tbCorreo.Text.Trim();
             EnviarCodigo(correo);
         }
 
@@ -41,15 +41,9 @@ namespace DobbleGame
                 MostrarMensaje(Properties.Resources.lb_CamposVacíos);
                 return;
             }
-            var proxy = new Servidor.GestionCorreosClient();
+            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
                 if (ValidarCorreo(correo) == false)
                 {
                     MostrarMensaje(Properties.Resources.lb_CorreoNoExiste_);
@@ -57,7 +51,7 @@ namespace DobbleGame
                 }
 
                 string codigo = GenerarCodigo();
-                var respuesta = proxy.EnviarCodigo(correo, codigo);
+                var respuesta = proxyGestionCorreos.EnviarCodigo(correo, codigo);
 
                 if (respuesta.ErrorBD)
                 {
@@ -73,27 +67,21 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
             }
         }
 
         public string GenerarCodigo()
         {
-            return new Random().Next(100000, 999999).ToString(); // Código de 6 dígitos
+            return new Random().Next(100000, 999999).ToString(); 
         }
 
         public bool ValidarCorreo(string correo)
         {
-            var proxy = new Servidor.GestionJugadorClient();
+            var proxyGestionJugador = new Servidor.GestionJugadorClient();
             try
             {
-                if (proxy.State == CommunicationState.Faulted)
-                {
-                    proxy.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
-                var respuesta = proxy.ExisteCorreoAsociado(correo);
+                var respuesta = proxyGestionJugador.ExisteCorreoAsociado(correo);
 
                 if (respuesta.ErrorBD)
                 {
@@ -112,7 +100,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
                 return false;
             }
         }
@@ -124,7 +112,7 @@ namespace DobbleGame
 
         private void MostrarMensaje(string mensaje)
         {
-            advertenciaIcono.Visibility = Visibility.Visible;
+            IconoAdvertencia.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
         }
     }

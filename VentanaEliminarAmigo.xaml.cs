@@ -37,6 +37,7 @@ namespace DobbleGame
             {
                 try
                 {
+
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();

@@ -73,7 +73,6 @@ namespace DobbleGame
 
                     if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
                     {
-                        // Mapeo de objetos del servicio a la capa de dominio
                         List<Dominio.Amistad> solicitudesAmistad = respuesta.Resultado
                             .Select(solicitud => new Dominio.Amistad
                             {
@@ -84,7 +83,6 @@ namespace DobbleGame
                             })
                             .ToList();
 
-                        // Mostrar las notificaciones
                         foreach (var solicitud in solicitudesAmistad)
                         {
                             MostrarNotificacionSolicitud(solicitud);
@@ -104,7 +102,6 @@ namespace DobbleGame
             {
                 try
                 {
-                    // Verificar si el canal de comunicación está en estado Faulted
                     if (proxy.State == CommunicationState.Faulted)
                     {
                         proxy.Abort();
@@ -118,7 +115,6 @@ namespace DobbleGame
                         return;
                     }
 
-                    // Si no hay error, cargar la amistad
                     if (respuesta.Resultado != null)
                     {
                         var amistadDominio = new Dominio.Amistad
@@ -129,7 +125,6 @@ namespace DobbleGame
                             UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
                         };
 
-                        // Crear y mostrar la notificación con el objeto mapeado
                         MostrarNotificacionSolicitud(amistadDominio);
 
                     }
@@ -164,8 +159,8 @@ namespace DobbleGame
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.25, GridUnitType.Star) }); 
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.75, GridUnitType.Star) }); 
 
-            // Crear la imagen del usuario y hacerla circular
-            var fotoUsuario = new Image
+            
+            var fotoUsuario = new Image  // Crear la imagen del usuario y hacerla circular
             {
                 Width = 70, 
                 Height = 70, 
@@ -187,8 +182,8 @@ namespace DobbleGame
             };
             Grid.SetColumn(fotoUsuario, 0);
 
-            // Crear el TextBlock con el nombre de usuario
-            var nombreUsuario = new TextBlock
+            
+            var nombreUsuario = new TextBlock  // Crear el TextBlock con el nombre de usuario
             {
                 Text = cuentaUsuarioAmigo.Usuario,
                 FontSize = 21, 
@@ -198,8 +193,8 @@ namespace DobbleGame
             };
             Grid.SetColumn(nombreUsuario, 1);
 
-            // Crear los botones de aceptar y rechazar
-            var stackBotones = new StackPanel
+            
+            var stackBotones = new StackPanel  // Crear los botones de aceptar y rechazar
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Right
@@ -207,7 +202,7 @@ namespace DobbleGame
 
             var botonAceptar = new Button
             {
-                Content = "Aceptar",
+                Content = Properties.Resources.global_Aceptar,
                 Margin = new Thickness(0, 0, 5, 0),
                 Background = new SolidColorBrush(Colors.Green),
                 Foreground = new SolidColorBrush(Colors.White)
@@ -216,7 +211,7 @@ namespace DobbleGame
 
             var botonRechazar = new Button
             {
-                Content = "Rechazar",
+                Content = Properties.Resources.btn_Rechazar,
                 Background = new SolidColorBrush(Colors.Red),
                 Foreground = new SolidColorBrush(Colors.White)
             };
@@ -228,7 +223,7 @@ namespace DobbleGame
             var contenidoStackPanel = new StackPanel
             {
                 Orientation = Orientation.Vertical,
-                VerticalAlignment = VerticalAlignment.Center // Centrar verticalmente todo el contenido
+                VerticalAlignment = VerticalAlignment.Center 
             };
             contenidoStackPanel.Children.Add(nombreUsuario);
             contenidoStackPanel.Children.Add(stackBotones);
@@ -272,11 +267,6 @@ namespace DobbleGame
                         return;
                     }
 
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
 
                     var respuesta = proxy.AceptarSolicitud(solicitud.IdAmistad, nombreUsuario);
 
@@ -311,12 +301,6 @@ namespace DobbleGame
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
                         return;
-                    }
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
                     }
 
                     var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad, null, null);
