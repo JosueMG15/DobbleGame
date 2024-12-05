@@ -28,7 +28,7 @@ namespace DobbleGame
             InitializeComponent();
         }
 
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        private void BtnRegresar(object sender, RoutedEventArgs e)
         {
             IrMainWindow();
         }
@@ -40,7 +40,7 @@ namespace DobbleGame
             this.Close();
         }
 
-        private void BtnRegistrarUsuario_Click(object sender, RoutedEventArgs e)
+        private void BtnRegistrarUsuario(object sender, RoutedEventArgs e)
         {
             if (!CamposValidos()) return;
 
@@ -217,7 +217,7 @@ namespace DobbleGame
 
                 if (!File.Exists(rutaFotoDefecto))
                 {
-                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, "No se encontró la imagen por defecto");
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
                     return null;
                 }
 

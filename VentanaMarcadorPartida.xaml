@@ -26,8 +26,10 @@
     <Border Background="#EDE193" CornerRadius="20">
         <Grid >
             <StackPanel >
-                <Label Style="{StaticResource TituloLalezar1}" Content="¡Victoria!" HorizontalAlignment="Center" Height="90"/>
-                <Label x:Name="lbGanador" Style="{StaticResource TituloLalezar1}" HorizontalAlignment="Center" FontSize="50" Foreground="Black" Height="68" />
+                <Label Style="{StaticResource TituloLalezar1}" Content="{x:Static p:Resources.lb_Victoria}" 
+                       HorizontalAlignment="Center" Height="90"/>
+                <Label x:Name="lbGanador" Style="{StaticResource TituloLalezar1}" HorizontalAlignment="Center" FontSize="50" 
+                       Foreground="Black" Height="68" />
                 <Grid Margin="50,10,50,0" Height="550">
                     <Border Background="Black" Opacity=".2" CornerRadius="20">
                         <Image Source="pack://application:,,,/Imagenes/AbejaLobbyGris.png" Margin="30,50,10,0"/>
@@ -67,8 +69,8 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
-                <Button Content="Ir a la sala" Margin="150,20,150,0" Background="#62E02C"
-                        Foreground="White" FontWeight="Bold" Click="BtnIrSala_Click"/>
+                <Button Content="{x:Static p:Resources.btn_IrASala}" Margin="150,20,150,0" Background="#62E02C"
+                        Foreground="White" FontWeight="Bold" Click="BtnIrSala"/>
             </StackPanel>
         </Grid>
     </Border>

@@ -55,13 +55,6 @@ namespace DobbleGame
                 var proxy = new Servidor.GestionAmigosClient();
                 try
                 {
-                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
                     var respuestaUsuario = proxyGestionJugador.ExisteNombreUsuario(nombreUsuario);
                     if (respuestaUsuario.ErrorBD)
                     {

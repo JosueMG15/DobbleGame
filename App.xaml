@@ -17,12 +17,14 @@
                         <Border Background="White" CornerRadius="20">
                             <Grid>
                                 <TextBlock x:Name="TextoSugerido"
-                                           Text="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(extensiones:TextBoxExtensiones.TextoSugerido)}" 
+                                           Text="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, 
+                                                  Path=(extensiones:TextBoxExtensiones.TextoSugerido)}" 
                                            Foreground="Black"
                                            Opacity="0.4"
                                            VerticalAlignment="Center" 
                                            Margin="15,0,0,0" 
-                                           Visibility="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}, Converter={StaticResource CadenaVisibilidadConverter}}"/>
+                                           Visibility="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}, 
+                                                        Converter={StaticResource CadenaVisibilidadConverter}}"/>
                                 <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" />
                             </Grid>
                         </Border>
@@ -48,12 +50,14 @@
                         <Border Background="White" CornerRadius="20">
                             <Grid>
                                 <TextBlock x:Name="TextoSugerido"
-                                           Text="{Binding RelativeSource={RelativeSource AncestorType=PasswordBox}, Path=(extensiones:PasswordBoxExtensiones.TextoSugerido)}"  
+                                           Text="{Binding RelativeSource={RelativeSource AncestorType=PasswordBox}, 
+                                                  Path=(extensiones:PasswordBoxExtensiones.TextoSugerido)}"  
                                            Foreground="Black"
                                            Opacity="0.4"
                                            VerticalAlignment="Center" 
                                            Margin="15,0,0,0" 
-                                           Visibility="{Binding Password, RelativeSource={RelativeSource AncestorType=PasswordBox}, Converter={StaticResource CadenaVisibilidadConverter}}"/>
+                                           Visibility="{Binding Password, RelativeSource={RelativeSource AncestorType=PasswordBox}, 
+                                                        Converter={StaticResource CadenaVisibilidadConverter}}"/>
                                 <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" />
                             </Grid>
                         </Border>
@@ -125,14 +129,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                    BorderBrush="{TemplateBinding BorderBrush}" 
-                                    CornerRadius="20" 
-                                    Padding="10" 
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
+                        <Grid>
+                            <Border x:Name="BordeBase" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                    CornerRadius="20" Padding="10" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BordeBase" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="5" BlurRadius="15" Opacity="0.5" Color="Black" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -159,6 +170,15 @@
                             VerticalAlignment="Center">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="5" BlurRadius="15" Opacity="0.5" Color="Black" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -183,8 +203,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter> 
-        
-
             <Setter Property="Effect">
                 <Setter.Value>
                     <DropShadowEffect BlurRadius="0" Opacity="0" ShadowDepth="0" Color="White"/>

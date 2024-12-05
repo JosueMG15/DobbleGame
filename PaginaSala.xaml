@@ -76,10 +76,15 @@
             </Style.Triggers>
         </Style>
 
+        <BooleanToVisibilityConverter x:Key="ConvertidorBooleano" />
+
         <DataTemplate x:Key="JugadorRojoPlantilla">
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FF6464">
                 <Grid>
                     <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                           Margin="100,0,0,10" FontSize="30" Visibility="{Binding EstaListo, Converter={StaticResource ConvertidorBooleano}}"/>
+
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding NumeroJugador, StringFormat={x:Static p:Resources.lb_Jugador}}" 
                                HorizontalAlignment="Left" Margin="252,45,0,190"/>
                     <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
@@ -93,13 +98,15 @@
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#908ACAFF">
                 <Grid>
                     <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                           Margin="100,0,0,10" FontSize="30" Visibility="{Binding EstaListo, Converter={StaticResource ConvertidorBooleano}}"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding NumeroJugador, StringFormat={x:Static p:Resources.lb_Jugador}}" 
                                HorizontalAlignment="Left" Margin="252,45,0,190"/>
                     <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding Puntaje, StringFormat={x:Static p:Resources.lb_Puntaje}}" 
                                HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
-                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" 
-                            Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar_Click"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" 
+                            Background="#F44545" Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -108,13 +115,15 @@
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#9092FF6A">
                 <Grid>
                     <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                           Margin="100,0,0,10" FontSize="30" Visibility="{Binding EstaListo, Converter={StaticResource ConvertidorBooleano}}"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding NumeroJugador, StringFormat={x:Static p:Resources.lb_Jugador}}" 
                                HorizontalAlignment="Left" Margin="252,45,0,190"/>
                     <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding Puntaje, StringFormat={x:Static p:Resources.lb_Puntaje}}" 
                                HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
-                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" 
-                            Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar_Click"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" 
+                            Background="#F44545" Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -123,13 +132,15 @@
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FFFA60">
                 <Grid>
                     <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
+                    <Label Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                           Margin="100,0,0,10" FontSize="30" Visibility="{Binding EstaListo, Converter={StaticResource ConvertidorBooleano}}"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding NumeroJugador, StringFormat={x:Static p:Resources.lb_Jugador}}" 
                                HorizontalAlignment="Left" Margin="252,45,0,190"/>
                     <Label Content="{Binding Usuario}" HorizontalAlignment="Left" Margin="251,80,0,140" FontSize="30"/>
                     <TextBlock Style="{DynamicResource NumeroJugador}" Text="{Binding Puntaje, StringFormat={x:Static p:Resources.lb_Puntaje}}" 
                                HorizontalAlignment="Left" FontSize="20" Height="40" Margin="252,135,0,95"/>
-                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" Background="#F44545" 
-                            Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar_Click"/>
+                    <Button Style="{StaticResource BtnExpulsar}" Width="100" Height="50" Content="{x:Static p:Resources.btn_Expulsar}" 
+                            Background="#F44545" Foreground="White" Margin="272,196,88,24" Click="BtnExpulsar"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -147,21 +158,22 @@
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <TextBox HorizontalAlignment="Left" Margin="42,0,0,31" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="333" Height="54" Background="#FFEDE193" 
-                 Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}" 
-                 KeyDown="EnviarMensaje_KeyDown" LostFocus="TbChat_LostFocus" MaxLength="100"/>
-        <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="308,0,0,29" Background="Transparent"
-                    Click="BtnEnviarMensaje" Height="56" GotFocus="BtnEnviarMensaje_GotFocus" LostFocus="BtnEnviarMensaje_LostFocus">
+        <TextBox HorizontalAlignment="Left" Margin="42,0,0,31" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="333" Height="54" 
+                 Background="#FFEDE193" Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" KeyDown="EnviarMensaje_KeyDown" 
+                 LostFocus="TbChat_LostFocus" MaxLength="100" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}" />
+        <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="308,0,0,29" 
+                Background="Transparent" Click="BtnEnviarMensaje" Height="56" GotFocus="BtnEnviarMensaje_GotFocus" 
+                LostFocus="BtnEnviarMensaje_LostFocus">
             <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
         </Button>
 
         <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Background="Transparent"
-                    Click="BtnRegresar_Click" Height="91">
+                    Click="BtnRegresar" Height="91">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform"/>
         </Button>
 
-        <Border x:Name="borderContenedor" Margin="42,0,0,92" Width="333" Height="258" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="White" 
-                CornerRadius="20" Padding="30,30,30,0" Panel.ZIndex="1">
+        <Border x:Name="borderContenedor" Margin="42,0,0,92" Width="333" Height="258" HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom" Background="White" CornerRadius="20" Padding="30,30,30,0" Panel.ZIndex="1">
             <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Hidden">
                 <TextBlock x:Name="tbContenedor" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Left"
                            TextWrapping="Wrap"/>
@@ -174,7 +186,8 @@
             </Border.OpacityMask>
         </Border>
 
-        <ItemsControl ItemsSource="{Binding UsuariosConectados}" ItemTemplateSelector="{StaticResource SelectorPlantillaJugador}" Margin="100,50,50,200">
+        <ItemsControl ItemsSource="{Binding UsuariosConectados}" ItemTemplateSelector="{StaticResource SelectorPlantillaJugador}" 
+                      Margin="100,50,50,200">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="2" Columns="2" />
@@ -182,12 +195,14 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <Button x:Name="btnCodigoSala" Content="" HorizontalAlignment="Right" Margin="0,0,123,63" VerticalAlignment="Bottom" Width="252" Height="49" 
-                Background="#FFF1EA29" Click="BtnCopiarCodigoSala_Click"/>
-        <Button Content="" HorizontalAlignment="Right" Margin="0,0,123,9" VerticalAlignment="Bottom" Width="252" Height="49" Background="#FFF1EA29"/>
+        <Button x:Name="btnCodigoSala" HorizontalAlignment="Right" Margin="0,0,123,63" VerticalAlignment="Bottom" Width="252" Height="49" 
+                Background="#FFF1EA29" Click="BtnCopiarCodigoSala" Content=""/>
+        <Button x:Name="btnJugadorListo" Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Right" Margin="0,0,123,6" 
+                VerticalAlignment="Bottom" Width="252" Height="49" Background="#FFF1EA29" Click="BtnJugadorListo"
+                FontSize="15" FontWeight="Bold"/>
 
-        <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" IsEnabled="false"
-                Click="BtnIniciarPartida_Click" Height="126">
+        <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" 
+                Visibility="Hidden" Click="BtnIniciarPartida" Height="126">
             <Grid>
                 <Image Source="/Imagenes/BotonIniciarPartida.png" Stretch="Uniform" Height="111" Width="220" RenderTransformOrigin="0.725,0.455"/>
                 <Label Content="{x:Static p:Resources.btn_IniciarPartida}" FontSize="28" Foreground="Black" 

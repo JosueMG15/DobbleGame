@@ -33,9 +33,9 @@ namespace DobbleGame
                 plantillasDisponibles.Add(JugadorAmarilloPlantilla, true);
         }
 
-        public override DataTemplate SelectTemplate(object item, DependencyObject contenedor)
+        public override DataTemplate SelectTemplate(object objeto, DependencyObject contenedor)
         {
-            var usuario = item as Jugador;
+            var usuario = objeto as Jugador;
 
             if (usuario == null) return null;
 
@@ -67,9 +67,9 @@ namespace DobbleGame
         {
             contadorPlantillas = 0;
 
-            foreach (var key in plantillasDisponibles.Keys.ToList())
+            foreach (var llave in plantillasDisponibles.Keys.ToList())
             {
-                plantillasDisponibles[key] = true;
+                plantillasDisponibles[llave] = true;
             }
         }
     }

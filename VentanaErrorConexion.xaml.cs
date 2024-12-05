@@ -65,23 +65,9 @@ namespace DobbleGame
                     }
                 }
             }
-            catch (CommunicationException ex)
-            {
-                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de CommunicationException: {ex.Message}." +
-                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
-                proxy.Abort();
-            }
-            catch (TimeoutException ex)
-            {
-                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción de TimeoutException: {ex.Message}." +
-                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
-                proxy.Abort();
-            }
             catch (Exception ex)
             {
-                Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción no manejada: {ex.Message}." +
-                               $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
-                proxy.Abort();
+                Utilidades.Utilidades.ManejarExcepcionErrorConexion(ex, proxy);
             }
 
             inicioSesion.Show();

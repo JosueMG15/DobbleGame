@@ -18,11 +18,11 @@
                    FontSize="110" Margin="0,130,0,10"/>
 
             <Button Style="{StaticResource BotonGrande}"  Content="{x:Static p:Resources.btn_CrearSala}" FontSize="60" 
-                    Width="600" Background="#F1EA29" Margin="0,80,0,60" Click="BtnCrearSala_Click">
+                    Width="600" Background="#F1EA29" Margin="0,80,0,60" Click="BtnCrearSala">
             </Button>
 
             <Button Style="{StaticResource BotonGrande}" Content="{x:Static p:Resources.btn_UnirseASala}" FontSize="50" 
-                    Width="500" Background="#FC8C1B" Foreground="White" Click="BtnUnirseASala_Click">
+                    Width="500" Background="#FC8C1B" Foreground="White" Click="BtnUnirseASala">
             </Button>
             
         </StackPanel>

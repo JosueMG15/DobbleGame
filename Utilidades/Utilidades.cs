@@ -14,6 +14,12 @@ namespace DobbleGame.Utilidades
 {
     public static class Utilidades
     {
+        private static readonly Regex CorreoRegex = new Regex(
+            @"^[^\s@]+@[^\s@]+\.[^\s@]+$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase,
+            TimeSpan.FromSeconds(2)
+        );
+
         public static bool ValidarContraseña(string contraseña)
         {
 
@@ -56,8 +62,7 @@ namespace DobbleGame.Utilidades
 
         public static bool ValidarPatronCorreo(string correo)
         {
-            string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(correo, patronCorreo);
+            return CorreoRegex.IsMatch(correo);
         }
         public static System.Windows.Media.Brush StringABrush(string colorString)
         {
@@ -82,13 +87,17 @@ namespace DobbleGame.Utilidades
             MainWindow inicioSesion = new MainWindow();
             try
             {
-                foreach (Window window in Application.Current.Windows)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    if (window != inicioSesion)
+                    foreach (Window window in Application.Current.Windows)
                     {
-                        window.Close();
+                        if (window != null && window != inicioSesion && window.IsLoaded)
+                        {
+                            window.Close();
+                        }
                     }
-                }
+                });
+
                 inicioSesion.Show();
                 contenedor = inicioSesion;
 
@@ -199,6 +208,13 @@ namespace DobbleGame.Utilidades
                     MostrarVentanaErrorConexionServidor(contenedor, true);
                 }
             }
+        }
+
+        public static void ManejarExcepcionErrorConexion(Exception ex, ICommunicationObject proxy)
+        {
+            Registro.Error($"Estado del proxy: {proxy.State}. \nExcepción: {ex.GetType().Name}: {ex.Message}." +
+                           $"\nTraza: {ex.StackTrace}. \nFuente: {ex.Source}");
+            proxy.Abort();
         }
     }
 }

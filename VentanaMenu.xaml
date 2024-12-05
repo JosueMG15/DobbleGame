@@ -8,8 +8,8 @@
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
         mc:Ignorable="d"
         Title="VentanaMenu" Height="800" Width="1600" WindowStartupLocation="CenterScreen"
-        WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
+        WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Icon="pack://application:,,,/Imagenes/AbejaMenu.png">
+    <Grid x:Name="GridPrincipal">
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -29,7 +29,7 @@
                     <DropShadowEffect/>
                 </Button.Effect>
                 <Image Name="ImagenPerfil" Source="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="UniformToFill" 
-                       Height="80" Width="80" ClipToBounds="True">
+                       Height="80" Width="80" ClipToBounds="True" >
                     <Image.Clip>
                         <EllipseGeometry RadiusX="40" RadiusY="40" Center="40,40" />
                     </Image.Clip>
@@ -40,7 +40,7 @@
             <Button x:Name="btnEstadoUsuario" Width="20" Height="20" Margin="130,85,250,195" Click="BtnCambiarEstado_Click" />
             <Label x:Name="lbEstadoUsuario" Style="{StaticResource EstadoUsuario}"  Height="30" Margin="155,80,0,190" HorizontalAlignment="Left"/>
             <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" Height="80" Background="Transparent" Margin="0,35,10,0"
-                    Padding="0" Click="BtnCerrarSesion_Click">
+                    Padding="0" Click="BtnCerrarSesion_Click" ToolTip="{x:Static p:Resources.btn_CerrarSesión}">
                 <Image Source="pack://application:,,,/Imagenes/BotonSalir.png" Stretch="Uniform">
                     <Image.Effect>
                         <DropShadowEffect/>
@@ -49,12 +49,12 @@
             </Button>
 
             <Button Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,125,0,0" Background="Transparent"
-            Click="BtnSolicitudesAmistad" Height="72">
+            Click="BtnSolicitudesAmistad" Height="72" ToolTip="{x:Static p:Resources.btn_SolicitudesDeAmistad}">
                 <Image Source="pack://application:,,,/Imagenes/BotonSolicitudes.png" Stretch="Uniform" Height="77" Width="76"/>
             </Button>
 
             <Button Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140,144,0,0" Background="Transparent"
-            Click="BtnAgregarAmistad" Height="59">
+            Click="BtnAgregarAmistad" Height="59" ToolTip="{x:Static p:Resources.btn_AgregarAmistad}">
                 <Image Source="pack://application:,,,/Imagenes/BotonMandarSolicitud.png" Stretch="Uniform" Height="40" Width="53"/>
             </Button>
 

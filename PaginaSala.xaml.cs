@@ -27,6 +27,7 @@ namespace DobbleGame
         private Servidor.IGestionSala proxy;
         private const int NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA = 2;
         private readonly SelectorPlantillaJugador selectorPlantilla;
+        private bool estaListo = false;
         public ObservableCollection<Jugador> UsuariosConectados { get; set; }
         public bool EsAnfitrion { get; set; }
         public string CodigoSala { get; set; }
@@ -37,19 +38,19 @@ namespace DobbleGame
             InitializeComponent();
             this.DataContext = this;
             UsuariosConectados = new ObservableCollection<Jugador>();
-            UsuariosConectados.CollectionChanged += UsuariosConectados_CollectionChanged;
             EsAnfitrion = esAnfitrion;
             HayConexionConSala = false;
             CodigoSala = codigoSala;
             selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
             selectorPlantilla.IniciarlizarPlantillas();
-
+            btnIniciarPartida.DataContext = UsuariosConectados;
         }
 
         public bool IniciarSesionSala()
         {
             if (EsAnfitrion && CodigoSala == null)
             {
+                btnIniciarPartida.Visibility = Visibility.Visible;
                 return CrearSala();
             }
             else
@@ -171,7 +172,7 @@ namespace DobbleGame
             }
         }
 
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        private void BtnRegresar(object sender, RoutedEventArgs e)
         {
             AbandonarSala();
             IrPaginaMenu();
@@ -240,7 +241,33 @@ namespace DobbleGame
             }
         }
 
-        private void BtnIniciarPartida_Click(object sender, RoutedEventArgs e)
+        private void BtnIniciarPartida(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (UsuariosConectados.Count >= NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA)
+                {
+                    if (proxy.TodosLosJugadoresEstanListos(CodigoSala))
+                    {
+                        IniciarPartida();
+                    }
+                    else
+                    {
+                        ControlDeUsuarioNotificacion.Instancia.MostrarNotificacion(Properties.Resources.msg_JugadoresNoListos);
+                    }
+                }
+                else
+                {
+                    ControlDeUsuarioNotificacion.Instancia.MostrarNotificacion(Properties.Resources.msg_MinimoJugadores);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+        }
+
+        private void IniciarPartida()
         {
             try
             {
@@ -259,7 +286,7 @@ namespace DobbleGame
             }
         }
 
-        private void BtnExpulsar_Click(object sender, RoutedEventArgs e)
+        private void BtnExpulsar(object sender, RoutedEventArgs e)
         {
             Button boton = sender as Button;
 
@@ -297,15 +324,7 @@ namespace DobbleGame
         {
             ((ICommunicationObject)proxy).Close();
             IrPaginaMenu();
-            MessageBox.Show(Properties.Resources.lb_HasSidoExpulsado);
-        }
-
-        private void UsuariosConectados_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (EsAnfitrion && UsuariosConectados.Count >= NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA)
-            {
-                btnIniciarPartida.IsEnabled = true;
-            }
+            ControlDeUsuarioNotificacion.Instancia.MostrarNotificacion(Properties.Resources.lb_HasSidoExpulsado);
         }
 
         public void MostrarMensajeSala(string mensaje)
@@ -331,9 +350,20 @@ namespace DobbleGame
             }));
         }
 
-        public void ConvertirEnAnfitrion()
+        public void ConvertirEnAnfitrion(string nombreUsuario)
         {
             EsAnfitrion = true;
+            btnIniciarPartida.Visibility = Visibility.Visible;
+
+            this.Dispatcher.Invoke(() =>
+            {
+                var usuario = UsuariosConectados.FirstOrDefault(u => u.Usuario == nombreUsuario);
+
+                if (usuario != null)
+                {
+                    usuario.EsAnfitrion = true;
+                }
+            });
         }
 
         public void CambiarVentana()
@@ -347,11 +377,48 @@ namespace DobbleGame
             }
         }
 
-        private void BtnCopiarCodigoSala_Click(object sender, RoutedEventArgs e)
+        private void BtnJugadorListo(object sender, RoutedEventArgs e)
+        {
+            if (estaListo)
+            {
+                ControlDeUsuarioNotificacion.Instancia.MostrarNotificacion(Properties.Resources.msg_YaEstasListo);
+                return;
+            }
+
+            try
+            {
+                proxy.NotificarJugadorListo(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala);
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)proxy, ex, this);
+            }
+        }
+
+        public void MostrarJugadorListo(string nombreUsuario, bool estaListo)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                var usuario = UsuariosConectados.FirstOrDefault(u => u.Usuario == nombreUsuario);
+
+                if (usuario.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario)
+                {
+                    this.estaListo = estaListo;
+                }
+
+                if (usuario != null)
+                {
+                    usuario.EstaListo = estaListo;
+                }
+            });
+        }
+
+        private void BtnCopiarCodigoSala(object sender, RoutedEventArgs e)
         {
             if (sender is Button boton)
             {
                 Clipboard.SetText(boton.Content.ToString());
+                ControlDeUsuarioNotificacion.Instancia.MostrarNotificacion(Properties.Resources.msg_CodigoCopiado);
             }
         }
 

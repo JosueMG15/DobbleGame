@@ -24,7 +24,7 @@ namespace DobbleGame
             InitializeComponent();
         }
 
-        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
+        private void BtnAceptar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

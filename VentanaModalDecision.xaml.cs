@@ -35,13 +35,13 @@ namespace DobbleGame
             btnCancelar.Content = nombreBotonCancelar;
         }
 
-        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
+        private void BtnAceptar(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();
         }
 
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
         }

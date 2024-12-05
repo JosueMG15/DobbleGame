@@ -24,7 +24,7 @@ namespace DobbleGame
             InitializeComponent();
         }
 
-        private void BtnCrearSala_Click(object sender, RoutedEventArgs e)
+        private void BtnCrearSala(object sender, RoutedEventArgs e)
         {
             PaginaSala paginaSala = new PaginaSala(true, null);
 
@@ -34,7 +34,7 @@ namespace DobbleGame
             }
         }
 
-        private void BtnUnirseASala_Click(object sender, RoutedEventArgs e)
+        private void BtnUnirseASala(object sender, RoutedEventArgs e)
         {
             VentanaIngresoCodigoSala paginaIngresoCodigoSala = new VentanaIngresoCodigoSala();
             bool? resultado = paginaIngresoCodigoSala.ShowDialog();

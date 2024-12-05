@@ -115,23 +115,16 @@ namespace DobbleGame
                 bitmap.UriSource = new Uri(selectedFilePath);
                 bitmap.EndInit();
 
-                guardarFotoPerfil(selectedFilePath, bitmap);                          
+                GuardarFotoPerfil(selectedFilePath, bitmap);                          
             }
         }
 
-        private void guardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
+        private void GuardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
         {
             var proxy = new Servidor.GestionJugadorClient();
             var proxyUsuario = new GestionAmigosClient();
             try
             {
-                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                if (!estaConectado.Resultado)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                    return;
-                }
-
                 if (proxy.State == CommunicationState.Faulted)
                 {
                     proxy.Abort();

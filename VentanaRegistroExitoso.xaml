@@ -11,9 +11,11 @@
         <Grid >
             <StackPanel >
                 <Image Width="60" Source="pack://application:,,,/Imagenes/IconoExito.png" Margin="20"/>
-                <TextBlock x:Name="tbMensaje" HorizontalAlignment="Center" Text="{x:Static p:Resources.lb_RegistroExitoso}" FontSize="15" TextWrapping="Wrap" FontWeight="Bold"/> 
+                <TextBlock x:Name="tbMensaje" HorizontalAlignment="Center" Text="{x:Static p:Resources.lb_RegistroExitoso}" FontSize="15" 
+                           TextWrapping="Wrap" FontWeight="Bold"/> 
             </StackPanel>
-            <Button Width="100" Content="{x:Static p:Resources.global_Ok}" VerticalAlignment="Bottom" Margin="0,0,0,15" Background="#89F25C" Foreground="White" Click="BtnAceptar_Click"/>
+            <Button Width="100" Content="{x:Static p:Resources.global_Ok}" VerticalAlignment="Bottom" Margin="0,0,0,15" Background="#89F25C" 
+                    Foreground="White" Click="BtnAceptar"/>
         </Grid>
     </Border>
 </Window>

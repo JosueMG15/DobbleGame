@@ -25,10 +25,15 @@ namespace DobbleGame
         {
             InitializeComponent();
             MarcadorFinal.ItemsSource = resultadoJugadores;
-            lbGanador.Content = resultadoJugadores.FirstOrDefault().Usuario;
+
+            if (resultadoJugadores != null )
+            {
+                lbGanador.Content = resultadoJugadores.FirstOrDefault().Usuario;
+            }
+            
         }
 
-        private void BtnIrSala_Click(object sender, RoutedEventArgs e)
+        private void BtnIrSala(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();

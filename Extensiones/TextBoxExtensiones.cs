@@ -21,9 +21,9 @@ namespace DobbleGame.Extensiones
             return (string)obj.GetValue(PropiedadTextoSugerido);
         }
 
-        public static void SetTextoSugerido(DependencyObject obj, string value)
+        public static void SetTextoSugerido(DependencyObject obj, string valor)
         { 
-            obj.SetValue(PropiedadTextoSugerido, value);
+            obj.SetValue(PropiedadTextoSugerido, valor);
         }
     }
 }

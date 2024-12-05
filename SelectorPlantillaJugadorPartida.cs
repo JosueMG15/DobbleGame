@@ -24,11 +24,11 @@ namespace DobbleGame
             {"Plantilla4", true},
         };
 
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        public override DataTemplate SelectTemplate(object objeto, DependencyObject contenedor)
         {
-            var jugador = item as Jugador;
+            var jugador = objeto as Jugador;
             if (jugador == null)
-                return base.SelectTemplate(item, container);
+                return base.SelectTemplate(objeto, contenedor);
 
             if (jugador.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario
                 && plantillasDisponibles["Plantilla1"])
@@ -53,14 +53,14 @@ namespace DobbleGame
                 return Plantilla4;
             }
 
-            return base.SelectTemplate(item, container);
+            return base.SelectTemplate(objeto, contenedor);
         }
 
         public void ReiniciarPlantillasPartida()
         {
-            foreach (var key in plantillasDisponibles.Keys.ToList())
+            foreach (var llave in plantillasDisponibles.Keys.ToList())
             {
-                plantillasDisponibles[key] = true;
+                plantillasDisponibles[llave] = true;
             }
         }
     }

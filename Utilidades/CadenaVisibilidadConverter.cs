@@ -11,16 +11,16 @@ namespace DobbleGame.Utilidades
 {
     public class CadenaVisibilidadConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) 
+        public object Convert(object valor, Type tipoObjetivo, object parametro, CultureInfo cultura) 
         {
-            if (value is string texto && string.IsNullOrEmpty(texto))
+            if (valor is string texto && string.IsNullOrEmpty(texto))
             {
                 return Visibility.Visible;
             }
             return Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object valor, Type tipoObjetivo, object parametro, CultureInfo cultura)
         {
             throw new NotImplementedException();
         }

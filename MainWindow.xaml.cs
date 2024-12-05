@@ -5,6 +5,7 @@ using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.ServiceModel;
@@ -41,7 +42,8 @@ namespace DobbleGame
 
                 try
                 {
-                    var respuestaInicioSesion = proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+                    var respuestaInicioSesion = 
+                        proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
 
                     if (respuestaInicioSesion.ErrorBD)
                     {
@@ -76,11 +78,12 @@ namespace DobbleGame
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     
                         ventanaMenu.Show();
-
+                        
                         App.Current.Dispatcher.Invoke(() =>
                         {
                             ((App)Application.Current).IniciarPing();
                         });
+                        
                     }
                     else
                     {
@@ -98,8 +101,42 @@ namespace DobbleGame
             }
         }
 
+        private void BtnEntrarMenuInvitado(object sender, EventArgs e)
+        {
+            var proxy = new Servidor.GestionJugadorClient();
 
-        private void BtnEntrarMenu_Click(object sender, RoutedEventArgs e)
+            try
+            {
+                string nombreInvitado = String.Format(Properties.Resources.lb_Invitado, new Random().Next(10000, 100000));
+                var respuestaInicioSesion = proxy.IniciarSesionInvitado(nombreInvitado, CargarFotoDefecto());
+
+                if (respuestaInicioSesion.Resultado != null)
+                {
+                    var cuentaInvitado = respuestaInicioSesion.Resultado;
+                    Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
+                    {
+                        Usuario = cuentaInvitado.Usuario,
+                        Foto = cuentaInvitado.Foto
+                    };
+
+                    VentanaMenuInvitado ventanaMenuInvitado = new VentanaMenuInvitado();
+                    this.Close();
+                    ventanaMenuInvitado.Show();
+                    
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        ((App)Application.Current).IniciarPing();
+                    });
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+            }
+        }
+
+        private void BtnEntrarMenu(object sender, RoutedEventArgs e)
         {
             IniciarSesion();
         }
@@ -118,7 +155,7 @@ namespace DobbleGame
             ventanaRecuperarContraseña.ShowDialog();
         }
 
-        private void BtnCambioIdioma_Click(object sender, RoutedEventArgs e)
+        private void BtnCambioIdioma(object sender, RoutedEventArgs e)
         {
             string idiomaEspañol = "es-MX";
             string idiomaIngles = "en-US";
@@ -126,6 +163,7 @@ namespace DobbleGame
             if (Thread.CurrentThread.CurrentUICulture.Name == idiomaEspañol)
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(idiomaIngles);
+                
             } 
             else
             {
@@ -146,12 +184,35 @@ namespace DobbleGame
             tbContraseñaOlvidada.Text = Properties.Resources.lb_ContraseñaOlvidada;
             btnEntrar.Content = Properties.Resources.btn_Entrar;
             btnEntrarComoInvitado.Content = Properties.Resources.btn_EntrarComoInvitado;
+            btnCambioIdioma.Content = Properties.Resources.btn_CambioIdioma;
         }
 
         private void MostrarMensaje(string mensaje)
         {
             panelMensaje.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
+        }
+
+        private byte[] CargarFotoDefecto()
+        {
+            try
+            {
+                string rutaProyecto = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+                string rutaFotoDefecto = System.IO.Path.Combine(rutaProyecto, "Imagenes", "PerfilPorDefecto.jpg");
+
+                if (!File.Exists(rutaFotoDefecto))
+                {
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
+                    return null;
+                }
+
+                return File.ReadAllBytes(rutaFotoDefecto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
 
         private void PasswordBox_CambioDeContraseña(object sender, RoutedEventArgs e)

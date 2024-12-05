@@ -14,13 +14,23 @@
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
         </Grid.Background>
 
-        <Label Content="{x:Static Properties:Resources.lb_IngresarCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" Margin="0,29,0,314" />
-        <StackPanel x:Name="panelMensaje" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center" Height="60" Margin="0,-150,0,0">
-            <Image Margin="0,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
-            <Label x:Name="lbMensaje" Content="" Margin="0,10,0,0" FontSize="20" Foreground="Red" />
+        <StackPanel>
+            <Label Content="{x:Static Properties:Resources.lb_IngresarCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" 
+                   Margin="0,29,0,0" />
+            <Label Content="{x:Static Properties:Resources.lb_MensajeUnirsePartida}" Style="{StaticResource Titulo2}" FontSize="14" Height="30" 
+                   VerticalAlignment="Top"/>
+            <StackPanel x:Name="panelMensaje" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center" Height="80" 
+                        Margin="0,0,0,0">
+                <Image Margin="0,0,10,0" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Width="40" Stretch="Uniform"/>
+                <Label x:Name="lbMensaje" Content="" Margin="0,10,0,0" FontSize="20" Foreground="Red" />
+            </StackPanel>
+            <TextBox x:Name="tbCodigoSala" Width="350" Height="45" Margin="0" MaxLength="36" FontSize="24" />
+            <StackPanel Orientation="Horizontal" Height="180">
+                <Button Content="{x:Static Properties:Resources.btn_Unirse}" FontSize="15" Background="#FF62E02C" Foreground="White" 
+                        Width="150" Click="BtnAceptar" Margin="50"/>
+                <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" 
+                        Width="150" Click="BtnCancelar" Margin="50"/>
+            </StackPanel>
         </StackPanel>
-        <TextBox x:Name="tbCodigoSala" Width="NaN" Height="NaN" Margin="97,186,98,186" MaxLength="36"/>
-        <Button Content="{x:Static Properties:Resources.global_Aceptar}" FontSize="15" Background="#FF62E02C" Foreground="White" Click="BtnAceptar" Margin="72,290,291,58"/>
-        <Button Content="{x:Static Properties:Resources.global_Cancelar}" FontSize="15" Background="#FFF44545" Foreground="White" Click="BtnCancelar" Margin="288,296,75,63"/>
     </Grid>
 </Window>

@@ -20,8 +20,9 @@ namespace DobbleGame
 {
     public partial class App : Application
     {
-        private IGestionJugador proxy;
+        private IGestionServidor proxy;
         private CancellationTokenSource tokenDeCancelacion;
+        private readonly object bloqueadorToken = new object();
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -45,7 +46,7 @@ namespace DobbleGame
                 }
             }
 
-            var factory = new ChannelFactory<IGestionJugador>("NetTcpBinding_IGestionJugador");
+            var factory = new ChannelFactory<IGestionServidor>("NetTcpBinding_IGestionServidor");
             proxy = factory.CreateChannel();
 
             try
@@ -65,19 +66,39 @@ namespace DobbleGame
 
             InicializarProxy();
 
-            tokenDeCancelacion = new CancellationTokenSource();
+            lock (bloqueadorToken)
+            {
+                tokenDeCancelacion = new CancellationTokenSource();
+            }
 
             Task.Run(async () =>
             {
-                while (!tokenDeCancelacion.IsCancellationRequested)
+                while (true)
                 {
+                    CancellationTokenSource tokenLocal;
+                    lock (bloqueadorToken)
+                    {
+                        tokenLocal = tokenDeCancelacion;
+                    }
+
+                    if (tokenLocal == null || tokenLocal.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
                     try
                     {
                         await Task.Delay(TimeSpan.FromSeconds(5), tokenDeCancelacion.Token);
                         VerificarConexion();
+
+                        if (tokenDeCancelacion == null)
+                        {
+                            break;
+                        }
                     }
-                    catch (TaskCanceledException)
+                    catch (TaskCanceledException ex)
                     {
+                        Registro.Error($"Excepción de TaskCanceledException: {ex.Message}.\nTraza: {ex.StackTrace}");
                         break;
                     }
                     catch (Exception ex)
@@ -120,7 +141,8 @@ namespace DobbleGame
                 {
                     if (ventana.IsActive)
                     {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventana, true);
+                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(ventana, false);
+                        DetenerPing();
                         break;
                     }
                 }
@@ -131,9 +153,9 @@ namespace DobbleGame
         {
             try
             {
-                /*tokenDeCancelacion?.Cancel();
+                tokenDeCancelacion?.Cancel();
                 tokenDeCancelacion?.Dispose();
-                tokenDeCancelacion = null;*/
+                tokenDeCancelacion = null;
 
                 if (proxy != null && ((ICommunicationObject)proxy).State == CommunicationState.Opened)
                 {

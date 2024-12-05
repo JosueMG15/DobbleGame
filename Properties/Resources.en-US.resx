@@ -270,8 +270,8 @@
   <data name="lb_Jugador" xml:space="preserve">
     <value>Player {0}</value>
   </data>
-  <data name="btn_InvitarAmigo" xml:space="preserve">
-    <value>Invite friend</value>
+  <data name="btn_Invitar" xml:space="preserve">
+    <value>Invite</value>
   </data>
   <data name="btn_InvitarPorCorreo" xml:space="preserve">
     <value>Invite by e-mail</value>
@@ -298,7 +298,7 @@
     <value>Are you sure you want to kick {0}?</value>
   </data>
   <data name="lb_Puntos" xml:space="preserve">
-    <value>Score:</value>
+    <value>Score: {0}</value>
   </data>
   <data name="btn_Abandonar" xml:space="preserve">
     <value>Leave</value>
@@ -468,11 +468,56 @@
   <data name="lb_TeEstaInvitando " xml:space="preserve">
     <value>{0} is inviting you to play! </value>
   </data>
-  <data name="lb_MinimoJugadores" xml:space="preserve">
+  <data name="msg_MinimoJugadores" xml:space="preserve">
     <value>At least 2 players are required to start the game</value>
   </data>
   <data name="lb_ConfirmarIrPerfil" xml:space="preserve">
     <value>Doing this will make you leave the lobby 
 Are you sure you want to go to the profile?</value>
+  </data>
+  <data name="lb_Invitado" xml:space="preserve">
+    <value>Guest{0}</value>
+  </data>
+  <data name="btn_SolicitudesDeAmistad" xml:space="preserve">
+    <value>Friend requests</value>
+  </data>
+  <data name="btn_AgregarAmistad" xml:space="preserve">
+    <value>Add friend</value>
+  </data>
+  <data name="btn_EliminarAmigo" xml:space="preserve">
+    <value>Remove friend</value>
+  </data>
+  <data name="lb_CartasRestantes" xml:space="preserve">
+    <value>Remaining cards {0}</value>
+  </data>
+  <data name="lb_Victoria" xml:space="preserve">
+    <value>Victory!</value>
+  </data>
+  <data name="btn_IrASala" xml:space="preserve">
+    <value>Go to the lobby</value>
+  </data>
+  <data name="global_Listo" xml:space="preserve">
+    <value>Ready!</value>
+  </data>
+  <data name="msg_CodigoCopiado" xml:space="preserve">
+    <value>Copied code</value>
+  </data>
+  <data name="msg_JugadoresNoListos" xml:space="preserve">
+    <value>Not all players are ready</value>
+  </data>
+  <data name="msg_YaEstasListo" xml:space="preserve">
+    <value>You are ready</value>
+  </data>
+  <data name="msg_JugadorEnSala" xml:space="preserve">
+    <value>The player is already in the lobby</value>
+  </data>
+  <data name="msg_InvitaciónEnviada" xml:space="preserve">
+    <value>Invitation sent</value>
+  </data>
+  <data name="msg_InvitaciónPendiente" xml:space="preserve">
+    <value>The user has a pending invitation </value>
+  </data>
+  <data name="btn_CambioIdioma" xml:space="preserve">
+    <value>Switch to Spanish</value>
   </data>
 </root>
