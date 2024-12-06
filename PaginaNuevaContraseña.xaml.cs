@@ -1,28 +1,10 @@
-﻿using DobbleGame.Servidor;
-using DobbleGame.Utilidades;
-using Dominio;
+﻿using DobbleGame.Utilidades;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para PaginaNuevaContraseña.xaml
-    /// </summary>
     public partial class PaginaNuevaContraseña : Page
     {
         private Servidor.GestionJugadorClient _proxyGestionJugador = new Servidor.GestionJugadorClient();

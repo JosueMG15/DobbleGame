@@ -1,23 +1,13 @@
 ﻿using DobbleGame.Servidor;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
@@ -31,23 +21,31 @@ namespace DobbleGame
         public ObservableCollection<Jugador> UsuariosConectados { get; set; }
         public bool EsAnfitrion { get; set; }
         public string CodigoSala { get; set; }
-        public bool HayConexionConSala { get; set; }
-        private readonly ControlDeUsuarioNotificacion _controlNotificacion = new ControlDeUsuarioNotificacion();
+        private ControlDeUsuarioNotificacion _controlNotificacion;
 
         public PaginaSala(bool esAnfitrion, string codigoSala)
         {
             InitializeComponent();
-            this.DataContext = this;
-            UsuariosConectados = new ObservableCollection<Jugador>();
             EsAnfitrion = esAnfitrion;
-            HayConexionConSala = false;
             CodigoSala = codigoSala;
             _selectorPlantilla = (SelectorPlantillaJugador)this.Resources["SelectorPlantillaJugador"];
-            _selectorPlantilla.IniciarlizarPlantillas();
-            btnIniciarPartida.DataContext = UsuariosConectados;
-            this.gridPrincipal.Children.Add(_controlNotificacion);
+            InicializarDatos();
         }
 
+        private void InicializarDatos()
+        {
+            this.DataContext = this;
+            UsuariosConectados = new ObservableCollection<Jugador>();
+            _selectorPlantilla.IniciarlizarPlantillas();
+            btnIniciarPartida.DataContext = UsuariosConectados;
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _controlNotificacion = new ControlDeUsuarioNotificacion();
+                contenedorNotificacion.Content = _controlNotificacion;
+            });
+
+        }
 
         public bool IniciarSesionSala()
         {
@@ -63,6 +61,11 @@ namespace DobbleGame
 
         private bool CrearSala()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return false;
+            }
+
             InicializarProxySiEsNecesario();
 
             bool resultado = false;
@@ -78,7 +81,7 @@ namespace DobbleGame
 
                 if (resultado)
                 {
-                    HayConexionConSala = proxySala.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
+                    proxySala.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
                     proxySala.NotificarUsuarioConectado(CodigoSala);
                 }
             }
@@ -92,6 +95,11 @@ namespace DobbleGame
 
         private bool UnirseASala()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return false;
+            }
+
             InicializarProxySiEsNecesario();
 
             bool resultado = false;
@@ -102,7 +110,6 @@ namespace DobbleGame
                 var usuarioActual = Dominio.CuentaUsuario.CuentaUsuarioActual;
                 resultado = proxySala.UnirseASala(usuarioActual.Usuario, CodigoSala, Properties.Resources.msg_UnionSala, EsAnfitrion);
                 proxySala.NotificarUsuarioConectado(CodigoSala);
-                HayConexionConSala = resultado;
             }
             catch (Exception ex)
             {
@@ -114,6 +121,11 @@ namespace DobbleGame
 
         public void AbandonarSala()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             InicializarProxySiEsNecesario();
 
             try
@@ -176,7 +188,10 @@ namespace DobbleGame
 
         private void BtnRegresar(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             AbandonarSala();
             IrPaginaMenu();
@@ -218,7 +233,10 @@ namespace DobbleGame
 
         private void BtnEnviarMensaje(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             string mensaje = tbChat.Text.Trim();
 
@@ -252,7 +270,10 @@ namespace DobbleGame
 
         private void BtnIniciarPartida(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             try
             {
@@ -305,7 +326,10 @@ namespace DobbleGame
 
         private void BtnExpulsar(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             Button boton = sender as Button;
 
@@ -406,6 +430,11 @@ namespace DobbleGame
 
         private void BtnJugadorListo(object sender, RoutedEventArgs e)
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             if (_estaListo)
             {
                 _controlNotificacion.MostrarNotificacion(Properties.Resources.msg_YaEstasListo);

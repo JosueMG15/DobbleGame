@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,7 +13,6 @@ namespace DobbleGame
 {
     public partial class VentanaGestionarSolicitudesAmistad : Window
     {
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
         private VentanaMenu _ventanaMenu;
 
         public VentanaGestionarSolicitudesAmistad(VentanaMenu ventanaMenu)
@@ -43,6 +41,7 @@ namespace DobbleGame
 
         private void CargarSolicitudesAmistad()
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -79,46 +78,40 @@ namespace DobbleGame
 
         public void CargarSolicitud()
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            var _proxyGestionAmigos = new GestionAmigosClient();
+            try
             {
-                try
+                var respuesta = _proxyGestionAmigos.ObtenerSolicitud();
+                if (respuesta.ErrorBD)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuesta = proxy.ObtenerSolicitud();
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado != null)
-                    {
-                        var amistadDominio = new Dominio.Amistad
-                        {
-                            IdAmistad = respuesta.Resultado.idAmistad,
-                            EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
-                            UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
-                            UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
-                        };
-
-                        MostrarNotificacionSolicitud(amistadDominio);
-
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (respuesta.Resultado != null)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    var amistadDominio = new Dominio.Amistad
+                    {
+                        IdAmistad = respuesta.Resultado.idAmistad,
+                        EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
+                        UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
+                        UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
+                    };
+
+                    MostrarNotificacionSolicitud(amistadDominio);
+
                 }
             }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+            }
+
         }
 
         private void MostrarNotificacionSolicitud(Dominio.Amistad solicitud)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
@@ -147,7 +140,7 @@ namespace DobbleGame
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.75, GridUnitType.Star) });
 
 
-                var fotoUsuario = new Image  // Crear la imagen del usuario y hacerla circular
+                var fotoUsuario = new Image 
                 {
                     Width = 70,
                     Height = 70,
@@ -170,7 +163,7 @@ namespace DobbleGame
                 Grid.SetColumn(fotoUsuario, 0);
 
 
-                var nombreUsuario = new TextBlock  // Crear el TextBlock con el nombre de usuario
+                var nombreUsuario = new TextBlock  
                 {
                     Text = cuentaUsuarioAmigo.Usuario,
                     FontSize = 21,
@@ -181,7 +174,7 @@ namespace DobbleGame
                 Grid.SetColumn(nombreUsuario, 1);
 
 
-                var stackBotones = new StackPanel  // Crear los botones de aceptar y rechazar
+                var stackBotones = new StackPanel  
                 {
                     Orientation = Orientation.Horizontal,
                     HorizontalAlignment = HorizontalAlignment.Right
@@ -231,7 +224,7 @@ namespace DobbleGame
             }
         }
 
-        private ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
+        private static ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
         {
             if (fotoBytes == null || fotoBytes.Length == 0)
                 return null;
@@ -249,6 +242,7 @@ namespace DobbleGame
 
         private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud, String nombreUsuario)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
@@ -275,6 +269,7 @@ namespace DobbleGame
 
         private void RechazarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);

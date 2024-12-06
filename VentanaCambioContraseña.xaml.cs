@@ -6,13 +6,9 @@ using System.Windows.Controls;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaCambioContraseña.xaml
-    /// </summary>
     public partial class VentanaCambioContraseña : Window
     {
         private GestionJugadorClient _proxyJugadorClient = new GestionJugadorClient();
-        private GestionAmigosClient _proxyAmigosClient = new GestionAmigosClient();
 
         public VentanaCambioContraseña()
         {

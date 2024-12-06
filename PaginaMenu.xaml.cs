@@ -1,20 +1,7 @@
-﻿using DobbleGame.Servidor;
-using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
@@ -27,7 +14,10 @@ namespace DobbleGame
 
         private void BtnCrearSala(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             PaginaSala paginaSala = new PaginaSala(true, null);
 
@@ -39,6 +29,11 @@ namespace DobbleGame
 
         private void BtnUnirseASala(object sender, RoutedEventArgs e)
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             VentanaIngresoCodigoSala paginaIngresoCodigoSala = new VentanaIngresoCodigoSala();
             bool? resultado = paginaIngresoCodigoSala.ShowDialog();
 
@@ -55,7 +50,7 @@ namespace DobbleGame
             {
                 this.NavigationService.Navigate(paginaSala);
 
-                //AnimateElementsInPaginaSala(paginaSala);                
+                AnimateElementsInPaginaSala(paginaSala);                
             };
             this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -26,7 +21,7 @@ namespace DobbleGame.Utilidades
                 var hijo = VisualTreeHelper.GetChild(padre, i);
                 if (hijo is T hijoTipado && ((FrameworkElement)hijo).Name == nombreHijo)
                 {
-                    return (T)hijoTipado;
+                    return hijoTipado;
                 }
 
                 var hijoDeHijo = EncontrarHijoVisual<T>(hijo, nombreHijo);

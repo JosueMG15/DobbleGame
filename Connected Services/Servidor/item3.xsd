@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+  <xs:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
@@ -152,6 +152,34 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerUsuarioPorCorreoResult" nillable="true" type="q11:RespuestaServicioOfCuentaUsuario6jbaXeYD" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Ping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PingResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerPuntosUsuario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerPuntosUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerPuntosUsuarioResult" nillable="true" type="q12:RespuestaServicioOfNullableOfint5F2dSckg" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -330,7 +358,7 @@
   <xs:element name="ActualizarUsuariosConectados">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="usuariosConectados" nillable="true" type="q12:ArrayOfJugador" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="usuariosConectados" nillable="true" type="q13:ArrayOfJugador" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -370,7 +398,7 @@
   <xs:element name="EnviarSolicitudAmistadResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarSolicitudAmistadResult" nillable="true" type="q13:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarSolicitudAmistadResult" nillable="true" type="q14:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -385,7 +413,7 @@
   <xs:element name="AmistadYaExisteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="AmistadYaExisteResult" nillable="true" type="q14:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="AmistadYaExisteResult" nillable="true" type="q15:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -399,7 +427,7 @@
   <xs:element name="ObtenerSolicitudesPendientesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerSolicitudesPendientesResult" nillable="true" type="q15:RespuestaServicioOfArrayOfAmistad6jbaXeYD" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerSolicitudesPendientesResult" nillable="true" type="q16:RespuestaServicioOfArrayOfAmistad6jbaXeYD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -413,7 +441,7 @@
   <xs:element name="ObtenerUsuarioResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerUsuarioResult" nillable="true" type="q16:RespuestaServicioOfCuentaUsuario6jbaXeYD" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerUsuarioResult" nillable="true" type="q17:RespuestaServicioOfCuentaUsuario6jbaXeYD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -428,7 +456,7 @@
   <xs:element name="AceptarSolicitudResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="AceptarSolicitudResult" nillable="true" type="q17:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="AceptarSolicitudResult" nillable="true" type="q18:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -444,7 +472,7 @@
   <xs:element name="EliminarAmistadResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EliminarAmistadResult" nillable="true" type="q18:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EliminarAmistadResult" nillable="true" type="q19:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -458,7 +486,7 @@
   <xs:element name="ObtenerAmistadesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerAmistadesResult" nillable="true" type="q19:RespuestaServicioOfArrayOfAmistad6jbaXeYD" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerAmistadesResult" nillable="true" type="q20:RespuestaServicioOfArrayOfAmistad6jbaXeYD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -472,7 +500,7 @@
   <xs:element name="ObtenerAmistadResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerAmistadResult" nillable="true" type="q20:RespuestaServicioOfAmistad6jbaXeYD" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerAmistadResult" nillable="true" type="q21:RespuestaServicioOfAmistad6jbaXeYD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -484,7 +512,7 @@
   <xs:element name="ObtenerSolicitudResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerSolicitudResult" nillable="true" type="q21:RespuestaServicioOfAmistad6jbaXeYD" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="ObtenerSolicitudResult" nillable="true" type="q22:RespuestaServicioOfAmistad6jbaXeYD" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -498,7 +526,7 @@
   <xs:element name="UsuarioConectadoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="UsuarioConectadoResult" nillable="true" type="q22:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="UsuarioConectadoResult" nillable="true" type="q23:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -707,7 +735,7 @@
   <xs:element name="GuardarPuntosJugadorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="GuardarPuntosJugadorResult" nillable="true" type="q23:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="GuardarPuntosJugadorResult" nillable="true" type="q24:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -722,7 +750,7 @@
   <xs:element name="ActualizarJugadoresEnPartida">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="jugadoresConectados" nillable="true" type="q24:ArrayOfJugador" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="jugadoresConectados" nillable="true" type="q25:ArrayOfJugador" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -744,14 +772,14 @@
   <xs:element name="AsignarCarta">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="carta" nillable="true" type="q25:Carta" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="carta" nillable="true" type="q26:Carta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AsignarCartaCentral">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="cartaCentral" nillable="true" type="q26:Carta" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="cartaCentral" nillable="true" type="q27:Carta" />
         <xs:element minOccurs="0" name="cartasRestantes" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -785,7 +813,7 @@
   <xs:element name="EnviarCodigoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarCodigoResult" nillable="true" type="q27:RespuestaServicioOfboolean" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="EnviarCodigoResult" nillable="true" type="q28:RespuestaServicioOfboolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

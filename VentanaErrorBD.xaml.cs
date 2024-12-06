@@ -1,26 +1,10 @@
 ﻿using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
-using Dominio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaErrorBD.xaml
-    /// </summary>
     public partial class VentanaErrorBD : Window
     {
         public VentanaErrorBD(string titulo, string mensaje)
@@ -61,7 +45,7 @@ namespace DobbleGame
                 if (window is MainWindow)
                 {
                     isLoginWindowOpen = true;
-                    break; // Salir del bucle al encontrar la ventana
+                    break; 
                 }
             }
 

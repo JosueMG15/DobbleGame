@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para PaginaRecuperarContraseña.xaml
-    /// </summary>
     public partial class PaginaRecuperarContraseña : Page
     {
         private Servidor.GestionJugadorClient _proxyGestionJugador = new Servidor.GestionJugadorClient();
@@ -57,7 +54,7 @@ namespace DobbleGame
             }
         }
 
-        public string GenerarCodigo()
+        public static string GenerarCodigo()
         {
             return new Random().Next(100000, 999999).ToString(); 
         }

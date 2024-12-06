@@ -1,28 +1,12 @@
 ﻿using DobbleGame.Servidor;
-using DobbleGame.Utilidades;
 using Microsoft.Win32;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
@@ -40,9 +24,17 @@ namespace DobbleGame
 
         private void InicializarDatos()
         {
+            var respuestaObtenerPuntaje = _proxyGestionJugador.ObtenerPuntosUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            if (respuestaObtenerPuntaje.ErrorBD)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_ventanaMenu);
+            }
+            if (respuestaObtenerPuntaje.Resultado != null)
+            {
+                lbPuntaje.Content = String.Format(Properties.Resources.lb_Puntaje, respuestaObtenerPuntaje.Resultado);
+            }
             lbCorreoElectronico.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo;
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
-            lbPuntaje.Content = String.Format(Properties.Resources.lb_Puntaje, Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje);
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
         }
 
@@ -117,7 +109,7 @@ namespace DobbleGame
 
                 FileInfo fileInfo = new FileInfo(rutaArchivo);
 
-                if (fileInfo.Length > 10 * 1024) // 10 KB en bytes
+                if (fileInfo.Length > 10 * 1024)
                 {
                 MostrarMensaje(Properties.Resources.lb_FormatoInválido);
                 return;
@@ -161,7 +153,7 @@ namespace DobbleGame
             }
         }
 
-        private bool EsArchivoImagen(string rutaArchivo)
+        private static bool EsArchivoImagen(string rutaArchivo)
         {
             try
             {

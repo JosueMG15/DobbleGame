@@ -1,12 +1,8 @@
 ﻿using DobbleGame.Servidor;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -93,7 +89,7 @@ namespace DobbleGame.Utilidades
                 {
                     foreach (Window window in Application.Current.Windows)
                     {
-                        if (window != null && window != inicioSesion && window.IsLoaded)
+                        if (window != null && window != inicioSesion && window.IsLoaded && window != Application.Current.MainWindow)
                         {
                             window.Close();
                         }
@@ -111,11 +107,11 @@ namespace DobbleGame.Utilidades
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
 
-                    if (contenedor is Window ventana)
+                    if (contenedor is Window ventana && ventana.IsLoaded)
                     {
                         ventanaErrorConexion.Owner = ventana;
                     }
-                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
+                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal && ventanaPrincipal.IsLoaded)
                     {
                         ventanaErrorConexion.Owner = ventanaPrincipal;
                     }
@@ -137,6 +133,10 @@ namespace DobbleGame.Utilidades
                     else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
                     {
                         ventanaErrorConexion.Owner = ventanaPrincipal;
+                    }
+                    else
+                    {
+                        ventanaErrorConexion.Owner = null;
                     }
 
                     ventanaErrorConexion.ShowDialog();
@@ -230,6 +230,26 @@ namespace DobbleGame.Utilidades
             catch (Exception ex)
             {
                 ManejarExcepciones(proxy, ex, ventana);
+                return false;
+            }
+        }
+
+        public static bool PingConexion(string nombreUsuario, Window ventana)
+        {
+            var proxyGestionJugador = new GestionJugadorClient();
+            try
+            {
+                var estaConectado = proxyGestionJugador.Ping(nombreUsuario);
+                if (!estaConectado)
+                {
+                    MostrarVentanaErrorConexionServidor(ventana, false);
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ManejarExcepciones(proxyGestionJugador, ex, ventana);
                 return false;
             }
         }

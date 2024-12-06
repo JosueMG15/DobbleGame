@@ -5,13 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -69,7 +65,7 @@ namespace DobbleGame
                         proxyGestionJugador.CerrarSesionJugador
                             (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                         CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                        proxyGestionAmigos.NotificarCambios();
+                        proxyGestionAmigos.NotificarCambios(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                     }
                 }
                 catch (Exception ex)
@@ -81,7 +77,10 @@ namespace DobbleGame
 
         private void BtnRegresar(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
 
             InicializarProxySiEsNecesario();
             _permitirCierreInesperado = false;
@@ -224,21 +223,21 @@ namespace DobbleGame
 
         private void BtnValidarIcono(object sender, RoutedEventArgs e)
         {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
-
-            if (sender is Button boton && boton.Content is Image imagenIcono)
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
-                if (imagenIcono.Source != null)
+                return;
+            }
+
+            if (sender is Button boton && boton.Content is Image imagenIcono && imagenIcono.Source != null)
+            {
+                string rutaIcono = imagenIcono.Source.ToString();
+                try
                 {
-                    string rutaIcono = imagenIcono.Source.ToString();
-                    try
-                    {
-                        _proxyGestionPartida.ValidarCarta(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, rutaIcono, _codigoSala);
-                    }
-                    catch (Exception ex)
-                    {
-                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
-                    }
+                    _proxyGestionPartida.ValidarCarta(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, rutaIcono, _codigoSala);
+                }
+                catch (Exception ex)
+                {
+                    Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
                 }
             }
         }
@@ -248,11 +247,11 @@ namespace DobbleGame
             Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
             Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
             Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
             Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
             Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
             Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
         }
 
         public void AsignarCartaCentral(Carta cartaCentral, int cartasRestantes)
@@ -261,11 +260,11 @@ namespace DobbleGame
             IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
             IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
             IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
             IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
             IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
             IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
         }
 
         public void BloquearCarta()
@@ -302,6 +301,11 @@ namespace DobbleGame
 
         public void IniciarPartida()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             IniciarContador();
         }
 
@@ -358,6 +362,11 @@ namespace DobbleGame
 
         public async void FinalizarPartida()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             btnRegresar.Visibility = Visibility.Collapsed;
             tblCartasRestantes.Visibility = Visibility.Collapsed;
             cartaCentral.Visibility = Visibility.Collapsed;
@@ -432,6 +441,11 @@ namespace DobbleGame
 
         private void RegresarASala()
         {
+            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+            {
+                return;
+            }
+
             List<Jugador> jugadoresOrdenadosPorPuntos = JugadoresEnPartida.OrderByDescending(j => j.PuntosEnPartida).ToList();
 
             VentanaMarcadorPartida ventanaMarcadorPartida = new VentanaMarcadorPartida(jugadoresOrdenadosPorPuntos);
@@ -441,6 +455,11 @@ namespace DobbleGame
             {
                 try
                 {
+                    if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+                    {
+                        return;
+                    }
+
                     _proxyGestionPartida.RegresarASala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _codigoSala);
                 }
                 catch (Exception ex)

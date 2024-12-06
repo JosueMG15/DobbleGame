@@ -1,19 +1,11 @@
 ﻿using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
-using Dominio;
-using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -22,29 +14,22 @@ using System.Windows.Shapes;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para VentanaMenu.xaml
-    /// </summary>
     public partial class VentanaMenu : Window
     {
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
-        private GestionJugadorClient _proxyGestionJugador = new GestionJugadorClient();
-
-        private readonly ControlDeUsuarioNotificacion _controlNotificacion = new ControlDeUsuarioNotificacion();
+        private readonly ControlDeUsuarioNotificacion _controlNotificacion;
         public VentanaMenu()
         {
             InitializeComponent();
             InicializarDatos();
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
+            _controlNotificacion = new ControlDeUsuarioNotificacion();
+            contenedorNotificacion.Content = _controlNotificacion;
         }
 
         private void InicializarDatos()
         {
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
-
-            this.GridPrincipal.Children.Add(_controlNotificacion);
-
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
             CallbackManager.Instance.NotificarSalidaEvent += NotificarSalida;
             CallbackManager.Instance.NotificarInvitacionCambioEvent += NotificarInvitacionCambio;
@@ -205,7 +190,7 @@ namespace DobbleGame
             }
         }
 
-        private void CambiarEstadoAusente(StackPanel stackPanel)
+        private static void CambiarEstadoAusente(StackPanel stackPanel)
         {
             foreach ( var hijo in stackPanel.Children)   
             {
@@ -255,17 +240,16 @@ namespace DobbleGame
 
         private void PaginaSalaActiva(object sender, NavigationEventArgs e)
         {
-            if (e.Content is PaginaSala paginaSala)
+            if (e.Content is PaginaSala)
             {
                 ContenedorNotificaciones.Children.Clear();
                 CargarAmistades();
                 return;
             }
-            if (!(e.Content is PaginaSala paginaSala1))
+            if (!(e.Content is PaginaSala))
             {
                 ContenedorNotificaciones.Children.Clear();
                 CargarAmistades();
-                return;
             }
         }
 
@@ -328,6 +312,8 @@ namespace DobbleGame
 
         private void VentanaMenuCierreAbrupto(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            var _proxyGestionJugador = new GestionJugadorClient();
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
@@ -350,6 +336,8 @@ namespace DobbleGame
 
         private void CerrarSesion()
         {
+            var _proxyGestionJugador = new GestionJugadorClient();
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 _proxyGestionJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
@@ -366,6 +354,7 @@ namespace DobbleGame
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
 
             var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -412,6 +401,7 @@ namespace DobbleGame
 
         public void CargarAmistades()
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -455,6 +445,7 @@ namespace DobbleGame
 
         private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
@@ -484,7 +475,7 @@ namespace DobbleGame
                 grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                 
-                var fotoUsuario = new Image    // Foto del usuario
+                var fotoUsuario = new Image   
                 {
                     Width = 60,
                     Height = 60,
@@ -502,7 +493,7 @@ namespace DobbleGame
                 grid.Children.Add(fotoUsuario);
 
                  
-                var stackNombreEstado = new StackPanel    // Nombre de usuario y Estado
+                var stackNombreEstado = new StackPanel   
                 {
                     Orientation = Orientation.Vertical,
                     VerticalAlignment = VerticalAlignment.Center
@@ -524,7 +515,7 @@ namespace DobbleGame
                 };
 
                 
-                var puntosUsuario = new TextBlock    // Puntos del usuario
+                var puntosUsuario = new TextBlock    
                 {
                     Text = $"Puntos: {cuentaUsuarioAmigo.Puntaje}",
                     FontSize = 12,
@@ -536,7 +527,7 @@ namespace DobbleGame
                 grid.Children.Add(puntosUsuario);
 
                 
-                var botonesPanel = new StackPanel    // Botones de "EliminarAmistad" e "Invitar"
+                var botonesPanel = new StackPanel   
                 {
                     Orientation = Orientation.Horizontal,
                     HorizontalAlignment = HorizontalAlignment.Right,
@@ -587,14 +578,14 @@ namespace DobbleGame
                 };
                 botonesPanel.Children.Add(botonInvitar);
 
-                if (respuesta.Resultado)    //Si esta en línea
+                if (respuesta.Resultado)   
                 {
                     circulo.Fill = Brushes.LightGreen;
                     textoEstado.Content = Properties.Resources.lb_EnLínea;
 
                     foreach (Window ventana in Application.Current.Windows)
                     {
-                        if(ventana is VentanaMenu ventanaMenu && ventanaMenu.MarcoPrincipal.Content is PaginaSala paginaSala)
+                        if(ventana is VentanaMenu ventanaMenu && ventanaMenu.MarcoPrincipal.Content is PaginaSala)
                         {
                             botonInvitar.Background = Brushes.Blue;
                             botonInvitar.IsEnabled = true;
@@ -603,7 +594,7 @@ namespace DobbleGame
 
                     botonInvitar.Click += (s, e) => InvitarAmistad(solicitud);
                 }
-                else    //Si esta ausente
+                else   
                 {
                     circulo.Fill = Brushes.Red;
                     textoEstado.Content = Properties.Resources.lb_Ausente;
@@ -628,8 +619,9 @@ namespace DobbleGame
             }
         }
 
-        private DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
+        private static DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             if (esAgeno == true)
             {
                 var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
@@ -644,7 +636,7 @@ namespace DobbleGame
             }
         }
 
-        private ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
+        private static ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
         {
             if (fotoBytes == null || fotoBytes.Length == 0)
                 return null;

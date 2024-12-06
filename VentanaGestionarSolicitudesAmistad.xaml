@@ -14,11 +14,11 @@
                     Click="BtnRegresar" Height="68">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform" Height="46" Width="39"/>
         </Button>
-        <Label Content="{x:Static Properties:Resources.lb_SolicitudesAmistad}" Style="{StaticResource TituloLalezar1}"  Width="532" FontSize="55" Margin="0,54,0,492" />
+        <Label Content="{x:Static Properties:Resources.lb_SolicitudesAmistad}" Style="{StaticResource TituloLalezar1}"  Width="532" 
+               FontSize="55" Margin="0,54,0,492" />
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="58,158,58,53" Background="#FFF3F3F3">
             <StackPanel x:Name="ContenedorNotificaciones" Orientation="Vertical" Margin="10" Background="#FFF3F3F3">
-                <!-- Aquí se agregarán las notificaciones dinámicamente -->
             </StackPanel>
         </ScrollViewer>
 

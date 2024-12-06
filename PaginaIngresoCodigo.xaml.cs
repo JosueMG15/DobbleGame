@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace DobbleGame
 {
-    /// <summary>
-    /// Lógica de interacción para PaginaIngresoCodigo.xaml
-    /// </summary>
     public partial class PaginaIngresoCodigo : Page
     {
         private Servidor.GestionCorreosClient _proxyGestionCorreos = new Servidor.GestionCorreosClient();

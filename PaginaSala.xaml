@@ -153,10 +153,12 @@
 
     </Page.Resources>
 
-    <Grid x:Name="gridPrincipal">
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
+
+        <ContentControl x:Name="contenedorNotificacion" />
 
         <TextBox HorizontalAlignment="Left" Margin="42,0,0,31" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="333" Height="54" 
                  Background="#FFEDE193" Name="tbChat" Padding="15,0,60,0" GotFocus="TbChatTieneElFoco" KeyDown="EnviarMensajeEnter" 

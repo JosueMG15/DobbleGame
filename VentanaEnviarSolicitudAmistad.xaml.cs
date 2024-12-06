@@ -7,9 +7,6 @@ namespace DobbleGame
 {
     public partial class VentanaEnviarSolicitudAmistad : Window
     {
-        private GestionJugadorClient _proxyGestionJugador = new GestionJugadorClient();
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
-
         public VentanaEnviarSolicitudAmistad()
         {
             InitializeComponent();
@@ -28,6 +25,8 @@ namespace DobbleGame
 
         private void EnviarSolicitudAmistad()
         {
+            var _proxyGestionJugador = new GestionJugadorClient();
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 String nombreUsuario = tbNombreUsuario.Text.Trim();
@@ -51,7 +50,8 @@ namespace DobbleGame
                     return;
                 }
 
-                var respuestaAmistadYaExiste = _proxyGestionAmigos.AmistadYaExiste(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
+                var respuestaAmistadYaExiste = _proxyGestionAmigos.AmistadYaExiste
+                    (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
                 if (respuestaAmistadYaExiste.ErrorBD)
                 {

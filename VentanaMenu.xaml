@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="VentanaMenu" Height="800" Width="1600" WindowStartupLocation="CenterScreen"
         WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Icon="pack://application:,,,/Imagenes/IconoAbejaMenu.png">
-    <Grid x:Name="GridPrincipal">
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -17,6 +17,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
+        <ContentControl x:Name="contenedorNotificacion" />
         <Frame x:Name="MarcoPrincipal" NavigationUIVisibility="Hidden"/>
         <Grid Grid.Column="2" Background="#EDE193">
             <Grid.RowDefinitions>

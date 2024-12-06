@@ -2,10 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DobbleGame.Utilidades
 {
@@ -20,7 +16,7 @@ namespace DobbleGame.Utilidades
             return Visibility.Collapsed;
         }
 
-        public object ConvertBack(object valor, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

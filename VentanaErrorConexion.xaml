@@ -11,10 +11,13 @@
     <Border Background="#EDE193" CornerRadius="20">
         <Grid >
             <StackPanel >
-                <Label x:Name="lbTitulo" Style="{StaticResource Titulo2}" Content="" HorizontalAlignment="Left" Margin="30,30,0,0" FontSize="20" Foreground="Black"/>
-                <TextBlock x:Name="tbMensaje" HorizontalAlignment="Left" Text="" Margin="30,0,30,10" FontSize="15" TextWrapping="Wrap"></TextBlock>
+                <Label x:Name="lbTitulo" Style="{StaticResource Titulo2}" Content="" HorizontalAlignment="Left" 
+                       Margin="30,30,0,0" FontSize="20" Foreground="Black"/>
+                <TextBlock x:Name="tbMensaje" HorizontalAlignment="Left" Text="" Margin="30,0,30,10" FontSize="15" 
+                           TextWrapping="Wrap"></TextBlock>
             </StackPanel>
-            <Button Content="{x:Static p:Resources.global_Ok}"  VerticalAlignment="Top" Margin="158,155,158,0" Background="#FF939C8F" Foreground="White" Click="BtnOk_Click" Height="35"/>
+            <Button Content="{x:Static p:Resources.global_Ok}"  VerticalAlignment="Top" Margin="158,155,158,0" 
+                    Background="#FF939C8F" Foreground="White" Click="BtnOk_Click" Height="35"/>
         </Grid>
     </Border>
 
