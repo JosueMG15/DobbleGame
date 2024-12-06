@@ -1,32 +1,13 @@
-﻿using DobbleGame.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
-using System.Runtime.Remoting.Proxies;
-using Dominio;
-using System.Windows.Navigation;
-using System.Xml.Serialization;
-using System.Data.SqlClient;
-using System.ServiceModel;
 using DobbleGame.Servidor;
 
 namespace DobbleGame
 {
     public partial class VentanaCambioNombre : Window
     {
+        private GestionJugadorClient _proxyGestionJugadorClient = new GestionJugadorClient();
         private PaginaPerfil _paginaPerfil;
         private VentanaMenu _ventanaMenu;
         public VentanaCambioNombre(PaginaPerfil paginaPerfil, VentanaMenu ventanaMenu)
@@ -38,33 +19,25 @@ namespace DobbleGame
 
         private void BtnActualizarUsuario(object sender, RoutedEventArgs e)
         {
-            String nuevoNombre = tbNuevoNombre.Text.Trim();
-            GuardarCambioNombre(nuevoNombre);
-
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
+            GuardarCambioNombre();
             _paginaPerfil.ActualizarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
             _ventanaMenu.ActualizarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
         }
 
-        private void GuardarCambioNombre(string nuevoNombre)
+        private void GuardarCambioNombre()
         {
-            if (Utilidades.Utilidades.EsCampoVacio(nuevoNombre))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-
-            var proxy = new Servidor.GestionJugadorClient();
-            var proxyUsuario = new GestionAmigosClient();
             try
             {
-                var estaConectado = proxyUsuario.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                if (!estaConectado.Resultado)
+                string nuevoNombre = tbNuevoNombre.Text.Trim();
+
+                if (Utilidades.Utilidades.EsCampoVacio(nuevoNombre))
                 {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
                     return;
                 }
 
-                var respuestaUsuario = proxy.ExisteNombreUsuario(nuevoNombre);
+                var respuestaUsuario = _proxyGestionJugadorClient.ExisteNombreUsuario(nuevoNombre);
                 if (respuestaUsuario.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -76,15 +49,16 @@ namespace DobbleGame
                     return;
                 }
 
-                var respuestaModificarUsuario = proxy.ModificarNombreUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
+                var respuestaModificarUsuario = _proxyGestionJugadorClient.ModificarNombreUsuario
+                    (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nuevoNombre);
                 if (respuestaModificarUsuario.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
                     return;
                 }
+
                 if (respuestaModificarUsuario.Resultado)
                 {
-
                     Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario = nuevoNombre;
                     Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                     {
@@ -102,10 +76,8 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                Utilidades.Utilidades.ManejarExcepciones(proxyUsuario, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugadorClient, ex, this);
             }
-
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)

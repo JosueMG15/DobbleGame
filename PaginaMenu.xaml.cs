@@ -27,6 +27,8 @@ namespace DobbleGame
 
         private void BtnCrearSala(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             PaginaSala paginaSala = new PaginaSala(true, null);
 
             if (paginaSala.IniciarSesionSala())

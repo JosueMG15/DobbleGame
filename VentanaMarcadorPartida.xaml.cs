@@ -40,11 +40,13 @@ namespace DobbleGame
 
         private void BtnIrSala(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             var proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 this.DialogResult = true;
-                proxyGestionAmigos.NotificarCambios();
+                proxyGestionAmigos.NotificarCambios(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                 this.Close();
             }
             catch (Exception ex)

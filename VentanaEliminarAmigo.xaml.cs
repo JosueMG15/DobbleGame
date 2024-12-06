@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DobbleGame.Servidor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -20,9 +21,11 @@ namespace DobbleGame
     /// </summary>
     public partial class VentanaEliminarAmigo : Window
     {
-        VentanaMenu _ventanaMenu;
-        Dominio.Amistad _amistad;
-        Border _panelSolicitud;
+        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
+        private VentanaMenu _ventanaMenu;
+        private Dominio.Amistad _amistad;
+        private Border _panelSolicitud;
+
         public VentanaEliminarAmigo(VentanaMenu ventanaMenu, Dominio.Amistad amistad, Border panelSolicitud)
         {
             _ventanaMenu = ventanaMenu;
@@ -31,56 +34,47 @@ namespace DobbleGame
             InitializeComponent();
         }
 
-        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
+        private void BtnAceptar(object sender, RoutedEventArgs e)
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            try
             {
-                try
+                var respuestaUsuarioPrincipal = _proxyGestionAmigos.ObtenerUsuario(_amistad.UsuarioPrincipalId);
+                if (respuestaUsuarioPrincipal.ErrorBD)
                 {
-
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuestaUsuarioPrincipal = proxy.ObtenerUsuario(_amistad.UsuarioPrincipalId);
-                    if (respuestaUsuarioPrincipal.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    var cuentaPrincipal = respuestaUsuarioPrincipal.Resultado;
-
-
-                    //Usuario amigo de la amistad
-                    var respuestaUsuarioAmigo = proxy.ObtenerUsuario(_amistad.UsuarioAmigoId);
-                    var cuentaAmigo = respuestaUsuarioAmigo.Resultado;
-
-                    var respuesta = proxy.EliminarAmistad(_amistad.IdAmistad, cuentaPrincipal.Usuario, cuentaAmigo.Usuario);
-
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado)
-                    {
-                        _ventanaMenu.ContenedorNotificaciones.Children.Remove(_panelSolicitud);
-                        this.Close();
-                    }
-
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+                var cuentaPrincipal = respuestaUsuarioPrincipal.Resultado;
+
+
+                var respuestaUsuarioAmigo = _proxyGestionAmigos.ObtenerUsuario(_amistad.UsuarioAmigoId);
+                if (respuestaUsuarioAmigo.ErrorBD)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
+                var cuentaAmigo = respuestaUsuarioAmigo.Resultado;
+
+                var respuesta = _proxyGestionAmigos.EliminarAmistad(_amistad.IdAmistad, cuentaPrincipal.Usuario, cuentaAmigo.Usuario);
+                if (respuesta.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+
+                if (respuesta.Resultado)
+                {
+                    _ventanaMenu.ContenedorNotificaciones.Children.Remove(_panelSolicitud);
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

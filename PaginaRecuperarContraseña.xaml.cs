@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace DobbleGame
 {
@@ -21,11 +10,14 @@ namespace DobbleGame
     /// </summary>
     public partial class PaginaRecuperarContraseña : Page
     {
-        VentanaRecuperarContraseña _marcoPrincipal;
+        private Servidor.GestionJugadorClient _proxyGestionJugador = new Servidor.GestionJugadorClient();
+        private Servidor.GestionCorreosClient _proxyGestionCorreos = new Servidor.GestionCorreosClient();
+        private VentanaRecuperarContraseña _marcoPrincipal;
+
         public PaginaRecuperarContraseña(VentanaRecuperarContraseña marcoPrincipal)
         {
-            InitializeComponent();
-            _marcoPrincipal = marcoPrincipal;   
+            InitializeComponent();  
+            _marcoPrincipal = marcoPrincipal;
         }
 
         private void BtnEnviarCodigo(object sender, RoutedEventArgs e)
@@ -36,14 +28,14 @@ namespace DobbleGame
 
         private void EnviarCodigo(string correo)
         {
-            if (Utilidades.Utilidades.EsCampoVacio(correo))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
             try
             {
+                if (Utilidades.Utilidades.EsCampoVacio(correo))
+                {
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    return;
+                }
+
                 if (ValidarCorreo(correo) == false)
                 {
                     MostrarMensaje(Properties.Resources.lb_CorreoNoExiste_);
@@ -51,13 +43,7 @@ namespace DobbleGame
                 }
 
                 string codigo = GenerarCodigo();
-                var respuesta = proxyGestionCorreos.EnviarCodigo(correo, codigo);
-
-                if (respuesta.ErrorBD)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                    return;
-                }
+                var respuesta = _proxyGestionCorreos.EnviarCodigo(correo, codigo);
 
                 if (respuesta.Resultado)
                 {
@@ -67,7 +53,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionCorreos, ex, this);
             }
         }
 
@@ -78,10 +64,9 @@ namespace DobbleGame
 
         public bool ValidarCorreo(string correo)
         {
-            var proxyGestionJugador = new Servidor.GestionJugadorClient();
             try
             {
-                var respuesta = proxyGestionJugador.ExisteCorreoAsociado(correo);
+                var respuesta = _proxyGestionJugador.ExisteCorreoAsociado(correo);
 
                 if (respuesta.ErrorBD)
                 {
@@ -93,14 +78,11 @@ namespace DobbleGame
                 {
                     return true;
                 }
-                else
-                {
                     return false;
-                }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
                 return false;
             }
         }
@@ -108,6 +90,8 @@ namespace DobbleGame
         private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             _marcoPrincipal.Close();
+            _proxyGestionCorreos.Close();
+            _proxyGestionJugador.Close();
         }
 
         private void MostrarMensaje(string mensaje)

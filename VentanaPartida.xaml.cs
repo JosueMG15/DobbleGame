@@ -81,6 +81,8 @@ namespace DobbleGame
 
         private void BtnRegresar(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             InicializarProxySiEsNecesario();
             _permitirCierreInesperado = false;
             VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(Properties.Resources.lb_MensajeAbandonarPartida);
@@ -222,6 +224,8 @@ namespace DobbleGame
 
         private void BtnValidarIcono(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             if (sender is Button boton && boton.Content is Image imagenIcono)
             {
                 if (imagenIcono.Source != null)

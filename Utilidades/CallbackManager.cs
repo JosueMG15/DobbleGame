@@ -20,9 +20,8 @@ namespace DobbleGame.Utilidades
         public event Action NotificarCambioEvent;
         public event Action<string> NotificarSalidaEvent;
         public event Action<string> NotificarInvitacionCambioEvent;
-        public event Action<string,string> NotificarVentanaInvitacionEvent;
+        public event Action<string, string> NotificarVentanaInvitacionEvent;
 
-        // Propiedad para acceder a la única instancia de la clase
         public static CallbackManager Instance
         {
             get
@@ -87,11 +86,6 @@ namespace DobbleGame.Utilidades
         public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion, string codigoSala)
         {
             NotificarVentanaInvitacionEvent?.Invoke(nombreUsuarioInvitacion, codigoSala);
-        }
-
-        public GestionNotificacionesAmigosClient ObtenerProxy()
-        {
-            return _proxyNotificaciones;
         }
     }
 }

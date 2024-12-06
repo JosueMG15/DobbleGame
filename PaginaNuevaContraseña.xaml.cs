@@ -25,33 +25,35 @@ namespace DobbleGame
     /// </summary>
     public partial class PaginaNuevaContraseña : Page
     {
-        VentanaRecuperarContraseña _marcoPrincipal;
-        string _correo;
+        private Servidor.GestionJugadorClient _proxyGestionJugador = new Servidor.GestionJugadorClient();
+        private VentanaRecuperarContraseña _marcoPrincipal;
+        private string _correo;
+
         public PaginaNuevaContraseña(VentanaRecuperarContraseña marcoPrincipal, string correo)
         {
             InitializeComponent();
-            _marcoPrincipal = marcoPrincipal;
             _correo = correo;
+            _marcoPrincipal = marcoPrincipal;
         }
 
         private void BtnActualizar(object sender, RoutedEventArgs e)
         {
-            string nuevaContraseña = tbNuevaContraseña.Password.Trim();
-            string confirmarNuevaContraseña = tbConfirmarContraseña.Password.Trim();
-            ActualizarContraseña(nuevaContraseña, confirmarNuevaContraseña, _correo);
+            ActualizarContraseña(_correo);
         }
 
-        private void ActualizarContraseña(string nuevaContraseña, string confirmarNuevaContraseña, string correo)
+        private void ActualizarContraseña(string correo)
         {
-            if (Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-
-            var proxyGestionJugador = new Servidor.GestionJugadorClient();
             try
             {
+                string nuevaContraseña = tbNuevaContraseña.Password.Trim();
+                string confirmarNuevaContraseña = tbConfirmarContraseña.Password.Trim();
+
+                if (Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
+                {
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    return;
+                }
+
                 if (nuevaContraseña != confirmarNuevaContraseña)
                 {
                     MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
@@ -61,7 +63,7 @@ namespace DobbleGame
                 if (Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
                 {
                     string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(tbNuevaContraseña.Password);
-                    var respuestaUsuario = proxyGestionJugador.ObtenerUsuarioPorCorreo(correo);
+                    var respuestaUsuario = _proxyGestionJugador.ObtenerUsuarioPorCorreo(correo);
                     var usuario = respuestaUsuario.Resultado;
 
                     if (respuestaUsuario.ErrorBD)
@@ -76,15 +78,15 @@ namespace DobbleGame
                         Contraseña = usuario.Contraseña
                     };
 
-                    var respuestaModificarContraseña = proxyGestionJugador.ModificarContraseñaUsuario
+                    var respuestaModificarContraseña = _proxyGestionJugador.ModificarContraseñaUsuario
                         (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
-
 
                     if (respuestaModificarContraseña.ErrorBD)
                     {
                         Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
                         return;
                     }
+
                     if (nuevaContraseña == usuario.Contraseña)
                     {
                         MostrarMensaje(Properties.Resources.global_MismaContraseña_);
@@ -108,7 +110,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
             }
         }
 
@@ -121,8 +123,9 @@ namespace DobbleGame
         private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             _marcoPrincipal.Close();
-
+            _proxyGestionJugador.Close();
         }
+
         private void PbCambioDeContraseña(object sender, RoutedEventArgs e)
         {
             var passwordBox = sender as PasswordBox;

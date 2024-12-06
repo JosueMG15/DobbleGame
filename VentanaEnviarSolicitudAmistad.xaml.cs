@@ -1,61 +1,44 @@
-﻿using DobbleGame.Utilidades;
+﻿using DobbleGame.Servidor;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
-using System.Runtime.Remoting.Proxies;
-using Dominio;
-using System.Windows.Navigation;
-using System.Xml.Serialization;
-using System.Data.SqlClient;
-using System.ServiceModel;
+
 
 namespace DobbleGame
 {
     public partial class VentanaEnviarSolicitudAmistad : Window
     {
+        private GestionJugadorClient _proxyGestionJugador = new GestionJugadorClient();
+        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
+
         public VentanaEnviarSolicitudAmistad()
         {
             InitializeComponent();
         }
 
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        private void BtnRegresar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void BtnEnviar_Click(object sender, RoutedEventArgs e)
+        private void BtnEnviar(object sender, RoutedEventArgs e)
         {
-            String nombreUsuario = tbNombreUsuario.Text.Trim();
-            EnviarSolicitudAmistad(nombreUsuario);
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
+            EnviarSolicitudAmistad();
         }
 
-        private void EnviarSolicitudAmistad(string nombreUsuario)
+        private void EnviarSolicitudAmistad()
         {
-            if (Utilidades.Utilidades.EsCampoVacio(nombreUsuario))
-            {
-                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return;
-            }
-
-            var proxyGestionJugador = new Servidor.GestionJugadorClient();
-            var proxy = new Servidor.GestionAmigosClient();
             try
             {
-                var respuestaUsuario = proxyGestionJugador.ExisteNombreUsuario(nombreUsuario);
+                String nombreUsuario = tbNombreUsuario.Text.Trim();
 
+                if (Utilidades.Utilidades.EsCampoVacio(nombreUsuario))
+                {
+                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    return;
+                }
+
+                var respuestaUsuario = _proxyGestionJugador.ExisteNombreUsuario(nombreUsuario);
 
                 if (respuestaUsuario.ErrorBD)
                 {
@@ -68,8 +51,7 @@ namespace DobbleGame
                     return;
                 }
 
-                var respuestaAmistadYaExiste = proxy.AmistadYaExiste(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
-
+                var respuestaAmistadYaExiste = _proxyGestionAmigos.AmistadYaExiste(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
                 if (respuestaAmistadYaExiste.ErrorBD)
                 {
@@ -89,22 +71,17 @@ namespace DobbleGame
                     return;
                 }
 
-                var respuestaEnviarSolicitudAmistad = proxy.EnviarSolicitudAmistad(
+                var respuestaEnviarSolicitudAmistad = _proxyGestionAmigos.EnviarSolicitudAmistad(
                     Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, nombreUsuario);
 
                 if (respuestaEnviarSolicitudAmistad.Resultado)
                 {
                     this.Close();
                 }
-                else
-                {
-                    MostrarMensaje("No se pudo enviar la solicitud de amistad. Inténtalo nuevamente.");
-                }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
             }
 
         }

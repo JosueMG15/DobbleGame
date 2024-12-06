@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace DobbleGame
 {
@@ -21,9 +10,10 @@ namespace DobbleGame
     /// </summary>
     public partial class PaginaIngresoCodigo : Page
     {
-        VentanaRecuperarContraseña _marcoPrincipal;
-        string _correo;
-        string _codigo;
+        private Servidor.GestionCorreosClient _proxyGestionCorreos = new Servidor.GestionCorreosClient();
+        private VentanaRecuperarContraseña _marcoPrincipal;
+        private string _correo;
+        private string _codigo;
 
         public PaginaIngresoCodigo(VentanaRecuperarContraseña marcoPrincipal, string correo, string codigo)
         {
@@ -35,7 +25,6 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
-            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
             try
             {
                 string codigo = tbCodigoSala.Text.Trim();
@@ -58,7 +47,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionCorreos, ex, this);
             }
         }
 
@@ -69,18 +58,12 @@ namespace DobbleGame
 
         private void EnviarCodigo(string correo)
         {
-            var proxyGestionCorreos = new Servidor.GestionCorreosClient();
             try
             {
-                if (proxyGestionCorreos.State == CommunicationState.Faulted)
-                {
-                    proxyGestionCorreos.Abort();
-                    throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                }
-
-                string codigo = GenerarCodigo();
+                string codigo = new Random().Next(100000, 999999).ToString();
                 _codigo = codigo;
-                var respuesta = proxyGestionCorreos.EnviarCodigo(correo, codigo);
+
+                var respuesta = _proxyGestionCorreos.EnviarCodigo(correo, codigo);
                 if (respuesta.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
@@ -89,18 +72,14 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionCorreos, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionCorreos, ex, this);
             }
-        }
-
-        public string GenerarCodigo()
-        {
-            return new Random().Next(100000, 999999).ToString(); 
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)
         {
             _marcoPrincipal.Close();
+            _proxyGestionCorreos.Close();
         }
 
         private void MostrarMensaje(string mensaje)

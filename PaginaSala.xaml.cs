@@ -176,6 +176,8 @@ namespace DobbleGame
 
         private void BtnRegresar(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             AbandonarSala();
             IrPaginaMenu();
 
@@ -216,6 +218,8 @@ namespace DobbleGame
 
         private void BtnEnviarMensaje(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             string mensaje = tbChat.Text.Trim();
 
             InicializarProxySiEsNecesario();
@@ -248,6 +252,8 @@ namespace DobbleGame
 
         private void BtnIniciarPartida(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             try
             {
                 if (!EsAnfitrion)
@@ -299,6 +305,8 @@ namespace DobbleGame
 
         private void BtnExpulsar(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
             Button boton = sender as Button;
 
             var jugadorAExpulsar = boton?.DataContext as Jugador;

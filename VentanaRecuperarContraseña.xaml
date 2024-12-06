@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="VentanaRecuperarContraseña" Height="420" Width="500" WindowStyle="None">
     <Grid>
-        <Frame x:Name="MainWindow" NavigationUIVisibility="Hidden" Navigated="MainWindow_Navigated"/>
+        <Frame x:Name="MainWindow" NavigationUIVisibility="Hidden"/>
         
     </Grid>
 </Window>

@@ -28,7 +28,9 @@ namespace DobbleGame
 {
     public partial class PaginaPerfil : Page
     {
+        private GestionJugadorClient _proxyGestionJugador = new GestionJugadorClient();
         private VentanaMenu _ventanaMenu;
+
         public PaginaPerfil(VentanaMenu ventanaMenu)
         {
             InitializeComponent();
@@ -77,6 +79,8 @@ namespace DobbleGame
 
         private void BtnCambiarUsuario(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _ventanaMenu);
+
             VentanaCambioNombre ventanaCambioNombre = new VentanaCambioNombre(this, _ventanaMenu);
             ventanaCambioNombre.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaCambioNombre.ShowDialog();
@@ -84,6 +88,8 @@ namespace DobbleGame
 
         private void BtnCambiarContraseña(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _ventanaMenu);
+
             VentanaCambioContraseña ventanaCambioContraseña = new VentanaCambioContraseña();
             ventanaCambioContraseña.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaCambioContraseña.ShowDialog();
@@ -91,6 +97,8 @@ namespace DobbleGame
 
         private void BtnActualizarFoto(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _ventanaMenu);
+
             OpenFileDialog dialogo = new OpenFileDialog();
 
             dialogo.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
@@ -99,14 +107,14 @@ namespace DobbleGame
             dialogo.ShowDialog();
             string rutaArchivo = dialogo.FileName;
 
-            if (EsArchivoImagen(rutaArchivo) == false)
-            {
-                MostrarMensaje(Properties.Resources.lb_FormatoInválido);
-                return;
-            }
-
             if (!string.IsNullOrEmpty(rutaArchivo) && File.Exists(rutaArchivo))
             {
+                if (EsArchivoImagen(rutaArchivo) == false)
+                {
+                    MostrarMensaje(Properties.Resources.lb_FormatoInválido);
+                    return;
+                }
+
                 FileInfo fileInfo = new FileInfo(rutaArchivo);
 
                 if (fileInfo.Length > 10 * 1024) // 10 KB en bytes
@@ -126,12 +134,12 @@ namespace DobbleGame
 
         private void GuardarFotoPerfil(String rutaImagen, BitmapImage bitmap)
         {
-            var proxyGestionJugador = new Servidor.GestionJugadorClient();
             try
             {
                 byte[] foto = File.ReadAllBytes(rutaImagen);
 
-                var respuestaModificarFoto = proxyGestionJugador.ModificarFotoUsuario(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, foto);
+                var respuestaModificarFoto = _proxyGestionJugador.ModificarFotoUsuario
+                    (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, foto);
 
                 var ventanaPrincipal = Window.GetWindow(this);
 
@@ -149,7 +157,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
             }
         }
 

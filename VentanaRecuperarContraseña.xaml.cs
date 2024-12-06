@@ -26,10 +26,5 @@ namespace DobbleGame
             InitializeComponent();
             MainWindow.NavigationService.Navigate(new PaginaRecuperarContraseña(this));
         }
-
-        private void MainWindow_Navigated(object sender, NavigationEventArgs e)
-        {
-
-        }
     }
 }

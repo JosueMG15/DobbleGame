@@ -11,7 +11,7 @@
         Title="VentanaGestionarSolicitudesAmistad" Height="650" Width="700" WindowStyle="None">
     <Grid Background="#FFE1DD8B">
         <Button Width="59" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Background="Transparent"
-                    Click="BtnRegresar_Click" Height="68">
+                    Click="BtnRegresar" Height="68">
             <Image Source="pack://application:,,,/Imagenes/BotonRegresar.png" Stretch="Uniform" Height="46" Width="39"/>
         </Button>
         <Label Content="{x:Static Properties:Resources.lb_SolicitudesAmistad}" Style="{StaticResource TituloLalezar1}"  Width="532" FontSize="55" Margin="0,54,0,492" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DobbleGame.Servidor;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -210,6 +211,29 @@ namespace DobbleGame.Utilidades
                 }
             }
         }
+
+
+        public static bool EstaConectado(string nombreUsuario, Window ventana)
+        {
+            var proxy = new GestionAmigosClient();
+            try
+            {
+                var estaConectado = proxy.UsuarioConectado(nombreUsuario);
+                if (!estaConectado.Resultado)
+                {
+                    MostrarVentanaErrorConexionServidor(ventana, false);
+                    return false;
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                ManejarExcepciones(proxy, ex, ventana);
+                return false;
+            }
+        }
+
 
         public static void ManejarExcepcionErrorConexion(Exception ex, ICommunicationObject proxy)
         {

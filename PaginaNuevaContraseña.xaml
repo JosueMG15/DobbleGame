@@ -16,7 +16,7 @@
         </Grid.Background>
 
         <Image Name="IconoAdvertencia" Source="pack://application:,,,/Imagenes/IconoAdvertencia.png" Stretch="Uniform" Visibility="Hidden" Margin="105,102,349,277" RenderTransformOrigin="1.721,0.639"/>
-        <Label Name="lbMensaje" HorizontalAlignment="Left" Margin="158,102,0,0" VerticalAlignment="Top" FontSize="16" Foreground="Red" RenderTransformOrigin="0.218,0.569" Width="273" Height="48"/>
+        <Label Name="lbMensaje" HorizontalAlignment="Left" Margin="150,102,0,0" VerticalAlignment="Top" FontSize="16" Foreground="Red" RenderTransformOrigin="0.218,0.569" Width="282" Height="48"/>
 
         <Label Content="{x:Static p:Resources.lb_CambioContraseña}"  Style="{StaticResource TituloLalezar1}" Width="424" FontSize="45" Margin="0,21,0,323" HorizontalContentAlignment="Center" />
         <PasswordBox x:Name="tbNuevaContraseña" Width="NaN" Height="NaN" MaxLength="35" Margin="98,169,98,204" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_NuevaContraseña}" PasswordChanged="PbCambioDeContraseña"/>

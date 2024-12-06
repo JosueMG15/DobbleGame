@@ -5,21 +5,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
     public partial class VentanaGestionarSolicitudesAmistad : Window
     {
+        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
         private VentanaMenu _ventanaMenu;
 
         public VentanaGestionarSolicitudesAmistad(VentanaMenu ventanaMenu)
@@ -29,11 +24,6 @@ namespace DobbleGame
             CargarSolicitudesAmistad();
    
             CallbackManager.Instance.NotificarSolicitudAmistadEvent += NotificarSolicitudAmistad;
-        }
-
-        private void VentanaGestionarSolicitudesAmistad_Closed(object sender, EventArgs e)
-        {
-            CallbackManager.Instance.NotificarSolicitudAmistadEvent -= NotificarSolicitudAmistad;
         }
 
         public void NotificarSolicitudAmistad()
@@ -53,46 +43,37 @@ namespace DobbleGame
 
         private void CargarSolicitudesAmistad()
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            try
             {
-                try
+                var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+
+                if (respuesta.ErrorBD)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
 
-                    var respuesta = proxy.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
-
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
-                    {
-                        List<Dominio.Amistad> solicitudesAmistad = respuesta.Resultado
-                            .Select(solicitud => new Dominio.Amistad
-                            {
-                                IdAmistad = solicitud.idAmistad,
-                                EstadoSolicitud = solicitud.estadoSolicitud,
-                                UsuarioPrincipalId = solicitud.UsuarioPrincipalId,
-                                UsuarioAmigoId = solicitud.UsuarioAmigoId
-                            })
-                            .ToList();
-
-                        foreach (var solicitud in solicitudesAmistad)
+                if (respuesta.Resultado != null && respuesta.Resultado.Length > 0)
+                {
+                    List<Dominio.Amistad> solicitudesAmistad = respuesta.Resultado
+                        .Select(solicitud => new Dominio.Amistad
                         {
-                            MostrarNotificacionSolicitud(solicitud);
-                        }
+                            IdAmistad = solicitud.idAmistad,
+                            EstadoSolicitud = solicitud.estadoSolicitud,
+                            UsuarioPrincipalId = solicitud.UsuarioPrincipalId,
+                            UsuarioAmigoId = solicitud.UsuarioAmigoId
+                        })
+                        .ToList();
+
+                    foreach (var solicitud in solicitudesAmistad)
+                    {
+                        MostrarNotificacionSolicitud(solicitud);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
-                }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 
@@ -138,104 +119,116 @@ namespace DobbleGame
 
         private void MostrarNotificacionSolicitud(Dominio.Amistad solicitud)
         {
-            var proxy = new Servidor.GestionAmigosClient();
-            var respuesta = proxy.ObtenerUsuario(solicitud.UsuarioPrincipalId);
-            var cuenta = respuesta.Resultado;
-
-            Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
+            try
             {
-                Usuario = cuenta.Usuario,
-            };
+                var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
+                if (respuesta.ErrorBD)
+                {
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
+                }
+                var cuenta = respuesta.Resultado;
 
-            var panelSolicitud = new Border
-            {
-                Background = new SolidColorBrush(Colors.Transparent), 
-                Padding = new Thickness(10), 
-                BorderBrush = new SolidColorBrush(Colors.LightGray),
-                BorderThickness = new Thickness(1)
-            };
+                Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
+                {
+                    Usuario = cuenta.Usuario,
+                };
 
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.25, GridUnitType.Star) }); 
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.75, GridUnitType.Star) }); 
+                var panelSolicitud = new Border
+                {
+                    Background = new SolidColorBrush(Colors.Transparent),
+                    Padding = new Thickness(10),
+                    BorderBrush = new SolidColorBrush(Colors.LightGray),
+                    BorderThickness = new Thickness(1)
+                };
 
-            
-            var fotoUsuario = new Image  // Crear la imagen del usuario y hacerla circular
-            {
-                Width = 70, 
-                Height = 70, 
-                Stretch = Stretch.UniformToFill,
-                Margin = new Thickness(0, 0, 15, 0) 
-            };
+                var grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.25, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.75, GridUnitType.Star) });
 
-            byte[] fotoBytes = cuenta.Foto; 
-            if (fotoBytes != null)
-            {
-                fotoUsuario.Source = ConvertirBytesAImagen(fotoBytes);
+
+                var fotoUsuario = new Image  // Crear la imagen del usuario y hacerla circular
+                {
+                    Width = 70,
+                    Height = 70,
+                    Stretch = Stretch.UniformToFill,
+                    Margin = new Thickness(0, 0, 15, 0)
+                };
+
+                byte[] fotoBytes = cuenta.Foto;
+                if (fotoBytes != null)
+                {
+                    fotoUsuario.Source = ConvertirBytesAImagen(fotoBytes);
+                }
+
+                fotoUsuario.Clip = new EllipseGeometry
+                {
+                    Center = new Point(35, 35),
+                    RadiusX = 35,
+                    RadiusY = 35
+                };
+                Grid.SetColumn(fotoUsuario, 0);
+
+
+                var nombreUsuario = new TextBlock  // Crear el TextBlock con el nombre de usuario
+                {
+                    Text = cuentaUsuarioAmigo.Usuario,
+                    FontSize = 21,
+                    FontWeight = FontWeights.Bold,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                Grid.SetColumn(nombreUsuario, 1);
+
+
+                var stackBotones = new StackPanel  // Crear los botones de aceptar y rechazar
+                {
+                    Orientation = Orientation.Horizontal,
+                    HorizontalAlignment = HorizontalAlignment.Right
+                };
+
+                var botonAceptar = new Button
+                {
+                    Content = Properties.Resources.global_Aceptar,
+                    Margin = new Thickness(0, 0, 5, 0),
+                    Background = new SolidColorBrush(Colors.Green),
+                    Foreground = new SolidColorBrush(Colors.White)
+                };
+                botonAceptar.Click += (s, e) => AceptarSolicitud(solicitud, panelSolicitud, cuentaUsuarioAmigo.Usuario);
+
+                var botonRechazar = new Button
+                {
+                    Content = Properties.Resources.btn_Rechazar,
+                    Background = new SolidColorBrush(Colors.Red),
+                    Foreground = new SolidColorBrush(Colors.White)
+                };
+                botonRechazar.Click += (s, e) => RechazarSolicitud(solicitud, panelSolicitud);
+
+                stackBotones.Children.Add(botonAceptar);
+                stackBotones.Children.Add(botonRechazar);
+
+                var contenidoStackPanel = new StackPanel
+                {
+                    Orientation = Orientation.Vertical,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                contenidoStackPanel.Children.Add(nombreUsuario);
+                contenidoStackPanel.Children.Add(stackBotones);
+
+                Grid.SetColumn(contenidoStackPanel, 1);
+
+                grid.Children.Add(fotoUsuario);
+                grid.Children.Add(contenidoStackPanel);
+
+                panelSolicitud.Child = grid;
+
+                ContenedorNotificaciones.Children.Add(panelSolicitud);
+
             }
-
-            fotoUsuario.Clip = new EllipseGeometry
+            catch (Exception ex)
             {
-                Center = new Point(35, 35), 
-                RadiusX = 35,
-                RadiusY = 35
-            };
-            Grid.SetColumn(fotoUsuario, 0);
-
-            
-            var nombreUsuario = new TextBlock  // Crear el TextBlock con el nombre de usuario
-            {
-                Text = cuentaUsuarioAmigo.Usuario,
-                FontSize = 21, 
-                FontWeight = FontWeights.Bold,
-                VerticalAlignment = VerticalAlignment.Center, 
-                Margin = new Thickness(0, 0, 0, 0) 
-            };
-            Grid.SetColumn(nombreUsuario, 1);
-
-            
-            var stackBotones = new StackPanel  // Crear los botones de aceptar y rechazar
-            {
-                Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right
-            };
-
-            var botonAceptar = new Button
-            {
-                Content = Properties.Resources.global_Aceptar,
-                Margin = new Thickness(0, 0, 5, 0),
-                Background = new SolidColorBrush(Colors.Green),
-                Foreground = new SolidColorBrush(Colors.White)
-            };
-            botonAceptar.Click += (s, e) => AceptarSolicitud(solicitud, panelSolicitud, cuentaUsuarioAmigo.Usuario);
-
-            var botonRechazar = new Button
-            {
-                Content = Properties.Resources.btn_Rechazar,
-                Background = new SolidColorBrush(Colors.Red),
-                Foreground = new SolidColorBrush(Colors.White)
-            };
-            botonRechazar.Click += (s, e) => RechazarSolicitud(solicitud, panelSolicitud);
-
-            stackBotones.Children.Add(botonAceptar);
-            stackBotones.Children.Add(botonRechazar);
-
-            var contenidoStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Vertical,
-                VerticalAlignment = VerticalAlignment.Center 
-            };
-            contenidoStackPanel.Children.Add(nombreUsuario);
-            contenidoStackPanel.Children.Add(stackBotones);
-
-            Grid.SetColumn(contenidoStackPanel, 1);
-
-            grid.Children.Add(fotoUsuario);
-            grid.Children.Add(contenidoStackPanel);
-
-            panelSolicitud.Child = grid;
-
-            ContenedorNotificaciones.Children.Add(panelSolicitud);
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+            }
         }
 
         private ImageSource ConvertirBytesAImagen(byte[] fotoBytes)
@@ -256,75 +249,64 @@ namespace DobbleGame
 
         private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud, String nombreUsuario)
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            try
             {
-                try
+                Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
+                var respuesta = _proxyGestionAmigos.AceptarSolicitud(solicitud.IdAmistad, nombreUsuario);
+                if (respuesta.ErrorBD)
                 {
-                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-
-                    var respuesta = proxy.AceptarSolicitud(solicitud.IdAmistad, nombreUsuario);
-
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado)
-                    {
-                        ContenedorNotificaciones.Children.Remove(panelSolicitud);
-                        _ventanaMenu.ContenedorNotificaciones.Children.Clear();
-                        _ventanaMenu.CargarAmistades();
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (respuesta.Resultado)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    ContenedorNotificaciones.Children.Remove(panelSolicitud);
+                    _ventanaMenu.ContenedorNotificaciones.Children.Clear();
+                    _ventanaMenu.CargarAmistades();
                 }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 
         private void RechazarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            try
             {
-                try
+                Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
+
+                var estaConectado = _proxyGestionAmigos.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                if (!estaConectado.Resultado)
                 {
-                    var estaConectado = proxy.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    if (!estaConectado.Resultado)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                        return;
-                    }
-
-                    var respuesta = proxy.EliminarAmistad(solicitud.IdAmistad, null, null);
-
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado)
-                    {
-                        ContenedorNotificaciones.Children.Remove(panelSolicitud);
-                    }
-
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
+                    return;
                 }
-                catch (Exception ex)
+
+                var respuesta = _proxyGestionAmigos.EliminarAmistad(solicitud.IdAmistad, null, null);
+
+                if (respuesta.ErrorBD)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
+
+                if (respuesta.Resultado)
+                {
+                    ContenedorNotificaciones.Children.Remove(panelSolicitud);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 
-        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        private void BtnRegresar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

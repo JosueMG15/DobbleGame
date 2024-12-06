@@ -24,6 +24,8 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
+            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
+
             var codigoSala = tbCodigoSala.Text;
 
             if (string.IsNullOrWhiteSpace(codigoSala))
