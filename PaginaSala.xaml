@@ -8,7 +8,7 @@
       xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
-      Title="PaginaSala" PreviewMouseDown="Pagina_PreviewMouseDown">
+      Title="PaginaSala" PreviewMouseDown="OcultarDialogo">
 
     <Page.Resources>
         <Style x:Key="SombraBorder" TargetType="Border">
@@ -153,18 +153,18 @@
 
     </Page.Resources>
 
-    <Grid>
+    <Grid x:Name="gridPrincipal">
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalSala.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
         <TextBox HorizontalAlignment="Left" Margin="42,0,0,31" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="333" Height="54" 
-                 Background="#FFEDE193" Name="tbChat" Padding="15,0,60,0" GotFocus="TbChat_GotFocus" KeyDown="EnviarMensaje_KeyDown" 
-                 LostFocus="TbChat_LostFocus" MaxLength="100" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}" />
+                 Background="#FFEDE193" Name="tbChat" Padding="15,0,60,0" GotFocus="TbChatTieneElFoco" KeyDown="EnviarMensajeEnter" 
+                 LostFocus="TbChatPierdeElFoco" MaxLength="100" extensiones:TextBoxExtensiones.TextoSugerido="{x:Static p:Resources.tb_ClicChat}" />
         <Button x:Name="btnEnviarMensaje" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="308,0,0,29" 
-                Background="Transparent" Click="BtnEnviarMensaje" Height="56" GotFocus="BtnEnviarMensaje_GotFocus" 
-                LostFocus="BtnEnviarMensaje_LostFocus">
-            <Image Source="pack://application:,,,/Imagenes/enviarMensaje.png" Stretch="Uniform"/>
+                Background="Transparent" Click="BtnEnviarMensaje" Height="56" GotFocus="BtnEnviarMensajeTieneElFoco" 
+                LostFocus="BtnEnviarMensajePierdeElFoco">
+            <Image Source="pack://application:,,,/Imagenes/BotonEnviarMensaje.png" Stretch="Uniform"/>
         </Button>
 
         <Button Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Background="Transparent"
@@ -202,7 +202,7 @@
                 FontSize="15" FontWeight="Bold"/>
 
         <Button x:Name="btnIniciarPartida" Width="238" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" 
-                Visibility="Hidden" Click="BtnIniciarPartida" Height="126">
+                Click="BtnIniciarPartida" Height="126">
             <Grid>
                 <Image Source="/Imagenes/BotonIniciarPartida.png" Stretch="Uniform" Height="111" Width="220" RenderTransformOrigin="0.725,0.455"/>
                 <Label Content="{x:Static p:Resources.btn_IniciarPartida}" FontSize="28" Foreground="Black" 

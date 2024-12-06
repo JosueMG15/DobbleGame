@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
         Title="VentanaPartida" Height="800" Width="1600" WindowState="Maximized" 
-        WindowStyle="None" ResizeMode="NoResize" Icon="pack://application:,,,/Imagenes/AbejaMenu.png">
+        WindowStyle="None" ResizeMode="NoResize" Icon="pack://application:,,,/Imagenes/IconoAbejaMenu.png">
     <Window.Resources>
         <Style x:Key="FotoPerfil" TargetType="Image">
             <Setter Property="Height" Value="200"/>
@@ -32,13 +32,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
-                            <Polygon x:Name="Triangulo" Points="0,145.5 120,145.5 60,0"
+                            <Polygon x:Name="triangulo" Points="0,145.5 120,145.5 60,0"
                                      Fill="{DynamicResource ColorTriangulo}" Stroke="Black" StrokeThickness="2" Margin="-3,-7,3,7" />
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Triangulo" Property="Fill" Value="Gray" />
+                                <Setter TargetName="triangulo" Property="Fill" Value="Gray" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -70,7 +70,7 @@
             <Canvas>
                 <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Canvas.Left="120" Canvas.Top="40"/>
                 <TextBlock Text="{Binding Usuario}" Style="{StaticResource EstiloTexto}" Canvas.Left="350" Canvas.Top="50"/>
-                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Right="390" Canvas.Top="600" Foreground="#F1EA29"
+                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Left="140" Canvas.Top="250" Foreground="#F1EA29"
                            Text="{Binding PuntosEnPartida, StringFormat={x:Static p:Resources.lb_PuntosEnJuego}}" />
             </Canvas>
         </DataTemplate>
@@ -79,7 +79,7 @@
             <Canvas>
                 <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Canvas.Right="40" Canvas.Top="40"/>
                 <TextBlock Text="{Binding Usuario}" Style="{StaticResource EstiloTexto}" Canvas.Right="300" Canvas.Top="50"/>
-                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Right="390" Canvas.Top="600" Foreground="#F1EA29"
+                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Top="250" Canvas.Right="50" Foreground="#F1EA29"
                            Text="{Binding PuntosEnPartida, StringFormat={x:Static p:Resources.lb_PuntosEnJuego}}" />
             </Canvas>
         </DataTemplate>
@@ -88,7 +88,7 @@
             <Canvas>
                 <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Canvas.Top="560" Canvas.Left="120"/>
                 <TextBlock Text="{Binding Usuario}" Style="{StaticResource EstiloTexto}" Canvas.Left="350" Canvas.Top="690"/>
-                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Right="390" Canvas.Top="600" Foreground="#F1EA29"
+                <TextBlock Style="{StaticResource EstiloTexto}" Canvas.Left="140" Canvas.Top="490" Foreground="#F1EA29"
                            Text="{Binding PuntosEnPartida, StringFormat={x:Static p:Resources.lb_PuntosEnJuego}}" />
             </Canvas>
         </DataTemplate>
@@ -106,13 +106,13 @@
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanalPartida.png" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <TextBlock x:Name="tbCartasRestantes" Style="{StaticResource EstiloTexto}" VerticalAlignment="Top" 
+        <TextBlock x:Name="tblCartasRestantes" Style="{StaticResource EstiloTexto}" VerticalAlignment="Top" 
                    HorizontalAlignment="Center" Margin="200"/>
 
         <ItemsControl x:Name="controlJugadores" ItemsSource="{Binding JugadoresEnPartida}" 
                       ItemTemplateSelector="{StaticResource SelectorPlantillaJugadorPartida}" />
 
-        <TextBlock x:Name="tbTexto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="400" Panel.ZIndex="1"
+        <TextBlock x:Name="tblTexto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="400" Panel.ZIndex="1"
                    FontFamily="pack://application:,,,/Fuentes/#Lalezar"/>
 
         <Button x:Name="btnRegresar" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Background="Transparent"

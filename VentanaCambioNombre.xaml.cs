@@ -72,7 +72,7 @@ namespace DobbleGame
                 }
                 if (respuestaUsuario.Resultado)
                 {
-                    MostrarMensaje(Properties.Resources.lb_UsuarioExistente_);
+                    MostrarMensaje(Properties.Resources.lb_UsuarioExistente);
                     return;
                 }
 
@@ -118,11 +118,5 @@ namespace DobbleGame
             advertenciaIcono.Visibility = Visibility.Visible;
             lbMensaje.Content = mensaje;
         }
-
-        private void TbNuevoNombre(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
     }
 }

@@ -22,7 +22,14 @@ namespace DobbleGame
         public VentanaMenuInvitado()
         {
             InitializeComponent();
+            Inicializar();
+        }
+
+        private void Inicializar()
+        {
             MarcoPrincipal.NavigationService.Navigate(new PaginaMenu());
+            ControlDeUsuarioNotificacion controlNotificacion = new ControlDeUsuarioNotificacion();
+            this.gridPrincipal.Children.Add(controlNotificacion);
         }
 
         private void BtnCerrarSesion(object sender, RoutedEventArgs e)

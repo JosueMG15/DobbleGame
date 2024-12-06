@@ -53,11 +53,11 @@ namespace DobbleGame
             {
                 this.NavigationService.Navigate(paginaSala);
 
-                AnimateElementsInPaginaSala(paginaSala);                
+                //AnimateElementsInPaginaSala(paginaSala);                
             };
             this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
         }
-
+        
         private void AnimateElementsInPaginaSala(PaginaSala paginaSala)
         {
             if (paginaSala.Content is Panel panel)

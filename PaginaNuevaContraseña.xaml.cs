@@ -54,7 +54,7 @@ namespace DobbleGame
             {
                 if (nuevaContraseña != confirmarNuevaContraseña)
                 {
-                    MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                    MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
                     return;
                 }
 

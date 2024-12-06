@@ -8,7 +8,7 @@
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.global_IniciarSesión}" Height="700" Width="550" WindowStartupLocation="CenterScreen" 
-        PreviewMouseDown="Window_PreviewMouseDown" Icon="pack://application:,,,/Imagenes/AbejaMenu.png">
+        PreviewMouseDown="Window_PreviewMouseDown" Icon="pack://application:,,,/Imagenes/IconoAbejaMenu.png">
     <Grid x:Name="GridPrincipal">
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="None"/>
@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnCambioIdioma" Width="150" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30" Click="BtnCambioIdioma" 
                 FontSize="14" FontWeight="SemiBold" Background="Honeydew" Content="{x:Static p:Resources.btn_CambioIdioma}"/> 
-        <Image Source="pack://application:,,,/Imagenes/AbejaMenu.png" VerticalAlignment="Top" Height="200" Opacity="0.7" Margin="30"/>
+        <Image Source="pack://application:,,,/Imagenes/IconoAbejaMenu.png" VerticalAlignment="Top" Height="200" Opacity="0.7" Margin="30"/>
         <Label x:Name="lbDobble" Content="{x:Static p:Resources.lb_Dobble_NET}" Style="{StaticResource TituloLuckiestGuy1}" VerticalAlignment="Top" 
                Margin="0,120,0,10" />
         <Label x:Name="lbIniciarSesion" Content="{x:Static p:Resources.global_IniciarSesión}" Style="{StaticResource Titulo2}" 

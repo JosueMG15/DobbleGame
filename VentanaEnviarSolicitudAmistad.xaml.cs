@@ -64,7 +64,7 @@ namespace DobbleGame
                 }
                 if (!respuestaUsuario.Resultado)
                 {
-                    MostrarMensaje(Properties.Resources.lb_UsuarioInexistente_);
+                    MostrarMensaje(Properties.Resources.lb_UsuarioInexistente);
                     return;
                 }
 

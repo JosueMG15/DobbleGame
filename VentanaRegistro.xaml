@@ -8,7 +8,7 @@
         xmlns:p="clr-namespace:DobbleGame.Properties"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.titulo_Registro}" Height="700" Width="550" WindowStartupLocation="CenterScreen"
-        PreviewMouseDown="Window_PreviewMouseDown" Icon="pack://application:,,,/Imagenes/AbejaMenu.png">
+        PreviewMouseDown="OcultarDialogo" Icon="pack://application:,,,/Imagenes/IconoAbejaMenu.png">
     <Grid >
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Imagenes/FondoPanal.jpg" Stretch="None"/>
@@ -29,7 +29,7 @@
                      Margin="0,0,0,60" MaxLength="15"/>
             <StackPanel Orientation="Horizontal">
                 <PasswordBox x:Name="pbContraseña" extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.lb_Contraseña}" 
-                             Margin="120,0,0,60" MaxLength="35" PasswordChanged="PasswordBox_CambioDeContraseña"/>
+                             Margin="120,0,0,60" MaxLength="35" PasswordChanged="PbCambioDeContraseña"/>
                 <Button Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,-5" Background="Transparent">
                     <Button.ToolTip>
                         <ToolTip>
@@ -57,7 +57,7 @@
                 </Button>
             </StackPanel>
 
-            <PasswordBox x:Name="pbContraseñaConfirmada" Margin="0,0,0,50" MaxLength="35" PasswordChanged="PasswordBox_CambioDeContraseña"
+            <PasswordBox x:Name="pbContraseñaConfirmada" Margin="0,0,0,50" MaxLength="35" PasswordChanged="PbCambioDeContraseña"
                          extensiones:PasswordBoxExtensiones.TextoSugerido="{x:Static p:Resources.global_ConfirmarContraseña}" />
             <Button Content="{x:Static p:Resources.btn_Registrar}" Width="200" FontSize="20" Background="#F1EA29" Click="BtnRegistrarUsuario" />
         </StackPanel>

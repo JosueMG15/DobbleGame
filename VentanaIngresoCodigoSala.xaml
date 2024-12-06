@@ -8,7 +8,7 @@
         xmlns:Properties="clr-namespace:DobbleGame.Properties" 
         mc:Ignorable="d"
         Title="VentanaIngresoCodigoSala" Height="430" Width="500" WindowStyle="None" 
-        WindowStartupLocation="CenterScreen" PreviewMouseDown="Window_PreviewMouseDown">
+        WindowStartupLocation="CenterScreen" PreviewMouseDown="OcultarDialogo">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Imagenes/FondoPanalGris.png"/>
@@ -16,7 +16,7 @@
 
         <StackPanel>
             <Label Content="{x:Static Properties:Resources.lb_IngresarCódigo}" Style="{StaticResource TituloLalezar1}" Width="304" FontSize="45" 
-                   Margin="0,29,0,0" />
+                   Margin="0,29,0,0" HorizontalAlignment="Center"/>
             <Label Content="{x:Static Properties:Resources.lb_MensajeUnirsePartida}" Style="{StaticResource Titulo2}" FontSize="14" Height="30" 
                    VerticalAlignment="Top"/>
             <StackPanel x:Name="panelMensaje" Orientation="Horizontal" Visibility="Hidden" HorizontalAlignment="Center" Height="80" 

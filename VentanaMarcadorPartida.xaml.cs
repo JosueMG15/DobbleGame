@@ -28,7 +28,12 @@ namespace DobbleGame
 
             if (resultadoJugadores != null )
             {
-                lbGanador.Content = resultadoJugadores.FirstOrDefault().Usuario;
+                var primerJugador = resultadoJugadores.FirstOrDefault();
+                
+                if (primerJugador != null )
+                {
+                    lbGanador.Content = primerJugador.Usuario;
+                }
             }
             
         }

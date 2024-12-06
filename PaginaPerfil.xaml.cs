@@ -40,7 +40,7 @@ namespace DobbleGame
         {
             lbCorreoElectronico.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Correo;
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
-            lbPuntaje.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje;
+            lbPuntaje.Content = String.Format(Properties.Resources.lb_Puntaje, Dominio.CuentaUsuario.CuentaUsuarioActual.Puntaje);
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
         }
 

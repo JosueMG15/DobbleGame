@@ -56,7 +56,7 @@ namespace DobbleGame
 
         public void RegistrarUsuario(string correo, string nombreUsuario, string contraseñaHasheada, byte[] foto)
         {
-            var proxy = new GestionJugadorClient();
+            var proxyJugador = new GestionJugadorClient();
             try
             {
                 Servidor.CuentaUsuario cuentaUsuario = new Servidor.CuentaUsuario
@@ -67,7 +67,7 @@ namespace DobbleGame
                     Foto = foto
                 };
 
-                var respuestaCorreo = proxy.ExisteCorreoAsociado(cuentaUsuario.Correo);
+                var respuestaCorreo = proxyJugador.ExisteCorreoAsociado(cuentaUsuario.Correo);
                 if (respuestaCorreo.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -75,11 +75,11 @@ namespace DobbleGame
                 }
                 if (respuestaCorreo.Resultado)
                 {
-                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoExistente_);
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CorreoExistente);
                     return;
                 }
 
-                var respuestaUsuario = proxy.ExisteNombreUsuario(cuentaUsuario.Usuario);
+                var respuestaUsuario = proxyJugador.ExisteNombreUsuario(cuentaUsuario.Usuario);
                 if (respuestaUsuario.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -87,11 +87,11 @@ namespace DobbleGame
                 }
                 if (respuestaUsuario.Resultado)
                 {
-                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_UsuarioExistente_);
+                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_UsuarioExistente);
                     return;
                 }
 
-                var respuestaRegistro = proxy.RegistrarUsuario(cuentaUsuario);
+                var respuestaRegistro = proxyJugador.RegistrarUsuario(cuentaUsuario);
                 if (respuestaRegistro.ErrorBD)
                 {
                     Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
@@ -114,7 +114,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyJugador, ex, this);
             }
         }
 
@@ -164,7 +164,7 @@ namespace DobbleGame
         {
             if (!Utilidades.Utilidades.ValidarContraseña(pbContraseña.Password))
             {
-                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaIncorrecta_);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaIncorrecta);
                 return false;
             }
 
@@ -180,7 +180,7 @@ namespace DobbleGame
             }
             else
             {
-                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaNoCoincide_);
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ContraseñaNoCoincide);
             }
             return validado;
         }
@@ -201,7 +201,7 @@ namespace DobbleGame
             return validado;
         }
 
-        private void PasswordBox_CambioDeContraseña(object sender, RoutedEventArgs e)
+        private void PbCambioDeContraseña(object sender, RoutedEventArgs e)
         {
             var passwordBox = sender as PasswordBox;
             var textoSugerido = ContraseñaHelper.EncontrarHijoVisual<TextBlock>(passwordBox, "TextoSugerido");
@@ -230,7 +230,7 @@ namespace DobbleGame
             }
         }
 
-        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        private void OcultarDialogo(object sender, MouseEventArgs e)
         {
             if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
             {

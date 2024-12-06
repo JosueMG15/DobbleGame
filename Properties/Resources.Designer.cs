@@ -196,16 +196,6 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Invitar amigo.
-        ///   Busca una cadena traducida similar a Invitar.
-        /// </summary>
-        public static string btn_Invitar {
-            get {
-                return ResourceManager.GetString("btn_Invitar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Invitar por correo.
         /// </summary>
         public static string btn_InvitarPorCorreo {
@@ -506,14 +496,23 @@ namespace DobbleGame.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a La contraseña no cumple con lo solicitado .
         /// </summary>
-        public static string lb_ContraseñaIncorrecta_ {
+        public static string lb_ContraseñaIncorrecta {
             get {
-                return ResourceManager.GetString("lb_ContraseñaIncorrecta ", resourceCulture);
+                return ResourceManager.GetString("lb_ContraseñaIncorrecta", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a Las contraseñas no coinciden .
+        /// </summary>
+        public static string lb_ContraseñaNoCoincide {
+            get {
+                return ResourceManager.GetString("lb_ContraseñaNoCoincide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
         /// </summary>
         public static string lb_ContraseñaNoCoincide_ {
             get {
@@ -532,6 +531,15 @@ namespace DobbleGame.Properties {
         
         /// <summary>
         ///   Busca una cadena traducida similar a El correo electrónico ya existe.
+        /// </summary>
+        public static string lb_CorreoExistente {
+            get {
+                return ResourceManager.GetString("lb_CorreoExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
         /// </summary>
         public static string lb_CorreoExistente_ {
             get {
@@ -803,6 +811,15 @@ namespace DobbleGame.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. .
         /// </summary>
+        public static string lb_MensajeErrorCanalServidor {
+            get {
+                return ResourceManager.GetString("lb_MensajeErrorCanalServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
         public static string lb_MensajeErrorCanalServidor_ {
             get {
                 return ResourceManager.GetString("lb_MensajeErrorCanalServidor ", resourceCulture);
@@ -1001,18 +1018,18 @@ namespace DobbleGame.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a El nombre de usuario ya existe.
         /// </summary>
-        public static string lb_UsuarioExistente_ {
+        public static string lb_UsuarioExistente {
             get {
-                return ResourceManager.GetString("lb_UsuarioExistente ", resourceCulture);
+                return ResourceManager.GetString("lb_UsuarioExistente", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a El nombre de usuario no existe.
         /// </summary>
-        public static string lb_UsuarioInexistente_ {
+        public static string lb_UsuarioInexistente {
             get {
-                return ResourceManager.GetString("lb_UsuarioInexistente ", resourceCulture);
+                return ResourceManager.GetString("lb_UsuarioInexistente", resourceCulture);
             }
         }
         
@@ -1040,6 +1057,24 @@ namespace DobbleGame.Properties {
         public static string msg_CodigoCopiado {
             get {
                 return ResourceManager.GetString("msg_CodigoCopiado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Debes ser anfitrión para iniciar la partida.
+        /// </summary>
+        public static string msg_DebesSerAnfitrion {
+            get {
+                return ResourceManager.GetString("msg_DebesSerAnfitrion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ahora eres anfitrión.
+        /// </summary>
+        public static string msg_EresAnfitrion {
+            get {
+                return ResourceManager.GetString("msg_EresAnfitrion", resourceCulture);
             }
         }
         

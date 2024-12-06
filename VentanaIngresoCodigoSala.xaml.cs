@@ -26,46 +26,41 @@ namespace DobbleGame
         {
             var codigoSala = tbCodigoSala.Text;
 
-            if (!String.IsNullOrWhiteSpace(codigoSala))
-            {
-                PaginaSala paginaSala = new PaginaSala(false, codigoSala);
-
-                if (paginaSala.ExisteSala())
-                {
-                    if (paginaSala.EsSalaDisponible())
-                    {
-                        if (paginaSala.HayEspacioEnSala())
-                        {
-                            if (paginaSala.IniciarSesionSala())
-                            {
-                                Sala = paginaSala;
-                                this.DialogResult = true;
-                                this.Close();
-                            }
-                            else
-                            {
-                                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
-                            }
-                        }
-                        else
-                        {
-                            Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaLlena);
-                        }
-                    }
-                    else
-                    {
-                        Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaEnPartida);
-                    }
-                }
-                else
-                {
-                    Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaInexistente);
-                }
-            }
-            else
+            if (string.IsNullOrWhiteSpace(codigoSala))
             {
                 Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_CamposVacíos);
+                return;
             }
+
+            var paginaSala = new PaginaSala(false, codigoSala);
+
+            if (!paginaSala.ExisteSala())
+            {
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaInexistente);
+                return;
+            }
+
+            if (!paginaSala.EsSalaDisponible())
+            {
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaEnPartida);
+                return;
+            }
+
+            if (!paginaSala.HayEspacioEnSala())
+            {
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_SalaLlena);
+                return;
+            }
+
+            if (!paginaSala.IniciarSesionSala())
+            {
+                Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
+                return;
+            }
+
+            Sala = paginaSala;
+            this.DialogResult = true;
+            this.Close();
         }
 
         private void BtnCancelar(object sender, RoutedEventArgs e)
@@ -74,7 +69,7 @@ namespace DobbleGame
             this.Close();
         }
 
-        private void Window_PreviewMouseDown(object sender, MouseEventArgs e)
+        private void OcultarDialogo(object sender, MouseEventArgs e)
         {
             if (e.OriginalSource != panelMensaje && panelMensaje.Visibility == Visibility.Visible)
             {

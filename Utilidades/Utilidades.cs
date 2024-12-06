@@ -124,7 +124,7 @@ namespace DobbleGame.Utilidades
                 else
                 {
                     var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor,
-                        Properties.Resources.lb_MensajeErrorCanalServidor_)
+                        Properties.Resources.lb_MensajeErrorCanalServidor)
                     {
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };

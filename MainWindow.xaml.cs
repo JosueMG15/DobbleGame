@@ -36,14 +36,15 @@ namespace DobbleGame
 
         private void IniciarSesion()
         {
-            if (!Utilidades.Utilidades.EsCampoVacio(tbUsuario.Text) || !Utilidades.Utilidades.EsCampoVacio(pbContraseña.Password))
+            if (!Utilidades.Utilidades.EsCampoVacio(tbUsuario.Text) && !Utilidades.Utilidades.EsCampoVacio(pbContraseña.Password))
             {
-                var proxy = new Servidor.GestionJugadorClient();
+                var proxyGestionJugador = new Servidor.GestionJugadorClient();
 
                 try
                 {
                     var respuestaInicioSesion = 
-                        proxy.IniciarSesionJugador(tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
+                        proxyGestionJugador.IniciarSesionJugador
+                        (tbUsuario.Text, Utilidades.EncriptadorContraseña.GenerarHashSHA512(pbContraseña.Password));
 
                     if (respuestaInicioSesion.ErrorBD)
                     {
@@ -70,18 +71,12 @@ namespace DobbleGame
 
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
 
-                        var proxyUsuario = new Servidor.GestionAmigosClient();
-                        proxyUsuario.NotificarCambios();
+                        var proxyGestionAmigos = new Servidor.GestionAmigosClient();
+                        proxyGestionAmigos.NotificarCambios();
 
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     
                         ventanaMenu.Show();
-                        
-                        App.Current.Dispatcher.Invoke(() =>
-                        {
-                            ((App)Application.Current).IniciarPing();
-                        });
-                        
                     }
                     else
                     {
@@ -90,7 +85,7 @@ namespace DobbleGame
                 }
                 catch (Exception ex)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
                 }
             }
             else
@@ -101,12 +96,12 @@ namespace DobbleGame
 
         private void BtnEntrarMenuInvitado(object sender, EventArgs e)
         {
-            var proxy = new Servidor.GestionJugadorClient();
+            var proxyGestionJugador = new Servidor.GestionJugadorClient();
 
             try
             {
                 string nombreInvitado = String.Format(Properties.Resources.lb_Invitado, new Random().Next(10000, 100000));
-                var respuestaInicioSesion = proxy.IniciarSesionInvitado(nombreInvitado, CargarFotoDefecto());
+                var respuestaInicioSesion = proxyGestionJugador.IniciarSesionInvitado(nombreInvitado, CargarFotoDefecto());
 
                 if (respuestaInicioSesion.Resultado != null)
                 {
@@ -121,16 +116,11 @@ namespace DobbleGame
                     this.Close();
                     ventanaMenuInvitado.Show();
                     
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        ((App)Application.Current).IniciarPing();
-                    });
-                    
                 }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 

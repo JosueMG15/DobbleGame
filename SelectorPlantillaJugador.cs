@@ -16,34 +16,34 @@ namespace DobbleGame
         public DataTemplate JugadorVerdePlantilla { get; set; }
         public DataTemplate JugadorAmarilloPlantilla { get; set; }
 
-        private int contadorPlantillas = 0;
-        private Dictionary<DataTemplate, bool> plantillasDisponibles;
+        private int _contadorPlantillas = 0;
+        private Dictionary<DataTemplate, bool> _plantillasDisponibles;
 
         public SelectorPlantillaJugador() { }
 
         public void IniciarlizarPlantillas()
         {
-            plantillasDisponibles = new Dictionary<DataTemplate, bool>();
+            _plantillasDisponibles = new Dictionary<DataTemplate, bool>();
 
             if (JugadorAzulPlantilla != null)
-                plantillasDisponibles.Add(JugadorAzulPlantilla, true);
+                _plantillasDisponibles.Add(JugadorAzulPlantilla, true);
             if (JugadorVerdePlantilla != null)
-                plantillasDisponibles.Add(JugadorVerdePlantilla, true);
+                _plantillasDisponibles.Add(JugadorVerdePlantilla, true);
             if (JugadorAmarilloPlantilla != null)
-                plantillasDisponibles.Add(JugadorAmarilloPlantilla, true);
+                _plantillasDisponibles.Add(JugadorAmarilloPlantilla, true);
         }
 
-        public override DataTemplate SelectTemplate(object objeto, DependencyObject contenedor)
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var usuario = objeto as Jugador;
+            var usuario = item as Jugador;
 
             if (usuario == null) return null;
 
-            usuario.NumeroJugador = contadorPlantillas + 1;
+            usuario.NumeroJugador = _contadorPlantillas + 1;
 
             if (usuario.EsAnfitrion)
             {
-                contadorPlantillas += 1;
+                _contadorPlantillas += 1;
                 
                 if (JugadorRojoPlantilla != null)
                 {
@@ -51,12 +51,12 @@ namespace DobbleGame
                 }
             }
 
-            var plantillaDisponible = plantillasDisponibles.FirstOrDefault(p => p.Value).Key;
+            var plantillaDisponible = _plantillasDisponibles.FirstOrDefault(p => p.Value).Key;
             
             if (plantillaDisponible != null)
             {
-                contadorPlantillas += 1;
-                plantillasDisponibles[plantillaDisponible] = false;
+                _contadorPlantillas += 1;
+                _plantillasDisponibles[plantillaDisponible] = false;
                 return plantillaDisponible;
             }
 
@@ -65,11 +65,11 @@ namespace DobbleGame
 
         public void ReiniciarPlantillas()
         {
-            contadorPlantillas = 0;
+            _contadorPlantillas = 0;
 
-            foreach (var llave in plantillasDisponibles.Keys.ToList())
+            foreach (var llave in _plantillasDisponibles.Keys.ToList())
             {
-                plantillasDisponibles[llave] = true;
+                _plantillasDisponibles[llave] = true;
             }
         }
     }

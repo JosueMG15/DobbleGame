@@ -1318,10 +1318,10 @@ namespace DobbleGame.Servidor {
         System.Threading.Tasks.Task ReestablecerInvitacionPendienteAsync(string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarCambios", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse")]
-        void NotificarCambios();
+        void NotificarCambios(string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarCambios", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse")]
-        System.Threading.Tasks.Task NotificarCambiosAsync();
+        System.Threading.Tasks.Task NotificarCambiosAsync(string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion", ReplyAction="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse")]
         void NotificarDesconexion(string nombreUsuario);
@@ -1465,12 +1465,12 @@ namespace DobbleGame.Servidor {
             return base.Channel.ReestablecerInvitacionPendienteAsync(nombreUsuario);
         }
         
-        public void NotificarCambios() {
-            base.Channel.NotificarCambios();
+        public void NotificarCambios(string nombreUsuario) {
+            base.Channel.NotificarCambios(nombreUsuario);
         }
         
-        public System.Threading.Tasks.Task NotificarCambiosAsync() {
-            return base.Channel.NotificarCambiosAsync();
+        public System.Threading.Tasks.Task NotificarCambiosAsync(string nombreUsuario) {
+            return base.Channel.NotificarCambiosAsync(nombreUsuario);
         }
         
         public void NotificarDesconexion(string nombreUsuario) {
@@ -1814,53 +1814,6 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> EnviarCodigoAsync(string correo, string codigo) {
             return base.Channel.EnviarCodigoAsync(correo, codigo);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Servidor.IGestionServidor")]
-    public interface IGestionServidor {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionServidor/Ping", ReplyAction="http://tempuri.org/IGestionServidor/PingResponse")]
-        bool Ping(string nombreUsuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionServidor/Ping", ReplyAction="http://tempuri.org/IGestionServidor/PingResponse")]
-        System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGestionServidorChannel : DobbleGame.Servidor.IGestionServidor, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GestionServidorClient : System.ServiceModel.ClientBase<DobbleGame.Servidor.IGestionServidor>, DobbleGame.Servidor.IGestionServidor {
-        
-        public GestionServidorClient() {
-        }
-        
-        public GestionServidorClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
-        }
-        
-        public GestionServidorClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public GestionServidorClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public GestionServidorClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
-        }
-        
-        public bool Ping(string nombreUsuario) {
-            return base.Channel.Ping(nombreUsuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario) {
-            return base.Channel.PingAsync(nombreUsuario);
         }
     }
 }

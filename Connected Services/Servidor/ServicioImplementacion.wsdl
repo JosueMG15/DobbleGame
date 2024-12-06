@@ -4,7 +4,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -16,7 +16,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -28,7 +28,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -40,7 +40,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -52,7 +52,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -64,19 +64,7 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
-          <wsrm:AcknowledgementInterval Milliseconds="200" />
-        </wsrm:RMAssertion>
-        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <wsaw:UsingAddressing />
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="NetTcpBinding_IGestionServidor_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="35000" />
+          <wsrm:InactivityTimeout Milliseconds="25000" />
           <wsrm:AcknowledgementInterval Milliseconds="200" />
         </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -427,12 +415,6 @@
   <wsdl:message name="IGestionCorreos_EnviarCodigo_OutputMessage">
     <wsdl:part name="parameters" element="tns:EnviarCodigoResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionServidor_Ping_InputMessage">
-    <wsdl:part name="parameters" element="tns:Ping" />
-  </wsdl:message>
-  <wsdl:message name="IGestionServidor_Ping_OutputMessage">
-    <wsdl:part name="parameters" element="tns:PingResponse" />
-  </wsdl:message>
   <wsdl:portType name="IGestionJugador">
     <wsdl:operation name="RegistrarUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionJugador/RegistrarUsuario" message="tns:IGestionJugador_RegistrarUsuario_InputMessage" />
@@ -701,12 +683,6 @@
     <wsdl:operation name="EnviarCodigo">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionCorreos/EnviarCodigo" message="tns:IGestionCorreos_EnviarCodigo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionCorreos/EnviarCodigoResponse" message="tns:IGestionCorreos_EnviarCodigo_OutputMessage" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:portType name="IGestionServidor">
-    <wsdl:operation name="Ping">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionServidor/Ping" message="tns:IGestionServidor_Ping_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionServidor/PingResponse" message="tns:IGestionServidor_Ping_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IGestionJugador" type="tns:IGestionJugador">
@@ -1288,19 +1264,6 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="NetTcpBinding_IGestionServidor" type="tns:IGestionServidor">
-    <wsp:PolicyReference URI="#NetTcpBinding_IGestionServidor_policy" />
-    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Ping">
-      <soap12:operation soapAction="http://tempuri.org/IGestionServidor/Ping" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
       <soap12:address location="net.tcp://localhost:8081/IGestionJugador" />
@@ -1336,12 +1299,6 @@
       <soap12:address location="net.tcp://localhost:8081/IGestionCorreos" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/IGestionCorreos</wsa10:Address>
-      </wsa10:EndpointReference>
-    </wsdl:port>
-    <wsdl:port name="NetTcpBinding_IGestionServidor" binding="tns:NetTcpBinding_IGestionServidor">
-      <soap12:address location="net.tcp://localhost:8081/IGestionServidor" />
-      <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/IGestionServidor</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

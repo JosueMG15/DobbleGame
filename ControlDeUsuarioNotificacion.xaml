@@ -8,8 +8,8 @@
              xmlns:p="clr-namespace:DobbleGame.Properties"
              d:DesignHeight="100" d:DesignWidth="300" d:Background="Transparent">
     <Popup x:Name="Notificacion" Placement="Center"
-       PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-       StaysOpen="False" AllowsTransparency="True" Width="300" Height="150" >
+           HorizontalOffset="0" VerticalOffset="0"
+           StaysOpen="False" AllowsTransparency="True" Width="300" Height="150" >
         <Border x:Name="PopupBorder" Padding="20" CornerRadius="25" Margin="20" Background="MediumVioletRed">
             <Border.Effect>
                 <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="10" Opacity="0.5" />

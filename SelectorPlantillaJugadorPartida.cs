@@ -16,7 +16,7 @@ namespace DobbleGame
         public DataTemplate Plantilla3 { get; set; }
         public DataTemplate Plantilla4 { get; set; }
 
-        private readonly Dictionary<string, bool> plantillasDisponibles = new Dictionary<string, bool>
+        private readonly Dictionary<string, bool> _plantillasDisponibles = new Dictionary<string, bool>
         {
             {"Plantilla1", true},
             {"Plantilla2", true},
@@ -24,43 +24,43 @@ namespace DobbleGame
             {"Plantilla4", true},
         };
 
-        public override DataTemplate SelectTemplate(object objeto, DependencyObject contenedor)
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var jugador = objeto as Jugador;
+            var jugador = item as Jugador;
             if (jugador == null)
-                return base.SelectTemplate(objeto, contenedor);
+                return base.SelectTemplate(item, container);
 
             if (jugador.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario
-                && plantillasDisponibles["Plantilla1"])
+                && _plantillasDisponibles["Plantilla1"])
             {
-                plantillasDisponibles["Plantilla1"] = false;
+                _plantillasDisponibles["Plantilla1"] = false;
                 return Plantilla1;
             }
                 
-            if (plantillasDisponibles["Plantilla2"])
+            if (_plantillasDisponibles["Plantilla2"])
             {
-                plantillasDisponibles["Plantilla2"] = false;
+                _plantillasDisponibles["Plantilla2"] = false;
                 return Plantilla2;
             }
-            if (plantillasDisponibles["Plantilla3"])
+            if (_plantillasDisponibles["Plantilla3"])
             {
-                plantillasDisponibles["Plantilla3"] = false;
+                _plantillasDisponibles["Plantilla3"] = false;
                 return Plantilla3;
             }
-            if (plantillasDisponibles["Plantilla4"])
+            if (_plantillasDisponibles["Plantilla4"])
             {
-                plantillasDisponibles["Plantilla4"] = false;
+                _plantillasDisponibles["Plantilla4"] = false;
                 return Plantilla4;
             }
 
-            return base.SelectTemplate(objeto, contenedor);
+            return base.SelectTemplate(item, container);
         }
 
         public void ReiniciarPlantillasPartida()
         {
-            foreach (var llave in plantillasDisponibles.Keys.ToList())
+            foreach (var llave in _plantillasDisponibles.Keys.ToList())
             {
-                plantillasDisponibles[llave] = true;
+                _plantillasDisponibles[llave] = true;
             }
         }
     }

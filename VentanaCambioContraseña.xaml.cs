@@ -96,7 +96,7 @@ namespace DobbleGame
 
             if (!Utilidades.Utilidades.EsMismaContraseña(nuevaContraseña, confirmarNuevaContraseña))
             {
-                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide_);
+                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
                 return true;
             }
 

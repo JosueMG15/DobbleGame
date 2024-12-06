@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DobbleGame"
         xmlns:extensiones="clr-namespace:DobbleGame.Extensiones"
-        xmlns:Properties="clr-namespace:DobbleGame.Properties" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="DobbleGame.VentanaGestionarSolicitudesAmistad"
+        xmlns:Properties="clr-namespace:DobbleGame.Properties" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        x:Class="DobbleGame.VentanaGestionarSolicitudesAmistad"
         mc:Ignorable="d"
         Title="VentanaGestionarSolicitudesAmistad" Height="650" Width="700" WindowStyle="None">
     <Grid Background="#FFE1DD8B">

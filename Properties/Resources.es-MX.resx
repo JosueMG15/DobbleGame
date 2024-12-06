@@ -363,20 +363,11 @@
   <data name="lb_NombreUsuario" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>
-  <data name="lb_UsuarioExistente " xml:space="preserve">
-    <value>El nombre de usuario ya existe</value>
-  </data>
-  <data name="lb_CorreoExistente " xml:space="preserve">
-    <value>El correo electrónico ya existe</value>
+  <data name="lb_UsuarioExistente" xml:space="preserve">
+    <value>Username already exists</value>
   </data>
   <data name="lb_CorreoNoExiste " xml:space="preserve">
     <value>El correo es inexistente</value>
-  </data>
-  <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
-    <value>La contraseña no cumple con lo solicitado</value>
-  </data>
-  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
-    <value>Las contraseñas no coinciden</value>
   </data>
   <data name="lb_EnviarSolicitud " xml:space="preserve">
     <value>Enviar solicitud de amistad</value>
@@ -395,9 +386,6 @@
   </data>
   <data name="lb_ErrorInesperado" xml:space="preserve">
     <value>Ha ocurrido un error inesperado </value>
-  </data>
-  <data name="lb_UsuarioInexistente " xml:space="preserve">
-    <value>El nombre de usuario no existe</value>
   </data>
   <data name="lb_SolicitudYaEnviada " xml:space="preserve">
     <value>Ya hay una solicitud pendiente o una amistad con este usuario  </value>
@@ -462,9 +450,6 @@
   <data name="btn_IrInicioSesion " xml:space="preserve">
     <value>Ir a la pantalla de inicio de sesión </value>
   </data>
-  <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
-    <value>Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. </value>
-  </data>
   <data name="lb_TeEstaInvitando " xml:space="preserve">
     <value>¡{0} te está invitando a jugar! </value>
   </data>
@@ -474,12 +459,6 @@
   <data name="lb_ConfirmarIrPerfil" xml:space="preserve">
     <value>Hacer esto te hará abandonar la sala  
 ¿Seguro que deseas ir al perfil?</value>
-  </data>
-  <data name="titulo_EliminarAmigo" xml:space="preserve">
-    <value>¿Seguro que deseas eliminar a este amigo? </value>
-  </data>
-  <data name="btn_Invitar" xml:space="preserve">
-    <value>Invitar</value>
   </data>
   <data name="lb_Invitado" xml:space="preserve">
     <value>Invitado{0}</value>
@@ -525,5 +504,29 @@
   </data>
   <data name="btn_CambioIdioma" xml:space="preserve">
     <value>Cambiar a Inglés</value>
+  </data>
+  <data name="lb_CorreoExistente " xml:space="preserve">
+    <value>El correo electrónico ya existe</value>
+  </data>
+  <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
+    <value>La contraseña no cumple con lo solicitado</value>
+  </data>
+  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
+  <data name="lb_UsuarioInexistente " xml:space="preserve">
+    <value>El nombre de usuario no existe</value>
+  </data>
+  <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
+    <value>Lo sentimos, parece que el cliente no se encuentra en el canal actual del servidor, por favor, vuelve a iniciar sesión. </value>
+  </data>
+  <data name="titulo_EliminarAmigo" xml:space="preserve">
+    <value>¿Seguro que deseas eliminar a este amigo? </value>
+  </data>
+  <data name="msg_DebesSerAnfitrion" xml:space="preserve">
+    <value>Debes ser anfitrión para iniciar la partida </value>
+  </data>
+  <data name="msg_EresAnfitrion" xml:space="preserve">
+    <value>Ahora eres anfitrión</value>
   </data>
 </root>

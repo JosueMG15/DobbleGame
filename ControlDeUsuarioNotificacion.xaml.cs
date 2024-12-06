@@ -21,21 +21,6 @@ namespace DobbleGame
     /// </summary>
     public partial class ControlDeUsuarioNotificacion : UserControl
     {
-        private static ControlDeUsuarioNotificacion instancia;
-
-        public static ControlDeUsuarioNotificacion Instancia
-        {
-            get
-            {
-                if (instancia == null)
-                {
-                    instancia = new ControlDeUsuarioNotificacion();
-                }
-
-                return instancia;
-            }
-        }
-
         public ControlDeUsuarioNotificacion()
         {
             InitializeComponent();
