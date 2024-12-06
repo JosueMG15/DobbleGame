@@ -439,7 +439,7 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+                 Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 

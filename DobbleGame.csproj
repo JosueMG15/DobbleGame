@@ -337,7 +337,7 @@
     <None Include="Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Servidor\item3.xsd">
+    <None Include="Connected Services\Servidor\item.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\Servidor\item31.xsd">
