@@ -1,18 +1,7 @@
 ﻿using DobbleGame.Servidor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DobbleGame
 {
@@ -21,7 +10,6 @@ namespace DobbleGame
     /// </summary>
     public partial class VentanaEliminarAmigo : Window
     {
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
         private VentanaMenu _ventanaMenu;
         private Dominio.Amistad _amistad;
         private Border _panelSolicitud;
@@ -36,6 +24,7 @@ namespace DobbleGame
 
         private void BtnAceptar(object sender, RoutedEventArgs e)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuestaUsuarioPrincipal = _proxyGestionAmigos.ObtenerUsuario(_amistad.UsuarioPrincipalId);

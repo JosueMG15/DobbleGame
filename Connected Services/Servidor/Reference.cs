@@ -310,6 +310,83 @@ namespace DobbleGame.Servidor {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicioOfNullableOfint5F2dSckg", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
+    [System.SerializableAttribute()]
+    public partial class RespuestaServicioOfNullableOfint5F2dSckg : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorBDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExitosoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ResultadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorBD {
+            get {
+                return this.ErrorBDField;
+            }
+            set {
+                if ((this.ErrorBDField.Equals(value) != true)) {
+                    this.ErrorBDField = value;
+                    this.RaisePropertyChanged("ErrorBD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Exitoso {
+            get {
+                return this.ExitosoField;
+            }
+            set {
+                if ((this.ExitosoField.Equals(value) != true)) {
+                    this.ExitosoField = value;
+                    this.RaisePropertyChanged("Exitoso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Resultado {
+            get {
+                return this.ResultadoField;
+            }
+            set {
+                if ((this.ResultadoField.Equals(value) != true)) {
+                    this.ResultadoField = value;
+                    this.RaisePropertyChanged("Resultado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Jugador", Namespace="http://schemas.datacontract.org/2004/07/Logica")]
     [System.SerializableAttribute()]
     public partial class Jugador : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -871,6 +948,18 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreo", ReplyAction="http://tempuri.org/IGestionJugador/ObtenerUsuarioPorCorreoResponse")]
         System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioPorCorreoAsync(string correo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Ping", ReplyAction="http://tempuri.org/IGestionJugador/PingResponse")]
+        bool Ping(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/Ping", ReplyAction="http://tempuri.org/IGestionJugador/PingResponse")]
+        System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ObtenerPuntosUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ObtenerPuntosUsuarioResponse")]
+        DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg ObtenerPuntosUsuario(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionJugador/ObtenerPuntosUsuario", ReplyAction="http://tempuri.org/IGestionJugador/ObtenerPuntosUsuarioResponse")]
+        System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg> ObtenerPuntosUsuarioAsync(string nombreUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -986,6 +1075,22 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD> ObtenerUsuarioPorCorreoAsync(string correo) {
             return base.Channel.ObtenerUsuarioPorCorreoAsync(correo);
+        }
+        
+        public bool Ping(string nombreUsuario) {
+            return base.Channel.Ping(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> PingAsync(string nombreUsuario) {
+            return base.Channel.PingAsync(nombreUsuario);
+        }
+        
+        public DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg ObtenerPuntosUsuario(string nombreUsuario) {
+            return base.Channel.ObtenerPuntosUsuario(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg> ObtenerPuntosUsuarioAsync(string nombreUsuario) {
+            return base.Channel.ObtenerPuntosUsuarioAsync(nombreUsuario);
         }
     }
     

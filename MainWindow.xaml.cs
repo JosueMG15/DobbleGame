@@ -29,6 +29,7 @@ namespace DobbleGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
         public MainWindow()
         {
             InitializeComponent();
@@ -71,8 +72,8 @@ namespace DobbleGame
 
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
 
-                        var proxyGestionAmigos = new Servidor.GestionAmigosClient();
-                        proxyGestionAmigos.NotificarCambios();
+
+                        _proxyGestionAmigos.NotificarCambios(cuentaInicioSesion.Usuario);
 
                         VentanaMenu ventanaMenu = new VentanaMenu();
                         this.Close();                     

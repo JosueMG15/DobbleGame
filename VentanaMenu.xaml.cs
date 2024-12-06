@@ -6,14 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -27,9 +21,6 @@ namespace DobbleGame
     /// </summary>
     public partial class VentanaMenu : Window
     {
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
-        private GestionJugadorClient _proxyGestionJugador = new GestionJugadorClient();
-
         private readonly ControlDeUsuarioNotificacion _controlNotificacion = new ControlDeUsuarioNotificacion();
         public VentanaMenu()
         {
@@ -328,6 +319,8 @@ namespace DobbleGame
 
         private void VentanaMenuCierreAbrupto(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            var _proxyGestionJugador = new GestionJugadorClient();
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
@@ -350,6 +343,8 @@ namespace DobbleGame
 
         private void CerrarSesion()
         {
+            var _proxyGestionJugador = new GestionJugadorClient();
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 _proxyGestionJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
@@ -366,6 +361,7 @@ namespace DobbleGame
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
 
             var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -412,6 +408,7 @@ namespace DobbleGame
 
         public void CargarAmistades()
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -449,12 +446,13 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+                 Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
             }
         }
 
         private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
@@ -630,6 +628,7 @@ namespace DobbleGame
 
         private DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             if (esAgeno == true)
             {
                 var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);

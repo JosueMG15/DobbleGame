@@ -69,7 +69,7 @@ namespace DobbleGame
                         proxyGestionJugador.CerrarSesionJugador
                             (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
                         CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                        proxyGestionAmigos.NotificarCambios();
+                        proxyGestionAmigos.NotificarCambios(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
                     }
                 }
                 catch (Exception ex)

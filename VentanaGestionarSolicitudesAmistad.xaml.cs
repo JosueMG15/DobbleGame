@@ -14,7 +14,7 @@ namespace DobbleGame
 {
     public partial class VentanaGestionarSolicitudesAmistad : Window
     {
-        private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
+        //private GestionAmigosClient _proxyGestionAmigos = new GestionAmigosClient();
         private VentanaMenu _ventanaMenu;
 
         public VentanaGestionarSolicitudesAmistad(VentanaMenu ventanaMenu)
@@ -43,6 +43,7 @@ namespace DobbleGame
 
         private void CargarSolicitudesAmistad()
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
@@ -79,46 +80,39 @@ namespace DobbleGame
 
         public void CargarSolicitud()
         {
-            using (var proxy = new Servidor.GestionAmigosClient())
+            var proxy = new Servidor.GestionAmigosClient();
+            try
             {
-                try
+                var respuesta = proxy.ObtenerSolicitud();
+                if (respuesta.ErrorBD)
                 {
-                    if (proxy.State == CommunicationState.Faulted)
-                    {
-                        proxy.Abort();
-                        throw new InvalidOperationException("El canal de comunicación está en estado Faulted.");
-                    }
-
-                    var respuesta = proxy.ObtenerSolicitud();
-                    if (respuesta.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
-
-                    if (respuesta.Resultado != null)
-                    {
-                        var amistadDominio = new Dominio.Amistad
-                        {
-                            IdAmistad = respuesta.Resultado.idAmistad,
-                            EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
-                            UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
-                            UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
-                        };
-
-                        MostrarNotificacionSolicitud(amistadDominio);
-
-                    }
+                    Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                    return;
                 }
-                catch (Exception ex)
+
+                if (respuesta.Resultado != null)
                 {
-                    Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
+                    var amistadDominio = new Dominio.Amistad
+                    {
+                        IdAmistad = respuesta.Resultado.idAmistad,
+                        EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
+                        UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
+                        UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
+                    };
+
+                    MostrarNotificacionSolicitud(amistadDominio);
+
                 }
+            }
+            catch (Exception ex)
+            {
+                Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }
         }
 
         private void MostrarNotificacionSolicitud(Dominio.Amistad solicitud)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
@@ -249,6 +243,7 @@ namespace DobbleGame
 
         private void AceptarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud, String nombreUsuario)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
@@ -275,6 +270,7 @@ namespace DobbleGame
 
         private void RechazarSolicitud(Dominio.Amistad solicitud, Border panelSolicitud)
         {
+            var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow);
