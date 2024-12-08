@@ -264,8 +264,8 @@ namespace DobbleGame
                     List<Dominio.Amistad> amistades = respuesta.Resultado
                         .Select(amistad => new Dominio.Amistad
                         {
-                            IdAmistad = amistad.idAmistad,
-                            EstadoSolicitud = amistad.estadoSolicitud,
+                            IdAmistad = amistad.IdAmistad,
+                            EstadoSolicitud = amistad.EstadoSolicitud,
                             UsuarioPrincipalId = amistad.UsuarioPrincipalId,
                             UsuarioAmigoId = amistad.UsuarioAmigoId
                         })
@@ -448,7 +448,7 @@ namespace DobbleGame
 
         private static DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             if (esAgeno)
             {
                 var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);

@@ -57,8 +57,8 @@ namespace DobbleGame
                     List<Dominio.Amistad> solicitudesAmistad = respuesta.Resultado
                         .Select(solicitud => new Dominio.Amistad
                         {
-                            IdAmistad = solicitud.idAmistad,
-                            EstadoSolicitud = solicitud.estadoSolicitud,
+                            IdAmistad = solicitud.IdAmistad,
+                            EstadoSolicitud = solicitud.EstadoSolicitud,
                             UsuarioPrincipalId = solicitud.UsuarioPrincipalId,
                             UsuarioAmigoId = solicitud.UsuarioAmigoId
                         })
@@ -92,8 +92,8 @@ namespace DobbleGame
                 {
                     var amistadDominio = new Dominio.Amistad
                     {
-                        IdAmistad = respuesta.Resultado.idAmistad,
-                        EstadoSolicitud = respuesta.Resultado.estadoSolicitud,
+                        IdAmistad = respuesta.Resultado.IdAmistad,
+                        EstadoSolicitud = respuesta.Resultado.EstadoSolicitud,
                         UsuarioPrincipalId = respuesta.Resultado.UsuarioPrincipalId,
                         UsuarioAmigoId = respuesta.Resultado.UsuarioAmigoId
                     };
