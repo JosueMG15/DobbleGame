@@ -57,7 +57,7 @@ namespace DobbleGame
                 this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
             });
         }
-        
+
         private void AnimateElementsInPaginaSala(PaginaSala paginaSala)
         {
             if (paginaSala.Content is Panel panel)

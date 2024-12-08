@@ -246,7 +246,7 @@ namespace DobbleGame
                 return;
             }
 
-            string mensaje = tbChat.Text.Trim();
+            string mensaje = tbChat.Text;
 
             InicializarProxySiEsNecesario();
 

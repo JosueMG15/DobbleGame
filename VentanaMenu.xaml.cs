@@ -59,32 +59,38 @@ namespace DobbleGame
             {
                 Dispatcher.Invoke(() =>
                 {
-                    foreach (var child in ContenedorNotificaciones.Children)
+                    var stackPanel = EncontrarStackPanelPorUsuario(nombreUsuario);
+                    if (stackPanel != null)
                     {
-                        if (child is Border border && border.Child is Grid grid)
-                        {
-                            foreach (var gridHijo in grid.Children)
-                            {
-                                if (gridHijo is StackPanel stackPanel)
-                                {
-                                    foreach (var stackChild in stackPanel.Children)
-                                    {
-                                        if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
-                                        {
-                                            CambiarEstadoAusente(stackPanel);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        CambiarEstadoAusente(stackPanel);
                     }
-                });                
+                });
             }
             catch (Exception)
             {
                 Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
             }
+        }
+
+        private StackPanel EncontrarStackPanelPorUsuario(string nombreUsuario)
+        {
+            foreach (var child in ContenedorNotificaciones.Children)
+            {
+                if (child is Border border && border.Child is Grid grid)
+                {
+                    var stackPanel = grid.Children
+                        .OfType<StackPanel>()
+                        .FirstOrDefault(sp => sp.Children
+                            .OfType<TextBlock>()
+                            .Any(tb => tb.Text == nombreUsuario));
+
+                    if (stackPanel != null)
+                    {
+                        return stackPanel;
+                    }
+                }
+            }
+            return null;
         }
 
         private static void CambiarEstadoAusente(StackPanel stackPanel)
@@ -106,6 +112,7 @@ namespace DobbleGame
                 }
             }
         }
+
 
         private void BtnIrPerfil(object sender, RoutedEventArgs e)
         {
@@ -385,7 +392,7 @@ namespace DobbleGame
                 };
                 var imagenEliminar = new Image
                 {
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Imagenes/BotonEliminarAmigo.png")),
+                    Source = new BitmapImage(new Uri("Imagenes/BotonEliminarAmigo.png", UriKind.Relative)),
                     Width = 30,
                     Height = 30
                 };
@@ -407,6 +414,7 @@ namespace DobbleGame
                     FontSize = 12
                 };
                 estado.Children.Add(textoEstado);
+
 
                 if (respuesta.Resultado)   
                 {
@@ -440,8 +448,8 @@ namespace DobbleGame
 
         private static DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var proxyGestionAmigos = new GestionAmigosClient();
-            if (esAgeno == true)
+            var _proxyGestionAmigos = new GestionAmigosClient();
+            if (esAgeno)
             {
                 var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
                 var cuenta = respuesta.Resultado;

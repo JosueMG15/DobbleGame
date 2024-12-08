@@ -1,6 +1,7 @@
 ﻿using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -39,22 +40,14 @@ namespace DobbleGame
             }
         }
 
+
         private void BtnInicioSesion_Click(object sender, RoutedEventArgs e)
         {
             MainWindow inicioSesion = new MainWindow();
             var proxy = new GestionJugadorClient();
             var proxyUsuario = new GestionAmigosClient();
 
-            bool isLoginWindowOpen = false;
-
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is MainWindow)
-                {
-                    isLoginWindowOpen = true;
-                    break; 
-                }
-            }
+            bool isLoginWindowOpen = Application.Current.Windows.OfType<MainWindow>().Any();
 
             try
             {
@@ -67,12 +60,9 @@ namespace DobbleGame
 
                 proxy.Close();
 
-                foreach (Window window in Application.Current.Windows)
+                foreach (Window window in Application.Current.Windows.OfType<Window>().Where(window => window != inicioSesion))
                 {
-                    if (window != inicioSesion)
-                    {
-                        window.Close();
-                    }
+                    window.Close();
                 }
             }
             catch (Exception ex)
@@ -81,7 +71,7 @@ namespace DobbleGame
             }
 
             inicioSesion.Show();
-
         }
+
     }
 }

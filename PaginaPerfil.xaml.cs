@@ -101,7 +101,7 @@ namespace DobbleGame
 
             if (!string.IsNullOrEmpty(rutaArchivo) && File.Exists(rutaArchivo))
             {
-                if (EsArchivoImagen(rutaArchivo) == false)
+                if (!EsArchivoImagen(rutaArchivo))
                 {
                     MostrarMensaje(Properties.Resources.lb_FormatoInválido);
                     return;

@@ -400,7 +400,8 @@ namespace DobbleGame
 
         public async Task RegistrarPuntosDelJugador()
         {
-            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario
+                            && Dominio.CuentaUsuario.CuentaUsuarioActual.EsInviado);
 
             if (jugador != null && !Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
             {
