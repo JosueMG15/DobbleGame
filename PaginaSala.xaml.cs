@@ -202,15 +202,19 @@ namespace DobbleGame
 
         private void IrPaginaMenu()
         {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
+            Dispatcher.Invoke(() =>
             {
-                PaginaMenu paginaMenu = new PaginaMenu();
-                this.NavigationService.Navigate(paginaMenu);
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+                fadeOutAnimation.Completed += (s, a) =>
+                {
+                    PaginaMenu paginaMenu = new PaginaMenu();
+                    this.NavigationService.Navigate(paginaMenu);
 
-                AnimateElementsInPaginaMenu(paginaMenu);
-            };
-            this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+                    AnimateElementsInPaginaMenu(paginaMenu);
+                };
+                this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+
+            });
         }
 
         private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
@@ -238,14 +242,17 @@ namespace DobbleGame
                 return;
             }
 
-            string mensaje = tbChat.Text.Trim();
+            string mensaje = tbChat.Text;
 
             InicializarProxySiEsNecesario();
 
             try
             {
-                proxySala.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
-                tbChat.Text = string.Empty;
+                if (!String.IsNullOrEmpty(mensaje))
+                {
+                    proxySala.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    tbChat.Text = string.Empty;
+                }
             }
             catch (Exception ex)
             {
@@ -309,14 +316,17 @@ namespace DobbleGame
         {
             try
             {
-                int numeroJugadoresEsperados = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
-                if (ventanaPartida.IniciarSesionPartida())
+                Dispatcher.Invoke(() =>
                 {
-                    proxySala.CambiarVentanaParaTodos(CodigoSala);
-                    ventanaPartida.Show();
-                    Window.GetWindow(this).Hide();
-                }
+                    int numeroJugadoresEsperados = UsuariosConectados.Count;
+                    VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
+                    if (ventanaPartida.IniciarSesionPartida())
+                    {
+                        proxySala.CambiarVentanaParaTodos(CodigoSala);
+                        ventanaPartida.Show();
+                        Window.GetWindow(this).Hide();
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -419,13 +429,16 @@ namespace DobbleGame
 
         public void CambiarVentana()
         {
-            int numeroJugadoresEsperados = UsuariosConectados.Count;
-            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
-            if (ventanaPartida.IniciarSesionPartida())
+            Dispatcher.Invoke(() =>
             {
-                ventanaPartida.Show();
-                Window.GetWindow(this).Hide();
-            }
+                int numeroJugadoresEsperados = UsuariosConectados.Count;
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
+                if (ventanaPartida.IniciarSesionPartida())
+                {
+                    ventanaPartida.Show();
+                    Window.GetWindow(this).Hide();
+                }
+            });
         }
 
         private void BtnJugadorListo(object sender, RoutedEventArgs e)

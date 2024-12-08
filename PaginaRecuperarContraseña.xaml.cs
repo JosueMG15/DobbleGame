@@ -33,7 +33,7 @@ namespace DobbleGame
                     return;
                 }
 
-                if (ValidarCorreo(correo) == false)
+                if (!ValidarCorreo(correo))
                 {
                     MostrarMensaje(Properties.Resources.lb_CorreoNoExiste_);
                     return;

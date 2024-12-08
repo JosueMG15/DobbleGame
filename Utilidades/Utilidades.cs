@@ -99,48 +99,33 @@ namespace DobbleGame.Utilidades
                 inicioSesion.Show();
                 contenedor = inicioSesion;
 
-                if (estaEnCanal == true)
+                var ventanaErrorConexion = new VentanaErrorConexion
                 {
-                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor,
-                        Properties.Resources.lb_MensajeErrorConexiónServidor)
-                    {
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    };
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
 
-                    if (contenedor is Window ventana && ventana.IsLoaded)
-                    {
-                        ventanaErrorConexion.Owner = ventana;
-                    }
-                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal && ventanaPrincipal.IsLoaded)
-                    {
-                        ventanaErrorConexion.Owner = ventanaPrincipal;
-                    }
-
-                    ventanaErrorConexion.ShowDialog();
+                if (estaEnCanal)
+                {
+                    ventanaErrorConexion.MostrarDialogo(Properties.Resources.lb_ErrorConexiónServidor,
+                        Properties.Resources.lb_MensajeErrorConexiónServidor);
                 }
                 else
                 {
-                    var ventanaErrorConexion = new VentanaErrorConexion(Properties.Resources.lb_ErrorConexiónServidor,
-                        Properties.Resources.lb_MensajeErrorCanalServidor)
-                    {
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                    };
+                    ventanaErrorConexion.MostrarDialogo(Properties.Resources.lb_ErrorConexiónServidor,
+                        Properties.Resources.lb_MensajeErrorCanalServidor);
 
-                    if (contenedor is Window ventana)
-                    {
-                        ventanaErrorConexion.Owner = ventana;
-                    }
-                    else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal)
-                    {
-                        ventanaErrorConexion.Owner = ventanaPrincipal;
-                    }
-                    else
-                    {
-                        ventanaErrorConexion.Owner = null;
-                    }
 
-                    ventanaErrorConexion.ShowDialog();
                 }
+
+                if (contenedor is Window ventana && ventana.IsLoaded)
+                {
+                    ventanaErrorConexion.Owner = ventana;
+                }
+                else if (contenedor is Page pagina && pagina.Parent is Window ventanaPrincipal && ventanaPrincipal.IsLoaded)
+                {
+                    ventanaErrorConexion.Owner = ventanaPrincipal;
+                }
+                ventanaErrorConexion.ShowDialog();
             }
             catch (QuotaExceededException ex)
             {

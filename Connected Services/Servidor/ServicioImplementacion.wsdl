@@ -74,9 +74,9 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGestionJugador_RegistrarUsuario_InputMessage">
@@ -1304,39 +1304,39 @@
   </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionJugador" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionJugador" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionJugador</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionJugador</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionSala" binding="tns:NetTcpBinding_IGestionSala">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionSala" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionSala" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionSala</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionSala</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionAmigos" binding="tns:NetTcpBinding_IGestionAmigos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionAmigos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionNotificacionesAmigos" binding="tns:NetTcpBinding_IGestionNotificacionesAmigos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionNotificacionesAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionNotificacionesAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionPartida" binding="tns:NetTcpBinding_IGestionPartida">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionPartida" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionPartida" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionPartida</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionPartida</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionCorreos" binding="tns:NetTcpBinding_IGestionCorreos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionCorreos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionCorreos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionCorreos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionCorreos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

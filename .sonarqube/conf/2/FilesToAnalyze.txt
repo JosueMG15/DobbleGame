@@ -1,84 +1,159 @@
-﻿C:\Users\sosue\source\repos\DobbleGame\App.xaml
-C:\Users\sosue\source\repos\DobbleGame\SelectorPlantillaJugador.cs
-C:\Users\sosue\source\repos\DobbleGame\Utilidades\Registro.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaErrorConexion.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigoSala.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigo.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\PaginaMenu.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\PaginaPerfil.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\PaginaSala.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\Utilidades\CadenaVisibilidadConverter.cs
-C:\Users\sosue\source\repos\DobbleGame\Extensiones\PasswordBoxExtensiones.cs
-C:\Users\sosue\source\repos\DobbleGame\Extensiones\TextBoxExtensiones.cs
-C:\Users\sosue\source\repos\DobbleGame\Utilidades\ContraseñaHelper.cs
-C:\Users\sosue\source\repos\DobbleGame\Utilidades\EncriptadorContraseña.cs
-C:\Users\sosue\source\repos\DobbleGame\Utilidades\Utilidades.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaCambioContraseña.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaCambioNombre.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaEnviarSolicitudAmistad.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaGestionarSolicitudesAmistad.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaMenu.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaPartida.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaRecuperarContraseña.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaRegistro.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\VentanaRegistroExitoso.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\App.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\MainWindow.xaml.cs
-C:\Users\sosue\source\repos\DobbleGame\Properties\AssemblyInfo.cs
-C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.resx
-C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.en-US.resx
-C:\Users\sosue\source\repos\DobbleGame\Properties\Resources.es-MX.resx
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD.datasource
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD.datasource
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfboolean.datasource
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD.datasource
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item.xsd
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item1.xsd
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item2.xsd
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\ServicioImplementacion.wsdl
-C:\Users\sosue\source\repos\DobbleGame\packages.config
-C:\Users\sosue\source\repos\DobbleGame\Properties\Settings.settings
-C:\Users\sosue\source\repos\DobbleGame\App.config
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\item.disco
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\configuration91.svcinfo
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\configuration.svcinfo
-C:\Users\sosue\source\repos\DobbleGame\Connected Services\Servidor\Reference.svcmap
-C:\Users\sosue\source\repos\DobbleGame\MainWindow.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaErrorConexion.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigoSala.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaIngresoCodigo.xaml
-C:\Users\sosue\source\repos\DobbleGame\PaginaMenu.xaml
-C:\Users\sosue\source\repos\DobbleGame\PaginaPerfil.xaml
-C:\Users\sosue\source\repos\DobbleGame\PaginaSala.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaCambioContraseña.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaCambioNombre.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaEnviarSolicitudAmistad.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaGestionarSolicitudesAmistad.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaMenu.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaPartida.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaRecuperarContraseña.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaRegistro.xaml
-C:\Users\sosue\source\repos\DobbleGame\VentanaRegistroExitoso.xaml
-C:\Users\sosue\source\repos\DobbleGame\Fuentes\Lalezar-Regular.ttf
-C:\Users\sosue\source\repos\DobbleGame\Fuentes\LuckiestGuy-Regular.ttf
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\FondoPanal.jpg
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\AbejaMenu.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonRegresar.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonSalir.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\AbejaInvitado.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\FondoPanalSala.jpg
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\enviarMensaje.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonMandarSolicitud.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonSolicitudes.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BuscarAmistad.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\bob.jpg
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\PerfilPorDefecto.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonEdicion.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\FondoPanalGris.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\IconoAdvertencia.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\BotonIniciarPartida.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\IconoInformacion.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\IconoExito.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\AbejaLobbyGris.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\FondoPanalPartida.png
-C:\Users\sosue\source\repos\DobbleGame\Imagenes\IconoCaballo.png
+﻿C:\Users\Erick\source\repos\DobbleGame\App.xaml
+C:\Users\Erick\source\repos\DobbleGame\ControlDeUsuarioNotificacion.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaIngresoCodigo.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaNuevaContraseña.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaRecuperarContraseña.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\SelectorPlantillaJugador.cs
+C:\Users\Erick\source\repos\DobbleGame\SelectorPlantillaJugadorPartida.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\CallbackManager.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaEliminarAmigo.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\Registro.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaErrorBD.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaErrorConexion.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaIngresoCodigoSala.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaMenu.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaPerfil.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\PaginaSala.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\CadenaVisibilidadConverter.cs
+C:\Users\Erick\source\repos\DobbleGame\Extensiones\PasswordBoxExtensiones.cs
+C:\Users\Erick\source\repos\DobbleGame\Extensiones\TextBoxExtensiones.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\ContraseñaHelper.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\EncriptadorContraseña.cs
+C:\Users\Erick\source\repos\DobbleGame\Utilidades\Utilidades.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaCambioContraseña.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaCambioNombre.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaEnviarSolicitudAmistad.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaGestionarSolicitudesAmistad.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaMarcadorPartida.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaMenu.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaMenuInvitado.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaModalDecision.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaPartida.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaRecuperarContraseña.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaRegistro.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\VentanaRegistroExitoso.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\App.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\MainWindow.xaml.cs
+C:\Users\Erick\source\repos\DobbleGame\Properties\AssemblyInfo.cs
+C:\Users\Erick\source\repos\DobbleGame\Properties\Resources.resx
+C:\Users\Erick\source\repos\DobbleGame\Properties\Resources.en-US.resx
+C:\Users\Erick\source\repos\DobbleGame\Properties\Resources.es-MX.resx
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfAmistad6jbaXeYD.datasource
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfArrayOfAmistad6jbaXeYD.datasource
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfboolean.datasource
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfCuentaUsuario6jbaXeYD.datasource
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\DobbleGame.Servidor.RespuestaServicioOfNullableOfint5F2dSckg.datasource
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\item.xsd
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\item1.xsd
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\item2.xsd
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\ServicioImplementacion.wsdl
+C:\Users\Erick\source\repos\DobbleGame\packages.config
+C:\Users\Erick\source\repos\DobbleGame\Properties\Settings.settings
+C:\Users\Erick\source\repos\DobbleGame\App.config
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\item.disco
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\configuration91.svcinfo
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\configuration.svcinfo
+C:\Users\Erick\source\repos\DobbleGame\Connected Services\Servidor\Reference.svcmap
+C:\Users\Erick\source\repos\DobbleGame\ControlDeUsuarioNotificacion.xaml
+C:\Users\Erick\source\repos\DobbleGame\MainWindow.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaIngresoCodigo.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaNuevaContraseña.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaRecuperarContraseña.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaEliminarAmigo.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaErrorBD.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaErrorConexion.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaIngresoCodigoSala.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaMenu.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaPerfil.xaml
+C:\Users\Erick\source\repos\DobbleGame\PaginaSala.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaCambioContraseña.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaCambioNombre.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaEnviarSolicitudAmistad.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaGestionarSolicitudesAmistad.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaMarcadorPartida.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaMenu.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaMenuInvitado.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaModalDecision.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaPartida.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaRecuperarContraseña.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaRegistro.xaml
+C:\Users\Erick\source\repos\DobbleGame\VentanaRegistroExitoso.xaml
+C:\Users\Erick\source\repos\DobbleGame\Fuentes\Lalezar-Regular.ttf
+C:\Users\Erick\source\repos\DobbleGame\Fuentes\LuckiestGuy-Regular.ttf
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\FondoPanal.jpg
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonRegresar.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonSalir.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\FondoPanalSala.jpg
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonEnviarMensaje.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonMandarSolicitud.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BuscarAmistad.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonEdicion.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\FondoPanalGris.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\IconoAdvertencia.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonIniciarPartida.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\IconoInformacion.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\IconoExito.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\AbejaLobbyGris.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\FondoPanalPartida.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonEliminarAmigo.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Arbol.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Auto.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Balon.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Bebe.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Bicicleta.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Bola.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Caballo.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Camara.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Cangrejo.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Casa.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Chanclas.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Circo.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Cohete.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Consola.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Corazon.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Corona.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Crayolas.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Cubeta.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Dragon.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Enojado.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Feliz.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Flor.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Foco.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Gato.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Globos.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Hamster.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Lapiz.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Loro.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Luna.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Mano.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Manzana.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Mochila.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Montaña.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Moto.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Naranja.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Niña.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pastel.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pato.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pera.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Perro.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pie.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pila.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pino.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Pintura.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Rana.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Regalo.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Regla.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Reloj.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Reno.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Robot.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Rompecabezas.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Santa.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Sofa.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Sol.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Sombrilla.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Tren.png
+C:\Users\Erick\source\repos\DobbleGame\Iconos\Triste.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\Ficha.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\IconoAbejaMenu.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\BotonSolicitudes.png
+C:\Users\Erick\source\repos\DobbleGame\Imagenes\PerfilPorDefecto.jpg

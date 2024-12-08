@@ -51,6 +51,7 @@ namespace DobbleGame
                             Foto = cuentaInicioSesion.Foto,
                             Puntaje = cuentaInicioSesion.Puntaje,
                             Estado = true,
+                            EsInviado = false
                         };
 
                         CallbackManager.Instance.Conectar(cuentaInicioSesion.Usuario);
@@ -92,7 +93,8 @@ namespace DobbleGame
                     Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
                     {
                         Usuario = cuentaInvitado.Usuario,
-                        Foto = cuentaInvitado.Foto
+                        Foto = cuentaInvitado.Foto,
+                        EsInviado = true
                     };
 
                     VentanaMenuInvitado ventanaMenuInvitado = new VentanaMenuInvitado();

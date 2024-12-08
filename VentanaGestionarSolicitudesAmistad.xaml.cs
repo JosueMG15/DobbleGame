@@ -33,9 +33,9 @@ namespace DobbleGame
                     CargarSolicitud();
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
             }
         }
 

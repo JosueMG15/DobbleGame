@@ -1,17 +1,16 @@
 ﻿using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace DobbleGame
 {
     public partial class VentanaErrorConexion : Window
     {
-        public VentanaErrorConexion(string titulo, string mensaje)
+        public VentanaErrorConexion()
         {
             InitializeComponent();
-            lbTitulo.Content = titulo;
-            tbMensaje.Text = mensaje;
         }
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)
@@ -20,7 +19,7 @@ namespace DobbleGame
             var proxy = new GestionJugadorClient();
             var proxyUsuario = new GestionAmigosClient();
 
-            bool isLoginWindowOpen = false;
+            /*bool isLoginWindowOpen = false;
 
             foreach (Window window in Application.Current.Windows)
             {
@@ -29,7 +28,8 @@ namespace DobbleGame
                     isLoginWindowOpen = true;
                     break;
                 }
-            }
+            }*/
+            bool isLoginWindowOpen = Application.Current.Windows.OfType<MainWindow>().Any();
 
             try
             {
@@ -56,6 +56,12 @@ namespace DobbleGame
             }
 
             inicioSesion.Show();
+        }
+
+        public void MostrarDialogo(string titulo, string mensaje)
+        {
+            lbTitulo.Content = titulo;
+            tbMensaje.Text = mensaje;
         }
     }
 }

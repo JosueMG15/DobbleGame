@@ -96,19 +96,7 @@ namespace DobbleGame
                     if (_proxyGestionPartida.AbandonarPartida(usuarioActual.Usuario, _codigoSala))
                     {
                         ((ICommunicationObject)_proxyGestionPartida).Close();
-
-                        PaginaMenu paginaMenu = new PaginaMenu();
-                        if (_ventana is VentanaMenu ventanaMenu)
-                        {
-                            ventanaMenu.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
-                        }
-                        else if (_ventana is VentanaMenuInvitado ventanaMenuInvitado)
-                        {
-                            ventanaMenuInvitado.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
-                        }
-
-                        _ventana.Show();
-                        this.Close();
+                        IrPaginaMenu();
                     }
                 }
                 catch (Exception ex)
@@ -116,6 +104,25 @@ namespace DobbleGame
                     Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
                 }
             }
+        }
+
+        private void IrPaginaMenu()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                PaginaMenu paginaMenu = new PaginaMenu();
+                if (_ventana is VentanaMenu ventanaMenu)
+                {
+                    ventanaMenu.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
+                }
+                else if (_ventana is VentanaMenuInvitado ventanaMenuInvitado)
+                {
+                    ventanaMenuInvitado.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
+                }
+
+                _ventana.Show();
+                this.Close();
+            });
         }
 
         public bool IniciarSesionPartida()
@@ -381,13 +388,15 @@ namespace DobbleGame
 
         private async Task RegistrarPuntosDelJugador()
         {
-            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario
+                            && Dominio.CuentaUsuario.CuentaUsuarioActual.EsInviado);
+
 
             if (jugador != null)
             {
                 try
                 {
-                    var respuestaRegistroPuntos = await Task.Run(() => 
+                    var respuestaRegistroPuntos = await Task.Run(() =>
                     _proxyGestionPartida.GuardarPuntosJugador(jugador.Usuario, jugador.PuntosEnPartida));
                     if (respuestaRegistroPuntos.ErrorBD)
                     {
@@ -469,6 +478,14 @@ namespace DobbleGame
 
                 _permitirCierreInesperado = false;
                 this.Close();
+                IrASala();
+            }
+        }
+
+        private void IrASala()
+        {
+            Dispatcher.Invoke(() =>
+            {
                 PaginaSala paginaSala = new PaginaSala(EsAnfitrion, _codigoSala);
                 if (paginaSala.IniciarSesionSala())
                 {
@@ -482,7 +499,7 @@ namespace DobbleGame
                     }
                     _ventana.Show();
                 }
-            }
+            });
         }
 
         public void ConvertirEnAnfitrionDesdePartida()
