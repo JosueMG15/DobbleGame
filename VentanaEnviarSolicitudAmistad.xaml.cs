@@ -29,7 +29,7 @@ namespace DobbleGame
             var _proxyGestionAmigos = new GestionAmigosClient();
             try
             {
-                String nombreUsuario = tbNombreUsuario.Text.Trim();
+                string nombreUsuario = tbNombreUsuario.Text;
 
                 if (Utilidades.Utilidades.EsCampoVacio(nombreUsuario))
                 {

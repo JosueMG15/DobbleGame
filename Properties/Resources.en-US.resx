@@ -505,17 +505,11 @@ Are you sure you want to go to the profile?</value>
   <data name="btn_CambioIdioma" xml:space="preserve">
     <value>Switch to Spanish</value>
   </data>
-  <data name="lb_CorreoExistente " xml:space="preserve">
+  <data name="lb_CorreoExistente" xml:space="preserve">
     <value>E-mail already exists</value>
   </data>
-  <data name="lb_ContraseñaIncorrecta " xml:space="preserve">
-    <value>The password doesn't meet the requirements</value>
-  </data>
-  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
+  <data name="lb_ContraseñaNoCoincide" xml:space="preserve">
     <value>Password doesn't match</value>
-  </data>
-  <data name="lb_UsuarioInexistente " xml:space="preserve">
-    <value>The username doesn’t exist </value>
   </data>
   <data name="lb_MensajeErrorCanalServidor " xml:space="preserve">
     <value>Sorry, it seems the client is not on the current server channel, please log in again. </value>
@@ -528,5 +522,14 @@ Are you sure you want to go to the profile?</value>
   </data>
   <data name="msg_EresAnfitrion" xml:space="preserve">
     <value>You are now the host </value>
+  </data>
+  <data name="lb_ContraseñaIncorrecta" xml:space="preserve">
+    <value>The password doesn't meet the requirements</value>
+  </data>
+  <data name="lb_UsuarioInexistente " xml:space="preserve">
+    <value>The username doesn’t exist </value>
+  </data>
+  <data name="lb_Empate" xml:space="preserve">
+    <value>Tie!</value>
   </data>
 </root>

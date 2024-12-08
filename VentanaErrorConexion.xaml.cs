@@ -36,8 +36,11 @@ namespace DobbleGame
                 if (!isLoginWindowOpen)
                 {
                     proxy.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-                    CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    if (!Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
+                    {
+                        CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                        proxyUsuario.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    }
                 }
 
                 proxy.Close();

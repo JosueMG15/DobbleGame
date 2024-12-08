@@ -89,7 +89,7 @@ namespace DobbleGame.Utilidades
                 {
                     foreach (Window window in Application.Current.Windows)
                     {
-                        if (window != null && window != inicioSesion && window.IsLoaded && window != Application.Current.MainWindow)
+                        if (window != null && window != inicioSesion && window.IsLoaded)
                         {
                             window.Close();
                         }

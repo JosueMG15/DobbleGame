@@ -366,14 +366,8 @@
   <data name="lb_UsuarioExistente" xml:space="preserve">
     <value>El nombre de usuario ya existe</value>
   </data>
-  <data name="lb_CorreoExistente" xml:space="preserve">
-    <value>El correo electrónico ya existe</value>
-  </data>
   <data name="lb_CorreoNoExiste " xml:space="preserve">
     <value>El correo es inexistente </value>
-  </data>
-  <data name="lb_ContraseñaNoCoincide" xml:space="preserve">
-    <value>Las contraseñas no coinciden </value>
   </data>
   <data name="lb_EnviarSolicitud " xml:space="preserve">
     <value>Enviar solicitud de amistad </value>
@@ -514,14 +508,11 @@
   <data name="btn_CambioIdioma" xml:space="preserve">
     <value>Cambiar a Inglés</value>
   </data>
-  <data name="lb_CorreoExistente " xml:space="preserve">
-    <value />
+  <data name="lb_CorreoExistente" xml:space="preserve">
+    <value>El correo electrónico ya existe</value>
   </data>
-  <data name="lb_ContraseñaIncorrecta" xml:space="preserve">
-    <value>La contraseña no cumple con lo solicitado </value>
-  </data>
-  <data name="lb_ContraseñaNoCoincide " xml:space="preserve">
-    <value />
+  <data name="lb_ContraseñaNoCoincide" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
   </data>
   <data name="lb_UsuarioInexistente" xml:space="preserve">
     <value>El nombre de usuario no existe</value>
@@ -537,5 +528,14 @@
   </data>
   <data name="msg_EresAnfitrion" xml:space="preserve">
     <value>Ahora eres anfitrión</value>
+  </data>
+  <data name="lb_ContraseñaIncorrecta" xml:space="preserve">
+    <value>La contraseña no cumple con lo solicitado </value>
+  </data>
+  <data name="lb_UsuarioInexistente " xml:space="preserve">
+    <value />
+  </data>
+  <data name="lb_Empate" xml:space="preserve">
+    <value>¡Empate!</value>
   </data>
 </root>

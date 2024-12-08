@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,6 +23,7 @@ namespace DobbleGame
         public bool EsAnfitrion { get; set; }
         public string CodigoSala { get; set; }
         private ControlDeUsuarioNotificacion _controlNotificacion;
+        private readonly object _bloqueoInterfaz = new object();
 
         public PaginaSala(bool esAnfitrion, string codigoSala)
         {
@@ -36,8 +38,8 @@ namespace DobbleGame
         {
             this.DataContext = this;
             UsuariosConectados = new ObservableCollection<Jugador>();
-            _selectorPlantilla.IniciarlizarPlantillas();
             btnIniciarPartida.DataContext = UsuariosConectados;
+            _selectorPlantilla.IniciarlizarPlantillas();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -202,15 +204,21 @@ namespace DobbleGame
 
         private void IrPaginaMenu()
         {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
+            lock (_bloqueoInterfaz)
             {
-                PaginaMenu paginaMenu = new PaginaMenu();
-                this.NavigationService.Navigate(paginaMenu);
+                Dispatcher.Invoke(() =>
+                {
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+                    fadeOutAnimation.Completed += (s, a) =>
+                    {
+                        PaginaMenu paginaMenu = new PaginaMenu();
+                        this.NavigationService.Navigate(paginaMenu);
 
-                AnimateElementsInPaginaMenu(paginaMenu);
-            };
-            this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+                        AnimateElementsInPaginaMenu(paginaMenu);
+                    };
+                    this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+                });
+            }
         }
 
         private void AnimateElementsInPaginaMenu(PaginaMenu paginaMenu)
@@ -244,8 +252,11 @@ namespace DobbleGame
 
             try
             {
-                proxySala.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
-                tbChat.Text = string.Empty;
+                if (!String.IsNullOrEmpty(mensaje))
+                {
+                    proxySala.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    tbChat.Text = string.Empty;
+                }
             }
             catch (Exception ex)
             {
@@ -268,7 +279,7 @@ namespace DobbleGame
             }
         }
 
-        private void BtnIniciarPartida(object sender, RoutedEventArgs e)
+        private async void BtnIniciarPartida(object sender, RoutedEventArgs e)
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -285,6 +296,7 @@ namespace DobbleGame
 
                 if (UsuariosConectados.Count >= NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA)
                 {
+                    await Task.Delay(555);
                     if (proxySala.TodosLosJugadoresEstanListos(CodigoSala))
                     {
                         IniciarPartida();
@@ -309,14 +321,17 @@ namespace DobbleGame
         {
             try
             {
-                int numeroJugadoresEsperados = UsuariosConectados.Count;
-                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
-                if (ventanaPartida.IniciarSesionPartida())
+                Dispatcher.Invoke(() =>
                 {
-                    proxySala.CambiarVentanaParaTodos(CodigoSala);
-                    ventanaPartida.Show();
-                    Window.GetWindow(this).Hide();
-                }
+                    int numeroJugadoresEsperados = UsuariosConectados.Count;
+                    VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
+                    if (ventanaPartida.IniciarSesionPartida())
+                    {
+                        proxySala.CambiarVentanaParaTodos(CodigoSala);
+                        ventanaPartida.Show();
+                        Window.GetWindow(this).Hide();
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -326,11 +341,6 @@ namespace DobbleGame
 
         private void BtnExpulsar(object sender, RoutedEventArgs e)
         {
-            if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
-            {
-                return;
-            }
-
             Button boton = sender as Button;
 
             var jugadorAExpulsar = boton?.DataContext as Jugador;
@@ -344,6 +354,11 @@ namespace DobbleGame
 
                 if (respuesta == true)
                 {
+                    if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
+                    {
+                        return;
+                    }
+
                     try
                     {
                         ExpulsarJugador(jugadorAExpulsar.Usuario);
@@ -419,13 +434,16 @@ namespace DobbleGame
 
         public void CambiarVentana()
         {
-            int numeroJugadoresEsperados = UsuariosConectados.Count;
-            VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
-            if (ventanaPartida.IniciarSesionPartida())
+            Dispatcher.Invoke(() =>
             {
-                ventanaPartida.Show();
-                Window.GetWindow(this).Hide();
-            }
+                int numeroJugadoresEsperados = UsuariosConectados.Count;
+                VentanaPartida ventanaPartida = new VentanaPartida(CodigoSala, EsAnfitrion, numeroJugadoresEsperados, Window.GetWindow(this));
+                if (ventanaPartida.IniciarSesionPartida())
+                {
+                    ventanaPartida.Show();
+                    Window.GetWindow(this).Hide();
+                }
+            });
         }
 
         private void BtnJugadorListo(object sender, RoutedEventArgs e)
@@ -469,11 +487,16 @@ namespace DobbleGame
             });
         }
 
+        public bool PingSala()
+        {
+            return true;
+        }
+
         private void BtnCopiarCodigoSala(object sender, RoutedEventArgs e)
         {
             if (sender is Button boton)
             {
-                Clipboard.SetText(boton.Content.ToString());
+                Clipboard.SetDataObject(boton.Content.ToString(), true);
                 _controlNotificacion.MostrarNotificacion(Properties.Resources.msg_CodigoCopiado);
             }
         }

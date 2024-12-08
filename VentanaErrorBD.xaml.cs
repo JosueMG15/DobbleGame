@@ -1,6 +1,7 @@
 ﻿using DobbleGame.Servidor;
 using DobbleGame.Utilidades;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace DobbleGame
@@ -14,7 +15,12 @@ namespace DobbleGame
             tbMensaje.Text = mensaje;
         }
 
-        private void BtnReintentar_Click(object sender, RoutedEventArgs e)
+        private async void BtnReintentar_Click(object sender, RoutedEventArgs e)
+        {
+            await ReintentarConexionBD();
+        }
+
+        private async Task ReintentarConexionBD()
         {
             var proxy = new GestionAmigosClient();
             try
@@ -22,11 +28,12 @@ namespace DobbleGame
                 var respuestaUsuario = proxy.ObtenerSolicitud();
                 if (respuestaUsuario.ErrorBD)
                 {
+                    await Task.Delay(1000);
                     return;
                 }
                 this.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Utilidades.Utilidades.ManejarExcepciones(proxy, ex, this);
             }

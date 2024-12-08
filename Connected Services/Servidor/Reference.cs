@@ -29,6 +29,9 @@ namespace DobbleGame.Servidor {
         private string CorreoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EsInvitadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool EstadoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -75,6 +78,19 @@ namespace DobbleGame.Servidor {
                 if ((object.ReferenceEquals(this.CorreoField, value) != true)) {
                     this.CorreoField = value;
                     this.RaisePropertyChanged("Correo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EsInvitado {
+            get {
+                return this.EsInvitadoField;
+            }
+            set {
+                if ((this.EsInvitadoField.Equals(value) != true)) {
+                    this.EsInvitadoField = value;
+                    this.RaisePropertyChanged("EsInvitado");
                 }
             }
         }
@@ -613,16 +629,16 @@ namespace DobbleGame.Servidor {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EstadoSolicitudField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdAmistadField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int UsuarioAmigoIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int UsuarioPrincipalIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool estadoSolicitudField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idAmistadField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -631,6 +647,32 @@ namespace DobbleGame.Servidor {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EstadoSolicitud {
+            get {
+                return this.EstadoSolicitudField;
+            }
+            set {
+                if ((this.EstadoSolicitudField.Equals(value) != true)) {
+                    this.EstadoSolicitudField = value;
+                    this.RaisePropertyChanged("EstadoSolicitud");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdAmistad {
+            get {
+                return this.IdAmistadField;
+            }
+            set {
+                if ((this.IdAmistadField.Equals(value) != true)) {
+                    this.IdAmistadField = value;
+                    this.RaisePropertyChanged("IdAmistad");
+                }
             }
         }
         
@@ -656,32 +698,6 @@ namespace DobbleGame.Servidor {
                 if ((this.UsuarioPrincipalIdField.Equals(value) != true)) {
                     this.UsuarioPrincipalIdField = value;
                     this.RaisePropertyChanged("UsuarioPrincipalId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool estadoSolicitud {
-            get {
-                return this.estadoSolicitudField;
-            }
-            set {
-                if ((this.estadoSolicitudField.Equals(value) != true)) {
-                    this.estadoSolicitudField = value;
-                    this.RaisePropertyChanged("estadoSolicitud");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idAmistad {
-            get {
-                return this.idAmistadField;
-            }
-            set {
-                if ((this.idAmistadField.Equals(value) != true)) {
-                    this.idAmistadField = value;
-                    this.RaisePropertyChanged("idAmistad");
                 }
             }
         }
@@ -1203,6 +1219,9 @@ namespace DobbleGame.Servidor {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionSala/CambiarVentana")]
         void CambiarVentana();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionSala/PingSala", ReplyAction="http://tempuri.org/IGestionSala/PingSalaResponse")]
+        bool PingSala();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1736,6 +1755,12 @@ namespace DobbleGame.Servidor {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugador", ReplyAction="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorResponse")]
         System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> GuardarPuntosJugadorAsync(string nombreJugador, int puntosGanados);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitado", ReplyAction="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitadoResponse")]
+        bool GuardarPuntosJugadorInvitado(string nombreJugador, int puntosGanados);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitado", ReplyAction="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitadoResponse")]
+        System.Threading.Tasks.Task<bool> GuardarPuntosJugadorInvitadoAsync(string nombreJugador, int puntosGanados);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGestionPartida/RegresarASala")]
         void RegresarASala(string nombreUsuario, string codigoSala);
         
@@ -1864,6 +1889,14 @@ namespace DobbleGame.Servidor {
         
         public System.Threading.Tasks.Task<DobbleGame.Servidor.RespuestaServicioOfboolean> GuardarPuntosJugadorAsync(string nombreJugador, int puntosGanados) {
             return base.Channel.GuardarPuntosJugadorAsync(nombreJugador, puntosGanados);
+        }
+        
+        public bool GuardarPuntosJugadorInvitado(string nombreJugador, int puntosGanados) {
+            return base.Channel.GuardarPuntosJugadorInvitado(nombreJugador, puntosGanados);
+        }
+        
+        public System.Threading.Tasks.Task<bool> GuardarPuntosJugadorInvitadoAsync(string nombreJugador, int puntosGanados) {
+            return base.Channel.GuardarPuntosJugadorInvitadoAsync(nombreJugador, puntosGanados);
         }
         
         public void RegresarASala(string nombreUsuario, string codigoSala) {

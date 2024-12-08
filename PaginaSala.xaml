@@ -81,6 +81,11 @@
         <DataTemplate x:Key="JugadorRojoPlantilla">
             <Border Style="{StaticResource SombraBorder}" CornerRadius="25" Background="#90FF6464">
                 <Grid>
+                    <Image Source="pack://application:,,,/Iconos/Corona.png" Width="80" Margin="-140,-110,240,45" Panel.ZIndex="1">
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="-30" />
+                        </Image.RenderTransform>
+                    </Image>
                     <Image Style="{StaticResource FotoPerfil}" Source="{Binding Foto}" Margin="40,45,240,45"/>
                     <Label Content="{x:Static p:Resources.global_Listo}" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                            Margin="100,0,0,10" FontSize="30" Visibility="{Binding EstaListo, Converter={StaticResource ConvertidorBooleano}}"/>

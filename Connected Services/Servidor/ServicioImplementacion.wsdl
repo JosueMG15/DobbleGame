@@ -74,9 +74,9 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGestionJugador_RegistrarUsuario_InputMessage">
@@ -238,6 +238,12 @@
   <wsdl:message name="IGestionSala_CambiarVentana_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CambiarVentana" />
   </wsdl:message>
+  <wsdl:message name="IGestionSala_PingSala_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PingSala" />
+  </wsdl:message>
+  <wsdl:message name="IGestionSala_PingSala_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PingSalaResponse" />
+  </wsdl:message>
   <wsdl:message name="IGestionAmigos_EnviarSolicitudAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistad" />
   </wsdl:message>
@@ -390,6 +396,12 @@
   </wsdl:message>
   <wsdl:message name="IGestionPartida_GuardarPuntosJugador_OutputMessage">
     <wsdl:part name="parameters" element="tns:GuardarPuntosJugadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_GuardarPuntosJugadorInvitado_InputMessage">
+    <wsdl:part name="parameters" element="tns:GuardarPuntosJugadorInvitado" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_GuardarPuntosJugadorInvitado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GuardarPuntosJugadorInvitadoResponse" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_RegresarASala_InputMessage">
     <wsdl:part name="parameters" element="tns:RegresarASala" />
@@ -549,6 +561,10 @@
     <wsdl:operation name="CambiarVentana">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/CambiarVentana" message="tns:IGestionSala_CambiarVentana_OutputCallbackMessage" />
     </wsdl:operation>
+    <wsdl:operation name="PingSala">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionSala/PingSala" message="tns:IGestionSala_PingSala_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionSala/PingSalaResponse" message="tns:IGestionSala_PingSala_InputCallbackMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionAmigos">
     <wsdl:operation name="EnviarSolicitudAmistad">
@@ -667,6 +683,10 @@
     <wsdl:operation name="GuardarPuntosJugador">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugador" message="tns:IGestionPartida_GuardarPuntosJugador_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorResponse" message="tns:IGestionPartida_GuardarPuntosJugador_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarPuntosJugadorInvitado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitado" message="tns:IGestionPartida_GuardarPuntosJugadorInvitado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitadoResponse" message="tns:IGestionPartida_GuardarPuntosJugadorInvitado_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RegresarASala">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/RegresarASala" message="tns:IGestionPartida_RegresarASala_InputMessage" />
@@ -970,6 +990,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PingSala">
+      <soap12:operation soapAction="http://tempuri.org/IGestionSala/PingSala" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionAmigos" type="tns:IGestionAmigos">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionAmigos_policy" />
@@ -1228,6 +1257,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GuardarPuntosJugadorInvitado">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/GuardarPuntosJugadorInvitado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="RegresarASala">
       <soap12:operation soapAction="http://tempuri.org/IGestionPartida/RegresarASala" style="document" />
       <wsdl:input>
@@ -1304,39 +1342,39 @@
   </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionJugador" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionJugador" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionJugador</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionJugador</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionSala" binding="tns:NetTcpBinding_IGestionSala">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionSala" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionSala" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionSala</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionSala</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionAmigos" binding="tns:NetTcpBinding_IGestionAmigos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionAmigos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionNotificacionesAmigos" binding="tns:NetTcpBinding_IGestionNotificacionesAmigos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionNotificacionesAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionNotificacionesAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionPartida" binding="tns:NetTcpBinding_IGestionPartida">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionPartida" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionPartida" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionPartida</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionPartida</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionCorreos" binding="tns:NetTcpBinding_IGestionCorreos">
-      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionCorreos" />
+      <soap12:address location="net.tcp://localhost:8081/IGestionCorreos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionCorreos</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/IGestionCorreos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

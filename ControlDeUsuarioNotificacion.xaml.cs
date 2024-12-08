@@ -8,10 +8,7 @@ namespace DobbleGame
     {
         public ControlDeUsuarioNotificacion()
         {
-            if (Application.Current != null && Application.Current.MainWindow != null)
-            {
-                InitializeComponent();
-            }
+            InitializeComponent();
         }
 
         public void MostrarNotificacion(string mensaje)

@@ -28,14 +28,12 @@ namespace DobbleGame
 
         private void InicializarDatos()
         {
+            CargarAmistades();
             lbNombreUsuario.Content = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
             ConvertirImagenPerfil(Dominio.CuentaUsuario.CuentaUsuarioActual.Foto);
             CallbackManager.Instance.NotificarCambioEvent += NotificarCambio;
             CallbackManager.Instance.NotificarSalidaEvent += NotificarSalida;
-            CallbackManager.Instance.NotificarInvitacionCambioEvent += NotificarInvitacionCambio;
-            CallbackManager.Instance.NotificarVentanaInvitacionEvent += NotificarVentanaInvitacion;
 
-            MarcoPrincipal.Navigated += PaginaSalaActiva;
             this.Closing += VentanaMenuCierreAbrupto;
         }
 
@@ -89,107 +87,6 @@ namespace DobbleGame
             }
         }
 
-        public void NotificarInvitacionCambio(string nombreUsuario)
-        {
-            try
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    foreach (var hijo in ContenedorNotificaciones.Children)
-                    {
-                        if (hijo is Border border && border.Child is Grid grid)
-                        {
-                            foreach (var gridHijo in grid.Children)
-                            {
-                                if (gridHijo is StackPanel stackPanel)
-                                {
-                                    foreach (var stackChild in stackPanel.Children)
-                                    {
-                                        if (stackChild is TextBlock textBlock && textBlock.Text == nombreUsuario)
-                                        {
-                                            CambiarInvitacion(grid);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            catch (Exception)
-            {
-                Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, true);
-            }
-        }
-
-        public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion, string codigoSala)
-        {
-            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
-
-            try
-            {
-                if (!Application.Current.Windows.OfType<VentanaMenu>().Any())
-                {
-                    return;
-                }
-
-                string mensaje = string.Format(Properties.Resources.lb_TeEstaInvitando_, nombreUsuarioInvitacion);
-                VentanaModalDecision ventanaModalDecision = new VentanaModalDecision(mensaje)
-                {
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen
-                };
-                bool? respuesta = ventanaModalDecision.ShowDialog();
-
-                proxyGestionAmigos.ReestablecerInvitacionPendiente(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-
-                if (respuesta == true)
-                {
-                    ManejarRespuestaInvitacion(codigoSala);
-                }
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
-            }
-        }
-
-        private void ManejarRespuestaInvitacion(string codigoSala)
-        {
-            if (Application.Current.Windows.OfType<VentanaMenu>().FirstOrDefault() is VentanaMenu ventanaMenu)
-            {
-                if (ventanaMenu.MarcoPrincipal.Content is PaginaSala paginaSalaActual)
-                {
-                    paginaSalaActual.AbandonarSala();
-                }
-
-                PaginaSala nuevaPaginaSala = new PaginaSala(false, codigoSala);
-
-                if (!nuevaPaginaSala.ExisteSala())
-                {
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.lb_SalaInexistente);
-                    return;
-                }
-
-                if (!nuevaPaginaSala.EsSalaDisponible())
-                {
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.lb_SalaEnPartida);
-                    return;
-                }
-
-                if (!nuevaPaginaSala.HayEspacioEnSala())
-                {
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.lb_SalaLlena);
-                    return;
-                }
-
-                if (nuevaPaginaSala.IniciarSesionSala())
-                {
-                    ventanaMenu.MarcoPrincipal.Navigate(nuevaPaginaSala);
-                }
-            }
-        }
-
         private static void CambiarEstadoAusente(StackPanel stackPanel)
         {
             foreach ( var hijo in stackPanel.Children)   
@@ -207,49 +104,6 @@ namespace DobbleGame
                         }
                     }
                 }
-            }
-        }
-
-        private void CambiarInvitacion(Grid grid)
-        {
-            foreach (var hijo in grid.Children)
-            {
-                if (hijo is Panel panel)
-                {
-                    CambiarEstadoEnHijos(panel);
-                }
-            }
-        }
-
-        private void CambiarEstadoEnHijos(Panel parent)
-        {
-            foreach (var hijo in parent.Children)
-            {
-                if (hijo is Button botonInvitar && botonInvitar.Content?.ToString() == Properties.Resources.btn_Invitar)
-                {
-                    botonInvitar.Background = Brushes.Gray;
-                    botonInvitar.IsEnabled = false;
-                }
-
-                if (hijo is Panel panel)
-                {
-                    CambiarEstadoEnHijos(panel); 
-                }
-            }
-        }
-
-        private void PaginaSalaActiva(object sender, NavigationEventArgs e)
-        {
-            if (e.Content is PaginaSala)
-            {
-                ContenedorNotificaciones.Children.Clear();
-                CargarAmistades();
-                return;
-            }
-            if (!(e.Content is PaginaSala))
-            {
-                ContenedorNotificaciones.Children.Clear();
-                CargarAmistades();
             }
         }
 
@@ -312,52 +166,38 @@ namespace DobbleGame
 
         private void VentanaMenuCierreAbrupto(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var _proxyGestionJugador = new GestionJugadorClient();
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            CerrarSesion();
+        }
+
+        private void CerrarSesion()
+        {
+            var proxyGestionJugador = new GestionJugadorClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
+            string nombreUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
             try
             {
-                if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
+                if (!string.IsNullOrEmpty(nombreUsuario))
                 {
-                    _proxyGestionJugador.CerrarSesionJugador
-                        (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-
-                    CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    _proxyGestionAmigos.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);                                    
-                    _proxyGestionAmigos.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    _proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
+                    proxyGestionJugador.CerrarSesionJugador(nombreUsuario, Properties.Resources.msg_AbandonoSala);
+                    CallbackManager.Instance.Desconectar(nombreUsuario);
+                    proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
+                    proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
+                    proxyGestionAmigos.NotificarBotonInvitacion(nombreUsuario);
 
                 }
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
-            }
-        }
-
-        private void CerrarSesion()
-        {
-            var _proxyGestionJugador = new GestionJugadorClient();
-            var _proxyGestionAmigos = new GestionAmigosClient();
-            try
-            {
-                _proxyGestionJugador.CerrarSesionJugador(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-                CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                _proxyGestionAmigos.NotificarDesconexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                _proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
             }
         }
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
 
-            var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+            var respuesta = proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
             if (respuesta.ErrorBD)
             {
@@ -401,10 +241,10 @@ namespace DobbleGame
 
         public void CargarAmistades()
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             try
             {
-                var respuesta = _proxyGestionAmigos.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
+                var respuesta = proxyGestionAmigos.ObtenerAmistades(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
                 if (respuesta.ErrorBD)
                 {
@@ -439,13 +279,13 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                 Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+                 Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
             }
         }
 
         private void MostrarAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             try
             {
                 Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
@@ -455,7 +295,7 @@ namespace DobbleGame
                     Foto = UsuarioAmigo(solicitud, esAgeno).Foto
                 };
 
-                var respuesta = _proxyGestionAmigos.UsuarioConectado(cuentaUsuarioAmigo.Usuario);
+                var respuesta = proxyGestionAmigos.UsuarioConectado(cuentaUsuarioAmigo.Usuario);
 
                 var panelSolicitud = new Border
                 {
@@ -568,31 +408,10 @@ namespace DobbleGame
                 };
                 estado.Children.Add(textoEstado);
 
-                var botonInvitar = new Button
-                {
-                    Content = Properties.Resources.btn_Invitar,
-                    Background = Brushes.Gray,
-                    Foreground = Brushes.White,
-                    IsEnabled = false,
-                    Padding = new Thickness(5)
-                };
-                botonesPanel.Children.Add(botonInvitar);
-
                 if (respuesta.Resultado)   
                 {
                     circulo.Fill = Brushes.LightGreen;
                     textoEstado.Content = Properties.Resources.lb_EnLínea;
-
-                    foreach (Window ventana in Application.Current.Windows)
-                    {
-                        if(ventana is VentanaMenu ventanaMenu && ventanaMenu.MarcoPrincipal.Content is PaginaSala)
-                        {
-                            botonInvitar.Background = Brushes.Blue;
-                            botonInvitar.IsEnabled = true;
-                        }
-                    }
-
-                    botonInvitar.Click += (s, e) => InvitarAmistad(solicitud);
                 }
                 else   
                 {
@@ -615,22 +434,22 @@ namespace DobbleGame
             }
             catch (Exception ex)
             {
-                Utilidades.Utilidades.ManejarExcepciones(_proxyGestionAmigos, ex, this);
+                Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
             }
         }
 
         private static DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
+            var proxyGestionAmigos = new GestionAmigosClient();
             if (esAgeno == true)
             {
-                var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
+                var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
                 var cuenta = respuesta.Resultado;
                 return cuenta;
             }
             else
             {
-                var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioAmigoId);
+                var respuesta = proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioAmigoId);
                 var cuenta = respuesta.Resultado;
                 return cuenta;
             }
@@ -659,70 +478,6 @@ namespace DobbleGame
             VentanaEliminarAmigo ventanaEliminarAmigo = new VentanaEliminarAmigo(this, amistad, panelSolicitud);
             ventanaEliminarAmigo.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ventanaEliminarAmigo.ShowDialog();
-        }
-
-        private void InvitarAmistad(Dominio.Amistad solicitud)
-        {
-            Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
-            foreach (Window ventana in Application.Current.Windows)
-            {
-                if (ventana is VentanaMenu ventanaMenu && ventanaMenu.MarcoPrincipal.Content is PaginaSala paginaSala)
-                {
-                    ProcesarInvitacion(solicitud, paginaSala);
-                }
-            }
-        }
-
-        private void ProcesarInvitacion(Dominio.Amistad solicitud, PaginaSala paginaSala)
-        {
-            var proxyGestionAmigos = new Servidor.GestionAmigosClient();
-
-            try
-            {
-                string nombreUsuario = ObtenerNombreUsuarioInvitacion(solicitud);
-
-                if (paginaSala.UsuariosConectados.Any(j => j.Usuario == nombreUsuario))
-                {
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.msg_JugadorEnSala);
-                    return;
-                }
-
-                if (!proxyGestionAmigos.UsuarioConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario).Resultado)
-                {
-                    Utilidades.Utilidades.MostrarVentanaErrorConexionServidor(this, false);
-                    return;
-                }
-
-                if (!proxyGestionAmigos.TieneInvitacionPendiente(nombreUsuario))
-                {
-                    proxyGestionAmigos.NotificarInvitacion(nombreUsuario, Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, paginaSala.CodigoSala);
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.msg_InvitaciónEnviada);
-                }
-                else
-                {
-                    _controlNotificacion.MostrarNotificacion(Properties.Resources.msg_InvitaciónPendiente);
-                }
-            }
-            catch (Exception ex)
-            {
-                Utilidades.Utilidades.ManejarExcepciones(proxyGestionAmigos, ex, this);
-            }
-        }
-
-        private string ObtenerNombreUsuarioInvitacion(Dominio.Amistad solicitud)
-        {
-            Dominio.CuentaUsuarioAmigo cuentaUsuarioPrincipal = new Dominio.CuentaUsuarioAmigo
-            {
-                Usuario = UsuarioAmigo(solicitud, true).Usuario,
-            };
-            Dominio.CuentaUsuarioAmigo cuentaUsuarioAmigo = new Dominio.CuentaUsuarioAmigo
-            {
-                Usuario = UsuarioAmigo(solicitud, false).Usuario,
-            };
-
-            return Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario != cuentaUsuarioPrincipal.Usuario
-                ? cuentaUsuarioPrincipal.Usuario
-                : cuentaUsuarioAmigo.Usuario;
         }
     }
 }

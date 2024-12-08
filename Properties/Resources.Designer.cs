@@ -503,20 +503,11 @@ namespace DobbleGame.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Las contraseñas no coinciden .
+        ///   Busca una cadena traducida similar a Las contraseñas no coinciden.
         /// </summary>
         public static string lb_ContraseñaNoCoincide {
             get {
                 return ResourceManager.GetString("lb_ContraseñaNoCoincide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a .
-        /// </summary>
-        public static string lb_ContraseñaNoCoincide_ {
-            get {
-                return ResourceManager.GetString("lb_ContraseñaNoCoincide ", resourceCulture);
             }
         }
         
@@ -535,15 +526,6 @@ namespace DobbleGame.Properties {
         public static string lb_CorreoExistente {
             get {
                 return ResourceManager.GetString("lb_CorreoExistente", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a .
-        /// </summary>
-        public static string lb_CorreoExistente_ {
-            get {
-                return ResourceManager.GetString("lb_CorreoExistente ", resourceCulture);
             }
         }
         
@@ -607,6 +589,15 @@ namespace DobbleGame.Properties {
         public static string lb_EliminarAmigo {
             get {
                 return ResourceManager.GetString("lb_EliminarAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Empate!.
+        /// </summary>
+        public static string lb_Empate {
+            get {
+                return ResourceManager.GetString("lb_Empate", resourceCulture);
             }
         }
         
@@ -1030,6 +1021,15 @@ namespace DobbleGame.Properties {
         public static string lb_UsuarioInexistente {
             get {
                 return ResourceManager.GetString("lb_UsuarioInexistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string lb_UsuarioInexistente_ {
+            get {
+                return ResourceManager.GetString("lb_UsuarioInexistente ", resourceCulture);
             }
         }
         

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+  <xs:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
@@ -387,6 +387,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="PingSala">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PingSalaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PingSalaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="EnviarSolicitudAmistad">
     <xs:complexType>
       <xs:sequence>
@@ -736,6 +748,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Logica" minOccurs="0" name="GuardarPuntosJugadorResult" nillable="true" type="q24:RespuestaServicioOfboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuardarPuntosJugadorInvitado">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreJugador" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="puntosGanados" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuardarPuntosJugadorInvitadoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GuardarPuntosJugadorInvitadoResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

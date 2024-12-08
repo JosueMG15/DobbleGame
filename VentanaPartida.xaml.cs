@@ -54,23 +54,36 @@ namespace DobbleGame
         {
             if (_permitirCierreInesperado)
             {
-                var proxyGestionAmigos = new Servidor.GestionAmigosClient();
                 var proxyGestionJugador = new GestionJugadorClient();
+                string nombreUsuario = Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario;
+
                 try
                 {
-                    if (!string.IsNullOrEmpty(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario))
-                    {
-                        _proxyGestionPartida.AbandonarPartida(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _codigoSala);
-                        ((ICommunicationObject)_proxyGestionPartida).Close();
-                        proxyGestionJugador.CerrarSesionJugador
-                            (Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Properties.Resources.msg_AbandonoSala);
-                        CallbackManager.Instance.Desconectar(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                        proxyGestionAmigos.NotificarCambios(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
-                    }
+                    _proxyGestionPartida.AbandonarPartida(nombreUsuario, _codigoSala);
+                    proxyGestionJugador.CerrarSesionJugador(nombreUsuario, Properties.Resources.msg_AbandonoSala);
                 }
                 catch (Exception ex)
                 {
                     Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                }
+
+                if (!Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
+                {
+                    var proxyGestionAmigos = new GestionAmigosClient();
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(nombreUsuario))
+                        {
+                            CallbackManager.Instance.Desconectar(nombreUsuario);
+                            proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
+                            proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
+                            proxyGestionAmigos.NotificarBotonInvitacion(nombreUsuario);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Utilidades.Utilidades.ManejarExcepciones(proxyGestionJugador, ex, this);
+                    }
                 }
             }
         }
@@ -96,19 +109,7 @@ namespace DobbleGame
                     if (_proxyGestionPartida.AbandonarPartida(usuarioActual.Usuario, _codigoSala))
                     {
                         ((ICommunicationObject)_proxyGestionPartida).Close();
-
-                        PaginaMenu paginaMenu = new PaginaMenu();
-                        if (_ventana is VentanaMenu ventanaMenu)
-                        {
-                            ventanaMenu.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
-                        }
-                        else if (_ventana is VentanaMenuInvitado ventanaMenuInvitado)
-                        {
-                            ventanaMenuInvitado.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
-                        }
-
-                        _ventana.Show();
-                        this.Close();
+                        IrPaginaMenu();
                     }
                 }
                 catch (Exception ex)
@@ -116,6 +117,25 @@ namespace DobbleGame
                     Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
                 }
             }
+        }
+
+        private void IrPaginaMenu()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                PaginaMenu paginaMenu = new PaginaMenu();
+                if (_ventana is VentanaMenu ventanaMenu)
+                {
+                    ventanaMenu.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
+                }
+                else if (_ventana is VentanaMenuInvitado ventanaMenuInvitado)
+                {
+                    ventanaMenuInvitado.MarcoPrincipal.NavigationService.Navigate(paginaMenu);
+                }
+
+                _ventana.Show();
+                this.Close();
+            });
         }
 
         public bool IniciarSesionPartida()
@@ -360,7 +380,7 @@ namespace DobbleGame
             }
         }
 
-        public async void FinalizarPartida()
+        public void FinalizarPartida()
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -375,25 +395,45 @@ namespace DobbleGame
             tblTexto.Visibility = Visibility.Visible;
             cartaJugador.Visibility = Visibility.Collapsed;
             controlJugadores.Visibility = Visibility.Collapsed;
-            await RegistrarPuntosDelJugador();
             AnimacionFinalizarPartida();
         }
 
-        private async Task RegistrarPuntosDelJugador()
+        public async Task RegistrarPuntosDelJugador()
         {
             Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
 
-            if (jugador != null)
+            if (jugador != null && !Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
+            {
+                bool exito = false;
+
+                while (!exito)
+                {
+                    try
+                    {
+                        var respuestaRegistroPuntos = await Task.Run(() =>
+                        _proxyGestionPartida.GuardarPuntosJugador(jugador.Usuario, jugador.PuntosEnPartida));
+
+                        if (respuestaRegistroPuntos.ErrorBD)
+                        {
+                            Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
+                            continue;
+                        }
+
+                        exito = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
+                    }
+
+                }
+            }
+
+            if (jugador != null && Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
             {
                 try
                 {
-                    var respuestaRegistroPuntos = await Task.Run(() => 
-                    _proxyGestionPartida.GuardarPuntosJugador(jugador.Usuario, jugador.PuntosEnPartida));
-                    if (respuestaRegistroPuntos.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(this);
-                        return;
-                    }
+                    _proxyGestionPartida.GuardarPuntosJugadorInvitado(jugador.Usuario, jugador.PuntosEnPartida);
                 }
                 catch (Exception ex)
                 {
@@ -439,7 +479,7 @@ namespace DobbleGame
             tblTexto.BeginAnimation(System.Windows.Controls.TextBlock.FontSizeProperty, fontSizeAnimation);
         }
 
-        private void RegresarASala()
+        private async void RegresarASala()
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -459,7 +499,8 @@ namespace DobbleGame
                     {
                         return;
                     }
-
+                    await RegistrarPuntosDelJugador();
+                    _permitirCierreInesperado = false;
                     _proxyGestionPartida.RegresarASala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _codigoSala);
                 }
                 catch (Exception ex)
@@ -467,8 +508,15 @@ namespace DobbleGame
                     Utilidades.Utilidades.ManejarExcepciones((ICommunicationObject)_proxyGestionPartida, ex, this);
                 }
 
-                _permitirCierreInesperado = false;
                 this.Close();
+                IrASala();
+            }
+        }
+
+        private void IrASala()
+        {
+            Dispatcher.Invoke(() =>
+            {
                 PaginaSala paginaSala = new PaginaSala(EsAnfitrion, _codigoSala);
                 if (paginaSala.IniciarSesionSala())
                 {
@@ -482,7 +530,7 @@ namespace DobbleGame
                     }
                     _ventana.Show();
                 }
-            }
+            });
         }
 
         public void ConvertirEnAnfitrionDesdePartida()

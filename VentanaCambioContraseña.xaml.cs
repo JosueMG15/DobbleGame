@@ -31,11 +31,11 @@ namespace DobbleGame
         {
             try
             {
-                String contraseñaActual = pbContraseñaActual.Password.Trim();
-                String nuevaContraseña = pbNuevaContraseña.Password.Trim();
-                String confirmarNuevaContraseña = pbConfirmarNuevaContraseña.Password.Trim();
+                string contraseñaActual = pbContraseñaActual.Password;
+                string nuevaContraseña = pbNuevaContraseña.Password;
+                string confirmarNuevaContraseña = pbConfirmarNuevaContraseña.Password;
 
-                if (ValidarEntradas(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña))
+                if (!ValidarEntradas(contraseñaActual, nuevaContraseña, confirmarNuevaContraseña))
                 {
                     return;
                 }
@@ -74,19 +74,19 @@ namespace DobbleGame
                 Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_CamposVacíos);
-                return true;
+                return false;
             }
 
             if (!Utilidades.Utilidades.EsMismaContraseña(nuevaContraseña, confirmarNuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
-                return true;
+                return false;
             }
 
             if (Utilidades.Utilidades.EsMismaContraseña(contraseñaActual, nuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                return true;
+                return false;
             }
 
             if (!Utilidades.Utilidades.ValidarContraseña(contraseñaActual) ||
@@ -94,10 +94,10 @@ namespace DobbleGame
                 !Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
             {
                 MostrarMensaje(Properties.Resources.lb_DatosInválidos);
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         private bool ValidarContraseñaActual(string contraseñaActual)

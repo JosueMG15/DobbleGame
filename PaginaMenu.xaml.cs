@@ -45,14 +45,17 @@ namespace DobbleGame
 
         public void IrPaginaSalaAnimacion(PaginaSala paginaSala)
         {
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
-            fadeOutAnimation.Completed += (s, a) =>
+            Dispatcher.Invoke(() =>
             {
-                this.NavigationService.Navigate(paginaSala);
+                DoubleAnimation fadeOutAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.5)));
+                fadeOutAnimation.Completed += (s, a) =>
+                {
+                    this.NavigationService.Navigate(paginaSala);
 
-                AnimateElementsInPaginaSala(paginaSala);                
-            };
-            this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+                    AnimateElementsInPaginaSala(paginaSala);
+                };
+                this.BeginAnimation(Frame.OpacityProperty, fadeOutAnimation);
+            });
         }
         
         private void AnimateElementsInPaginaSala(PaginaSala paginaSala)

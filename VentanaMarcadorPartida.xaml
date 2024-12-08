@@ -26,7 +26,7 @@
     <Border Background="#EDE193" CornerRadius="20">
         <Grid >
             <StackPanel >
-                <Label Style="{StaticResource TituloLalezar1}" Content="{x:Static p:Resources.lb_Victoria}" 
+                <Label x:Name="lbResultadoPartida" Style="{StaticResource TituloLalezar1}"
                        HorizontalAlignment="Center" Height="90"/>
                 <Label x:Name="lbGanador" Style="{StaticResource TituloLalezar1}" HorizontalAlignment="Center" FontSize="50" 
                        Foreground="Black" Height="68" />
