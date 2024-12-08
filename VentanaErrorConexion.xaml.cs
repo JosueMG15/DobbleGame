@@ -19,16 +19,6 @@ namespace DobbleGame
             var proxy = new GestionJugadorClient();
             var proxyUsuario = new GestionAmigosClient();
 
-            /*bool isLoginWindowOpen = false;
-
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is MainWindow)
-                {
-                    isLoginWindowOpen = true;
-                    break;
-                }
-            }*/
             bool isLoginWindowOpen = Application.Current.Windows.OfType<MainWindow>().Any();
 
             try

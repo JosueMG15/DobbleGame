@@ -215,8 +215,8 @@ namespace DobbleGame
 
         private void BtnSolicitudesAmistad(object sender, RoutedEventArgs e)
         {
-            var _proxyGestionAmigos = new GestionAmigosClient();
             Utilidades.Utilidades.EstaConectado(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, this);
+            var _proxyGestionAmigos = new GestionAmigosClient();
 
             var respuesta = _proxyGestionAmigos.ObtenerSolicitudesPendientes(Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario);
 
@@ -406,7 +406,7 @@ namespace DobbleGame
                 };
                 var imagenEliminar = new Image
                 {
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Imagenes/BotonEliminarAmigo.png")),
+                    Source = new BitmapImage(new Uri("Imagenes/BotonEliminarAmigo.png", UriKind.Relative)),
                     Width = 30,
                     Height = 30
                 };
@@ -463,7 +463,7 @@ namespace DobbleGame
         private static DobbleGame.Servidor.CuentaUsuario UsuarioAmigo(Dominio.Amistad solicitud, bool esAgeno)
         {
             var _proxyGestionAmigos = new GestionAmigosClient();
-            if (esAgeno == true)
+            if (esAgeno)
             {
                 var respuesta = _proxyGestionAmigos.ObtenerUsuario(solicitud.UsuarioPrincipalId);
                 var cuenta = respuesta.Resultado;
