@@ -245,7 +245,7 @@ namespace DobbleGame
             });
         }
 
-        private void BtnValidarIcono(object sender, RoutedEventArgs e)
+        private async void BtnValidarIcono(object sender, RoutedEventArgs e)
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -257,7 +257,7 @@ namespace DobbleGame
                 string rutaIcono = imagenIcono.Source.ToString();
                 try
                 {
-                    _proxyGestionPartida.ValidarCarta(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, rutaIcono, _codigoSala);
+                    await _proxyGestionPartida.ValidarCartaAsync(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, rutaIcono, _codigoSala);
                 }
                 catch (Exception ex)
                 {
@@ -266,34 +266,43 @@ namespace DobbleGame
             }
         }
 
-        public void AsignarCarta(Carta carta)
+
+        public async void AsignarCarta(Carta carta)
         {
-            Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
-            Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
-            Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
-            Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
-            Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
-            Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
+            await Dispatcher.InvokeAsync(() =>
+            {
+                Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
+                Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
+                Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
+                /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+                Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
+                Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
+                Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
+                Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
+            });
         }
 
-        public void AsignarCartaCentral(Carta cartaCentral, int cartasRestantes)
+
+        public async void AsignarCartaCentral(Carta cartaCentral, int cartasRestantes)
         {
-            tblCartasRestantes.Text = String.Format(Properties.Resources.lb_CartasRestantes, cartasRestantes);
-            IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
-            IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
-            IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
-            IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
-            IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
-            IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
+            await Dispatcher.InvokeAsync(() =>
+            {
+                tblCartasRestantes.Text = String.Format(Properties.Resources.lb_CartasRestantes, cartasRestantes);
+                IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
+                IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
+                IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
+                /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+                IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
+                IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
+                IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
+                IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
+            });
         }
 
-        public void BloquearCarta()
+
+        public async void BloquearCarta()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            await Dispatcher.InvokeAsync(() =>
             {
                 Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
 
@@ -307,16 +316,16 @@ namespace DobbleGame
             });
         }
 
-        public void DesbloquearCarta()
+        public async void DesbloquearCarta()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            await Dispatcher.InvokeAsync(() =>
             {
                 Button[] botones = { boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8 };
 
                 foreach (var boton in botones)
                 {
-                    var tringulo = (Polygon)boton.Template.FindName("triangulo", boton);
-                    tringulo.Fill = new SolidColorBrush(Colors.White);
+                    var triangulo = (Polygon)boton.Template.FindName("triangulo", boton);
+                    triangulo.Fill = new SolidColorBrush(Colors.White);
                 }
 
                 cartaJugador.IsEnabled = true;
