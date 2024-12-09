@@ -267,11 +267,11 @@ namespace DobbleGame
             Icono1.Source = new BitmapImage(new Uri(carta.Iconos[0].Ruta));
             Icono2.Source = new BitmapImage(new Uri(carta.Iconos[1].Ruta));
             Icono3.Source = new BitmapImage(new Uri(carta.Iconos[2].Ruta));
-            Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
+            /*Icono4.Source = new BitmapImage(new Uri(carta.Iconos[3].Ruta));
             Icono5.Source = new BitmapImage(new Uri(carta.Iconos[4].Ruta));
             Icono6.Source = new BitmapImage(new Uri(carta.Iconos[5].Ruta));
             Icono7.Source = new BitmapImage(new Uri(carta.Iconos[6].Ruta));
-            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));
+            Icono8.Source = new BitmapImage(new Uri(carta.Iconos[7].Ruta));*/
         }
 
         public void AsignarCartaCentral(Carta cartaCentral, int cartasRestantes)
@@ -280,11 +280,11 @@ namespace DobbleGame
             IconoCentral1.Source = new BitmapImage(new Uri(cartaCentral.Iconos[0].Ruta));
             IconoCentral2.Source = new BitmapImage(new Uri(cartaCentral.Iconos[1].Ruta));
             IconoCentral3.Source = new BitmapImage(new Uri(cartaCentral.Iconos[2].Ruta));
-            IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
+            /*IconoCentral4.Source = new BitmapImage(new Uri(cartaCentral.Iconos[3].Ruta));
             IconoCentral5.Source = new BitmapImage(new Uri(cartaCentral.Iconos[4].Ruta));
             IconoCentral6.Source = new BitmapImage(new Uri(cartaCentral.Iconos[5].Ruta));
             IconoCentral7.Source = new BitmapImage(new Uri(cartaCentral.Iconos[6].Ruta));
-            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));
+            IconoCentral8.Source = new BitmapImage(new Uri(cartaCentral.Iconos[7].Ruta));*/
         }
 
         public void BloquearCarta()
@@ -380,7 +380,7 @@ namespace DobbleGame
             }
         }
 
-        public void FinalizarPartida()
+        public async void FinalizarPartida()
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -395,13 +395,12 @@ namespace DobbleGame
             tblTexto.Visibility = Visibility.Visible;
             cartaJugador.Visibility = Visibility.Collapsed;
             controlJugadores.Visibility = Visibility.Collapsed;
-            AnimacionFinalizarPartida();
+            await AnimacionFinalizarPartida();
         }
 
         public async Task RegistrarPuntosDelJugador()
         {
-            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario
-                            && Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado);
+            Jugador jugador = JugadoresEnPartida.FirstOrDefault(j => j.Usuario == Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
 
             if (jugador != null && !Dominio.CuentaUsuario.CuentaUsuarioActual.EsInvitado)
             {
@@ -434,7 +433,7 @@ namespace DobbleGame
             {
                 try
                 {
-                    _proxyGestionPartida.GuardarPuntosJugadorInvitado(jugador.Usuario, jugador.PuntosEnPartida);
+                    await _proxyGestionPartida.GuardarPuntosJugadorInvitadoAsync(jugador.Usuario, jugador.PuntosEnPartida);
                 }
                 catch (Exception ex)
                 {
@@ -443,7 +442,7 @@ namespace DobbleGame
             }
         }
 
-        private void AnimacionFinalizarPartida()
+        private async Task AnimacionFinalizarPartida()
         {
             DoubleAnimation fadeInAnimation = new DoubleAnimation
             {
@@ -460,27 +459,33 @@ namespace DobbleGame
                 Duration = TimeSpan.FromSeconds(1)
             };
 
-            fontSizeAnimation.Completed += (s, e) =>
-            {
-                var contador = new System.Windows.Threading.DispatcherTimer
-                {
-                    Interval = TimeSpan.FromSeconds(2)
-                };
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            fontSizeAnimation.Completed += (s, e) => tcs.SetResult(true);
 
-                contador.Tick += (sender, args) =>
-                {
-                    contador.Stop();
-                    tblTexto.Visibility = Visibility.Collapsed;
-                    RegresarASala();
-                };
-                contador.Start();
+            tblTexto.BeginAnimation(System.Windows.Controls.TextBlock.FontSizeProperty, fontSizeAnimation);
+
+            await tcs.Task;
+
+            var contador = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(2)
             };
 
-            tblTexto.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
-            tblTexto.BeginAnimation(System.Windows.Controls.TextBlock.FontSizeProperty, fontSizeAnimation);
+            TaskCompletionSource<bool> timerTcs = new TaskCompletionSource<bool>();
+            contador.Tick += async (sender, args) =>
+            {
+                contador.Stop();
+                tblTexto.Visibility = Visibility.Collapsed;
+                await RegresarASala();
+                timerTcs.SetResult(true);
+            };
+            contador.Start();
+
+            await timerTcs.Task; 
         }
 
-        private async void RegresarASala()
+
+        private async Task RegresarASala()
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -502,7 +507,7 @@ namespace DobbleGame
                     }
                     await RegistrarPuntosDelJugador();
                     _permitirCierreInesperado = false;
-                    _proxyGestionPartida.RegresarASala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _codigoSala);
+                    await _proxyGestionPartida.RegresarASalaAsync(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, _codigoSala);
                 }
                 catch (Exception ex)
                 {

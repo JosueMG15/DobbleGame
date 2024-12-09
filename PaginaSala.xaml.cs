@@ -297,7 +297,7 @@ namespace DobbleGame
                 if (UsuariosConectados.Count >= NUMERO_JUGADORES_MINIMOS_INICIO_PARTIDA)
                 {
                     await Task.Delay(555);
-                    if (proxySala.TodosLosJugadoresEstanListos(CodigoSala))
+                    if (await proxySala.TodosLosJugadoresEstanListosAsync(CodigoSala))
                     {
                         IniciarPartida();
                     }

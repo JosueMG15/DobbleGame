@@ -26,7 +26,7 @@ namespace DobbleGame
             var proxy = new GestionAmigosClient();
             try
             {
-                var respuestaUsuario = proxy.ObtenerSolicitud();
+                var respuestaUsuario = await proxy.ObtenerSolicitudAsync();
                 if (respuestaUsuario.ErrorBD)
                 {
                     await Task.Delay(1000);

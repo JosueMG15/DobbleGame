@@ -30,70 +30,82 @@ namespace DobbleGame
                 string nuevaContraseña = tbNuevaContraseña.Password.Trim();
                 string confirmarNuevaContraseña = tbConfirmarContraseña.Password.Trim();
 
-                if (Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
+                if (!ValidarCamposContraseña(nuevaContraseña, confirmarNuevaContraseña))
+                    return;
+
+                string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(nuevaContraseña);
+
+                var usuario = ObtenerUsuarioPorCorreo(correo);
+                if (usuario == null)
+                    return;
+
+                if (nuevaContraseña == usuario.Contraseña)
                 {
-                    MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                    MostrarMensaje(Properties.Resources.global_MismaContraseña_);
                     return;
                 }
 
-                if (nuevaContraseña != confirmarNuevaContraseña)
+                if (ModificarContraseña(usuario.IdCuentaUsuario, contraseñaHasheada))
                 {
-                    MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
-                    return;
-                }
-
-                if (Utilidades.Utilidades.ValidarContraseña(nuevaContraseña) && Utilidades.Utilidades.ValidarContraseña(confirmarNuevaContraseña))
-                {
-                    string contraseñaHasheada = Utilidades.EncriptadorContraseña.GenerarHashSHA512(tbNuevaContraseña.Password);
-                    var respuestaUsuario = _proxyGestionJugador.ObtenerUsuarioPorCorreo(correo);
-                    var usuario = respuestaUsuario.Resultado;
-
-                    if (respuestaUsuario.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                        return;
-                    }
-
-                    Dominio.CuentaUsuario.CuentaUsuarioActual = new Dominio.CuentaUsuario
-                    {
-                        IdCuentaUsuario = usuario.IdCuentaUsuario,
-                        Contraseña = usuario.Contraseña
-                    };
-
-                    var respuestaModificarContraseña = _proxyGestionJugador.ModificarContraseñaUsuario
-                        (Dominio.CuentaUsuario.CuentaUsuarioActual.IdCuentaUsuario, contraseñaHasheada);
-
-                    if (respuestaModificarContraseña.ErrorBD)
-                    {
-                        Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
-                        return;
-                    }
-
-                    if (nuevaContraseña == usuario.Contraseña)
-                    {
-                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                        return;
-                    }
-                    if (respuestaModificarContraseña.Resultado)
-                    {
-                        _marcoPrincipal.Close();
-                    }
-                    else
-                    {
-                        MostrarMensaje(Properties.Resources.global_MismaContraseña_);
-                        return;
-                    }
+                    _marcoPrincipal.Close();
                 }
                 else
                 {
-                    MostrarMensaje(Properties.Resources.lb_DatosInválidos);
-                    return;
+                    MostrarMensaje(Properties.Resources.global_MismaContraseña_);
                 }
             }
             catch (Exception ex)
             {
                 Utilidades.Utilidades.ManejarExcepciones(_proxyGestionJugador, ex, this);
             }
+        }
+
+        private bool ValidarCamposContraseña(string nuevaContraseña, string confirmarNuevaContraseña)
+        {
+            if (Utilidades.Utilidades.EsCampoVacio(nuevaContraseña) || Utilidades.Utilidades.EsCampoVacio(confirmarNuevaContraseña))
+            {
+                MostrarMensaje(Properties.Resources.lb_CamposVacíos);
+                return false;
+            }
+
+            if (nuevaContraseña != confirmarNuevaContraseña)
+            {
+                MostrarMensaje(Properties.Resources.lb_ContraseñaNoCoincide);
+                return false;
+            }
+
+            if (!Utilidades.Utilidades.ValidarContraseña(nuevaContraseña))
+            {
+                MostrarMensaje(Properties.Resources.lb_DatosInválidos);
+                return false;
+            }
+
+            return true;
+        }
+
+        private Servidor.CuentaUsuario ObtenerUsuarioPorCorreo(string correo)
+        {
+            var respuestaUsuario = _proxyGestionJugador.ObtenerUsuarioPorCorreo(correo);
+            if (respuestaUsuario.ErrorBD)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                return null;
+            }
+
+            return respuestaUsuario.Resultado;
+        }
+
+        private bool ModificarContraseña(int idCuentaUsuario, string contraseñaHasheada)
+        {
+            var respuestaModificarContraseña = _proxyGestionJugador.ModificarContraseñaUsuario(idCuentaUsuario, contraseñaHasheada);
+
+            if (respuestaModificarContraseña.ErrorBD)
+            {
+                Utilidades.Utilidades.MostrarVentanaErrorConexionBD(_marcoPrincipal);
+                return false;
+            }
+
+            return respuestaModificarContraseña.Resultado;
         }
 
         private void MostrarMensaje(string mensaje)

@@ -164,10 +164,8 @@ namespace DobbleGame.Utilidades
                 }
                 catch (Exception proxyEx)
                 {
-                    {
-                        proxy.Abort();
-                        Registro.Fatal($"Error al intentar cerrar el proxy: {proxyEx.Message}. Proxy abortado");
-                    }
+                    proxy.Abort();
+                    Registro.Fatal($"Error al intentar cerrar el proxy: {proxyEx.Message}. Proxy abortado");
                 }
 
                 if (ex is CommunicationObjectFaultedException)

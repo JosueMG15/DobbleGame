@@ -176,7 +176,7 @@ namespace DobbleGame
                 if (!File.Exists(rutaFotoDefecto))
                 {
                     Utilidades.Utilidades.MostrarMensajeStackPanel(panelMensaje, lbMensaje, Properties.Resources.lb_ErrorInesperado);
-                    return null;
+                    return new byte[0];
                 }
 
                 return File.ReadAllBytes(rutaFotoDefecto);
@@ -184,7 +184,7 @@ namespace DobbleGame
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return null;
+                return new byte[0];
             }
         }
 
