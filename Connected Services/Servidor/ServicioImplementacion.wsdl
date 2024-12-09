@@ -74,9 +74,9 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://192.168.100.57:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://192.168.100.57:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://192.168.100.57:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IGestionJugador_RegistrarUsuario_InputMessage">
@@ -304,18 +304,6 @@
   <wsdl:message name="IGestionAmigos_UsuarioConectado_OutputMessage">
     <wsdl:part name="parameters" element="tns:UsuarioConectadoResponse" />
   </wsdl:message>
-  <wsdl:message name="IGestionAmigos_TieneInvitacionPendiente_InputMessage">
-    <wsdl:part name="parameters" element="tns:TieneInvitacionPendiente" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_TieneInvitacionPendiente_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TieneInvitacionPendienteResponse" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_ReestablecerInvitacionPendiente_InputMessage">
-    <wsdl:part name="parameters" element="tns:ReestablecerInvitacionPendiente" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_ReestablecerInvitacionPendiente_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ReestablecerInvitacionPendienteResponse" />
-  </wsdl:message>
   <wsdl:message name="IGestionAmigos_NotificarCambios_InputMessage">
     <wsdl:part name="parameters" element="tns:NotificarCambios" />
   </wsdl:message>
@@ -327,15 +315,6 @@
   </wsdl:message>
   <wsdl:message name="IGestionAmigos_NotificarDesconexion_OutputMessage">
     <wsdl:part name="parameters" element="tns:NotificarDesconexionResponse" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_NotificarBotonInvitacion_InputMessage">
-    <wsdl:part name="parameters" element="tns:NotificarBotonInvitacion" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_NotificarBotonInvitacion_OutputMessage">
-    <wsdl:part name="parameters" element="tns:NotificarBotonInvitacionResponse" />
-  </wsdl:message>
-  <wsdl:message name="IGestionAmigos_NotificarInvitacion_InputMessage">
-    <wsdl:part name="parameters" element="tns:NotificarInvitacion" />
   </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_ConectarCliente_InputMessage">
     <wsdl:part name="parameters" element="tns:ConectarCliente" />
@@ -357,12 +336,6 @@
   </wsdl:message>
   <wsdl:message name="IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotificarSalida" />
-  </wsdl:message>
-  <wsdl:message name="IGestionNotificacionesAmigos_NotificarInvitacionCambio_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotificarInvitacionCambio" />
-  </wsdl:message>
-  <wsdl:message name="IGestionNotificacionesAmigos_NotificarVentanaInvitacion_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:NotificarVentanaInvitacion" />
   </wsdl:message>
   <wsdl:message name="IGestionPartida_CrearNuevaPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearNuevaPartida" />
@@ -432,6 +405,12 @@
   </wsdl:message>
   <wsdl:message name="IGestionPartida_DesbloquearCarta_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:DesbloquearCarta" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_PingPartida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PingPartida" />
+  </wsdl:message>
+  <wsdl:message name="IGestionPartida_PingPartida_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PingPartidaResponse" />
   </wsdl:message>
   <wsdl:message name="IGestionCorreos_EnviarCodigo_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarCodigo" />
@@ -607,14 +586,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/UsuarioConectado" message="tns:IGestionAmigos_UsuarioConectado_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/UsuarioConectadoResponse" message="tns:IGestionAmigos_UsuarioConectado_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="TieneInvitacionPendiente">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/TieneInvitacionPendiente" message="tns:IGestionAmigos_TieneInvitacionPendiente_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/TieneInvitacionPendienteResponse" message="tns:IGestionAmigos_TieneInvitacionPendiente_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ReestablecerInvitacionPendiente">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/ReestablecerInvitacionPendiente" message="tns:IGestionAmigos_ReestablecerInvitacionPendiente_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/ReestablecerInvitacionPendienteResponse" message="tns:IGestionAmigos_ReestablecerInvitacionPendiente_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="NotificarCambios">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarCambios" message="tns:IGestionAmigos_NotificarCambios_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarCambiosResponse" message="tns:IGestionAmigos_NotificarCambios_OutputMessage" />
@@ -622,13 +593,6 @@
     <wsdl:operation name="NotificarDesconexion">
       <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexion" message="tns:IGestionAmigos_NotificarDesconexion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarDesconexionResponse" message="tns:IGestionAmigos_NotificarDesconexion_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="NotificarBotonInvitacion">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacion" message="tns:IGestionAmigos_NotificarBotonInvitacion_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacionResponse" message="tns:IGestionAmigos_NotificarBotonInvitacion_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="NotificarInvitacion">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGestionAmigos/NotificarInvitacion" message="tns:IGestionAmigos_NotificarInvitacion_InputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionNotificacionesAmigos">
@@ -648,12 +612,6 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarSalida">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" message="tns:IGestionNotificacionesAmigos_NotificarSalida_OutputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="NotificarInvitacionCambio">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarInvitacionCambio" message="tns:IGestionNotificacionesAmigos_NotificarInvitacionCambio_OutputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="NotificarVentanaInvitacion">
-      <wsdl:output wsaw:Action="http://tempuri.org/IGestionNotificacionesAmigos/NotificarVentanaInvitacion" message="tns:IGestionNotificacionesAmigos_NotificarVentanaInvitacion_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionPartida">
@@ -717,6 +675,10 @@
     </wsdl:operation>
     <wsdl:operation name="DesbloquearCarta">
       <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/DesbloquearCarta" message="tns:IGestionPartida_DesbloquearCarta_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PingPartida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGestionPartida/PingPartida" message="tns:IGestionPartida_PingPartida_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGestionPartida/PingPartidaResponse" message="tns:IGestionPartida_PingPartida_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IGestionCorreos">
@@ -1093,24 +1055,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="TieneInvitacionPendiente">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/TieneInvitacionPendiente" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ReestablecerInvitacionPendiente">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/ReestablecerInvitacionPendiente" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="NotificarCambios">
       <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarCambios" style="document" />
       <wsdl:input>
@@ -1128,21 +1072,6 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NotificarBotonInvitacion">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarBotonInvitacion" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NotificarInvitacion">
-      <soap12:operation soapAction="http://tempuri.org/IGestionAmigos/NotificarInvitacion" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionNotificacionesAmigos" type="tns:IGestionNotificacionesAmigos">
@@ -1180,18 +1109,6 @@
     </wsdl:operation>
     <wsdl:operation name="NotificarSalida">
       <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarSalida" style="document" />
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NotificarInvitacionCambio">
-      <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarInvitacionCambio" style="document" />
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NotificarVentanaInvitacion">
-      <soap12:operation soapAction="http://tempuri.org/IGestionNotificacionesAmigos/NotificarVentanaInvitacion" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -1326,6 +1243,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PingPartida">
+      <soap12:operation soapAction="http://tempuri.org/IGestionPartida/PingPartida" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IGestionCorreos" type="tns:IGestionCorreos">
     <wsp:PolicyReference URI="#NetTcpBinding_IGestionCorreos_policy" />
@@ -1342,39 +1268,39 @@
   </wsdl:binding>
   <wsdl:service name="ServicioImplementacion">
     <wsdl:port name="NetTcpBinding_IGestionJugador" binding="tns:NetTcpBinding_IGestionJugador">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionJugador" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionJugador" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionJugador</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionJugador</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionSala" binding="tns:NetTcpBinding_IGestionSala">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionSala" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionSala" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionSala</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionSala</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionAmigos" binding="tns:NetTcpBinding_IGestionAmigos">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionAmigos" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionNotificacionesAmigos" binding="tns:NetTcpBinding_IGestionNotificacionesAmigos">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionNotificacionesAmigos" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionNotificacionesAmigos</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionNotificacionesAmigos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionPartida" binding="tns:NetTcpBinding_IGestionPartida">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionPartida" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionPartida" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionPartida</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionPartida</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGestionCorreos" binding="tns:NetTcpBinding_IGestionCorreos">
-      <soap12:address location="net.tcp://192.168.100.57:8081/IGestionCorreos" />
+      <soap12:address location="net.tcp://192.168.137.1:8081/IGestionCorreos" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.100.57:8081/IGestionCorreos</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.137.1:8081/IGestionCorreos</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

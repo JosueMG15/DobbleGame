@@ -189,8 +189,6 @@ namespace DobbleGame
                     CallbackManager.Instance.Desconectar(nombreUsuario);
                     proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
                     proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
-                    proxyGestionAmigos.NotificarBotonInvitacion(nombreUsuario);
-
                 }
             }
             catch (Exception ex)

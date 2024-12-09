@@ -77,7 +77,6 @@ namespace DobbleGame
                             CallbackManager.Instance.Desconectar(nombreUsuario);
                             proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
                             proxyGestionAmigos.NotificarDesconexion(nombreUsuario);
-                            proxyGestionAmigos.NotificarBotonInvitacion(nombreUsuario);
                         }
                     }
                     catch (Exception ex)
@@ -86,6 +85,11 @@ namespace DobbleGame
                     }
                 }
             }
+        }
+
+        public bool PingPartida()
+        {
+            return true;
         }
 
         private void BtnRegresar(object sender, RoutedEventArgs e)
@@ -481,7 +485,7 @@ namespace DobbleGame
             };
             contador.Start();
 
-            await timerTcs.Task; 
+            await timerTcs.Task;
         }
 
 

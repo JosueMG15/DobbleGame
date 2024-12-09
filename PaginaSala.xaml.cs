@@ -197,9 +197,6 @@ namespace DobbleGame
 
             AbandonarSala();
             IrPaginaMenu();
-
-            var proxyGestionAmigos = new GestionAmigosClient();
-            proxyGestionAmigos.NotificarBotonInvitacion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario);
         }
 
         private void IrPaginaMenu()
@@ -239,7 +236,7 @@ namespace DobbleGame
             }
         }
 
-        private void BtnEnviarMensaje(object sender, RoutedEventArgs e)
+        private async void BtnEnviarMensaje(object sender, RoutedEventArgs e)
         {
             if (!Utilidades.Utilidades.PingConexion(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, Application.Current.MainWindow))
             {
@@ -254,7 +251,7 @@ namespace DobbleGame
             {
                 if (!String.IsNullOrEmpty(mensaje))
                 {
-                    proxySala.EnviarMensajeSala(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
+                    await proxySala.EnviarMensajeSalaAsync(Dominio.CuentaUsuario.CuentaUsuarioActual.Usuario, CodigoSala, mensaje);
                     tbChat.Text = string.Empty;
                 }
             }

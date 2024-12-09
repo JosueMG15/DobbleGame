@@ -13,8 +13,6 @@ namespace DobbleGame.Utilidades
         public event Action NotificarSolicitudAmistadEvent;
         public event Action NotificarCambioEvent;
         public event Action<string> NotificarSalidaEvent;
-        public event Action<string> NotificarInvitacionCambioEvent;
-        public event Action<string, string> NotificarVentanaInvitacionEvent;
 
         public static CallbackManager Instance
         {
@@ -70,16 +68,6 @@ namespace DobbleGame.Utilidades
         public void NotificarSalida(string nombreUsuario)
         {
             NotificarSalidaEvent?.Invoke(nombreUsuario);
-        }
-
-        public void NotificarInvitacionCambio(string nombreUsuario)
-        {
-            NotificarInvitacionCambioEvent?.Invoke(nombreUsuario);
-        }
-
-        public void NotificarVentanaInvitacion(string nombreUsuarioInvitacion, string codigoSala)
-        {
-            NotificarVentanaInvitacionEvent?.Invoke(nombreUsuarioInvitacion, codigoSala);
         }
     }
 }

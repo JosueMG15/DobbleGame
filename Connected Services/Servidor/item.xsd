@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://192.168.100.57:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
+  <xs:import schemaLocation="http://192.168.137.1:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logica" />
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
@@ -542,32 +542,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="TieneInvitacionPendiente">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="TieneInvitacionPendienteResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="TieneInvitacionPendienteResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ReestablecerInvitacionPendiente">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ReestablecerInvitacionPendienteResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="NotificarCambios">
     <xs:complexType>
       <xs:sequence>
@@ -590,27 +564,6 @@
   <xs:element name="NotificarDesconexionResponse">
     <xs:complexType>
       <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotificarBotonInvitacion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotificarBotonInvitacionResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotificarInvitacion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="nombreUsuarioInvitacion" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
-      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConectarCliente">
@@ -651,21 +604,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotificarInvitacionCambio">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="NotificarVentanaInvitacion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuarioInvitacion" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -827,6 +765,18 @@
   <xs:element name="DesbloquearCarta">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PingPartida">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PingPartidaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PingPartidaResult" type="xs:boolean" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EnviarCodigo">
